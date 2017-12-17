@@ -1,0 +1,6 @@
+<div>
+<textarea readonly [ngModel]="Output | async"></textarea>
+</div>
+<div>
+<textarea [ngModel]="Input" (ngModelChange)="InputChanged($event)" ></textarea>
+</div>
