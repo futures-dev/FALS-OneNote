@@ -4,11 +4,11 @@ import * as si from "socket.io-client";
 
 @Injectable()
 export class ConnectionService {
-    url = "http://::1:1337";
+    url = "http://127.0.0.1/";
     connection: SocketIOClient.Socket;
 
     constructor() {
-        this.connection = si.connect(this.url, { autoConnect: true });
+        this.connection = si.connect(this.url, { autoConnect: true, port: "3003" });
         this.connection.on('connection', () => {
             console.log("connected");
             console.log(this.connection);
@@ -18,10 +18,10 @@ export class ConnectionService {
 
     AddListener(callback: (message: string) => void): void {
         console.log(this.connection);
-        this.connection.addEventListener("blast", callback);
+        this.connection.addEventListener("message", callback);
     }
 
     Send(message: string): void {
-        this.connection.emit("blast", message);
+        this.connection.emit("message", message);
     }
 }

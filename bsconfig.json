@@ -8,7 +8,7 @@
             "/node_modules": "node_modules"
         }
     },
-    "https": true,
+    "https": false,
     "watch": true,
     "files": "dist/**/*"
 }
