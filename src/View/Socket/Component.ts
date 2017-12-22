@@ -32,13 +32,10 @@ export class SocketComponent implements OnInit {
         private ConnectionService : ConnectionService
     ) {
         console.log("SocketComponent ctor");
-
-        this.Output.subscribe(this.OutputChanged);
-
-        this.ConnectionService.AddListener(this.InputChanged);
      }
 
-    ngOnInit() {         
-        console.log("SocketComponent OnInit");
+    ngOnInit() {      
+        this.Output.subscribe(this.OutputChanged);
+        this.ConnectionService.AddListener(q => this.InputChanged(q));
     }
 }

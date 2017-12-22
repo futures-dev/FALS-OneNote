@@ -11,10 +11,11 @@
         "noEmitOnError": true,
         "rootDir": "src",
         "outDir": "dist",
-        "baseUrl": "src/",
+        "baseUrl": "./",
         "paths": {
             "*": [
-                "*"
+                "src/*",
+                "dist/*"
             ]
         },
         "lib": [

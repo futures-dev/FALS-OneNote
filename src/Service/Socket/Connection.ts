@@ -4,11 +4,11 @@ import * as si from "socket.io-client";
 
 @Injectable()
 export class ConnectionService {
-    url = "http://127.0.0.1/";
+    url = "http://localhost:3003";
     connection: SocketIOClient.Socket;
 
     constructor() {
-        this.connection = si.connect(this.url, { autoConnect: true, port: "3003" });
+        this.connection = si.connect(this.url,{upgrade:false, transports:['polling']});
         this.connection.on('connection', () => {
             console.log("connected");
             console.log(this.connection);

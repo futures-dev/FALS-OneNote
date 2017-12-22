@@ -31,20 +31,21 @@
     "office-ui-fabric-js": "^1.4.0",
     "reflect-metadata": "^0.1.10",
     "rxjs": "^5.5.5",
-    "socket.io-client": "^2.0.4",
+    "socket.io-client": "1.7.4",
     "systemjs": "^0.20.19",
     "zone.js": "^0.8.18"
   },
   "devDependencies": {
+    "@types/angular": "^1.6.2",
+    "@types/jquery": "^2.0.39",
+    "@types/office-js": "^0.0.37",
+    "browser-sync": "^2.18.13",
     "concurrently": "^3.1.0",
     "cpx": "^1.5.0",
     "debug": "^3.1.0",
+    "module-alias": "^2.0.3",
     "rimraf": "^2.6.2",
-    "browser-sync": "^2.18.13",
-    "typescript": "^2.6.2",
-    "@types/office-js": "^0.0.37",
-    "@types/jquery": "^2.0.39",
-    "@types/angular": "^1.6.2",
-    "socket.io": "2.0.4"
+    "socket.io": "1.7.4",
+    "typescript": "^2.6.2"
   }
 }
