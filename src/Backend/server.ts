@@ -8,6 +8,7 @@ import { delay } from "Service/Common/Thread";
 import { Course } from "Service/Fals/Entities/Course";
 import { Student } from "Service/Fals/Entities/Student";
 import { CourseModel } from "Service/Fals/Entities/CourseModel";
+import { CourseModelWrapper } from "Service/Fals/Entities/Lazy/CourseModelWrapper";
 
 let app = express();
 let server = new http.Server(app);
@@ -21,19 +22,37 @@ app.get("/courses", (req: Request, res: Response) => {
   let courseA = new Course();
   let courseB = new Course();
 
-  courseA.student= new Student();  
-  courseA.student.Email = "studentA@gmail.com";
-  courseA.student.DisplayName = "Иван Смирнов";
-  courseA.courseModel = new CourseModel();
-  courseA.courseModel.title = "CourseA";
+  courseA.student = new Student();
+  courseA.student.email = "studentA@gmail.com";
+  courseA.student.displayName = "Иван Смирнов";
+  courseA.courseModel = new CourseModelWrapper("/course"+"?id=0");
 
-  courseB.student= new Student();
-  courseB.student.Email = "studentB@gmail.com";
-  courseB.student.DisplayName = "Иван Смирнов";
-  courseB.courseModel = new CourseModel();
-  courseB.courseModel.title = "CourseB";
+  courseB.student = new Student();
+  courseB.student.email = "studentB@gmail.com";
+  courseB.student.displayName = "Иван Смирнов";
+  courseB.courseModel = new CourseModelWrapper("/course"+"?id=1");
 
   res.json([courseA, courseB]);
+});
+
+app.get("/course", (req: Request, res: Response) => {
+  console.log(req.query);
+  let id = +req.query.id;
+  var courseModel : CourseModel;
+  switch (id) {
+    case 0:
+      courseModel = new CourseModel();
+      courseModel.title = "CourseA";
+      break;
+    case 1:
+      courseModel = new CourseModel();
+      courseModel.title = "CourseB";
+      break;
+    default:
+      res.sendStatus(404);
+      return;
+  }  
+  res.json(courseModel);
 });
 
 //#region POST
