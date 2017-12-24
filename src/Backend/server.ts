@@ -5,7 +5,9 @@ import { Request, Response } from "express";
 import { Client } from "Backend/Socket/Client";
 
 import { delay } from "Service/Common/Thread";
-import { Course } from "Service/Learning/Course";
+import { Course } from "Service/Fals/Entities/Course";
+import { Student } from "Service/Fals/Entities/Student";
+import { CourseModel } from "Service/Fals/Entities/CourseModel";
 
 let app = express();
 let server = new http.Server(app);
@@ -16,7 +18,22 @@ let io = socketio(server);
 //#region GET
 
 app.get("/courses", (req: Request, res: Response) => {
-  res.json([new Course(false), new Course(true)]);
+  let courseA = new Course();
+  let courseB = new Course();
+
+  courseA.student= new Student();  
+  courseA.student.Email = "studentA@gmail.com";
+  courseA.student.DisplayName = "Иван Смирнов";
+  courseA.courseModel = new CourseModel();
+  courseA.courseModel.title = "CourseA";
+
+  courseB.student= new Student();
+  courseB.student.Email = "studentB@gmail.com";
+  courseB.student.DisplayName = "Иван Смирнов";
+  courseB.courseModel = new CourseModel();
+  courseB.courseModel.title = "CourseB";
+
+  res.json([courseA, courseB]);
 });
 
 //#region POST
@@ -38,7 +55,6 @@ io.on("connection", (socket: SocketIO.Socket) => {
 
 async function foo(id: string) {
   io.to(id).emit("message", "hi from server" + Date.now().toLocaleString("ru"));
-  global.gc();
   await delay(500).then(() => foo(id));
 }
 

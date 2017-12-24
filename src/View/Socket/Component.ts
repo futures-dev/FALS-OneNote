@@ -25,7 +25,7 @@ export class SocketComponent implements OnInit {
 
     @Output()
     OutputChanged(val : string) : void{
-        console.log(val);
+        //console.log(val);
     }
 
     constructor(

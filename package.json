@@ -6,10 +6,11 @@
   "scripts": {
     "tsc": "tsc -p tsconfig.json -w",
     "server": "browser-sync start --config bsconfig.json",
-    "copy": "cpx \"src/**/!(*.ts)\" dist --watch",
-    "backend": "node ./src/Backend/index.js",
+    "copy": "cpx \"src/**/!(*.ts|*.java)\" dist --watch",
+    "backend": "node ./dist/Backend/index.js",
     "start": "rimraf dist && concurrently \"npm run tsc\" \"npm run copy\" \"npm run server\" && npm run backend",
-    "validate": "./node_modules/.bin/validate-office-addin"
+    "validate": "./node_modules/.bin/validate-office-addin",
+    "gen": "mvn generate-sources"
   },
   "dependencies": {
     "@angular/common": "^5.1.1",
