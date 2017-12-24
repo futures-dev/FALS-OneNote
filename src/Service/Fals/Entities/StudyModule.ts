@@ -1,6 +1,6 @@
 /* Auto-generated file */
 
-import * as typeMap from "Service/Fals/TypeMap"
+import {Period, Type} from "Service/Fals/TypeMap"
 
 import { Material } from '../Bank/Material'; 
 import { Module } from './Module'; 
