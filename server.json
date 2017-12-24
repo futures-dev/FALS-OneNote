@@ -1,0 +1,47 @@
+{
+  "Students": [
+    {
+      "email": "studentA@gmail.com",
+      "displayName": "Иван Смирнов"
+    },
+    {
+      "email": "studentB@gmail.com",
+      "displayName": "Иван Смирнов"
+    }
+  ],
+  "CourseModels": [
+    {
+      "modules": null,
+      "title": "CourseModelA"
+    },
+    {
+      "modules": null,
+      "title": "CourseModelB"
+    }
+  ],
+  "Courses": [
+    {
+      "student": {
+        "email": "studentA@gmail.com",
+        "displayName": "Иван Смирнов"
+      },
+      "courseModel": {
+        "modules": null,
+        "title": null,
+        "IUrl": "/course?id=0"
+      }
+    },
+    {
+      "student": {
+        "email": "studentB@gmail.com",
+        "displayName": "Иван Смирнов"
+      },
+      "courseModel": {
+        "modules": null,
+        "title": null,
+        "IUrl": "/course?id=1"
+      }
+    }
+  ],
+  "SelectedCoursesMap": {}
+}

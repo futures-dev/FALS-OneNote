@@ -1,61 +1,67 @@
 import * as socketio from "socket.io";
 import * as express from "express";
 import * as http from "http";
+import * as bodyParser from "body-parser";
 import { Request, Response } from "express";
 import { Client } from "Backend/Socket/Client";
+
+import * as fs from "fs";
+import { Storage } from "Backend//Storage";
 
 import { delay } from "Service/Common/Thread";
 import { Course } from "Service/Fals/Entities/Course";
 import { Student } from "Service/Fals/Entities/Student";
 import { CourseModel } from "Service/Fals/Entities/CourseModel";
 import { CourseModelWrapper } from "Service/Fals/Entities/Lazy/CourseModelWrapper";
+import { Assert } from "Service/Common/Assert";
 
 let app = express();
 let server = new http.Server(app);
 let io = socketio(server);
 
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 //chat_app.use(express.static(__dirname + '/node_modules'));
+
+//#region Storage
+
+let storage: Storage = JSON.parse(
+  fs.readFileSync(process.argv.slice(2)[0]).toString()
+);
 
 //#region GET
 
 app.get("/courses", (req: Request, res: Response) => {
-  let courseA = new Course();
-  let courseB = new Course();
-
-  courseA.student = new Student();
-  courseA.student.email = "studentA@gmail.com";
-  courseA.student.displayName = "Иван Смирнов";
-  courseA.courseModel = new CourseModelWrapper("/course"+"?id=0");
-
-  courseB.student = new Student();
-  courseB.student.email = "studentB@gmail.com";
-  courseB.student.displayName = "Иван Смирнов";
-  courseB.courseModel = new CourseModelWrapper("/course"+"?id=1");
-
-  res.json([courseA, courseB]);
+  res.json(storage.Courses);
 });
 
 app.get("/course", (req: Request, res: Response) => {
-  console.log(req.query);
-  let id = +req.query.id;
-  var courseModel : CourseModel;
-  switch (id) {
-    case 0:
-      courseModel = new CourseModel();
-      courseModel.title = "CourseA";
-      break;
-    case 1:
-      courseModel = new CourseModel();
-      courseModel.title = "CourseB";
-      break;
-    default:
-      res.sendStatus(404);
-      return;
-  }  
-  res.json(courseModel);
+  let courseModels: CourseModel[] = storage.CourseModels;
+  let id = +req.query.courseId;
+  if (id < courseModels.length) {
+    res.json(courseModels[id]);
+  } else {
+    res.status(404).send('Invalid Parameter: course "id"');
+  }
 });
 
 //#region POST
+
+app.post("/selectCourse", (req: Request, res: Response) => {
+  let course = storage.Courses[+req.body.courseId];
+  if (
+    assert(
+      course.student.email == req.body.studentEmail,
+      res,
+      "Course does not belong to student"
+    )
+  )
+    return;
+
+  storage.SelectedCoursesMap[+req.body.studentEmail] = course;
+
+  res.sendStatus(200);
+});
 
 //#region SOCKET
 
@@ -82,3 +88,18 @@ async function foo(id: string) {
 server.listen(3003, () => {
   console.log("Listening on port 3003");
 });
+
+//#region: Helpers
+
+function assert(
+  condition: boolean,
+  response: Response,
+  message: string,
+  status: number = 404
+): boolean {
+  if (!condition) {
+    response.status(status).send(message);
+    return true;
+  }
+  return false;
+}

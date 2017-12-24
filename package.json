@@ -7,9 +7,10 @@
     "tsc": "tsc -p tsconfig.json -w",
     "server": "browser-sync start --config bsconfig.json",
     "copy": "cpx \"src/**/!(*.ts|*.java)\" dist --watch",
-    "backend": "node ./dist/Backend/index.js",
-    "start": "rimraf dist && concurrently \"npm run tsc\" \"npm run copy\" \"npm run server\" && npm run backend",
+    "backend": "node ./dist/Backend/serverLauncher.js ./server.json",
+    "start": "rimraf dist && concurrently \"npm run tsc\" \"npm run copy\" \"npm run server\"",
     "validate": "./node_modules/.bin/validate-office-addin",
+    "createStorage": "node ./dist/Backend/createStorageLauncher.js ./server.json",
     "gen": "mvn generate-sources"
   },
   "dependencies": {
