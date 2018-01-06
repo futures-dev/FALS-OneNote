@@ -11,7 +11,62 @@
   ],
   "CourseModels": [
     {
-      "modules": null,
+      "modules": {
+        "Value": null,
+        "Children": [
+          {
+            "Value": {
+              "possibleInterventions": [
+                {
+                  "studyModule": {
+                    "possibleInterventions": null,
+                    "resultType": null,
+                    "material": {
+                      "id": 2,
+                      "content": "Keep up and you will succeed"
+                    }
+                  },
+                  "followingModule": {
+                    "possibleInterventions": [
+                      {
+                        "message": "5 - 2 = 2"
+                      }
+                    ],
+                    "resultType": null,
+                    "material": {
+                      "id": 1,
+                      "content": "Remember: 2+2=5"
+                    }
+                  },
+                  "studyTimeout": null
+                }
+              ],
+              "resultType": null,
+              "problem": {
+                "id": 0,
+                "content": "How much watch?"
+              },
+              "correctAnswer": null
+            },
+            "Children": null
+          },
+          {
+            "Value": {
+              "possibleInterventions": [
+                {
+                  "message": "5 - 2 = 2"
+                }
+              ],
+              "resultType": null,
+              "material": {
+                "id": 1,
+                "content": "Remember: 2+2=5"
+              }
+            },
+            "Children": null
+          }
+        ]
+      },
       "title": "CourseModelA"
     },
     {
@@ -19,6 +74,115 @@
       "title": "CourseModelB"
     }
   ],
+  "Modules": {
+    "0": {
+      "Value": null,
+      "Children": [
+        {
+          "Value": {
+            "possibleInterventions": [
+              {
+                "studyModule": {
+                  "possibleInterventions": null,
+                  "resultType": null,
+                  "material": {
+                    "id": 2,
+                    "content": "Keep up and you will succeed"
+                  }
+                },
+                "followingModule": {
+                  "possibleInterventions": [
+                    {
+                      "message": "5 - 2 = 2"
+                    }
+                  ],
+                  "resultType": null,
+                  "material": {
+                    "id": 1,
+                    "content": "Remember: 2+2=5"
+                  }
+                },
+                "studyTimeout": null
+              }
+            ],
+            "resultType": null,
+            "problem": {
+              "id": 0,
+              "content": "How much watch?"
+            },
+            "correctAnswer": null
+          },
+          "Children": null
+        },
+        {
+          "Value": {
+            "possibleInterventions": [
+              {
+                "message": "5 - 2 = 2"
+              }
+            ],
+            "resultType": null,
+            "material": {
+              "id": 1,
+              "content": "Remember: 2+2=5"
+            }
+          },
+          "Children": null
+        }
+      ]
+    },
+    "1": {
+      "Value": {
+        "possibleInterventions": [
+          {
+            "studyModule": {
+              "possibleInterventions": null,
+              "resultType": null,
+              "material": {
+                "id": 2,
+                "content": "Keep up and you will succeed"
+              }
+            },
+            "followingModule": {
+              "possibleInterventions": [
+                {
+                  "message": "5 - 2 = 2"
+                }
+              ],
+              "resultType": null,
+              "material": {
+                "id": 1,
+                "content": "Remember: 2+2=5"
+              }
+            },
+            "studyTimeout": null
+          }
+        ],
+        "resultType": null,
+        "problem": {
+          "id": 0,
+          "content": "How much watch?"
+        },
+        "correctAnswer": null
+      },
+      "Children": null
+    },
+    "2": {
+      "Value": {
+        "possibleInterventions": [
+          {
+            "message": "5 - 2 = 2"
+          }
+        ],
+        "resultType": null,
+        "material": {
+          "id": 1,
+          "content": "Remember: 2+2=5"
+        }
+      },
+      "Children": null
+    }
+  },
   "Courses": [
     {
       "student": {
