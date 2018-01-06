@@ -1,5 +1,5 @@
 import { Injectable, Output } from "@angular/core";
-import { EventEmitter } from "@angular/core/src/event_emitter";
+import { EventEmitter } from "@angular/core";
 import { Subject } from "rxjs/Subject";
 
 @Injectable()
