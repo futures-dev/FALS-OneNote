@@ -7,11 +7,11 @@ import { Module } from './Module';
 /**
  * @author Computer
  * @version 1.0
- * @created 24-дек-2017 20:28:46
+ * @created 24-пїЅпїЅпїЅ-2017 20:28:46
  * @class
  * @extends Module
  */
-export class AssignmentModule extends Module {
+export abstract class AssignmentModule extends Module {
     public problem : Problem;
 
     public constructor() {
