@@ -1,6 +1,7 @@
 import * as socketio from "socket.io";
 import * as express from "express";
 import * as http from "http";
+import * as cors from "cors";
 import * as bodyParser from "body-parser";
 import { Request, Response } from "express";
 import { Client } from "Backend/Socket/Client";
@@ -21,6 +22,7 @@ let io = socketio(server);
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(cors());
 //chat_app.use(express.static(__dirname + '/node_modules'));
 
 //#region Storage
@@ -33,6 +35,7 @@ let storage: Storage = JSON.parse(
 
 app.get("/courses", (req: Request, res: Response) => {
   res.json(storage.Courses);
+  console.log(storage.Courses);
 });
 
 app.get("/course", (req: Request, res: Response) => {
