@@ -1,0 +1,6 @@
+<div>
+    {{Module.Value | json}}
+    <div *ngFor="let module of Module.Children; let i = index">
+        {{i}}. <br> <pre>{{module.Value | json}}</pre>
+    </div>
+</div>

@@ -9,11 +9,35 @@ import { OfficeModule } from "Service/Office/Module";
 import { SocketModule } from "View/Socket/Module";
 import { CourseListModule } from "View/CourseList/Module";
 import { HttpClientModule } from "@angular/common/http";
+import { CourseDashboardModule } from "View/CourseDashboard/Module";
+import { ConnectionService } from "Service/Socket/Connection";
+import { CourseService } from "Service/CourseLogic/CourseService";
 
 @NgModule({
-    imports: [BrowserModule, FormsModule, RouterModule, RoutingModule, HttpClientModule, OfficeModule, SocketModule, CourseListModule],
+    imports: [        
+        // Framework
+        BrowserModule,
+        FormsModule,
+        RouterModule,
+        RoutingModule,
+        HttpClientModule,
+
+        // local modules
+        OfficeModule, 
+
+        // View modules
+        SocketModule,
+        CourseListModule,
+        CourseDashboardModule,
+    ],
     exports: [],
     declarations: [MainComponent],
-    bootstrap: [MainComponent]
+    bootstrap: [MainComponent],
+    providers: [
+        // all container controlled services to be registered here
+
+        ConnectionService,
+        CourseService,
+    ]
 })
 export class MainModule {}

@@ -9,7 +9,7 @@ import { Listener } from 'Service/Socket/Scenario';
 @Component({
     selector: 'socket',
     templateUrl: 'View/Socket/Socket.html',
-    providers: [ConnectionService]
+    providers: []
 })
 export class SocketComponent implements OnInit {
 

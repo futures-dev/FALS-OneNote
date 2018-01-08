@@ -1,0 +1,7 @@
+<div>
+    Dashboard
+    <div *ngFor="let module of (Course|async)?.courseModel?.modules?.Children; let i=index">
+        Module {{i}}
+        <course-dashboard-module [Module]="module"></course-dashboard-module>
+    </div>
+</div>

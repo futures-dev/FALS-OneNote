@@ -5,6 +5,7 @@ import { ConnectionService } from 'Service/Socket/Connection';
 import { ActivateScenario, ActivateScenarioError } from 'Service/CourseLogic/ActivateScenario';
 import { SelectedCourseChanged } from 'Service/Socket/Events';
 import { Observable } from 'rxjs/Observable';
+import { CourseProvider } from 'Service/Providers/CourseProvider';
 
 @Injectable()
 export class CourseService {
@@ -12,8 +13,10 @@ export class CourseService {
     public CurrentCourse : BehaviorSubject<Course> = new BehaviorSubject<Course>(null);
 
     constructor(
-        private socket : ConnectionService
+        private socket : ConnectionService,
+        private courseProvider : CourseProvider
     ) { 
+        console.log("ctor");
         socket.AddListener(SelectedCourseChanged, course => 
             this.CurrentCourse.next(course));        
     }
@@ -28,7 +31,12 @@ export class CourseService {
                 return;
             }
             
-            console.log("ActivateScenario success");
+            // todo: populate on explicit request only
+            this.courseProvider.populateCourse(course).subscribe(
+                filledCourse => this.CurrentCourse.next(course)
+            );
+
+            console.log("ActivateScenario success ="+course);
             this.CurrentCourse.next(course);
         });       
         activate.Start();

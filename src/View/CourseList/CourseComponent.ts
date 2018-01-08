@@ -12,7 +12,7 @@ import { ActivateScenarioError } from "Service/CourseLogic/ActivateScenario";
 @Component({
     selector: 'course',
     templateUrl: 'View/CourseList/Course.html',
-    providers:[CourseProvider, CourseService],
+    providers:[CourseProvider],
 })
 export class CourseComponent implements OnInit{
     
