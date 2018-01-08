@@ -15,6 +15,8 @@ import { Student } from "Service/Fals/Entities/Student";
 import { CourseModel } from "Service/Fals/Entities/CourseModel";
 import { CourseModelWrapper } from "Service/Fals/Entities/Lazy/CourseModelWrapper";
 import { Assert } from "Service/Common/Assert";
+import { SelectCourse, GetSelectedCourse, SelectedCourseChanged } from "Service/Socket/Events";
+import { Result } from "Service/Socket/Results";
 
 let app = express();
 let server = new http.Server(app);
@@ -27,9 +29,11 @@ app.use(cors());
 
 //#region Storage
 
-let storage: Storage = JSON.parse(
+let storage: Storage = Object.create(Storage.prototype);
+Object.assign(storage, JSON.parse(
   fs.readFileSync(process.argv.slice(2)[0]).toString()
-);
+));
+storage.onSerialized();
 
 //#region GET
 
@@ -78,8 +82,26 @@ io.on("connection", (socket: SocketIO.Socket) => {
     socket.handshake
   ));
 
-  //console.log(client);
+  socket.on(SelectCourse, (course: Course) => {
+    storage.SelectedCoursesMap[course.student.email] = course;
 
+    socket.emit(SelectedCourseChanged, course);
+
+    socket.emit(SelectCourse, Result.sOk);
+  });
+
+  socket.on(GetSelectedCourse, (student: Student) => {
+    let course = storage.SelectedCoursesMap[student.email];
+    
+    if (course){
+    socket.emit(GetSelectedCourse, course);
+    }
+    else{
+      socket.emit(GetSelectedCourse, Result.eNotFound);
+    }
+  })
+
+  // todo: remove
   foo(socket.id);
 });
 

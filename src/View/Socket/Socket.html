@@ -2,5 +2,9 @@
 <textarea readonly [ngModel]="Output | async"></textarea>
 </div>
 <div>
-<textarea [ngModel]="Input" (ngModelChange)="InputChanged($event)" ></textarea>
+    <input type="text" [ngModel]="Event" (ngModelChange)="EventChanged($event)">
+</div>
+<div>
+<textarea [ngModel]="Input" (ngModelChange)="Input = $event"></textarea>
+<button (click)="Emit()"></button>
 </div>

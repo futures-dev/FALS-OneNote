@@ -8,8 +8,27 @@ export class Storage {
   constructor(
     public Students: Student[] = [],
     public CourseModels: CourseModel[] = [],
-    public Modules: Map<number, Tree<Module>> = new Map<number, Tree<Module>>(),
+    public Modules: {[i:number]: Tree<Module>} = {},
     public Courses: Course[] = [],
-    public SelectedCoursesMap: Map<Student, Course> = new Map<Student, Course>()
+    public SelectedCoursesMap: {[email:string]: Course} = {}
   ) {}
+
+  public onSerialized() : void{
+    if (!this.Students){
+      this.Students = [];
+    }
+    if (!this.CourseModels){
+      this.CourseModels = [];
+    }
+    if (!this.Modules){
+      this.Modules = {};
+    }
+    if (!this.Courses){
+      this.Courses = [];
+    }
+    console.log(this.SelectedCoursesMap);
+    if (!this.SelectedCoursesMap){
+      this.SelectedCoursesMap = {};
+    }
+  }
 }

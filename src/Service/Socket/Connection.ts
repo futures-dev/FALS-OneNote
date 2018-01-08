@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 
 import * as si from "socket.io-client";
+import { Listener } from "Service/Socket/Scenario";
 
 @Injectable()
 export class ConnectionService {
@@ -16,12 +17,16 @@ export class ConnectionService {
         this.connection.on('error', m => console.log(m));
     }
 
-    AddListener(callback: (message: string) => void): void {
-        console.log(this.connection);
-        this.connection.addEventListener("message", callback);
+    AddListener(event: string, callback: Listener): void {
+        this.connection.addEventListener(event, callback);
     }
 
-    Send(message: string): void {
-        this.connection.emit("message", message);
+    RemoveListener(event: string, callback:Listener):void{
+        this.connection.removeEventListener(event, callback);
+    }
+
+    Send(event: string, data: any): void {
+        console.log("Send "+event+". "+data);
+        this.connection.emit(event, data);
     }
 }

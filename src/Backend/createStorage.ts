@@ -23,10 +23,10 @@ storage.Students = generateStudents(storage);
 storage.Courses = generateCourses(storage);
 storage.Modules = generateModules(storage);
 storage.CourseModels = generateCourseModels(storage);
-storage.SelectedCoursesMap = new Map<Student, Course>();
+storage.SelectedCoursesMap = {};
 
-function generateModules(storage: Storage): Map<number, Tree<Module>>{
-  var map = new Map<number, Tree<Module>>();
+function generateModules(storage: Storage): {[i: number]: Tree<Module>}{
+  var map = {};
 
   let modulesRoot = map[0] = new Tree<Module>();
 
