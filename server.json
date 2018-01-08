@@ -191,7 +191,7 @@
       },
       "courseModel": {
         "modules": null,
-        "title": null,
+        "title": "CourseModelA",
         "IUrl": "/course?courseId=0"
       }
     },
@@ -202,7 +202,7 @@
       },
       "courseModel": {
         "modules": null,
-        "title": null,
+        "title": "CourseModelB",
         "IUrl": "/course?courseId=1"
       }
     }

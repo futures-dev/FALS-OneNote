@@ -1,7 +1,10 @@
 <div>
-    <input id="{{Course.title}}" [checked]="IsExpanded.value" (change)="IsExpanded.next(!IsExpanded.value)" type=checkbox>
-    <label for="{{Course.title}}">{{Course.title}}</label>
+    <input id="course_expander_{{$id}}" [checked]="IsExpanded.value" (change)="IsExpanded.next(!IsExpanded.value)" type=checkbox>
+    <label for="course_expander{{$id}}">{{(Course | async)?.courseModel?.title}}</label>
     <div *ngIf="IsExpanded | async">
         {{(Course | async)?.courseModel?.modules?.Children[0]?.Value?.problem?.content}}
     </div>    
+    <div>
+        <input type="button" id="course_select_button_{{$id}}" (click)="SelectCourse()">
+    </div>
 </div>

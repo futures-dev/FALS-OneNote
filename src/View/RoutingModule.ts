@@ -7,7 +7,7 @@ import { CourseListComponent } from "View/CourseList/Component";
 
 const routes: Routes = [
     { path:"socket", component: SocketComponent},
-    { path:"courseList", component: CourseListComponent},
+    { path:"courseList", component: CourseListComponent}
 ];
 
 @NgModule({

@@ -4,11 +4,15 @@ import { LoadingState } from "Service/Common/Enums";
 import { Input, Component } from "@angular/core";
 import { BehaviorSubject } from "rxjs/BehaviorSubject";
 import { OnInit } from "@angular/core";
+import { CourseService } from "Service/CourseLogic/CourseService";
+import { Router } from "@angular/router";
+import { UrlTree } from "@angular/router/src/url_tree";
+import { ActivateScenarioError } from "Service/CourseLogic/ActivateScenario";
 
 @Component({
     selector: 'course',
     templateUrl: 'View/CourseList/Course.html',
-    providers:[CourseProvider],
+    providers:[CourseProvider, CourseService],
 })
 export class CourseComponent implements OnInit{
     
@@ -27,7 +31,9 @@ export class CourseComponent implements OnInit{
     }
 
     constructor(
-        private courseProvider : CourseProvider
+        private courseProvider : CourseProvider,
+        private courseService : CourseService,
+        private router : Router,
     ){    }
 
     load() : void{
@@ -36,6 +42,16 @@ export class CourseComponent implements OnInit{
             this.Course.next(q);
             this.LoadState.next(LoadingState.Loaded);
         });
+    }
+
+    SelectCourse() : void{
+        this.courseService.Activate(this.Course.value).subscribe(
+            error => {
+                if (error==ActivateScenarioError.sOk){
+                    this.router.navigateByUrl("/courseDashboard");
+                }
+            }
+        );
     }
 
     ngOnInit() {

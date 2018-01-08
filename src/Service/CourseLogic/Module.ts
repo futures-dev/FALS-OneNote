@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
+import { SocketModule } from 'Service/Socket/Module';
+import { ConnectionService } from 'Service/Socket/Connection';
 
 @NgModule({
-    imports: [],
+    imports: [SocketModule],
     exports: [],
     declarations: [],    
-    providers: [],
+    providers: [ConnectionService],
 })
 export class CourseLogicModule { }
 

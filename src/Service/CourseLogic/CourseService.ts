@@ -4,6 +4,7 @@ import { Course } from 'Service/Fals/Entities/Course';
 import { ConnectionService } from 'Service/Socket/Connection';
 import { ActivateScenario, ActivateScenarioError } from 'Service/CourseLogic/ActivateScenario';
 import { SelectedCourseChanged } from 'Service/Socket/Events';
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class CourseService {
@@ -17,7 +18,7 @@ export class CourseService {
             this.CurrentCourse.next(course));        
     }
 
-    public Activate(course : Course) : void{
+    public Activate(course : Course) : Observable<ActivateScenarioError>{
         this.CurrentCourse.next(null);
 
         let activate = new ActivateScenario(course, this.socket);
@@ -30,7 +31,9 @@ export class CourseService {
             console.log("ActivateScenario success");
             this.CurrentCourse.next(course);
         });       
-        activate.Start(); 
+        activate.Start();
+
+        return activate.Result;
     }
 
     private disconnect
