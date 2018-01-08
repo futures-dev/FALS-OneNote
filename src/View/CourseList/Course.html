@@ -1,0 +1,7 @@
+<div>
+    <input id="{{Course.title}}" ng-model="IsExpanded" type=checkbox>
+    <label for="{{Course.title}}">{{Course.title}}</label>
+    <div *ngIf="IsExpanded">
+        {{Course?.courseModel?.modules?.Children[0]?.problem}}
+    </div>    
+</div>

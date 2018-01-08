@@ -3,7 +3,7 @@ import { Component, OnInit, Input, Output } from '@angular/core';
 import {ConnectionService} from 'Service/Socket/Connection'
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
-import { EventEmitter } from '@angular/core/src/event_emitter';
+import { EventEmitter } from '@angular/core';
 
 @Component({
     selector: 'socket',
@@ -12,20 +12,12 @@ import { EventEmitter } from '@angular/core/src/event_emitter';
 })
 export class SocketComponent implements OnInit {
 
-    @Input()
     Input : string;
 
-    @Input()
     Output : Subject<string> = new Subject();
 
-    @Output()
     InputChanged(val : string) : void{
         this.Output.next(val);
-    }
-
-    @Output()
-    OutputChanged(val : string) : void{
-        //console.log(val);
     }
 
     constructor(
@@ -34,8 +26,7 @@ export class SocketComponent implements OnInit {
         console.log("SocketComponent ctor");
      }
 
-    ngOnInit() {      
-        this.Output.subscribe(this.OutputChanged);
+    ngOnInit() {
         this.ConnectionService.AddListener(q => this.InputChanged(q));
     }
 }
