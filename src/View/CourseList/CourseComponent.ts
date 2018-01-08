@@ -17,7 +17,7 @@ export class CourseComponent implements OnInit{
     @Input() 
     Course : BehaviorSubject<Course>;
     
-    IsExpanded : BehaviorSubject<Boolean> = new BehaviorSubject(false);
+    IsExpanded : BehaviorSubject<boolean> = new BehaviorSubject(false);
 
     onIsExpandedChanged(expand : boolean) {
         console.log("onIsExpandedChanged " + expand);
@@ -32,13 +32,13 @@ export class CourseComponent implements OnInit{
 
     load() : void{
         this.LoadState.next(LoadingState.Loading);
-        this.courseProvider.populateCourse(this.Course.value).lift(q => {
+        this.courseProvider.populateCourse(this.Course.value).subscribe(q => {
             this.Course.next(q);
             this.LoadState.next(LoadingState.Loaded);
         });
     }
 
     ngOnInit() {
-        this.IsExpanded.subscribe(this.onIsExpandedChanged);        
+        this.IsExpanded.subscribe(q => this.onIsExpandedChanged(q));        
     }
 }

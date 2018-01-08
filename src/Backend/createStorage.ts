@@ -92,10 +92,10 @@ function generateCourses(storage: Storage): Course[] {
   let courseB = new Course();
 
   courseA.student = storage.Students[0];
-  courseA.courseModel = new CourseModelWrapper("/course" + "?id=0");
+  courseA.courseModel = new CourseModelWrapper("/course" + "?courseId=0");
 
   courseB.student = storage.Students[1];
-  courseB.courseModel = new CourseModelWrapper("/course" + "?id=1");
+  courseB.courseModel = new CourseModelWrapper("/course" + "?courseId=1");
 
   return [courseA, courseB];
 }

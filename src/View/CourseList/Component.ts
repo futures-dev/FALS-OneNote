@@ -13,14 +13,13 @@ export class CourseListComponent implements OnInit {
         private courseProvider : CourseProvider
     ) { }
 
-    Courses : BehaviorSubject<Course[]> = new BehaviorSubject<Course[]>([]);
+    Courses : BehaviorSubject<BehaviorSubject<Course>[]> = new BehaviorSubject<BehaviorSubject<Course>[]>([]);
 
     ngOnInit() {
         this.courseProvider.getCourses().subscribe(
             courses => {
-                this.Courses.next(courses);      
+                this.Courses.next(courses.map(course => new BehaviorSubject<Course>(course)));      
                 console.log(courses);
-
                 }  );
      }
 }

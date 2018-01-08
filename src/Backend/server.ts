@@ -39,10 +39,12 @@ app.get("/courses", (req: Request, res: Response) => {
 });
 
 app.get("/course", (req: Request, res: Response) => {
+  console.log("mehjere");
   let courseModels: CourseModel[] = storage.CourseModels;
   let id = +req.query.courseId;
   if (id < courseModels.length) {
     res.json(courseModels[id]);
+    console.log(courseModels[id]);
   } else {
     res.status(404).send('Invalid Parameter: course "id"');
   }
