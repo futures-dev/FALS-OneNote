@@ -3,12 +3,10 @@ import { Observable } from "rxjs/Observable";
 import { ConnectionService } from "Service/Socket/Connection";
 import { Course } from "Service/Fals/Entities/Course";
 import { SelectCourse } from "Service/Socket/Events";
+import { ActivateCourseError } from "Service/Fals/Facade/ActivateCourseError";
 
-export enum ActivateScenarioError{
-    sOk
-}
 
-export class ActivateScenario extends ScenarioBase<ActivateScenarioError>{
+export class ActivateCourseScenario extends ScenarioBase<ActivateCourseError>{
     constructor(private course : Course, connection : ConnectionService)
     {
         super(connection);
@@ -24,7 +22,7 @@ export class ActivateScenario extends ScenarioBase<ActivateScenarioError>{
     }
 
     private OnSelectCourse(message : string) : void{        
-        this.Result.next(ActivateScenarioError.sOk);
+        this.Result.next(ActivateCourseError.sOk);
     }
     
 }

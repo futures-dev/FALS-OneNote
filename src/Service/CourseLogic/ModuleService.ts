@@ -4,6 +4,11 @@ import { Module } from 'Service/Fals/Entities/Module';
 import { ConnectionService } from 'Service/Socket/Connection';
 import { CurrentModuleChanged, SendModuleResult } from 'Service/Socket/Events';
 import { ModuleResult } from 'Service/Fals/Entities/ModuleResult';
+import { CourseService } from 'Service/CourseLogic/CourseService';
+import { SendModuleResultScenario } from 'Service/CourseLogic/Scenarios/SendModuleResultScenario';
+import { SendModuleResultError } from 'Service/Fals/Facade/SendModuleResultError';
+import { Observable } from 'rxjs/Observable';
+import { GetCurrentModuleScenario } from 'Service/CourseLogic/Scenarios/GetCurrentModuleScenario';
 
 @Injectable()
 export class ModuleService {
@@ -12,16 +17,22 @@ export class ModuleService {
 
     constructor(
         private socket : ConnectionService,
+        private courseService : CourseService,
 
     ) {
         this.socket.AddListener(CurrentModuleChanged, (m : Module) => {
             this.Module.next(m);
         })
+        this.courseService.CurrentCourse.subscribe(c => {
+            let getModule = new GetCurrentModuleScenario(c, this.socket);
+            getModule.Result.subscribe(m => this.Module.next(m));
+            getModule.Start();
+        })
      }
 
-     SendModuleResult(result : ModuleResult){
-         // check this.Module.value.resultType
-
-         this.socket.Send(SendModuleResult, result);
+     SendModuleResult(moduleResult : ModuleResult) : Observable<SendModuleResultError>{
+         let SendModuleResult = new SendModuleResultScenario(moduleResult, this.socket);
+         SendModuleResult.Start();
+         return SendModuleResult.Result;
      }
 }

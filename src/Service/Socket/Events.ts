@@ -9,6 +9,7 @@ export const GetSelectedCourse = "GetSelectedCourse";
 export const SelectedCourseChanged = "SelectedCourseChanged";
 
 // Module
+export const GetCurrentModule = "GetCurrentModule";
 export const CurrentModuleChanged = "CurrentModuleChanged";
 
 // Statistics

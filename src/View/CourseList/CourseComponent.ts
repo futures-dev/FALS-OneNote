@@ -7,7 +7,7 @@ import { OnInit } from "@angular/core";
 import { CourseService } from "Service/CourseLogic/CourseService";
 import { Router } from "@angular/router";
 import { UrlTree } from "@angular/router/src/url_tree";
-import { ActivateScenarioError } from "Service/CourseLogic/ActivateScenario";
+import { ActivateCourseError } from "Service/Fals/Facade/ActivateCourseError";
 
 @Component({
     selector: 'course',
@@ -47,7 +47,7 @@ export class CourseComponent implements OnInit{
     SelectCourse() : void{
         this.courseService.Activate(this.Course.value).subscribe(
             error => {
-                if (error==ActivateScenarioError.sOk){
+                if (error==ActivateCourseError.sOk){
                     this.router.navigateByUrl("/courseDashboard");
                 }
             }

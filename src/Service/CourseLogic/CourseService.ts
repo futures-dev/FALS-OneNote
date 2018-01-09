@@ -2,10 +2,11 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Course } from 'Service/Fals/Entities/Course';
 import { ConnectionService } from 'Service/Socket/Connection';
-import { ActivateScenario, ActivateScenarioError } from 'Service/CourseLogic/ActivateScenario';
 import { SelectedCourseChanged } from 'Service/Socket/Events';
 import { Observable } from 'rxjs/Observable';
 import { CourseProvider } from 'Service/Providers/CourseProvider';
+import { ActivateCourseError } from 'Service/Fals/Facade/ActivateCourseError';
+import { ActivateCourseScenario } from 'Service/CourseLogic/Scenarios/ActivateCourseScenario';
 
 @Injectable()
 export class CourseService {
@@ -21,12 +22,12 @@ export class CourseService {
             this.CurrentCourse.next(course));        
     }
 
-    public Activate(course : Course) : Observable<ActivateScenarioError>{
+    public Activate(course : Course) : Observable<ActivateCourseError>{
         this.CurrentCourse.next(null);
 
-        let activate = new ActivateScenario(course, this.socket);
+        let activate = new ActivateCourseScenario(course, this.socket);
         activate.Result.subscribe(result => {
-            if (result != ActivateScenarioError.sOk){
+            if (result != ActivateCourseError.sOk){
                 console.log("ActivateScenarioError: " + result);
                 return;
             }
