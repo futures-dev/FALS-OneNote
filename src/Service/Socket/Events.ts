@@ -5,12 +5,12 @@ export const Cancel = "Cancel";
 // Course
 
 export const SelectCourse = "SelectCourse";
-export const GetSelectedCourse = "GetSelectedCourse";
-export const SelectedCourseChanged = "SelectedCourseChanged";
+
+// CurrentState
+export const GetCurrentState = "GetCurrentState";
+export const CurrentStateChanged = "CurrentStateChanged";
 
 // Module
-export const GetCurrentModule = "GetCurrentModule";
-export const CurrentModuleChanged = "CurrentModuleChanged";
+export const SendModuleResult = "ModuleResult";
 
 // Statistics
-export const SendModuleResult = "ModuleResult";

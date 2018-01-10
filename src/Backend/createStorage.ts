@@ -23,7 +23,7 @@ storage.Students = generateStudents(storage);
 storage.Courses = generateCourses(storage);
 storage.Modules = generateModules(storage);
 storage.CourseModels = generateCourseModels(storage);
-storage.SelectedCoursesMap = {};
+storage.CourseStates = {};
 
 function generateModules(storage: Storage): {[i: number]: Tree<Module>}{
   var map = {};
@@ -117,8 +117,8 @@ let storageObject = new Storage(
   storage.CourseModels,
   storage.Modules,
   storage.Courses,
-  storage.SelectedCoursesMap
 );
+storage.CourseStates,
 
 console.log(storageObject);
 fs.writeFileSync(StoragePath, JSON.stringify(storageObject, null, 2));

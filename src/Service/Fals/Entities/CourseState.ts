@@ -7,7 +7,7 @@ import { Course } from './Course';
 /**
  * @author Computer
  * @version 1.0
- * @created 24-дек-2017 20:28:47
+ * @created 24-пїЅпїЅпїЅ-2017 20:28:47
  * @class
  */
 export class CourseState {
@@ -15,9 +15,12 @@ export class CourseState {
 
     public course : Course;
 
+    public index : number;
+
     public constructor() {
         this.currentModule = null;
         this.course = null;
+        this.index = 0;
     }
 }
 CourseState["__class"] = "Entities.CourseState";

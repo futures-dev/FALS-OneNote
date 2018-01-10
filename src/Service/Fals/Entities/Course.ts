@@ -7,7 +7,7 @@ import { CourseModel } from './CourseModel';
 /**
  * @author Computer
  * @version 1.0
- * @created 24-дек-2017 20:28:46
+ * @created 24-пїЅпїЅпїЅ-2017 20:28:46
  * @class
  */
 export class Course {
@@ -22,6 +22,13 @@ export class Course {
 
     public isFinished() : boolean {
         return false;
+    }
+
+    public equals(other : Course) : boolean {
+        return this === other || (
+            other != null &&
+            this.courseModel.equals(other.courseModel) &&
+            this.student.equals(other.student));        
     }
 }
 Course["__class"] = "Entities.Course";

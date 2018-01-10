@@ -15,8 +15,9 @@ import { Student } from "Service/Fals/Entities/Student";
 import { CourseModel } from "Service/Fals/Entities/CourseModel";
 import { CourseModelWrapper } from "Service/Fals/Entities/Lazy/CourseModelWrapper";
 import { Assert } from "Service/Common/Assert";
-import { SelectCourse, GetSelectedCourse, SelectedCourseChanged } from "Service/Socket/Events";
+import { SelectCourse, GetCurrentState, CurrentStateChanged } from "Service/Socket/Events";
 import { Result } from "Service/Socket/Results";
+import { CourseState } from "Service/Fals/Entities/CourseState";
 
 let app = express();
 let server = new http.Server(app);
@@ -56,18 +57,8 @@ app.get("/course", (req: Request, res: Response) => {
 
 //#region POST
 
-app.post("/selectCourse", (req: Request, res: Response) => {
-  let course = storage.Courses[+req.body.courseId];
-  if (
-    assert(
-      course.student.email == req.body.studentEmail,
-      res,
-      "Course does not belong to student"
-    )
-  )
-    return;
-
-  storage.SelectedCoursesMap[+req.body.studentEmail] = course;
+app.post("/selectCourse", (req: Request, res: Response) => {  
+  // obsolete
 
   res.sendStatus(200);
 });
@@ -83,21 +74,48 @@ io.on("connection", (socket: SocketIO.Socket) => {
   ));
 
   socket.on(SelectCourse, (course: Course) => {
-    storage.SelectedCoursesMap[course.student.email] = course;
+    if (!storage.CourseStates[course.student.email]){
+      storage.CourseStates[course.student.email] = []
+    }
 
-    socket.emit(SelectedCourseChanged, course);
+    let courseStates = storage.CourseStates[course.student.email];
+    let lastState = courseStates[courseStates.length - 1];
+
+    let currentState = new CourseState();
+    currentState.course = course;
+    currentState.index = lastState ? lastState.index + 1 : 1;
+
+    let previousState = courseStates.slice(0)
+      .reverse()
+      .find(q => q.course == course);
+
+    if (previousState){
+      currentState.currentModule = previousState.currentModule;
+    }
+    else{
+      currentState.currentModule = course.courseModel.modules.Value;
+    }
+
+    socket.emit(CurrentStateChanged, currentState);
 
     socket.emit(SelectCourse, Result.sOk);
   });
 
-  socket.on(GetSelectedCourse, (student: Student) => {
-    let course = storage.SelectedCoursesMap[student.email];
-    
-    if (course){
-    socket.emit(GetSelectedCourse, course);
+  socket.on(GetCurrentState, (student: Student) => {
+    let courseStates = storage.CourseStates[student.email];
+    if (!courseStates){
+      courseStates = storage.CourseStates[student.email] = []
+      socket.emit(GetCurrentState, Result.eNotFound);
+    }
+
+    let courseState = courseStates.slice(0)
+    .reverse()
+    .find(q => student.equals(q.course.student));
+    if (courseState){
+      socket.emit(GetCurrentState, courseState); 
     }
     else{
-      socket.emit(GetSelectedCourse, Result.eNotFound);
+      socket.emit(GetCurrentState, Result.eNotFound);
     }
   })
 

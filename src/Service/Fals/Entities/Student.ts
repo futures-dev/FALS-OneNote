@@ -5,7 +5,7 @@ import {Period, Type} from "Service/Fals/TypeMap"
 /**
  * @author Computer
  * @version 1.0
- * @created 24-дек-2017 20:28:47
+ * @created 24-пїЅпїЅпїЅ-2017 20:28:47
  * @class
  */
 export class Student {
@@ -16,6 +16,13 @@ export class Student {
     public constructor() {
         this.email = null;
         this.displayName = null;
+    }
+
+    public equals(other : Student) {
+        return this === other || (
+            other != null &&
+            this.email == other.email
+        );
     }
 }
 Student["__class"] = "Entities.Student";

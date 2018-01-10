@@ -9,7 +9,7 @@ import { Student } from './Student';
 /**
  * @author Computer
  * @version 1.0
- * @created 24-дек-2017 20:28:47
+ * @created 24-пїЅпїЅпїЅ-2017 20:28:47
  * @class
  */
 export class CourseModel {
@@ -28,6 +28,12 @@ export class CourseModel {
 
     public getActiveStudents() : Student[] {
         return null;
+    }
+
+    public equals(other : CourseModel) : boolean {
+        return this == other || (
+            other != null &&
+            this.title == other.title);        
     }
 }
 CourseModel["__class"] = "Entities.CourseModel";

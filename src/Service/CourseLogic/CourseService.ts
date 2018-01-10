@@ -2,11 +2,12 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Course } from 'Service/Fals/Entities/Course';
 import { ConnectionService } from 'Service/Socket/Connection';
-import { SelectedCourseChanged } from 'Service/Socket/Events';
+import { CurrentStateChanged } from 'Service/Socket/Events';
 import { Observable } from 'rxjs/Observable';
 import { CourseProvider } from 'Service/Providers/CourseProvider';
 import { ActivateCourseError } from 'Service/Fals/Facade/ActivateCourseError';
 import { ActivateCourseScenario } from 'Service/CourseLogic/Scenarios/ActivateCourseScenario';
+import { CourseState } from 'Service/Fals/Entities/CourseState';
 
 @Injectable()
 export class CourseService {
@@ -18,8 +19,8 @@ export class CourseService {
         private courseProvider : CourseProvider
     ) { 
         console.log("ctor");
-        socket.AddListener(SelectedCourseChanged, course => 
-            this.CurrentCourse.next(course));        
+        socket.AddListener(CurrentStateChanged, (cs : CourseState) => 
+            this.CurrentCourse.next(cs.course));        
     }
 
     public Activate(course : Course) : Observable<ActivateCourseError>{

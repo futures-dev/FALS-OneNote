@@ -3,6 +3,7 @@ import { Course } from "Service/Fals/Entities/Course";
 import { Student } from "Service/Fals/Entities/Student";
 import { Module } from "Service/Fals/Entities/Module";
 import { Tree } from "Service/Fals/Entities/Tree";
+import { CourseState } from "Service/Fals/Entities/CourseState";
 
 export class Storage {
   constructor(
@@ -10,7 +11,7 @@ export class Storage {
     public CourseModels: CourseModel[] = [],
     public Modules: {[i:number]: Tree<Module>} = {},
     public Courses: Course[] = [],
-    public SelectedCoursesMap: {[email:string]: Course} = {}
+    public CourseStates: {[email:string]: CourseState[]} = {},
   ) {}
 
   public onSerialized() : void{
@@ -26,9 +27,8 @@ export class Storage {
     if (!this.Courses){
       this.Courses = [];
     }
-    console.log(this.SelectedCoursesMap);
-    if (!this.SelectedCoursesMap){
-      this.SelectedCoursesMap = {};
+    if (!this.CourseStates){
+      this.CourseStates = {};
     }
   }
 }
