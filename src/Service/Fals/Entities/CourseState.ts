@@ -7,7 +7,7 @@ import { Course } from './Course';
 /**
  * @author Computer
  * @version 1.0
- * @created 24-���-2017 20:28:47
+ * @created 11-���-2018 9:14:20
  * @class
  */
 export class CourseState {
@@ -21,6 +21,15 @@ export class CourseState {
         this.currentModule = null;
         this.course = null;
         this.index = 0;
+    }
+
+    /**
+     * 
+     * @param {CourseState} other
+     * @return {boolean}
+     */
+    public hasChanged(other : CourseState) : boolean {
+        return this !== other || (other != null && this.course.equals(other.course) && /* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(this.currentModule,other.currentModule)));
     }
 }
 CourseState["__class"] = "Entities.CourseState";

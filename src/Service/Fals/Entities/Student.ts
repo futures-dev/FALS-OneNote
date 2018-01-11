@@ -5,7 +5,7 @@ import {Period, Type} from "Service/Fals/TypeMap"
 /**
  * @author Computer
  * @version 1.0
- * @created 24-ï¿½ï¿½ï¿½-2017 20:28:47
+ * @created 11-ÿíâ-2018 9:14:21
  * @class
  */
 export class Student {
@@ -18,11 +18,13 @@ export class Student {
         this.displayName = null;
     }
 
-    public equals(other : Student) {
-        return this === other || (
-            other != null &&
-            this.email == other.email
-        );
+    /**
+     * 
+     * @param {Student} other
+     * @return {boolean}
+     */
+    public equals(other : Student) : boolean {
+        return this === other || (other != null && /* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(this.email,other.email)));
     }
 }
 Student["__class"] = "Entities.Student";

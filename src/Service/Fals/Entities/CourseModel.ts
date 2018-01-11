@@ -9,7 +9,7 @@ import { Student } from './Student';
 /**
  * @author Computer
  * @version 1.0
- * @created 24-���-2017 20:28:47
+ * @created 11-���-2018 9:14:20
  * @class
  */
 export class CourseModel {
@@ -22,18 +22,21 @@ export class CourseModel {
         this.title = null;
     }
 
+    /**
+     * 
+     * @param {CourseModel} other
+     * @return {boolean}
+     */
+    public equals(other : CourseModel) : boolean {
+        return this === other || (other != null && /* equals */(<any>((o1: any, o2: any) => { if(o1 && o1.equals) { return o1.equals(o2); } else { return o1 === o2; } })(this.title,other.title)));
+    }
+
     public getActiveCourses() : Course[] {
         return null;
     }
 
     public getActiveStudents() : Student[] {
         return null;
-    }
-
-    public equals(other : CourseModel) : boolean {
-        return this == other || (
-            other != null &&
-            this.title == other.title);        
     }
 }
 CourseModel["__class"] = "Entities.CourseModel";

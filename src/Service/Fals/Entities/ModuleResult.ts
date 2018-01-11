@@ -3,12 +3,11 @@
 import {Period, Type} from "Service/Fals/TypeMap"
 
 import { ModuleStatistics } from './ModuleStatistics'; 
-import { Student } from './Student'; 
 import { Module } from './Module'; 
 /**
  * @author Computer
  * @version 1.0
- * @created 24-ï¿½ï¿½ï¿½-2017 20:28:47
+ * @created 11-ÿíâ-2018 9:14:21
  * @class
  * @extends ModuleStatistics
  */

@@ -7,11 +7,11 @@ import { Course } from './Course';
 /**
  * @author Computer
  * @version 1.0
- * @created 24-дек-2017 20:28:47
+ * @created 11-янв-2018 9:14:20
  * @class
  * @extends Statistics
  */
-export class CourseStatistics extends Statistics {
+export abstract class CourseStatistics extends Statistics {
     public course : Course;
 
     public constructor() {
