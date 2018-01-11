@@ -4,7 +4,7 @@ package Entities;
 /**
  * @author Computer
  * @version 1.0
- * @created 24-дек-2017 20:28:47
+ * @created 11-пїЅпїЅпїЅ-2018 9:14:20
  */
 public class CourseModel {
 
@@ -13,6 +13,16 @@ public class CourseModel {
 
 	public CourseModel(){
 
+	}
+
+	/**
+	 * 
+	 * @param other
+	 */
+	public boolean equals(CourseModel other){
+		return this == other || (
+		    other != null &&
+			this.title.equals(other.title));
 	}
 
 	public Course[] getActiveCourses(){

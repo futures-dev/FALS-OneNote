@@ -4,11 +4,10 @@ package Entities;
 /**
  * @author Computer
  * @version 1.0
- * @created 24-дек-2017 20:28:47
+ * @created 11-янв-2018 9:14:21
  */
 public class ModuleResult extends ModuleStatistics {
 
-	public Student student;
 	public Module module;
 	public Object result;
 
