@@ -8,7 +8,7 @@ import { CourseService } from 'Service/CourseLogic/CourseService';
 import { SendModuleResultScenario } from 'Service/CourseLogic/Scenarios/SendModuleResultScenario';
 import { SendModuleResultError } from 'Service/Fals/Facade/SendModuleResultError';
 import { Observable } from 'rxjs/Observable';
-import { GetCurrentModuleScenario } from 'Service/CourseLogic/Scenarios/GetCurrentModuleScenario';
+import { GetCurrentStateScenario } from 'Service/CourseLogic/Scenarios/GetCurrentStateScenario';
 import { CourseState } from 'Service/Fals/Entities/CourseState';
 
 @Injectable()
@@ -25,8 +25,8 @@ export class ModuleService {
             this.Module.next(cs.currentModule);
         })
         this.courseService.CurrentCourse.subscribe(c => {
-            let getModule = new GetCurrentModuleScenario(c, this.socket);
-            getModule.Result.subscribe(m => this.Module.next(m));
+            let getModule = new GetCurrentStateScenario(c.student, this.socket);
+            getModule.Result.subscribe(m => this.Module.next(m.currentModule));
             getModule.Start();
         })
      }
