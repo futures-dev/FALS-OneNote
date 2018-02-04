@@ -4,13 +4,14 @@ package Bank;
 /**
  * @author Computer
  * @version 1.0
- * @created 24-дек-2017 17:17:01
+ * @created 04-фев-2018 14:02:05
  */
-public class Material extends Entity {
+public class Task extends Entity {
 
-	public String content;
+	public Assignment assignment;
+	public Key key;
 
-	public Material(){
+	public Task(){
 
 	}
 

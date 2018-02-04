@@ -10,6 +10,7 @@ public class ModuleResult extends ModuleStatistics {
 
 	public Module module;
 	public Object result;
+	public int resultGrade;
 
 	public ModuleResult(){
 

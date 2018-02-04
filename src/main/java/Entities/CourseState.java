@@ -11,6 +11,8 @@ public class CourseState {
 	public Module currentModule;
 	public Course course;
 	public int index;
+	public Step currentStep;
+	public Student student;
 
 	public CourseState(){
 

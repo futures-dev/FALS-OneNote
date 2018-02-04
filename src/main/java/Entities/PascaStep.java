@@ -6,16 +6,16 @@ import Pasca.PascaOnenoteSettings;
 /**
  * @author Computer
  * @version 1.0
- * @created 24-дек-2017 20:28:47
+ * @created 04-фев-2018 13:53:34
  */
-public class PascaModule extends Module {
+public class PascaStep extends Step {
 
 	public PascaFalsSettings pascaFalsSettings;
 	public PascaSessionSettings pascaSessionSettings;
 	public PascaOnenoteSettings pascaOnenoteSettings;
 	public PascaFalsSettings m_PascaFalsSettings;
 
-	public PascaModule(){
+	public PascaStep(){
 
 	}
 

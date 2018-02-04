@@ -4,13 +4,13 @@ package Bank;
 /**
  * @author Computer
  * @version 1.0
- * @created 24-дек-2017 17:17:01
+ * @created 04-фев-2018 14:02:05
  */
-public class Material extends Entity {
+public class HypertextMaterial extends Material {
 
 	public String content;
 
-	public Material(){
+	public HypertextMaterial(){
 
 	}
 

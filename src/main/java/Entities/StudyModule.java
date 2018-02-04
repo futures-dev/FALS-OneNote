@@ -16,3 +16,18 @@ public class StudyModule extends Module {
 	}
 
 }
+
+/**
+ * @author Computer
+ * @version 1.0
+ * @updated 04-фев-2018 13:53:35
+ */
+public class StudyStep extends Step {
+
+	public Material materials;
+
+	public StudyStep(){
+
+	}
+
+}

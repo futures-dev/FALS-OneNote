@@ -6,7 +6,7 @@ package Entities;
  * @version 1.0
  * @created 24-дек-2017 20:28:47
  */
-public class Hint extends InterventionModel {
+public class Hint extends StepInterventionModel {
 
 	public String message;
 

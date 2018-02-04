@@ -4,12 +4,14 @@ package Entities;
 /**
  * @author Computer
  * @version 1.0
- * @created 11-ÿíâ-2018 9:14:20
+ * @created 11-ï¿½ï¿½ï¿½-2018 9:14:20
  */
 public class Course {
 
 	public volatile Student student;
 	public CourseModel courseModel;
+	public Tree<Module> modules;
+	public String title;
 
 	public Course(){
 
