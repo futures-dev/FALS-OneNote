@@ -2,12 +2,6 @@
 
 import {Period, Type} from "Service/Fals/TypeMap"
 
-/**
- * @author Computer
- * @version 1.0
- * @created 11-џэт-2018 9:14:21
- * @class
- */
 export class Student {
     public email : string;
 

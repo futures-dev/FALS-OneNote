@@ -4,13 +4,6 @@ import {Period, Type} from "Service/Fals/TypeMap"
 
 import { CourseStatistics } from './CourseStatistics'; 
 import { Module } from './Module'; 
-/**
- * @author Computer
- * @version 1.0
- * @created 24-���-2017 20:28:47
- * @class
- * @extends CourseStatistics
- */
 export abstract class ModuleStatistics extends CourseStatistics {
     public module : Module;
 

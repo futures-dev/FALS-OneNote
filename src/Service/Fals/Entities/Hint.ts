@@ -2,15 +2,8 @@
 
 import {Period, Type} from "Service/Fals/TypeMap"
 
-import { InterventionModel } from './InterventionModel'; 
-/**
- * @author Computer
- * @version 1.0
- * @created 24-дек-2017 20:28:47
- * @class
- * @extends InterventionModel
- */
-export class Hint extends InterventionModel {
+import { StepInterventionModel } from './StepInterventionModel'; 
+export class Hint extends StepInterventionModel {
     public message : string;
 
     public constructor() {

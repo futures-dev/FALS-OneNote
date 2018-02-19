@@ -2,21 +2,15 @@
 
 import {Period, Type} from "Service/Fals/TypeMap"
 
-import { InterventionModel } from './InterventionModel'; 
-/**
- * @author Computer
- * @version 1.0
- * @created 24-���-2017 20:28:47
- * @class
- */
-export abstract class Module {
-    public possibleInterventions : InterventionModel[];
+import { Step } from './Step'; 
+export class Module {
+    public steps : Step[];
 
-    public resultType : string;
+    public maxGrade : number;
 
     public constructor() {
-        this.possibleInterventions = null;
-        this.resultType = null;
+        this.steps = null;
+        this.maxGrade = 0;
     }
 }
 Module["__class"] = "Entities.Module";

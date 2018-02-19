@@ -2,15 +2,15 @@
 
 import {Period, Type} from "Service/Fals/TypeMap"
 
-import { Item } from './Item'; 
+import { Entity } from './Entity'; 
 /**
  * @author Computer
  * @version 1.0
  * @created 24-дек-2017 17:17:01
  * @class
- * @extends Item
+ * @extends Entity
  */
-export class Material extends Item {
+export class Material extends Entity {
     public content : string;
 
     public constructor() {

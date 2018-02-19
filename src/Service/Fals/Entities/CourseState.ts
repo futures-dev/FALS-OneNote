@@ -4,12 +4,8 @@ import {Period, Type} from "Service/Fals/TypeMap"
 
 import { Module } from './Module'; 
 import { Course } from './Course'; 
-/**
- * @author Computer
- * @version 1.0
- * @created 11-���-2018 9:14:20
- * @class
- */
+import { Step } from './Step'; 
+import { Student } from './Student'; 
 export class CourseState {
     public currentModule : Module;
 
@@ -17,10 +13,16 @@ export class CourseState {
 
     public index : number;
 
+    public currentStep : Step;
+
+    public student : Student;
+
     public constructor() {
         this.currentModule = null;
         this.course = null;
         this.index = 0;
+        this.currentStep = null;
+        this.student = null;
     }
 
     /**
