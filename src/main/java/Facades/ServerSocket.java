@@ -1,6 +1,7 @@
 package Facades;
 
 import Entities.Course;
+import Entities.StepStatistics;
 import Entities.Student;
 import Entities.ModuleResult;
 import Entities.StepGrade;
@@ -22,20 +23,14 @@ public interface ServerSocket {
 
 	/**
 	 * 
-	 * @param stepResult
-	 */
-	public void SubmitStepResult(SubmitStepResultError stepResult);
-
-	/**
-	 * 
-	 * @param stepAnswer
-	 */
-	public void SubmitStepAnswer(StepAnswer stepAnswer);
-
-	/**
-	 * 
 	 * @param stepGrade
 	 */
 	public void SubmitStepGrade(StepGrade stepGrade);
+
+	/**
+	 * 
+	 * @param stepResult
+	 */
+	public void SubmitStepResult(StepStatistics stepResult);
 
 }

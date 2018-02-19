@@ -1,22 +1,16 @@
 /* Auto-generated file */
 
 import { Period, Type } from "Service/Fals/TypeMap";
-import { StepIntervention } from "../Entities/StepIntervention";
-import { ModuleIntervention } from "../Entities/ModuleIntervention";
 import { Course } from "../Entities/Course";
+import { ModuleIntervention } from "../Entities/ModuleIntervention";
+import { StepIntervention } from "../Entities/StepIntervention";
 import { CourseState } from "../Entities/CourseState";
 import { StepGrade } from "../Entities/StepGrade";
 import { ActivateCourseError } from "./ActivateCourseError";
-import { SubmitStepResultError } from "./SubmitStepResultError";
-import { SubmitStepAnswerError } from "./SubmitStepAnswerError";
+import { SubmitModuleResultError } from "./SubmitModuleResultError";
 import { SubmitStepGradeError } from "./SubmitStepGradeError";
+import { SubmitStepResultError } from "./SubmitStepResultError";
 export interface ClientSocket {
-  /**
-   *
-   * @param {ActivateCourseError} result
-   */
-  SelectCourse(result: ActivateCourseError);
-
   /**
    *
    * @param {CourseState} currentState
@@ -25,15 +19,21 @@ export interface ClientSocket {
 
   /**
    *
-   * @param {SubmitStepResultError} result
+   * @param {Course} currentState
    */
-  SendModuleResult(result: SubmitStepResultError);
+  GetCurrentState(currentState: Course);
 
   /**
    *
-   * @param {SubmitStepAnswerError} result
+   * @param {ModuleIntervention} intervention
    */
-  SubmitStepAnswer(result: SubmitStepAnswerError);
+  ModuleIntervene(intervention: ModuleIntervention);
+
+  /**
+   *
+   * @param {ActivateCourseError} result
+   */
+  SelectCourse(result: ActivateCourseError);
 
   /**
    *
@@ -49,19 +49,19 @@ export interface ClientSocket {
 
   /**
    *
-   * @param {ModuleIntervention} intervention
+   * @param {SubmitModuleResultError} result
    */
-  ModuleIntervene(intervention: ModuleIntervention);
-
-  /**
-   *
-   * @param {Course} currentState
-   */
-  GetCurrentState(currentState: Course);
+  SubmitModuleResult(result: SubmitModuleResultError);
 
   /**
    *
    * @param {SubmitStepGradeError} result
    */
   SubmitStepGrade(result: SubmitStepGradeError);
+
+  /**
+   *
+   * @param {SubmitStepResultError} result
+   */
+  SubmitStepResult(result: SubmitStepResultError);
 }

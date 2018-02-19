@@ -6,6 +6,13 @@ import { Course } from "../Entities/Course";
 export interface ServerFacade {
   /**
    *
+   * @param {string} id
+   * @return {Course}
+   */
+  GetCourse(id: string): Course;
+
+  /**
+   *
    * @param {Student} student
    * @return {Array}
    */
@@ -17,11 +24,4 @@ export interface ServerFacade {
    * @return {Student}
    */
   GetStudent(id: string): Student;
-
-  /**
-   *
-   * @param {string} id
-   * @return {Course}
-   */
-  GetCourse(id: string): Course;
 }

@@ -1,18 +1,12 @@
 package Facades;
 
-import Entities.StepIntervention;
-import Entities.ModuleIntervention;
 import Entities.Course;
+import Entities.ModuleIntervention;
+import Entities.StepIntervention;
 import Entities.CourseState;
 import Entities.StepGrade;
 
 public interface ClientSocket {
-
-	/**
-	 * 
-	 * @param result
-	 */
-	public void SelectCourse(ActivateCourseError result);
 
 	/**
 	 * 
@@ -22,15 +16,21 @@ public interface ClientSocket {
 
 	/**
 	 * 
-	 * @param result
+	 * @param currentState
 	 */
-	public void SendModuleResult(SubmitStepResultError result);
+	public void GetCurrentState(Course currentState);
+
+	/**
+	 * 
+	 * @param intervention
+	 */
+	public void ModuleIntervene(ModuleIntervention intervention);
 
 	/**
 	 * 
 	 * @param result
 	 */
-	public void SubmitStepAnswer(SubmitStepAnswerError result);
+	public void SelectCourse(ActivateCourseError result);
 
 	/**
 	 * 
@@ -46,20 +46,20 @@ public interface ClientSocket {
 
 	/**
 	 * 
-	 * @param intervention
+	 * @param result
 	 */
-	public void ModuleIntervene(ModuleIntervention intervention);
-
-	/**
-	 * 
-	 * @param currentState
-	 */
-	public void GetCurrentState(Course currentState);
+	public void SubmitModuleResult(SubmitModuleResultError result);
 
 	/**
 	 * 
 	 * @param result
 	 */
 	public void SubmitStepGrade(SubmitStepGradeError result);
+
+	/**
+	 * 
+	 * @param result
+	 */
+	public void SubmitStepResult(SubmitStepResultError result);
 
 }

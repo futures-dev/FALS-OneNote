@@ -2,11 +2,11 @@
 
 import { Period, Type } from "Service/Fals/TypeMap";
 import { Course } from "../Entities/Course";
+import { StepStatistics } from "../Entities/StepStatistics";
 import { Student } from "../Entities/Student";
 import { ModuleResult } from "../Entities/ModuleResult";
 import { StepGrade } from "../Entities/StepGrade";
 import { StepAnswer } from "../Entities/StepAnswer";
-import { SubmitStepResultError } from "./SubmitStepResultError";
 export interface ServerSocket {
   /**
    *
@@ -22,19 +22,13 @@ export interface ServerSocket {
 
   /**
    *
-   * @param {SubmitStepResultError} stepResult
-   */
-  SubmitStepResult(stepResult: SubmitStepResultError);
-
-  /**
-   *
-   * @param {StepAnswer} stepAnswer
-   */
-  SubmitStepAnswer(stepAnswer: StepAnswer);
-
-  /**
-   *
    * @param {StepGrade} stepGrade
    */
   SubmitStepGrade(stepGrade: StepGrade);
+
+  /**
+   *
+   * @param {StepStatistics} stepResult
+   */
+  SubmitStepResult(stepResult: StepStatistics);
 }
