@@ -44,13 +44,12 @@ interface Handshake {
 }
 
 export class Client {
-
-  public userId : string;
+  public userId: string;
 
   constructor(
     public SocketClient: SocketIO.Client,
     public Handshake: Handshake,
-    public Student: Student,
+    public Student: Student
   ) {
     this.userId = Handshake.query.userId;
   }

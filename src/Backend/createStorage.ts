@@ -118,10 +118,7 @@ function generateModules(storage: Storage): { [i: number]: Tree<Module> } {
 }
 
 function generateCourses(storage: Storage): Course[] {
-  Assert(
-    storage.Modules,
-    "Modules should be generated before generateCourses"
-  );
+  Assert(storage.Modules, "Modules should be generated before generateCourses");
 
   let courseA = new Course();
   courseA.title = "CourseA";
@@ -150,7 +147,7 @@ function generateCourseStates(storage: Storage): CourseState[] {
 
   courseB.student = storage.Students[1];
   courseB.course = Object.assign(new CourseWrapper(), {
-    IUrl: "/course" + "?courseId=1"
+    IUrl: "/course" + "?courseId=1",
   });
 
   return [courseA, courseB];
@@ -172,7 +169,7 @@ let storageObject = new Storage(
   storage.Students,
   storage.Modules,
   storage.Courses,
-  storage.CourseStates,
+  storage.CourseStates
 );
 storage.CourseStates, console.log(storageObject);
 fs.writeFileSync(StoragePath, JSON.stringify(storageObject, null, 2));

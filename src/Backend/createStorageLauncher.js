@@ -1,4 +1,4 @@
-alias = require('module-alias');
-alias.addPath(__dirname+"/../");
+alias = require("module-alias");
+alias.addPath(__dirname + "/../");
 
-require('./createStorage')
+require("./createStorage");
