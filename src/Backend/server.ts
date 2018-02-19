@@ -74,15 +74,16 @@ let clients: { [id: string]: Client } = {};
 io.on("connection", (socket: SocketIO.Socket) => {
   let client = (clients[socket.id] = new Client(
     socket.client,
-    socket.handshake
+    socket.handshake,
+    storage.Students[socket.handshake.query.userId],
   ));
 
   socket.on(SelectCourse, (course: Course) => {
-    if (!storage.CourseStates[course.student.email]) {
-      storage.CourseStates[course.student.email] = [];
+    if (!storage.CourseStates[client.userId]) {
+      storage.CourseStates[client.userId] = [];
     }
 
-    let courseStates = storage.CourseStates[course.student.email];
+    let courseStates = storage.CourseStates[client.userId];
     let lastState = courseStates[courseStates.length - 1];
 
     let currentState = new CourseState();
@@ -97,7 +98,7 @@ io.on("connection", (socket: SocketIO.Socket) => {
     if (previousState) {
       currentState.currentModule = previousState.currentModule;
     } else {
-      currentState.currentModule = course.courseModel.modules.Value;
+      currentState.currentModule = course.modules.Value;
     }
 
     socket.emit(CurrentStateChanged, currentState);
@@ -115,7 +116,7 @@ io.on("connection", (socket: SocketIO.Socket) => {
     let courseState = courseStates
       .slice(0)
       .reverse()
-      .find(q => student.equals(q.course.student));
+      .find(q => student.equals(client.Student));
     if (courseState) {
       socket.emit(GetCurrentState, courseState);
     } else {

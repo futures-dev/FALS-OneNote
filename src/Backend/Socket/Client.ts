@@ -1,3 +1,5 @@
+import { Student } from "Service/Fals/Entities/Student";
+
 interface Handshake {
   /**
    * The headers passed along with the request. e.g. 'host',
@@ -42,8 +44,14 @@ interface Handshake {
 }
 
 export class Client {
+
+  public userId : string;
+
   constructor(
     public SocketClient: SocketIO.Client,
-    public Handshake: Handshake
-  ) {}
+    public Handshake: Handshake,
+    public Student: Student,
+  ) {
+    this.userId = Handshake.query.userId;
+  }
 }

@@ -9,7 +9,7 @@ export class ConnectionService {
   connection: SocketIOClient.Socket;
 
   constructor() {
-    this.connection = si.connect(this.url, {
+    this.connection = si.connect(this.url + "?userId="+"email@email.com", {
       upgrade: false,
       transports: ["polling"],
     });
