@@ -11,7 +11,7 @@
     "start": "rimraf dist && concurrently \"npm run tsc\" \"npm run copy\" \"npm run server\"",
     "validate": "./node_modules/.bin/validate-office-addin",
     "createStorage": "node ./dist/Backend/createStorageLauncher.js ./server.json",
-    "gen": "mvn generate-sources"
+    "gen": "rimraf ./src/Service/Fals/*/ && mvn generate-sources && copyfiles -u 3 ./src/main/java/**/*.ts ./src/Service/Fals"
   },
   "dependencies": {
     "@angular/common": "^5.1.3",
