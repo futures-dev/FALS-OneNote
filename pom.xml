@@ -50,7 +50,7 @@
                     <module>commonjs</module>
                     <moduleResolution>node</moduleResolution>
                     <tsOnly>true</tsOnly>
-					<verbose>true</verbose>
+					<verbose>false</verbose>
                     <header>src/Service/Fals/Header.ts</header>
 					<tsOut>src/Service/Fals</tsOut>
 					<targetVersion>ES6</targetVersion>
