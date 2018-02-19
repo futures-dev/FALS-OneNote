@@ -1,39 +1,42 @@
 /* Auto-generated file */
 
-import {Period, Type} from "Service/Fals/TypeMap"
-
-import { Student } from './Student'; 
-import { CourseModel } from './CourseModel'; 
-/**
- * @author Computer
- * @version 1.0
- * @created 11-џэт-2018 9:14:20
- * @class
- */
+import { Period, Type } from "Service/Fals/TypeMap";
+import { Tree } from "./Tree";
+import { Module } from "./Module";
 export class Course {
-    public student : Student;
+  public description: string;
 
-    public courseModel : CourseModel;
+  public modules: Tree<Module>;
 
-    public constructor() {
-        this.student = null;
-        this.courseModel = null;
-    }
+  public title: string;
 
-    public isFinished() : boolean {
-        return false;
-    }
+  public constructor() {
+    this.description = null;
+    this.modules = null;
+    this.title = null;
+  }
 
-    /**
-     * 
-     * @param {Course} other
-     * @return {boolean}
-     */
-    public equals(other : Course) : boolean {
-        return this === other || (other != null && this.student.equals(other.student) && this.courseModel.equals(other.courseModel));
-    }
+  public isFinished(): boolean {
+    return false;
+  }
+
+  /**
+   *
+   * @param {Course} other    other
+   * @return {boolean}
+   */
+  public equals(other: Course): boolean {
+    return (
+      this === other ||
+      (other != null &&
+        /* equals */ <any>((o1: any, o2: any) => {
+          if (o1 && o1.equals) {
+            return o1.equals(o2);
+          } else {
+            return o1 === o2;
+          }
+        })(this.title, other.title))
+    );
+  }
 }
 Course["__class"] = "Entities.Course";
-
-
-

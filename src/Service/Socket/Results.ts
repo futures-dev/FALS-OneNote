@@ -1,4 +1,4 @@
-export enum Result{
-    sOk,
-    eNotFound,
+export enum Result {
+  sOk,
+  eNotFound,
 }

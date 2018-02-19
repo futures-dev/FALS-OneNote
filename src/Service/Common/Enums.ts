@@ -1,5 +1,5 @@
-export enum LoadingState{
-    Unload,
-    Loading,
-    Loaded
+export enum LoadingState {
+  Unload,
+  Loading,
+  Loaded,
 }

@@ -10,51 +10,49 @@ import { UrlTree } from "@angular/router/src/url_tree";
 import { ActivateCourseError } from "Service/Fals/Facade/ActivateCourseError";
 
 @Component({
-    selector: 'course',
-    templateUrl: 'View/CourseList/Course.html',
-    providers:[CourseProvider],
+  selector: "course",
+  templateUrl: "View/CourseList/Course.html",
+  providers: [CourseProvider],
 })
-export class CourseComponent implements OnInit{
-    
-    LoadState : BehaviorSubject<LoadingState> = new BehaviorSubject(LoadingState.Unload);
-    
-    @Input() 
-    Course : BehaviorSubject<Course>;
-    
-    IsExpanded : BehaviorSubject<boolean> = new BehaviorSubject(false);
+export class CourseComponent implements OnInit {
+  LoadState: BehaviorSubject<LoadingState> = new BehaviorSubject(
+    LoadingState.Unload
+  );
 
-    onIsExpandedChanged(expand : boolean) {
-        console.log("onIsExpandedChanged " + expand);
-        if (expand && this.LoadState.value == LoadingState.Unload){
-            this.load();
-        }
+  @Input() Course: BehaviorSubject<Course>;
+
+  IsExpanded: BehaviorSubject<boolean> = new BehaviorSubject(false);
+
+  onIsExpandedChanged(expand: boolean) {
+    console.log("onIsExpandedChanged " + expand);
+    if (expand && this.LoadState.value == LoadingState.Unload) {
+      this.load();
     }
+  }
 
-    constructor(
-        private courseProvider : CourseProvider,
-        private courseService : CourseService,
-        private router : Router,
-    ){    }
+  constructor(
+    private courseProvider: CourseProvider,
+    private courseService: CourseService,
+    private router: Router
+  ) {}
 
-    load() : void{
-        this.LoadState.next(LoadingState.Loading);
-        this.courseProvider.populateCourse(this.Course.value).subscribe(q => {
-            this.Course.next(q);
-            this.LoadState.next(LoadingState.Loaded);
-        });
-    }
+  load(): void {
+    this.LoadState.next(LoadingState.Loading);
+    this.courseProvider.populateCourse(this.Course.value).subscribe(q => {
+      this.Course.next(q);
+      this.LoadState.next(LoadingState.Loaded);
+    });
+  }
 
-    SelectCourse() : void{
-        this.courseService.Activate(this.Course.value).subscribe(
-            error => {
-                if (error==ActivateCourseError.sOk){
-                    this.router.navigateByUrl("/courseDashboard");
-                }
-            }
-        );
-    }
+  SelectCourse(): void {
+    this.courseService.Activate(this.Course.value).subscribe(error => {
+      if (error == ActivateCourseError.sOk) {
+        this.router.navigateByUrl("/courseDashboard");
+      }
+    });
+  }
 
-    ngOnInit() {
-        this.IsExpanded.subscribe(q => this.onIsExpandedChanged(q));        
-    }
+  ngOnInit() {
+    this.IsExpanded.subscribe(q => this.onIsExpandedChanged(q));
+  }
 }

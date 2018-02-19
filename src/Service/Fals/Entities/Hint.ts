@@ -1,24 +1,13 @@
 /* Auto-generated file */
 
-import {Period, Type} from "Service/Fals/TypeMap"
+import { Period, Type } from "Service/Fals/TypeMap";
+import { StepInterventionModel } from "./StepInterventionModel";
+export class Hint extends StepInterventionModel {
+  public message: string;
 
-import { InterventionModel } from './InterventionModel'; 
-/**
- * @author Computer
- * @version 1.0
- * @created 24-дек-2017 20:28:47
- * @class
- * @extends InterventionModel
- */
-export class Hint extends InterventionModel {
-    public message : string;
-
-    public constructor() {
-        super();
-        this.message = null;
-    }
+  public constructor() {
+    super();
+    this.message = null;
+  }
 }
 Hint["__class"] = "Entities.Hint";
-
-
-

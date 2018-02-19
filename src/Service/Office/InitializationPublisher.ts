@@ -4,19 +4,19 @@ import { Subject } from "rxjs/Subject";
 
 @Injectable()
 export class InitializationPublisher {
-    constructor() {}
+  constructor() {}
 
-    publish(): void {
-        this._initialized.complete();
+  publish(): void {
+    this._initialized.complete();
+  }
+
+  subscribe(callback: () => void): void {
+    if (this._initialized.isStopped) {
+      callback();
     }
 
-    subscribe(callback: () => void): void {
-        if (this._initialized.isStopped) {
-            callback();
-        }
+    this._initialized.subscribe(null, null, callback);
+  }
 
-        this._initialized.subscribe(null, null, callback);
-    }
-
-    private readonly _initialized: Subject<boolean> = new Subject();
+  private readonly _initialized: Subject<boolean> = new Subject();
 }

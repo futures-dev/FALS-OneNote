@@ -1,15 +1,11 @@
 package Facades;
 
+import Entities.Course;
 import Entities.Student;
 import Entities.ModuleResult;
 import Entities.StepGrade;
 import Entities.StepAnswer;
 
-/**
- * @author Computer
- * @version 1.0
- * @created 04-фев-2018 14:02:04
- */
 public interface ServerSocket {
 
 	/**
@@ -26,9 +22,9 @@ public interface ServerSocket {
 
 	/**
 	 * 
-	 * @param moduleResult
+	 * @param stepResult
 	 */
-	public void SendModuleResult(ModuleResult moduleResult);
+	public void SubmitStepResult(SubmitStepResultError stepResult);
 
 	/**
 	 * 

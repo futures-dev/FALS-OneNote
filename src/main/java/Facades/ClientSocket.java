@@ -1,15 +1,11 @@
 package Facades;
 
-import Entities.CourseState;
-import Entities.ModuleIntervention;
 import Entities.StepIntervention;
+import Entities.ModuleIntervention;
+import Entities.Course;
+import Entities.CourseState;
 import Entities.StepGrade;
 
-/**
- * @author Andrei
- * @version 1.0
- * @created 04-фев-2018 14:02:04
- */
 public interface ClientSocket {
 
 	/**
@@ -28,7 +24,7 @@ public interface ClientSocket {
 	 * 
 	 * @param result
 	 */
-	public void SendModuleResult(SendModuleResultError result);
+	public void SendModuleResult(SubmitStepResultError result);
 
 	/**
 	 * 
@@ -58,7 +54,7 @@ public interface ClientSocket {
 	 * 
 	 * @param currentState
 	 */
-	public void GetCurrentState(CourseState currentState);
+	public void GetCurrentState(Course currentState);
 
 	/**
 	 * 
