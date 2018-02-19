@@ -1,31 +1,28 @@
 import { ScenarioBase } from "Service/Socket/Scenario";
 import { ConnectionService } from "Service/Socket/Connection";
-import { SendModuleResult } from "Service/Socket/Events";
-import { ModuleResult } from "Service/Fals/Entities/ModuleResult";
-import { SendModuleResultError } from "Service/Fals/Facade/SendModuleResultError";
+import { SubmitModuleResult } from "Service/Socket/Events";
+import { ModuleStatistics } from "Service/Fals/Entities/ModuleStatistics";
+import { SubmitModuleResultError } from "Service/Fals/Facades/SubmitModuleResultError";
 
-export class SendModuleResultScenario extends ScenarioBase<
-  SendModuleResultError
+export class SubmitModuleResultScenario extends ScenarioBase<
+  SubmitModuleResultError
 > {
-  constructor(
-    private moduleResult: ModuleResult,
-    connection: ConnectionService
-  ) {
+  constructor(private result: ModuleStatistics, connection: ConnectionService) {
     super(connection);
   }
 
   Start(): void {
-    this.SendModuleResultStage();
+    this.SubmitModuleResultStage();
   }
 
-  SendModuleResultStage(): void {
-    this.connection.AddListener(SendModuleResult, s =>
-      this.OnSendModuleResult(s)
+  SubmitModuleResultStage(): void {
+    this.connection.AddListener(SubmitModuleResult, s =>
+      this.OnSubmitModuleResult(s)
     );
-    this.connection.Send(SendModuleResult, this.moduleResult);
+    this.connection.Send(SubmitModuleResult, this.result);
   }
 
-  OnSendModuleResult(error: SendModuleResultError) {
+  OnSubmitModuleResult(error: SubmitModuleResultError) {
     this.Result.next(error);
   }
 }

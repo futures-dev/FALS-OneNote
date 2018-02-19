@@ -9,123 +9,242 @@
       "displayName": "Иван Смирнов"
     }
   ],
-  "CourseModels": [
-    {
-      "modules": {
-        "Value": null,
-        "Children": [
-          {
-            "Value": {
-              "possibleInterventions": [
-                {
-                  "studyModule": {
-                    "possibleInterventions": null,
-                    "resultType": null,
-                    "material": {
-                      "id": 2,
-                      "content": "Keep up and you will succeed"
-                    }
-                  },
-                  "followingModule": {
-                    "possibleInterventions": [
-                      {
-                        "message": "5 - 2 = 2"
-                      }
-                    ],
-                    "resultType": null,
-                    "material": {
-                      "id": 1,
-                      "content": "Remember: 2+2=5"
-                    }
-                  },
-                  "studyTimeout": null
-                }
-              ],
-              "resultType": null,
-              "problem": {
-                "id": 0,
-                "content": "How much watch?"
-              },
-              "correctAnswer": null
-            },
-            "Children": null
-          },
-          {
-            "Value": {
-              "possibleInterventions": [
-                {
-                  "message": "5 - 2 = 2"
-                }
-              ],
-              "resultType": null,
-              "material": {
-                "id": 1,
-                "content": "Remember: 2+2=5"
-              }
-            },
-            "Children": null
-          }
-        ]
-      },
-      "title": "CourseModelA"
-    },
-    {
-      "modules": null,
-      "title": "CourseModelB"
-    }
-  ],
   "Modules": {
     "0": {
       "Value": null,
       "Children": [
         {
           "Value": {
-            "possibleInterventions": [
+            "steps": [
               {
-                "studyModule": {
-                  "possibleInterventions": null,
-                  "resultType": null,
-                  "material": {
-                    "id": 2,
-                    "content": "Keep up and you will succeed"
-                  }
-                },
-                "followingModule": {
-                  "possibleInterventions": [
-                    {
-                      "message": "5 - 2 = 2"
+                "resultType": "function String() { [native code] }",
+                "maxGrade": 0,
+                "possibleInterventions": [
+                  {
+                    "step": {
+                      "resultType": "",
+                      "maxGrade": 0,
+                      "possibleInterventions": null,
+                      "exercises": [
+                        {
+                          "resultType": "function Number() { [native code] }",
+                          "maxGrade": 5,
+                          "possibleInterventions": null,
+                          "problem": {
+                            "id": null,
+                            "type": null,
+                            "version": null,
+                            "content": "2 + 2 = ?"
+                          },
+                          "answers": [
+                            {
+                              "id": null,
+                              "type": null,
+                              "version": null,
+                              "value": "2"
+                            },
+                            {
+                              "id": null,
+                              "type": null,
+                              "version": null,
+                              "value": "3"
+                            },
+                            {
+                              "id": null,
+                              "type": null,
+                              "version": null,
+                              "value": "4"
+                            },
+                            {
+                              "id": null,
+                              "type": null,
+                              "version": null,
+                              "value": "5"
+                            }
+                          ],
+                          "correctAnswer": 3
+                        },
+                        {
+                          "resultType": "function String() { [native code] }",
+                          "maxGrade": 15,
+                          "possibleInterventions": null,
+                          "problem": {
+                            "id": null,
+                            "type": null,
+                            "version": null,
+                            "content": "3 + 3 = ?"
+                          },
+                          "correctAnswer": {
+                            "id": null,
+                            "type": null,
+                            "version": null,
+                            "value": "6"
+                          }
+                        }
+                      ]
                     }
-                  ],
-                  "resultType": null,
-                  "material": {
-                    "id": 1,
-                    "content": "Remember: 2+2=5"
                   }
+                ],
+                "problem": {
+                  "id": null,
+                  "type": null,
+                  "version": null,
+                  "content": "How much watch?"
                 },
-                "studyTimeout": null
+                "correctAnswer": {
+                  "id": null,
+                  "type": null,
+                  "version": null,
+                  "value": "Whom how"
+                }
+              },
+              {
+                "resultType": "",
+                "maxGrade": 0,
+                "possibleInterventions": null,
+                "materials": {
+                  "id": null,
+                  "type": null,
+                  "version": null,
+                  "content": "<div>Material1.Content Image!<img source=\"https://www.google.ru/images/branding/googlelogo/2x/googlelogo_color_120x44dp.png\"></img></div>"
+                }
+              },
+              {
+                "resultType": "",
+                "maxGrade": 0,
+                "possibleInterventions": null,
+                "exercises": [
+                  {
+                    "resultType": "function Number() { [native code] }",
+                    "maxGrade": 5,
+                    "possibleInterventions": null,
+                    "problem": {
+                      "id": null,
+                      "type": null,
+                      "version": null,
+                      "content": "2 + 2 = ?"
+                    },
+                    "answers": [
+                      {
+                        "id": null,
+                        "type": null,
+                        "version": null,
+                        "value": "2"
+                      },
+                      {
+                        "id": null,
+                        "type": null,
+                        "version": null,
+                        "value": "3"
+                      },
+                      {
+                        "id": null,
+                        "type": null,
+                        "version": null,
+                        "value": "4"
+                      },
+                      {
+                        "id": null,
+                        "type": null,
+                        "version": null,
+                        "value": "5"
+                      }
+                    ],
+                    "correctAnswer": 3
+                  },
+                  {
+                    "resultType": "function String() { [native code] }",
+                    "maxGrade": 15,
+                    "possibleInterventions": null,
+                    "problem": {
+                      "id": null,
+                      "type": null,
+                      "version": null,
+                      "content": "3 + 3 = ?"
+                    },
+                    "correctAnswer": {
+                      "id": null,
+                      "type": null,
+                      "version": null,
+                      "value": "6"
+                    }
+                  }
+                ]
               }
             ],
-            "resultType": null,
-            "problem": {
-              "id": 0,
-              "content": "How much watch?"
-            },
-            "correctAnswer": null
+            "maxGrade": 0,
+            "possibleInterventions": null
           },
           "Children": null
         },
         {
           "Value": {
-            "possibleInterventions": [
+            "steps": [
               {
-                "message": "5 - 2 = 2"
+                "resultType": "",
+                "maxGrade": 0,
+                "possibleInterventions": null,
+                "exercises": [
+                  {
+                    "resultType": "function Number() { [native code] }",
+                    "maxGrade": 5,
+                    "possibleInterventions": null,
+                    "problem": {
+                      "id": null,
+                      "type": null,
+                      "version": null,
+                      "content": "2 + 2 = ?"
+                    },
+                    "answers": [
+                      {
+                        "id": null,
+                        "type": null,
+                        "version": null,
+                        "value": "2"
+                      },
+                      {
+                        "id": null,
+                        "type": null,
+                        "version": null,
+                        "value": "3"
+                      },
+                      {
+                        "id": null,
+                        "type": null,
+                        "version": null,
+                        "value": "4"
+                      },
+                      {
+                        "id": null,
+                        "type": null,
+                        "version": null,
+                        "value": "5"
+                      }
+                    ],
+                    "correctAnswer": 3
+                  },
+                  {
+                    "resultType": "function String() { [native code] }",
+                    "maxGrade": 15,
+                    "possibleInterventions": null,
+                    "problem": {
+                      "id": null,
+                      "type": null,
+                      "version": null,
+                      "content": "3 + 3 = ?"
+                    },
+                    "correctAnswer": {
+                      "id": null,
+                      "type": null,
+                      "version": null,
+                      "value": "6"
+                    }
+                  }
+                ]
               }
             ],
-            "resultType": null,
-            "material": {
-              "id": 1,
-              "content": "Remember: 2+2=5"
-            }
+            "maxGrade": 0,
+            "possibleInterventions": null
           },
           "Children": null
         }
@@ -133,79 +252,729 @@
     },
     "1": {
       "Value": {
-        "possibleInterventions": [
+        "steps": [
           {
-            "studyModule": {
-              "possibleInterventions": null,
-              "resultType": null,
-              "material": {
-                "id": 2,
-                "content": "Keep up and you will succeed"
-              }
-            },
-            "followingModule": {
-              "possibleInterventions": [
-                {
-                  "message": "5 - 2 = 2"
+            "resultType": "function String() { [native code] }",
+            "maxGrade": 0,
+            "possibleInterventions": [
+              {
+                "step": {
+                  "resultType": "",
+                  "maxGrade": 0,
+                  "possibleInterventions": null,
+                  "exercises": [
+                    {
+                      "resultType": "function Number() { [native code] }",
+                      "maxGrade": 5,
+                      "possibleInterventions": null,
+                      "problem": {
+                        "id": null,
+                        "type": null,
+                        "version": null,
+                        "content": "2 + 2 = ?"
+                      },
+                      "answers": [
+                        {
+                          "id": null,
+                          "type": null,
+                          "version": null,
+                          "value": "2"
+                        },
+                        {
+                          "id": null,
+                          "type": null,
+                          "version": null,
+                          "value": "3"
+                        },
+                        {
+                          "id": null,
+                          "type": null,
+                          "version": null,
+                          "value": "4"
+                        },
+                        {
+                          "id": null,
+                          "type": null,
+                          "version": null,
+                          "value": "5"
+                        }
+                      ],
+                      "correctAnswer": 3
+                    },
+                    {
+                      "resultType": "function String() { [native code] }",
+                      "maxGrade": 15,
+                      "possibleInterventions": null,
+                      "problem": {
+                        "id": null,
+                        "type": null,
+                        "version": null,
+                        "content": "3 + 3 = ?"
+                      },
+                      "correctAnswer": {
+                        "id": null,
+                        "type": null,
+                        "version": null,
+                        "value": "6"
+                      }
+                    }
+                  ]
                 }
-              ],
-              "resultType": null,
-              "material": {
-                "id": 1,
-                "content": "Remember: 2+2=5"
               }
+            ],
+            "problem": {
+              "id": null,
+              "type": null,
+              "version": null,
+              "content": "How much watch?"
             },
-            "studyTimeout": null
+            "correctAnswer": {
+              "id": null,
+              "type": null,
+              "version": null,
+              "value": "Whom how"
+            }
+          },
+          {
+            "resultType": "",
+            "maxGrade": 0,
+            "possibleInterventions": null,
+            "materials": {
+              "id": null,
+              "type": null,
+              "version": null,
+              "content": "<div>Material1.Content Image!<img source=\"https://www.google.ru/images/branding/googlelogo/2x/googlelogo_color_120x44dp.png\"></img></div>"
+            }
+          },
+          {
+            "resultType": "",
+            "maxGrade": 0,
+            "possibleInterventions": null,
+            "exercises": [
+              {
+                "resultType": "function Number() { [native code] }",
+                "maxGrade": 5,
+                "possibleInterventions": null,
+                "problem": {
+                  "id": null,
+                  "type": null,
+                  "version": null,
+                  "content": "2 + 2 = ?"
+                },
+                "answers": [
+                  {
+                    "id": null,
+                    "type": null,
+                    "version": null,
+                    "value": "2"
+                  },
+                  {
+                    "id": null,
+                    "type": null,
+                    "version": null,
+                    "value": "3"
+                  },
+                  {
+                    "id": null,
+                    "type": null,
+                    "version": null,
+                    "value": "4"
+                  },
+                  {
+                    "id": null,
+                    "type": null,
+                    "version": null,
+                    "value": "5"
+                  }
+                ],
+                "correctAnswer": 3
+              },
+              {
+                "resultType": "function String() { [native code] }",
+                "maxGrade": 15,
+                "possibleInterventions": null,
+                "problem": {
+                  "id": null,
+                  "type": null,
+                  "version": null,
+                  "content": "3 + 3 = ?"
+                },
+                "correctAnswer": {
+                  "id": null,
+                  "type": null,
+                  "version": null,
+                  "value": "6"
+                }
+              }
+            ]
           }
         ],
-        "resultType": null,
-        "problem": {
-          "id": 0,
-          "content": "How much watch?"
-        },
-        "correctAnswer": null
+        "maxGrade": 0,
+        "possibleInterventions": null
       },
       "Children": null
     },
     "2": {
       "Value": {
-        "possibleInterventions": [
+        "steps": [
           {
-            "message": "5 - 2 = 2"
+            "resultType": "",
+            "maxGrade": 0,
+            "possibleInterventions": null,
+            "exercises": [
+              {
+                "resultType": "function Number() { [native code] }",
+                "maxGrade": 5,
+                "possibleInterventions": null,
+                "problem": {
+                  "id": null,
+                  "type": null,
+                  "version": null,
+                  "content": "2 + 2 = ?"
+                },
+                "answers": [
+                  {
+                    "id": null,
+                    "type": null,
+                    "version": null,
+                    "value": "2"
+                  },
+                  {
+                    "id": null,
+                    "type": null,
+                    "version": null,
+                    "value": "3"
+                  },
+                  {
+                    "id": null,
+                    "type": null,
+                    "version": null,
+                    "value": "4"
+                  },
+                  {
+                    "id": null,
+                    "type": null,
+                    "version": null,
+                    "value": "5"
+                  }
+                ],
+                "correctAnswer": 3
+              },
+              {
+                "resultType": "function String() { [native code] }",
+                "maxGrade": 15,
+                "possibleInterventions": null,
+                "problem": {
+                  "id": null,
+                  "type": null,
+                  "version": null,
+                  "content": "3 + 3 = ?"
+                },
+                "correctAnswer": {
+                  "id": null,
+                  "type": null,
+                  "version": null,
+                  "value": "6"
+                }
+              }
+            ]
           }
         ],
-        "resultType": null,
-        "material": {
-          "id": 1,
-          "content": "Remember: 2+2=5"
-        }
+        "maxGrade": 0,
+        "possibleInterventions": null
       },
       "Children": null
     }
   },
   "Courses": [
     {
-      "student": {
-        "email": "studentA@gmail.com",
-        "displayName": "Иван Смирнов"
+      "description": null,
+      "modules": {
+        "Value": null,
+        "Children": [
+          {
+            "Value": {
+              "steps": [
+                {
+                  "resultType": "function String() { [native code] }",
+                  "maxGrade": 0,
+                  "possibleInterventions": [
+                    {
+                      "step": {
+                        "resultType": "",
+                        "maxGrade": 0,
+                        "possibleInterventions": null,
+                        "exercises": [
+                          {
+                            "resultType": "function Number() { [native code] }",
+                            "maxGrade": 5,
+                            "possibleInterventions": null,
+                            "problem": {
+                              "id": null,
+                              "type": null,
+                              "version": null,
+                              "content": "2 + 2 = ?"
+                            },
+                            "answers": [
+                              {
+                                "id": null,
+                                "type": null,
+                                "version": null,
+                                "value": "2"
+                              },
+                              {
+                                "id": null,
+                                "type": null,
+                                "version": null,
+                                "value": "3"
+                              },
+                              {
+                                "id": null,
+                                "type": null,
+                                "version": null,
+                                "value": "4"
+                              },
+                              {
+                                "id": null,
+                                "type": null,
+                                "version": null,
+                                "value": "5"
+                              }
+                            ],
+                            "correctAnswer": 3
+                          },
+                          {
+                            "resultType": "function String() { [native code] }",
+                            "maxGrade": 15,
+                            "possibleInterventions": null,
+                            "problem": {
+                              "id": null,
+                              "type": null,
+                              "version": null,
+                              "content": "3 + 3 = ?"
+                            },
+                            "correctAnswer": {
+                              "id": null,
+                              "type": null,
+                              "version": null,
+                              "value": "6"
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "problem": {
+                    "id": null,
+                    "type": null,
+                    "version": null,
+                    "content": "How much watch?"
+                  },
+                  "correctAnswer": {
+                    "id": null,
+                    "type": null,
+                    "version": null,
+                    "value": "Whom how"
+                  }
+                },
+                {
+                  "resultType": "",
+                  "maxGrade": 0,
+                  "possibleInterventions": null,
+                  "materials": {
+                    "id": null,
+                    "type": null,
+                    "version": null,
+                    "content": "<div>Material1.Content Image!<img source=\"https://www.google.ru/images/branding/googlelogo/2x/googlelogo_color_120x44dp.png\"></img></div>"
+                  }
+                },
+                {
+                  "resultType": "",
+                  "maxGrade": 0,
+                  "possibleInterventions": null,
+                  "exercises": [
+                    {
+                      "resultType": "function Number() { [native code] }",
+                      "maxGrade": 5,
+                      "possibleInterventions": null,
+                      "problem": {
+                        "id": null,
+                        "type": null,
+                        "version": null,
+                        "content": "2 + 2 = ?"
+                      },
+                      "answers": [
+                        {
+                          "id": null,
+                          "type": null,
+                          "version": null,
+                          "value": "2"
+                        },
+                        {
+                          "id": null,
+                          "type": null,
+                          "version": null,
+                          "value": "3"
+                        },
+                        {
+                          "id": null,
+                          "type": null,
+                          "version": null,
+                          "value": "4"
+                        },
+                        {
+                          "id": null,
+                          "type": null,
+                          "version": null,
+                          "value": "5"
+                        }
+                      ],
+                      "correctAnswer": 3
+                    },
+                    {
+                      "resultType": "function String() { [native code] }",
+                      "maxGrade": 15,
+                      "possibleInterventions": null,
+                      "problem": {
+                        "id": null,
+                        "type": null,
+                        "version": null,
+                        "content": "3 + 3 = ?"
+                      },
+                      "correctAnswer": {
+                        "id": null,
+                        "type": null,
+                        "version": null,
+                        "value": "6"
+                      }
+                    }
+                  ]
+                }
+              ],
+              "maxGrade": 0,
+              "possibleInterventions": null
+            },
+            "Children": null
+          },
+          {
+            "Value": {
+              "steps": [
+                {
+                  "resultType": "",
+                  "maxGrade": 0,
+                  "possibleInterventions": null,
+                  "exercises": [
+                    {
+                      "resultType": "function Number() { [native code] }",
+                      "maxGrade": 5,
+                      "possibleInterventions": null,
+                      "problem": {
+                        "id": null,
+                        "type": null,
+                        "version": null,
+                        "content": "2 + 2 = ?"
+                      },
+                      "answers": [
+                        {
+                          "id": null,
+                          "type": null,
+                          "version": null,
+                          "value": "2"
+                        },
+                        {
+                          "id": null,
+                          "type": null,
+                          "version": null,
+                          "value": "3"
+                        },
+                        {
+                          "id": null,
+                          "type": null,
+                          "version": null,
+                          "value": "4"
+                        },
+                        {
+                          "id": null,
+                          "type": null,
+                          "version": null,
+                          "value": "5"
+                        }
+                      ],
+                      "correctAnswer": 3
+                    },
+                    {
+                      "resultType": "function String() { [native code] }",
+                      "maxGrade": 15,
+                      "possibleInterventions": null,
+                      "problem": {
+                        "id": null,
+                        "type": null,
+                        "version": null,
+                        "content": "3 + 3 = ?"
+                      },
+                      "correctAnswer": {
+                        "id": null,
+                        "type": null,
+                        "version": null,
+                        "value": "6"
+                      }
+                    }
+                  ]
+                }
+              ],
+              "maxGrade": 0,
+              "possibleInterventions": null
+            },
+            "Children": null
+          }
+        ]
       },
-      "courseModel": {
-        "modules": null,
-        "title": "CourseModelA",
-        "IUrl": "/course?courseId=0"
-      }
+      "title": "CourseA"
     },
     {
-      "student": {
-        "email": "studentB@gmail.com",
-        "displayName": "Иван Смирнов"
+      "description": null,
+      "modules": {
+        "Value": null,
+        "Children": [
+          {
+            "Value": {
+              "steps": [
+                {
+                  "resultType": "function String() { [native code] }",
+                  "maxGrade": 0,
+                  "possibleInterventions": [
+                    {
+                      "step": {
+                        "resultType": "",
+                        "maxGrade": 0,
+                        "possibleInterventions": null,
+                        "exercises": [
+                          {
+                            "resultType": "function Number() { [native code] }",
+                            "maxGrade": 5,
+                            "possibleInterventions": null,
+                            "problem": {
+                              "id": null,
+                              "type": null,
+                              "version": null,
+                              "content": "2 + 2 = ?"
+                            },
+                            "answers": [
+                              {
+                                "id": null,
+                                "type": null,
+                                "version": null,
+                                "value": "2"
+                              },
+                              {
+                                "id": null,
+                                "type": null,
+                                "version": null,
+                                "value": "3"
+                              },
+                              {
+                                "id": null,
+                                "type": null,
+                                "version": null,
+                                "value": "4"
+                              },
+                              {
+                                "id": null,
+                                "type": null,
+                                "version": null,
+                                "value": "5"
+                              }
+                            ],
+                            "correctAnswer": 3
+                          },
+                          {
+                            "resultType": "function String() { [native code] }",
+                            "maxGrade": 15,
+                            "possibleInterventions": null,
+                            "problem": {
+                              "id": null,
+                              "type": null,
+                              "version": null,
+                              "content": "3 + 3 = ?"
+                            },
+                            "correctAnswer": {
+                              "id": null,
+                              "type": null,
+                              "version": null,
+                              "value": "6"
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "problem": {
+                    "id": null,
+                    "type": null,
+                    "version": null,
+                    "content": "How much watch?"
+                  },
+                  "correctAnswer": {
+                    "id": null,
+                    "type": null,
+                    "version": null,
+                    "value": "Whom how"
+                  }
+                },
+                {
+                  "resultType": "",
+                  "maxGrade": 0,
+                  "possibleInterventions": null,
+                  "materials": {
+                    "id": null,
+                    "type": null,
+                    "version": null,
+                    "content": "<div>Material1.Content Image!<img source=\"https://www.google.ru/images/branding/googlelogo/2x/googlelogo_color_120x44dp.png\"></img></div>"
+                  }
+                },
+                {
+                  "resultType": "",
+                  "maxGrade": 0,
+                  "possibleInterventions": null,
+                  "exercises": [
+                    {
+                      "resultType": "function Number() { [native code] }",
+                      "maxGrade": 5,
+                      "possibleInterventions": null,
+                      "problem": {
+                        "id": null,
+                        "type": null,
+                        "version": null,
+                        "content": "2 + 2 = ?"
+                      },
+                      "answers": [
+                        {
+                          "id": null,
+                          "type": null,
+                          "version": null,
+                          "value": "2"
+                        },
+                        {
+                          "id": null,
+                          "type": null,
+                          "version": null,
+                          "value": "3"
+                        },
+                        {
+                          "id": null,
+                          "type": null,
+                          "version": null,
+                          "value": "4"
+                        },
+                        {
+                          "id": null,
+                          "type": null,
+                          "version": null,
+                          "value": "5"
+                        }
+                      ],
+                      "correctAnswer": 3
+                    },
+                    {
+                      "resultType": "function String() { [native code] }",
+                      "maxGrade": 15,
+                      "possibleInterventions": null,
+                      "problem": {
+                        "id": null,
+                        "type": null,
+                        "version": null,
+                        "content": "3 + 3 = ?"
+                      },
+                      "correctAnswer": {
+                        "id": null,
+                        "type": null,
+                        "version": null,
+                        "value": "6"
+                      }
+                    }
+                  ]
+                }
+              ],
+              "maxGrade": 0,
+              "possibleInterventions": null
+            },
+            "Children": null
+          },
+          {
+            "Value": {
+              "steps": [
+                {
+                  "resultType": "",
+                  "maxGrade": 0,
+                  "possibleInterventions": null,
+                  "exercises": [
+                    {
+                      "resultType": "function Number() { [native code] }",
+                      "maxGrade": 5,
+                      "possibleInterventions": null,
+                      "problem": {
+                        "id": null,
+                        "type": null,
+                        "version": null,
+                        "content": "2 + 2 = ?"
+                      },
+                      "answers": [
+                        {
+                          "id": null,
+                          "type": null,
+                          "version": null,
+                          "value": "2"
+                        },
+                        {
+                          "id": null,
+                          "type": null,
+                          "version": null,
+                          "value": "3"
+                        },
+                        {
+                          "id": null,
+                          "type": null,
+                          "version": null,
+                          "value": "4"
+                        },
+                        {
+                          "id": null,
+                          "type": null,
+                          "version": null,
+                          "value": "5"
+                        }
+                      ],
+                      "correctAnswer": 3
+                    },
+                    {
+                      "resultType": "function String() { [native code] }",
+                      "maxGrade": 15,
+                      "possibleInterventions": null,
+                      "problem": {
+                        "id": null,
+                        "type": null,
+                        "version": null,
+                        "content": "3 + 3 = ?"
+                      },
+                      "correctAnswer": {
+                        "id": null,
+                        "type": null,
+                        "version": null,
+                        "value": "6"
+                      }
+                    }
+                  ]
+                }
+              ],
+              "maxGrade": 0,
+              "possibleInterventions": null
+            },
+            "Children": null
+          }
+        ]
       },
-      "courseModel": {
-        "modules": null,
-        "title": "CourseModelB",
-        "IUrl": "/course?courseId=1"
-      }
+      "title": "CourseB"
     }
   ],
-  "SelectedCoursesMap": {}
+  "CourseStates": {}
 }

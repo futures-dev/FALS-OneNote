@@ -1,11 +1,11 @@
 <div>
-    <div *ngIf="Module instanceOf AssignmentModule">
-        AssignmentModule
-        <assignmentModule [Module]="Module"></assignmentModule>
+    <div *ngIf="Step instanceOf AssignmentStep">
+        AssignmentStep
+        <assignmentStep [Step]="Step"></assignmentStep>
     </div>
-    <div *ngIf="Module instanceOf StudyModule">
-        StudyModule
-        <studyModule [Module]="Module"></studyModule>
+    <div *ngIf="Step instanceOf StudyStep">
+        StudyStep
+        <studyStep [Step]="Step"></studyStep>
     </div>
     <button class="ms-welcome__action ms-Button ms-Button--hero ms-u-slideUpIn20" (click)="tryProceed()">
         <span class="ms-Button-label">Debug socket</span>

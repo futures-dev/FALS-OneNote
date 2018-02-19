@@ -7,7 +7,7 @@ import { OnInit } from "@angular/core";
 import { CourseService } from "Service/CourseLogic/CourseService";
 import { Router } from "@angular/router";
 import { UrlTree } from "@angular/router/src/url_tree";
-import { ActivateCourseError } from "Service/Fals/Facade/ActivateCourseError";
+import { ActivateCourseError } from "Service/Fals/Facades/ActivateCourseError";
 
 @Component({
   selector: "course",

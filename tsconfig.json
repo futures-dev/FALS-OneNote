@@ -13,17 +13,9 @@
         "outDir": "dist",
         "baseUrl": "./",
         "paths": {
-            "*": [
-                "src/*",
-                "dist/*"
-            ]
+            "*": ["src/*", "dist/*"]
         },
-        "lib": [
-            "dom",
-            "es2015"
-        ]
+        "lib": ["dom", "es2015"]
     },
-    "exclude": [
-        "node_modules"
-    ]
+    "exclude": ["node_modules", "target"]
 }

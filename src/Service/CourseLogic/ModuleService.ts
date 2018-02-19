@@ -2,14 +2,15 @@ import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs/BehaviorSubject";
 import { Module } from "Service/Fals/Entities/Module";
 import { ConnectionService } from "Service/Socket/Connection";
-import { CurrentStateChanged, SendModuleResult } from "Service/Socket/Events";
+import { CurrentStateChanged, SubmitModuleResult } from "Service/Socket/Events";
 import { ModuleResult } from "Service/Fals/Entities/ModuleResult";
 import { CourseService } from "Service/CourseLogic/CourseService";
-import { SendModuleResultScenario } from "Service/CourseLogic/Scenarios/SendModuleResultScenario";
-import { SendModuleResultError } from "Service/Fals/Facade/SendModuleResultError";
+import { SubmitModuleResultScenario } from "Service/CourseLogic/Scenarios/SendModuleResultScenario";
+import { SubmitModuleResultError } from "Service/Fals/Facades/SubmitModuleResultError";
 import { Observable } from "rxjs/Observable";
 import { GetCurrentStateScenario } from "Service/CourseLogic/Scenarios/GetCurrentStateScenario";
 import { CourseState } from "Service/Fals/Entities/CourseState";
+import { ModuleStatistics } from "Service/Fals/Entities/ModuleStatistics";
 
 @Injectable()
 export class ModuleService {
@@ -19,23 +20,15 @@ export class ModuleService {
     private socket: ConnectionService,
     private courseService: CourseService
   ) {
-    this.socket.AddListener(CurrentStateChanged, (cs: CourseState) => {
-      this.Module.next(cs.currentModule);
-    });
-    this.courseService.CurrentCourse.subscribe(c => {
-      let getModule = new GetCurrentStateScenario(c.student, this.socket);
-      getModule.Result.subscribe(m => this.Module.next(m.currentModule));
-      getModule.Start();
+    this.courseService.CurrentCourseState.subscribe(c => {
+      this.Module.next(c.currentModule);
     });
   }
 
   SendModuleResult(
-    moduleResult: ModuleResult
-  ): Observable<SendModuleResultError> {
-    let SendModuleResult = new SendModuleResultScenario(
-      moduleResult,
-      this.socket
-    );
+    result: ModuleStatistics
+  ): Observable<SubmitModuleResultError> {
+    let SendModuleResult = new SubmitModuleResultScenario(result, this.socket);
     SendModuleResult.Start();
     return SendModuleResult.Result;
   }

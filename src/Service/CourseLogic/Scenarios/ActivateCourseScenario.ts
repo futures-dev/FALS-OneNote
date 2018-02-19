@@ -3,7 +3,7 @@ import { Observable } from "rxjs/Observable";
 import { ConnectionService } from "Service/Socket/Connection";
 import { Course } from "Service/Fals/Entities/Course";
 import { SelectCourse } from "Service/Socket/Events";
-import { ActivateCourseError } from "Service/Fals/Facade/ActivateCourseError";
+import { ActivateCourseError } from "Service/Fals/Facades/ActivateCourseError";
 
 export class ActivateCourseScenario extends ScenarioBase<ActivateCourseError> {
   constructor(private course: Course, connection: ConnectionService) {

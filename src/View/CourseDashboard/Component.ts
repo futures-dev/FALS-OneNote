@@ -9,7 +9,7 @@ import { BehaviorSubject } from "rxjs/BehaviorSubject";
 })
 export class CourseDashboardComponent implements OnInit {
   get Course() {
-    return this.courseService.CurrentCourse;
+    return this.courseService.CurrentCourseState;
   }
 
   constructor(private courseService: CourseService) {}

@@ -5,14 +5,22 @@ import { Listener } from "Service/Socket/Scenario";
 
 @Injectable()
 export class ConnectionService {
-  url = "http://localhost:3003";
+  static url = "http://localhost:3003";
   connection: SocketIOClient.Socket;
 
+  /*
+    TODO: OFFICE CREDENTIALS
+  */
+  static userId = "studentA@gmail.com";
+
   constructor() {
-    this.connection = si.connect(this.url + "?userId="+"email@email.com", {
-      upgrade: false,
-      transports: ["polling"],
-    });
+    this.connection = si.connect(
+      ConnectionService.url + "?userId=" + ConnectionService.userId,
+      {
+        upgrade: false,
+        transports: ["polling"],
+      }
+    );
     this.connection.on("connection", () => {
       console.log("connected");
       console.log(this.connection);

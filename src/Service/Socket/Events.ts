@@ -11,6 +11,9 @@ export const GetCurrentState = "GetCurrentState";
 export const CurrentStateChanged = "CurrentStateChanged";
 
 // Module
-export const SendModuleResult = "ModuleResult";
+export const SubmitModuleResult = "ModuleResult";
+
+// Step
+export const SubmitStepResult = "StepResult";
 
 // Statistics

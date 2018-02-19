@@ -75,7 +75,7 @@ io.on("connection", (socket: SocketIO.Socket) => {
   let client = (clients[socket.id] = new Client(
     socket.client,
     socket.handshake,
-    storage.Students[socket.handshake.query.userId],
+    storage.Students[socket.handshake.query.userId]
   ));
 
   socket.on(SelectCourse, (course: Course) => {
@@ -106,10 +106,12 @@ io.on("connection", (socket: SocketIO.Socket) => {
     socket.emit(SelectCourse, Result.sOk);
   });
 
-  socket.on(GetCurrentState, (student: Student) => {
-    let courseStates = storage.CourseStates[student.email];
+  socket.on(GetCurrentState, (course: Course) => {
+    let student = storage.Students[client.userId];
+
+    let courseStates = storage.CourseStates[client.userId];
     if (!courseStates) {
-      courseStates = storage.CourseStates[student.email] = [];
+      courseStates = storage.CourseStates[client.userId] = [];
       socket.emit(GetCurrentState, Result.eNotFound);
     }
 

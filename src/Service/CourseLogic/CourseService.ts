@@ -5,15 +5,15 @@ import { ConnectionService } from "Service/Socket/Connection";
 import { CurrentStateChanged } from "Service/Socket/Events";
 import { Observable } from "rxjs/Observable";
 import { CourseProvider } from "Service/Providers/CourseProvider";
-import { ActivateCourseError } from "Service/Fals/Facade/ActivateCourseError";
+import { ActivateCourseError } from "Service/Fals/Facades/ActivateCourseError";
 import { ActivateCourseScenario } from "Service/CourseLogic/Scenarios/ActivateCourseScenario";
 import { CourseState } from "Service/Fals/Entities/CourseState";
 
 @Injectable()
 export class CourseService {
-  public CurrentCourse: BehaviorSubject<Course> = new BehaviorSubject<Course>(
-    null
-  );
+  public CurrentCourseState: BehaviorSubject<CourseState> = new BehaviorSubject<
+    CourseState
+  >(null);
 
   constructor(
     private socket: ConnectionService,
@@ -21,12 +21,12 @@ export class CourseService {
   ) {
     console.log("ctor");
     socket.AddListener(CurrentStateChanged, (cs: CourseState) =>
-      this.CurrentCourse.next(cs.course)
+      this.CurrentCourseState.next(cs)
     );
   }
 
   public Activate(course: Course): Observable<ActivateCourseError> {
-    this.CurrentCourse.next(null);
+    this.CurrentCourseState.next(null);
 
     let activate = new ActivateCourseScenario(course, this.socket);
     activate.Result.subscribe(result => {
@@ -35,13 +35,9 @@ export class CourseService {
         return;
       }
 
-      // todo: populate on explicit request only
-      this.courseProvider
-        .populateCourse(course)
-        .subscribe(filledCourse => this.CurrentCourse.next(course));
-
-      console.log("ActivateScenario success =" + course);
-      this.CurrentCourse.next(course);
+      console.log(
+        "ActivateScenario success =" + course + ", avaiting CourseStateChanged"
+      );
     });
     activate.Start();
 
