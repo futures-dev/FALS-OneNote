@@ -4,7 +4,6 @@ package Entities;
 public class ControlStep extends Step {
 
 	public Step exercises[];
-	public Step m_Step;
 
 	public ControlStep(){
 

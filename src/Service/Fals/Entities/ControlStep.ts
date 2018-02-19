@@ -5,12 +5,9 @@ import { Step } from "./Step";
 export class ControlStep extends Step {
   public exercises: Step[];
 
-  public m_Step: Step;
-
   public constructor() {
     super();
     this.exercises = null;
-    this.m_Step = null;
   }
 
   public finalize() {
