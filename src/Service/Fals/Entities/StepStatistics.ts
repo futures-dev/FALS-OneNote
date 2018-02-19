@@ -10,9 +10,5 @@ export class StepStatistics extends ModuleStatistics {
     super();
     this.step = null;
   }
-
-  public finalize() {
-    super.finalize();
-  }
 }
 StepStatistics["__class"] = "Entities.StepStatistics";

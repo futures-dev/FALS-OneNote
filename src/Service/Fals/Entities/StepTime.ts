@@ -12,9 +12,5 @@ export class StepTime extends StepStatistics {
     this.beginTime = null;
     this.endTime = null;
   }
-
-  public finalize() {
-    super.finalize();
-  }
 }
 StepTime["__class"] = "Entities.StepTime";

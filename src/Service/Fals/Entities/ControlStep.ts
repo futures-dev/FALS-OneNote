@@ -10,10 +10,6 @@ export class ControlStep extends Step {
     this.exercises = null;
   }
 
-  public finalize() {
-    super.finalize();
-  }
-
   public getGrade(): number {
     return 0;
   }

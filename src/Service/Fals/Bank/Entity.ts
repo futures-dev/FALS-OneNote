@@ -2,12 +2,6 @@
 
 import { Period, Type } from "Service/Fals/TypeMap";
 import { Version } from "./Version";
-/**
- * @author Computer
- * @version 1.0
- * @created 04-���-2018 14:02:05
- * @class
- */
 export class Entity {
   public id: string;
 
