@@ -9,8 +9,4 @@ public class StepStatistics extends ModuleStatistics {
 
 	}
 
-	public void finalize() throws Throwable {
-		super.finalize();
-	}
-
 }

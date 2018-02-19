@@ -11,8 +11,4 @@ public class StepTime extends StepStatistics {
 
 	}
 
-	public void finalize() throws Throwable {
-		super.finalize();
-	}
-
 }

@@ -7,8 +7,4 @@ public class PascaSessionSettings {
 
 	}
 
-	public void finalize() throws Throwable {
-
-	}
-
 }

@@ -7,8 +7,4 @@ public class PascaOnenoteSettings {
 
 	}
 
-	public void finalize() throws Throwable {
-
-	}
-
 }

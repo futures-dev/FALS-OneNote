@@ -9,10 +9,6 @@ public class ControlStep extends Step {
 
 	}
 
-	public void finalize() throws Throwable {
-		super.finalize();
-	}
-
 	public int getGrade(){
 		return 0;
 	}
