@@ -1,10 +1,10 @@
 package Entities;
 
-import Bank.Answer;
+import Bank.Key;
 
 public class TestStep extends AssignmentStep {
 
-	public Answer answers[];
+	public Key answers[];
 	public int correctAnswer;
 
 	public TestStep(){

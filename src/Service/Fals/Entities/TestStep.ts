@@ -1,10 +1,10 @@
 /* Auto-generated file */
 
 import { Period, Type } from "Service/Fals/TypeMap";
-import { Answer } from "../Bank/Answer";
+import { Key } from "../Bank/Key";
 import { AssignmentStep } from "./AssignmentStep";
 export class TestStep extends AssignmentStep {
-  public answers: Answer[];
+  public answers: Key[];
 
   public correctAnswer: number;
 
