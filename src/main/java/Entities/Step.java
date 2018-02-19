@@ -3,7 +3,7 @@ package Entities;
 
 public abstract class Step {
 
-	public String resultType;
+	public String resultType = "";
 	public int maxGrade;
 	public StepInterventionModel possibleInterventions[];
 

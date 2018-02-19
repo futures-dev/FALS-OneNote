@@ -1,6 +1,7 @@
 /* Auto-generated file */
 
 import { Period, Type } from "Service/Fals/TypeMap";
+import { StepResult } from "../Pasca/StepResult";
 import { PascaSessionSettings } from "../Pasca/PascaSessionSettings";
 import { PascaOnenoteSettings } from "../Pasca/PascaOnenoteSettings";
 import { Step } from "./Step";
@@ -20,6 +21,7 @@ export class PascaStep extends Step {
     this.pascaSessionSettings = null;
     this.pascaOnenoteSettings = null;
     this.m_PascaFalsSettings = null;
+    this.resultType = StepResult.toString();
   }
 }
 PascaStep["__class"] = "Entities.PascaStep";
