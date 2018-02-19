@@ -1,13 +1,9 @@
 /* Custom ts file because Java does not support interface instance fields */
 
 export interface ILazyWrapper {
-    IUrl : string;
+  IUrl: string;
 }
 
 export namespace ILazyWrapper {
-
-    export let IUrl : string = null;
+  export let IUrl: string = null;
 }
-
-
-

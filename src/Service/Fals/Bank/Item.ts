@@ -1,24 +1,19 @@
 /* Auto-generated file */
 
-import {Period, Type} from "Service/Fals/TypeMap"
-
+import { Period, Type } from "Service/Fals/TypeMap";
 /**
  * @author Computer
  * @version 1.0
- * @created 24-дек-2017 17:17:01
+ * @created 24-пїЅпїЅпїЅ-2017 17:17:01
  * @class
  */
 export class Item {
-    /*private*/ id : number;
+  /*private*/ id: number;
 
-    public constructor() {
-        this.id = 0;
-    }
+  public constructor() {
+    this.id = 0;
+  }
 
-    public finalize() {
-    }
+  public finalize() {}
 }
 Item["__class"] = "Bank.Item";
-
-
-

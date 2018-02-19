@@ -1,12 +1,7 @@
 /* Auto-generated file */
 
-import {Period, Type} from "Service/Fals/TypeMap"
-
+import { Period, Type } from "Service/Fals/TypeMap";
 export class Statistics {
-    public constructor() {
-    }
+  public constructor() {}
 }
 Statistics["__class"] = "Entities.Statistics";
-
-
-

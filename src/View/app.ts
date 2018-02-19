@@ -3,5 +3,5 @@ import { MainModule } from "View/Main/Module";
 
 // when Office has initalized, manually bootstrap the app
 (() => {
-    platformBrowserDynamic().bootstrapModule(MainModule);
+  platformBrowserDynamic().bootstrapModule(MainModule);
 })();

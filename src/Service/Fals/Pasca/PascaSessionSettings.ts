@@ -1,15 +1,9 @@
 /* Auto-generated file */
 
-import {Period, Type} from "Service/Fals/TypeMap"
-
+import { Period, Type } from "Service/Fals/TypeMap";
 export class PascaSessionSettings {
-    public constructor() {
-    }
+  public constructor() {}
 
-    public finalize() {
-    }
+  public finalize() {}
 }
 PascaSessionSettings["__class"] = "Pasca.PascaSessionSettings";
-
-
-

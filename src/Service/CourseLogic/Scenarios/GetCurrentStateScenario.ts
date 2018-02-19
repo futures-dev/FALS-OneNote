@@ -7,20 +7,22 @@ import { CourseState } from "Service/Fals/Entities/CourseState";
 import { Student } from "Service/Fals/Entities/Student";
 
 export class GetCurrentStateScenario extends ScenarioBase<CourseState> {
-    constructor(private student : Student, connection:ConnectionService){
-        super(connection);
-    }
+  constructor(private student: Student, connection: ConnectionService) {
+    super(connection);
+  }
 
-    Start() : void{
-        this.GetCurrentModuleStage();
-    }
+  Start(): void {
+    this.GetCurrentModuleStage();
+  }
 
-    GetCurrentModuleStage() : void{
-        this.connection.AddListener(GetCurrentState, s => this.OnGetCurrentState(s));
-        this.connection.Send(GetCurrentState, this.student);
-    }
+  GetCurrentModuleStage(): void {
+    this.connection.AddListener(GetCurrentState, s =>
+      this.OnGetCurrentState(s)
+    );
+    this.connection.Send(GetCurrentState, this.student);
+  }
 
-    OnGetCurrentState(cs : CourseState) : void{
-        this.Result.next(cs);
-    }
+  OnGetCurrentState(cs: CourseState): void {
+    this.Result.next(cs);
+  }
 }

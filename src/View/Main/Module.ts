@@ -14,30 +14,30 @@ import { ConnectionService } from "Service/Socket/Connection";
 import { CourseService } from "Service/CourseLogic/CourseService";
 
 @NgModule({
-    imports: [        
-        // Framework
-        BrowserModule,
-        FormsModule,
-        RouterModule,
-        RoutingModule,
-        HttpClientModule,
+  imports: [
+    // Framework
+    BrowserModule,
+    FormsModule,
+    RouterModule,
+    RoutingModule,
+    HttpClientModule,
 
-        // local modules
-        OfficeModule, 
+    // local modules
+    OfficeModule,
 
-        // View modules
-        SocketModule,
-        CourseListModule,
-        CourseDashboardModule,
-    ],
-    exports: [],
-    declarations: [MainComponent],
-    bootstrap: [MainComponent],
-    providers: [
-        // all container controlled services to be registered here
+    // View modules
+    SocketModule,
+    CourseListModule,
+    CourseDashboardModule
+  ],
+  exports: [],
+  declarations: [MainComponent],
+  bootstrap: [MainComponent],
+  providers: [
+    // all container controlled services to be registered here
 
-        ConnectionService,
-        CourseService,
-    ]
+    ConnectionService,
+    CourseService
+  ]
 })
 export class MainModule {}
