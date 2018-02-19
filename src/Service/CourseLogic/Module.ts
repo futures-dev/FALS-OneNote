@@ -6,6 +6,6 @@ import { ConnectionService } from "Service/Socket/Connection";
   imports: [SocketModule],
   exports: [],
   declarations: [],
-  providers: [ConnectionService]
+  providers: [ConnectionService],
 })
 export class CourseLogicModule {}

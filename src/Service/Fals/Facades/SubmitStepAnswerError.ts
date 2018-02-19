@@ -2,5 +2,5 @@
 
 import { Period, Type } from "Service/Fals/TypeMap";
 export enum SubmitStepAnswerError {
-  sOk
+  sOk,
 }

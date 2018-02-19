@@ -28,7 +28,7 @@ import { CourseService } from "Service/CourseLogic/CourseService";
     // View modules
     SocketModule,
     CourseListModule,
-    CourseDashboardModule
+    CourseDashboardModule,
   ],
   exports: [],
   declarations: [MainComponent],
@@ -37,7 +37,7 @@ import { CourseService } from "Service/CourseLogic/CourseService";
     // all container controlled services to be registered here
 
     ConnectionService,
-    CourseService
-  ]
+    CourseService,
+  ],
 })
 export class MainModule {}

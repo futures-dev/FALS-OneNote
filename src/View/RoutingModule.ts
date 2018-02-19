@@ -9,12 +9,12 @@ import { CourseDashboardComponent } from "View/CourseDashboard/Component";
 const routes: Routes = [
   { path: "socket", component: SocketComponent },
   { path: "courseList", component: CourseListComponent },
-  { path: "courseDashboard", component: CourseDashboardComponent }
+  { path: "courseDashboard", component: CourseDashboardComponent },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class RoutingModule {}
 

@@ -4,7 +4,7 @@ import { InitializationPublisher } from "Service/Office/InitializationPublisher"
 @Component({
   selector: "main",
   templateUrl: "View/Main/Main.html",
-  providers: [InitializationPublisher]
+  providers: [InitializationPublisher],
 })
 export class MainComponent implements OnInit {
   title: string = "AppComponent Title";

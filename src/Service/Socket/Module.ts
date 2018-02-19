@@ -6,6 +6,6 @@ import { ConnectionService } from "./Connection";
   declarations: [],
   imports: [],
   exports: [],
-  providers: []
+  providers: [],
 })
 export class SocketModule {}

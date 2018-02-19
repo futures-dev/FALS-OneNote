@@ -11,6 +11,6 @@ import { CourseService } from "Service/CourseLogic/CourseService";
   imports: [RouterModule, FormsModule, CommonModule, CourseLogicModule],
   exports: [],
   declarations: [ModuleComponent],
-  providers: [CourseService]
+  providers: [CourseService],
 })
 export class ModuleModule {}

@@ -12,7 +12,7 @@ import { ActivateCourseError } from "Service/Fals/Facade/ActivateCourseError";
 @Component({
   selector: "course",
   templateUrl: "View/CourseList/Course.html",
-  providers: [CourseProvider]
+  providers: [CourseProvider],
 })
 export class CourseComponent implements OnInit {
   LoadState: BehaviorSubject<LoadingState> = new BehaviorSubject(

@@ -4,6 +4,6 @@ import { NgModule } from "@angular/core";
   imports: [],
   exports: [],
   declarations: [],
-  providers: []
+  providers: [],
 })
 export class OfficeModule {}

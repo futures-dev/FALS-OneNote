@@ -4,7 +4,7 @@ import { ModuleService } from "Service/CourseLogic/ModuleService";
 
 @Component({
   selector: "module",
-  templateUrl: "View/Module/Module.html"
+  templateUrl: "View/Module/Module.html",
 })
 export class ModuleComponent implements OnInit {
   get Module() {

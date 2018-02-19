@@ -13,6 +13,6 @@ import { ModuleComponent } from "View/CourseDashboard/ModuleComponent";
   imports: [RouterModule, FormsModule, CommonModule, CourseLogicModule],
   exports: [],
   declarations: [CourseDashboardComponent, ModuleComponent],
-  providers: [CourseService]
+  providers: [CourseService],
 })
 export class CourseDashboardModule {}

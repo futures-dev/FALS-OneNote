@@ -4,7 +4,7 @@ import { Tree } from "Service/Fals/Entities/Tree";
 
 @Component({
   selector: "course-dashboard-module",
-  templateUrl: "View/CourseDashboard/Module.html"
+  templateUrl: "View/CourseDashboard/Module.html",
 })
 export class ModuleComponent implements OnInit {
   @Input() Module: Tree<Module>;

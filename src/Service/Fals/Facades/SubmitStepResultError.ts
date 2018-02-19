@@ -4,5 +4,5 @@ import { Period, Type } from "Service/Fals/TypeMap";
 export enum SubmitStepResultError {
   sOk,
   eStepDoesNotBelongToModule,
-  eResultTypeError
+  eResultTypeError,
 }

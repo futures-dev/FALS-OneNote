@@ -16,9 +16,9 @@ import { CourseLogicModule } from "Service/CourseLogic/Module";
     FormsModule,
     CommonModule,
     ProvidersModule,
-    CourseLogicModule
+    CourseLogicModule,
   ],
   exports: [],
-  declarations: [CourseListComponent, CourseComponent]
+  declarations: [CourseListComponent, CourseComponent],
 })
 export class CourseListModule {}

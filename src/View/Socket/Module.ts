@@ -13,9 +13,9 @@ import { CommonModule } from "@angular/common";
     FormsModule,
     CommonModule,
     StatisticsModule,
-    socket.SocketModule
+    socket.SocketModule,
   ],
   exports: [],
-  declarations: [SocketComponent]
+  declarations: [SocketComponent],
 })
 export class SocketModule {}

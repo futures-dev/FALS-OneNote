@@ -6,7 +6,7 @@ import { BehaviorSubject } from "rxjs/BehaviorSubject";
 @Component({
   selector: "courseList",
   templateUrl: "View/CourseList/CourseList.html",
-  providers: [CourseProvider]
+  providers: [CourseProvider],
 })
 export class CourseListComponent implements OnInit {
   constructor(private courseProvider: CourseProvider) {}

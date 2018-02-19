@@ -6,6 +6,6 @@ import { RouterModule } from "@angular/router";
   imports: [],
   exports: [],
   declarations: [], //StatisticsComponent],
-  providers: []
+  providers: [],
 })
 export class StatisticsModule {}

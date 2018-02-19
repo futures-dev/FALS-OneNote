@@ -8,6 +8,6 @@ import { CourseProvider } from "Service/Providers/CourseProvider";
   imports: [HttpClientModule],
   exports: [],
   declarations: [],
-  providers: [CourseProvider, ServerProvider]
+  providers: [CourseProvider, ServerProvider],
 })
 export class ProvidersModule {}

@@ -12,10 +12,13 @@ import { Storage } from "Backend//Storage";
 import { delay } from "Service/Common/Thread";
 import { Course } from "Service/Fals/Entities/Course";
 import { Student } from "Service/Fals/Entities/Student";
-import { CourseModel } from "Service/Fals/Entities/CourseModel";
-import { CourseModelWrapper } from "Service/Fals/Entities/Lazy/CourseModelWrapper";
+import { CourseWrapper } from "Service/Fals/Entities/Lazy/CourseWrapper";
 import { Assert } from "Service/Common/Assert";
-import { SelectCourse, GetCurrentState, CurrentStateChanged } from "Service/Socket/Events";
+import {
+  SelectCourse,
+  GetCurrentState,
+  CurrentStateChanged,
+} from "Service/Socket/Events";
 import { Result } from "Service/Socket/Results";
 import { CourseState } from "Service/Fals/Entities/CourseState";
 
@@ -31,9 +34,10 @@ app.use(cors());
 //#region Storage
 
 let storage: Storage = Object.create(Storage.prototype);
-Object.assign(storage, JSON.parse(
-  fs.readFileSync(process.argv.slice(2)[0]).toString()
-));
+Object.assign(
+  storage,
+  JSON.parse(fs.readFileSync(process.argv.slice(2)[0]).toString())
+);
 storage.onSerialized();
 
 //#region GET
@@ -45,11 +49,11 @@ app.get("/courses", (req: Request, res: Response) => {
 
 app.get("/course", (req: Request, res: Response) => {
   console.log("mehjere");
-  let courseModels: CourseModel[] = storage.CourseModels;
+  let courses: Course[] = storage.Courses;
   let id = +req.query.courseId;
-  if (id < courseModels.length) {
-    res.json(courseModels[id]);
-    console.log(courseModels[id]);
+  if (id < courses.length) {
+    res.json(courses[id]);
+    console.log(courses[id]);
   } else {
     res.status(404).send('Invalid Parameter: course "id"');
   }
@@ -57,7 +61,7 @@ app.get("/course", (req: Request, res: Response) => {
 
 //#region POST
 
-app.post("/selectCourse", (req: Request, res: Response) => {  
+app.post("/selectCourse", (req: Request, res: Response) => {
   // obsolete
 
   res.sendStatus(200);
@@ -74,8 +78,8 @@ io.on("connection", (socket: SocketIO.Socket) => {
   ));
 
   socket.on(SelectCourse, (course: Course) => {
-    if (!storage.CourseStates[course.student.email]){
-      storage.CourseStates[course.student.email] = []
+    if (!storage.CourseStates[course.student.email]) {
+      storage.CourseStates[course.student.email] = [];
     }
 
     let courseStates = storage.CourseStates[course.student.email];
@@ -85,14 +89,14 @@ io.on("connection", (socket: SocketIO.Socket) => {
     currentState.course = course;
     currentState.index = lastState ? lastState.index + 1 : 1;
 
-    let previousState = courseStates.slice(0)
+    let previousState = courseStates
+      .slice(0)
       .reverse()
       .find(q => q.course == course);
 
-    if (previousState){
+    if (previousState) {
       currentState.currentModule = previousState.currentModule;
-    }
-    else{
+    } else {
       currentState.currentModule = course.courseModel.modules.Value;
     }
 
@@ -103,21 +107,21 @@ io.on("connection", (socket: SocketIO.Socket) => {
 
   socket.on(GetCurrentState, (student: Student) => {
     let courseStates = storage.CourseStates[student.email];
-    if (!courseStates){
-      courseStates = storage.CourseStates[student.email] = []
+    if (!courseStates) {
+      courseStates = storage.CourseStates[student.email] = [];
       socket.emit(GetCurrentState, Result.eNotFound);
     }
 
-    let courseState = courseStates.slice(0)
-    .reverse()
-    .find(q => student.equals(q.course.student));
-    if (courseState){
-      socket.emit(GetCurrentState, courseState); 
-    }
-    else{
+    let courseState = courseStates
+      .slice(0)
+      .reverse()
+      .find(q => student.equals(q.course.student));
+    if (courseState) {
+      socket.emit(GetCurrentState, courseState);
+    } else {
       socket.emit(GetCurrentState, Result.eNotFound);
     }
-  })
+  });
 
   // todo: remove
   foo(socket.id);

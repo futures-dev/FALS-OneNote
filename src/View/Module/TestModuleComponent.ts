@@ -9,7 +9,7 @@ import { Course } from "Service/Fals/Entities/Course";
 
 @Component({
   selector: "testModule",
-  templateUrl: "View/Module/TestModule.html"
+  templateUrl: "View/Module/TestModule.html",
 })
 export class TestModuleComponent implements OnInit {
   @Input() Module: TestModule;

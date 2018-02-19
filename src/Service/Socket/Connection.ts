@@ -11,7 +11,7 @@ export class ConnectionService {
   constructor() {
     this.connection = si.connect(this.url, {
       upgrade: false,
-      transports: ["polling"]
+      transports: ["polling"],
     });
     this.connection.on("connection", () => {
       console.log("connected");

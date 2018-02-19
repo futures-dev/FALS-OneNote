@@ -5,7 +5,7 @@ import { BehaviorSubject } from "rxjs/BehaviorSubject";
 
 @Component({
   selector: "course-dashboard",
-  templateUrl: "View/CourseDashboard/CourseDashboard.html"
+  templateUrl: "View/CourseDashboard/CourseDashboard.html",
 })
 export class CourseDashboardComponent implements OnInit {
   get Course() {

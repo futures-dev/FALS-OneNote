@@ -1,19 +1,18 @@
 import * as fs from "fs";
-import {Storage} from "Backend/Storage"
+import { Storage } from "Backend/Storage";
 
 import { Course } from "Service/Fals/Entities/Course";
-import { CourseModelWrapper } from "Service/Fals/Entities/Lazy/CourseModelWrapper";
+import { CourseWrapper } from "Service/Fals/Entities/Lazy/CourseWrapper";
 import { Student } from "Service/Fals/Entities/Student";
-import { CourseModel } from "Service/Fals/Entities/CourseModel";
 import { Assert } from "Service/Common/Assert";
 import { Tree } from "Service/Fals/Entities/Tree";
-import { Module } from "Service/Fals/Entities/Module";
-import { AssignmentModule } from "Service/Fals/Entities/AssignmentModule";
-import { StudyModule } from "Service/Fals/Entities/StudyModule";
-import { OpenTestModule } from "Service/Fals/Entities/OpenTestModule";
+import { Step } from "Service/Fals/Entities/Step";
+import { AssignmentStep } from "Service/Fals/Entities/AssignmentStep";
+import { StudyStep } from "Service/Fals/Entities/StudyStep";
+import { OpenTestStep } from "Service/Fals/Entities/OpenTestStep";
 import { Problem } from "Service/Fals/Bank/Problem";
 import { Material } from "Service/Fals/Bank/Material";
-import { StudyIntervention } from "Service/Fals/Entities/StudyIntervention";
+import { GotoStepIntervention } from "Service/Fals/Entities/GotoStepIntervention";
 import { Hint } from "Service/Fals/Entities/Hint";
 
 let StoragePath = process.argv.slice(2)[0];
@@ -25,19 +24,19 @@ storage.Modules = generateModules(storage);
 storage.CourseModels = generateCourseModels(storage);
 storage.CourseStates = {};
 
-function generateModules(storage: Storage): {[i: number]: Tree<Module>}{
+function generateModules(storage: Storage): { [i: number]: Tree<Module> } {
   var map = {};
 
-  let modulesRoot = map[0] = new Tree<Module>();
+  let modulesRoot = (map[0] = new Tree<Module>());
 
   let module1Node = new Tree<Module>();
-  map[1] = module1Node;  
+  map[1] = module1Node;
   let module1 = new OpenTestModule();
   module1Node.Value = module1;
-  
+
   module1.problem = new Problem();
-  module1.problem.content = "How much watch?";  
-  let int1 = module1.possibleInterventions = [new StudyIntervention()];
+  module1.problem.content = "How much watch?";
+  let int1 = (module1.possibleInterventions = [new StudyIntervention()]);
   int1[0].studyModule = new StudyModule();
   int1[0].studyModule.material = new Material();
   int1[0].studyModule.material.content = "Keep up and you will succeed";
@@ -52,12 +51,10 @@ function generateModules(storage: Storage): {[i: number]: Tree<Module>}{
   module2.material = new Material();
   module2.material.content = "Remember: 2+2=5";
   module2.material.id = 1;
-  let int2 = module2.possibleInterventions = [new Hint()];
+  let int2 = (module2.possibleInterventions = [new Hint()]);
   int2[0].message = "5 - 2 = 2";
-  
-  modulesRoot.Children = [
-    module1Node,module2Node
-  ];
+
+  modulesRoot.Children = [module1Node, module2Node];
 
   return map;
 }
@@ -104,7 +101,7 @@ function generateStudents(storage: Storage): Student[] {
   let studentA = new Student();
   studentA.email = "studentA@gmail.com";
   studentA.displayName = "Иван Смирнов";
-  
+
   let studentB = new Student();
   studentB.email = "studentB@gmail.com";
   studentB.displayName = "Иван Смирнов";
@@ -116,9 +113,7 @@ let storageObject = new Storage(
   storage.Students,
   storage.CourseModels,
   storage.Modules,
-  storage.Courses,
+  storage.Courses
 );
-storage.CourseStates,
-
-console.log(storageObject);
+storage.CourseStates, console.log(storageObject);
 fs.writeFileSync(StoragePath, JSON.stringify(storageObject, null, 2));
