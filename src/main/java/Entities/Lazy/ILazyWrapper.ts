@@ -1,6 +1,6 @@
 /* Custom ts file because Java does not support interface instance fields */
 
-export interface ILazyWrapper {
+export interface ILazyWrapper<T> {
   IUrl: string;
 }
 
