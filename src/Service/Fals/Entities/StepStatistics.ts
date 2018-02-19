@@ -3,7 +3,7 @@
 import { Period, Type } from "Service/Fals/TypeMap";
 import { ModuleStatistics } from "./ModuleStatistics";
 import { Step } from "./Step";
-export class StepStatistics extends ModuleStatistics {
+export abstract class StepStatistics extends ModuleStatistics {
   public step: Step;
 
   public constructor() {

@@ -12,6 +12,7 @@ export class TestStep extends AssignmentStep {
     super();
     this.answers = null;
     this.correctAnswer = 0;
+    this.resultType = Number.toString();
   }
 }
 TestStep["__class"] = "Entities.TestStep";

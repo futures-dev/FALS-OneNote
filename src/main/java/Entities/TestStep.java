@@ -8,7 +8,7 @@ public class TestStep extends AssignmentStep {
 	public int correctAnswer;
 
 	public TestStep(){
-
+		this.resultType = Integer.class.toString();
 	}
 
 }

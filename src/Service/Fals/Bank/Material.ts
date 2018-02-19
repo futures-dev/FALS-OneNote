@@ -2,7 +2,7 @@
 
 import { Period, Type } from "Service/Fals/TypeMap";
 import { Entity } from "./Entity";
-export class Material extends Entity {
+export abstract class Material extends Entity {
   public constructor() {
     super();
   }
