@@ -1,21 +1,20 @@
 <header class="ms-welcome__header ms-bgColor-neutralLighter ms-u-fadeIn500">
-    <img width="90" height="90" src="assets/logo-filled.png" alt="FALS-OneNote" title="FALS-OneNote"
-    />
+    <img width="90" height="90" src="assets/logo-filled.png" alt="FALS-OneNote" title="FALS-OneNote" />
     <h1 class="ms-fontSize-su ms-fontWeight-light ms-fontColor-neutralPrimary">Welcome</h1>
 </header>
 <router-outlet>
-    <div>
-        <button class="ms-welcome__action ms-Button ms-Button--hero ms-u-slideUpIn20" [routerLink]="['/courseList']">
-            <span class="ms-Button-label">Select course</span>
-            <span class="ms-Button-icon">
-                <i class="ms-Icon ms-Icon--ChevronRight"></i>
-            </span>
-        </button>
-        <button class="ms-welcome__action ms-Button ms-Button--hero ms-u-slideUpIn20" [routerLink]="['/socket']">
-            <span class="ms-Button-label">Debug socket</span>
-            <span class="ms-Button-icon">
-                <i class="ms-Icon ms-Icon--ChevronRight"></i>
-            </span>
-        </button>
-    </div>
 </router-outlet>
+<div>
+    <button class="ms-welcome__action ms-Button ms-Button--hero ms-u-slideUpIn20" [routerLink]="['/courseList']">
+        <span class="ms-Button-label">Select course</span>
+        <span class="ms-Button-icon">
+            <i class="ms-Icon ms-Icon--ChevronRight"></i>
+        </span>
+    </button>
+    <button class="ms-welcome__action ms-Button ms-Button--hero ms-u-slideUpIn20" [routerLink]="['/socket']">
+        <span class="ms-Button-label">Debug socket</span>
+        <span class="ms-Button-icon">
+            <i class="ms-Icon ms-Icon--ChevronRight"></i>
+        </span>
+    </button>
+</div>

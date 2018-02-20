@@ -9,14 +9,14 @@
             </div>
         </div>
         <ul class="ms-Breadcrumb-list">
-            <li class="ms-Breadcrumb-listItem" *ngFor="let module of (Course|async)?.courseModel?.modules?.Children; let i=index;">
-                <a class="ms-Breadcrumb-itemLink" tabindex="" ng-click="SelectModule()" ng-disabled="i < moduleCount">Module {{i + 1}}</a>
+            <li class="ms-Breadcrumb-listItem" *ngFor="let module of (Course|async)?.course?.modules?.Children; let i=index;">
+                <button class="ms-Button ms-Button--hero" tabindex="" [attr.disabled]="isCurrentModule(module)" ng-click="SelectModule()">Module {{i + 1}}</button>
                 <i class="ms-Breadcrumb-chevron ms-Icon ms-Icon--chevronRight"></i>
             </li>
         </ul>
     </div>
-    <div *ngFor="let module of (Course|async)?.course?.modules?.Children; let i=index">
+    <!-- <div *ngFor="let module of (Course|async)?.course?.modules?.Children; let i=index">
         Module {{i}}
         <course-dashboard-module [Module]="module"></course-dashboard-module>
-    </div>
+    </div> -->
 </div>

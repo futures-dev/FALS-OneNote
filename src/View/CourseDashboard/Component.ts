@@ -3,6 +3,7 @@ import { CourseService } from "Service/CourseLogic/CourseService";
 import { Course } from "Service/Fals/Entities/Course";
 import { BehaviorSubject } from "rxjs/BehaviorSubject";
 import { Router } from "@angular/router";
+import { Module } from "Service/Fals/Entities/Module";
 
 @Component({
   selector: "course-dashboard",
@@ -13,9 +14,9 @@ export class CourseDashboardComponent implements OnInit {
     return this.courseService.CurrentCourseState;
   }
 
-  get moduleCount() {
-    return this.courseService.CurrentCourseState.value.currentModule.steps
-      .length;
+  isCurrentModule(module: Module): boolean {
+    // TODO: EQUALS
+    return module == this.Course.value.currentModule;
   }
 
   constructor(private courseService: CourseService, private router: Router) {}
