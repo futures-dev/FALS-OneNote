@@ -4,7 +4,7 @@ package Bank;
 public class Entity {
 
 	public String id;
-	public String type;
+	public String type = getClass().toString();
 	public Version version;
 
 	public Entity(){
@@ -13,20 +13,14 @@ public class Entity {
 
 	/**
 	 * 
-	 * @param a
-	 * @param b
+	 * @param other
 	 */
-	public static boolean equals(Entity a, Entity b){
-		if (a == null && b == null){
-			return true;
-		}
-		if (a == null || b == null){
+	public boolean equals(Entity other){
+		if (other == null){
 			return false;
 		}
-		return (a.type.equals(b.type) 
-		&& a.id.equals(b.id)
-		&& a.version.equals(b.version));
-		
+		return (type.equals(other.type) 
+		&& id.equals(other.id));
 	}
 
 }

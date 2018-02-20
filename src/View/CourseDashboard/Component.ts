@@ -4,6 +4,7 @@ import { Course } from "Service/Fals/Entities/Course";
 import { BehaviorSubject } from "rxjs/BehaviorSubject";
 import { Router } from "@angular/router";
 import { Module } from "Service/Fals/Entities/Module";
+import { Entity } from "Service/Fals/Bank/Entity";
 
 @Component({
   selector: "course-dashboard",
@@ -15,8 +16,7 @@ export class CourseDashboardComponent implements OnInit {
   }
 
   isCurrentModule(module: Module): boolean {
-    // TODO: EQUALS
-    return module == this.Course.value.currentModule;
+    return module.equals(this.Course.value.currentModule);
   }
 
   constructor(private courseService: CourseService, private router: Router) {}

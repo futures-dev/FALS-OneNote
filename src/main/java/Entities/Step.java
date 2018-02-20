@@ -1,7 +1,8 @@
 package Entities;
 
+import Bank.Entity;
 
-public abstract class Step {
+public abstract class Step extends Entity {
 
 	public int maxGrade;
 	public StepInterventionModel possibleInterventions[];

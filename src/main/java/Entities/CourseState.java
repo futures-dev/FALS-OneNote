@@ -19,10 +19,11 @@ public class CourseState extends Entity {
 	 * @param other
 	 */
 	public boolean hasChanged(CourseState other){
-		return this != other || (
-		    other != null &&
-		    this.course.equals(other.course) &&
-			this.currentModule.equals(other.currentModule));
+		return !super.equals(other) && !(
+			student.equals(other.student) &&
+		    course.equals(other.course) &&
+			currentModule.equals(other.currentModule) &&
+			currentStep.equals(other.currentStep));
 	}
 
 }

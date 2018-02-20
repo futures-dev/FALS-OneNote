@@ -33,22 +33,13 @@ export class CourseState extends Entity {
    */
   public hasChanged(other: CourseState): boolean {
     return (
-      this !== other ||
-      (other != null &&
-        /* equals */ <any>((o1: any, o2: any) => {
-          if (o1 && o1.equals) {
-            return o1.equals(o2);
-          } else {
-            return o1 === o2;
-          }
-        })(this.course, other.course) &&
-        /* equals */ <any>((o1: any, o2: any) => {
-          if (o1 && o1.equals) {
-            return o1.equals(o2);
-          } else {
-            return o1 === o2;
-          }
-        })(this.currentModule, other.currentModule))
+      !super.equals(other) &&
+      !(
+        this.student.equals(other.student) &&
+        this.course.equals(other.course) &&
+        this.currentModule.equals(other.currentModule) &&
+        this.currentStep.equals(other.currentStep)
+      )
     );
   }
 }

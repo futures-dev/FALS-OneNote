@@ -5,27 +5,22 @@ import { Version } from "./Version";
 export class Entity {
   public id: string;
 
-  public type: string;
+  public type: string = (<any>this.constructor).toString();
 
   public version: Version;
 
   public constructor() {
     this.id = null;
-    this.type = null;
     this.version = null;
   }
 
   /**
    *
-   * @param {Entity} a
-   * @param {Entity} b
+   * @param {Entity} other
    * @return {boolean}
    */
-  public static equals(a: Entity, b: Entity): boolean {
-    if (a == null && b == null) {
-      return true;
-    }
-    if (a == null || b == null) {
+  public equals(other: Entity): boolean {
+    if (other == null) {
       return false;
     }
     return (
@@ -35,21 +30,14 @@ export class Entity {
         } else {
           return o1 === o2;
         }
-      })(a.type, b.type) &&
+      })(this.type, other.type) &&
       /* equals */ <any>((o1: any, o2: any) => {
         if (o1 && o1.equals) {
           return o1.equals(o2);
         } else {
           return o1 === o2;
         }
-      })(a.id, b.id) &&
-      /* equals */ <any>((o1: any, o2: any) => {
-        if (o1 && o1.equals) {
-          return o1.equals(o2);
-        } else {
-          return o1 === o2;
-        }
-      })(a.version, b.version)
+      })(this.id, other.id)
     );
   }
 }

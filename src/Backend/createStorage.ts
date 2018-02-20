@@ -40,15 +40,20 @@ function generateModules(storage: Storage): { [i: number]: Tree<Module> } {
   let module1Node = new Tree<Module>();
   map[1] = module1Node;
   let module1 = new Module();
+  module1.id = "module1";
   module1Node.Value = module1;
   let module2Node = new Tree<Module>();
   map[2] = module2Node;
   let module2 = new Module();
+  module2.id = "module2";
   module2Node.Value = module2;
 
   let step1 = new OpenTestStep();
+  step1.id = "step1";
   let step2 = new StudyStep();
+  step2.id = "step2";
   let step3 = new ControlStep();
+  step3.id = "step3";
   module1.steps = [step1, step2, step3];
 
   step1.problem = new Assignment();
@@ -65,7 +70,9 @@ function generateModules(storage: Storage): { [i: number]: Tree<Module> } {
   step2.materials = material1;
 
   let exercise1 = new TestStep();
+  exercise1.id = "exercise1";
   let exercise2 = new OpenTestStep();
+  exercise2.id = "exercise2";
 
   exercise1.problem = new Assignment();
   exercise1.problem.content = "2 + 2 = ?";
@@ -96,9 +103,12 @@ function generateModules(storage: Storage): { [i: number]: Tree<Module> } {
   step3.exercises = [exercise1, exercise2];
 
   let step21 = new ControlStep();
+  step21.id = "step21";
   module2.steps = [step21];
   let exercise21 = new StudyStep();
+  exercise21.id = "exercise21";
   let exercise22 = new OpenTestStep();
+  exercise22.id = "exercise22";
   step21.exercises = [exercise1, exercise2];
 
   exercise21.materials = Object.assign(new HypertextMaterial(), {
@@ -123,12 +133,12 @@ function generateCourses(storage: Storage): Course[] {
   Assert(storage.Modules, "Modules should be generated before generateCourses");
 
   let courseA = new Course();
-  courseA.title = "CourseA";
+  courseA.title = courseA.id = "CourseA";
   courseA.description = "It is an easy course!";
   courseA.modules = storage.Modules[0];
 
   let courseB = new Course();
-  courseB.title = "CourseB";
+  courseB.title = courseB.id = "CourseB";
   courseB.description = "You shall not pass";
   courseB.modules = storage.Modules[0];
 
