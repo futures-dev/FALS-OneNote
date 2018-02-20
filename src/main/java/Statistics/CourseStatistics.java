@@ -1,5 +1,6 @@
-package Entities;
+package Statistics;
 
+import Entities.Course;
 
 public abstract class CourseStatistics extends Statistics {
 

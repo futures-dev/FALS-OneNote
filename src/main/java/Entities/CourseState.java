@@ -1,12 +1,13 @@
 package Entities;
 
+import Bank.Entity;
 
-public class CourseState {
+public class CourseState extends Entity {
 
-	public Module currentModule;
 	public Course course;
-	public int index;
+	public Module currentModule;
 	public Step currentStep;
+	public int index;
 	public Student student;
 
 	public CourseState(){

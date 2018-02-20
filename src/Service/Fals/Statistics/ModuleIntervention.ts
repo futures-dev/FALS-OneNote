@@ -1,8 +1,8 @@
 /* Auto-generated file */
 
 import { Period, Type } from "Service/Fals/TypeMap";
+import { ModuleInterventionModel } from "../Entities/ModuleInterventionModel";
 import { ModuleStatistics } from "./ModuleStatistics";
-import { ModuleInterventionModel } from "./ModuleInterventionModel";
 export class ModuleIntervention extends ModuleStatistics {
   public intervention: ModuleInterventionModel;
 
@@ -14,4 +14,4 @@ export class ModuleIntervention extends ModuleStatistics {
     this.interventionTime = null;
   }
 }
-ModuleIntervention["__class"] = "Entities.ModuleIntervention";
+ModuleIntervention["__class"] = "Statistics.ModuleIntervention";

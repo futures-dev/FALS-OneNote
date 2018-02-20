@@ -3,8 +3,8 @@ package Entities;
 
 public class Student {
 
-	public String email;
 	public String displayName;
+	public String email;
 
 	public Student(){
 

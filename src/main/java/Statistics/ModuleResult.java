@@ -1,5 +1,6 @@
-package Entities;
+package Statistics;
 
+import Entities.Module;
 
 public class ModuleResult extends ModuleStatistics {
 

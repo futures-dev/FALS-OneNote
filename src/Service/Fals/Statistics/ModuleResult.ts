@@ -1,8 +1,8 @@
 /* Auto-generated file */
 
 import { Period, Type } from "Service/Fals/TypeMap";
+import { Module } from "../Entities/Module";
 import { ModuleStatistics } from "./ModuleStatistics";
-import { Module } from "./Module";
 export class ModuleResult extends ModuleStatistics {
   public module: Module;
 
@@ -14,4 +14,4 @@ export class ModuleResult extends ModuleStatistics {
     this.resultGrade = 0;
   }
 }
-ModuleResult["__class"] = "Entities.ModuleResult";
+ModuleResult["__class"] = "Statistics.ModuleResult";

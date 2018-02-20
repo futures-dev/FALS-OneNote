@@ -1,5 +1,6 @@
-package Entities;
+package Statistics;
 
+import Entities.Step;
 
 public abstract class StepStatistics extends ModuleStatistics {
 

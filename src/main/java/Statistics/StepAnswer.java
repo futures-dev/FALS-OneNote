@@ -1,4 +1,4 @@
-package Entities;
+package Statistics;
 
 
 public class StepAnswer extends StepStatistics {

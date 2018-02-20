@@ -13,4 +13,4 @@ export class ModuleTime extends ModuleStatistics {
     this.finishTime = null;
   }
 }
-ModuleTime["__class"] = "Entities.ModuleTime";
+ModuleTime["__class"] = "Statistics.ModuleTime";

@@ -2,11 +2,11 @@
 
 import { Period, Type } from "Service/Fals/TypeMap";
 import { Course } from "../Entities/Course";
-import { StepStatistics } from "../Entities/StepStatistics";
+import { StepStatistics } from "../Statistics/StepStatistics";
 import { Student } from "../Entities/Student";
-import { ModuleResult } from "../Entities/ModuleResult";
-import { StepGrade } from "../Entities/StepGrade";
-import { StepAnswer } from "../Entities/StepAnswer";
+import { ModuleResult } from "../Statistics/ModuleResult";
+import { StepGrade } from "../Statistics/StepGrade";
+import { StepAnswer } from "../Statistics/StepAnswer";
 export interface ServerSocket {
   /**
    *

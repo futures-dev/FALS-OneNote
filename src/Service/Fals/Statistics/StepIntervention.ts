@@ -1,8 +1,8 @@
 /* Auto-generated file */
 
 import { Period, Type } from "Service/Fals/TypeMap";
+import { StepInterventionModel } from "../Entities/StepInterventionModel";
 import { StepStatistics } from "./StepStatistics";
-import { StepInterventionModel } from "./StepInterventionModel";
 export class StepIntervention extends StepStatistics {
   public intervention: StepInterventionModel;
 
@@ -14,4 +14,4 @@ export class StepIntervention extends StepStatistics {
     this.interventionTime = null;
   }
 }
-StepIntervention["__class"] = "Entities.StepIntervention";
+StepIntervention["__class"] = "Statistics.StepIntervention";

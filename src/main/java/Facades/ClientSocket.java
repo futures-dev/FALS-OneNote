@@ -1,10 +1,10 @@
 package Facades;
 
 import Entities.Course;
-import Entities.ModuleIntervention;
-import Entities.StepIntervention;
+import Statistics.ModuleIntervention;
+import Statistics.StepIntervention;
 import Entities.CourseState;
-import Entities.StepGrade;
+import Statistics.StepGrade;
 
 public interface ClientSocket {
 

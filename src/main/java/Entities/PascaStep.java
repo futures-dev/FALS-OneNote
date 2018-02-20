@@ -1,18 +1,18 @@
 package Entities;
 
-import Pasca.StepResult;
-import Pasca.PascaSessionSettings;
+import Pasca.PascaStepResult;
 import Pasca.PascaOnenoteSettings;
+import Pasca.PascaSessionSettings;
 
 public class PascaStep extends Step {
 
 	public PascaFalsSettings pascaFalsSettings;
-	public PascaSessionSettings pascaSessionSettings;
 	public PascaOnenoteSettings pascaOnenoteSettings;
+	public PascaSessionSettings pascaSessionSettings;
 	public PascaFalsSettings m_PascaFalsSettings;
 
 	public PascaStep(){
-		this.resultType = StepResult.class.toString();
+		this.resultType = PascaStepResult.class.toString();
 	}
 
 }

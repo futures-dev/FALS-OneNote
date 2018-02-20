@@ -2,13 +2,13 @@
 
 import { Period, Type } from "Service/Fals/TypeMap";
 export class Student {
-  public email: string;
-
   public displayName: string;
 
+  public email: string;
+
   public constructor() {
-    this.email = null;
     this.displayName = null;
+    this.email = null;
   }
 
   /**

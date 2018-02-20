@@ -1,4 +1,4 @@
-package Entities;
+package Statistics;
 
 import java.util.Date;
 

@@ -2,12 +2,12 @@
 
 import { Period, Type } from "Service/Fals/TypeMap";
 import { StepStatistics } from "./StepStatistics";
-export class StepAnswer extends StepStatistics {
-  public value: string;
+export class StepGrade extends StepStatistics {
+  public resultGrade: number;
 
   public constructor() {
     super();
-    this.value = null;
+    this.resultGrade = 0;
   }
 }
-StepAnswer["__class"] = "Entities.StepAnswer";
+StepGrade["__class"] = "Statistics.StepGrade";

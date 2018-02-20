@@ -1,5 +1,6 @@
-package Entities;
+package Statistics;
 
+import Entities.ModuleInterventionModel;
 import java.util.Date;
 
 public class ModuleIntervention extends ModuleStatistics {

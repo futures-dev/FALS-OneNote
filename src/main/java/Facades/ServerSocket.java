@@ -1,11 +1,11 @@
 package Facades;
 
 import Entities.Course;
-import Entities.StepStatistics;
+import Statistics.StepStatistics;
 import Entities.Student;
-import Entities.ModuleResult;
-import Entities.StepGrade;
-import Entities.StepAnswer;
+import Statistics.ModuleResult;
+import Statistics.StepGrade;
+import Statistics.StepAnswer;
 
 public interface ServerSocket {
 

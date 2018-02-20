@@ -1,11 +1,12 @@
 package Entities;
 
+import Bank.Entity;
 
-public class Module {
+public class Module extends Entity {
 
-	public Step steps[];
 	public int maxGrade;
 	public ModuleInterventionModel possibleInterventions[];
+	public Step steps[];
 
 	public Module(){
 

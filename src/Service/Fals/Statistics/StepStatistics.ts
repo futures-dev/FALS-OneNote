@@ -1,8 +1,8 @@
 /* Auto-generated file */
 
 import { Period, Type } from "Service/Fals/TypeMap";
+import { Step } from "../Entities/Step";
 import { ModuleStatistics } from "./ModuleStatistics";
-import { Step } from "./Step";
 export abstract class StepStatistics extends ModuleStatistics {
   public step: Step;
 
@@ -11,4 +11,4 @@ export abstract class StepStatistics extends ModuleStatistics {
     this.step = null;
   }
 }
-StepStatistics["__class"] = "Entities.StepStatistics";
+StepStatistics["__class"] = "Statistics.StepStatistics";

@@ -2,10 +2,10 @@
 
 import { Period, Type } from "Service/Fals/TypeMap";
 import { Course } from "../Entities/Course";
-import { ModuleIntervention } from "../Entities/ModuleIntervention";
-import { StepIntervention } from "../Entities/StepIntervention";
+import { ModuleIntervention } from "../Statistics/ModuleIntervention";
+import { StepIntervention } from "../Statistics/StepIntervention";
 import { CourseState } from "../Entities/CourseState";
-import { StepGrade } from "../Entities/StepGrade";
+import { StepGrade } from "../Statistics/StepGrade";
 import { ActivateCourseError } from "./ActivateCourseError";
 import { SubmitModuleResultError } from "./SubmitModuleResultError";
 import { SubmitStepGradeError } from "./SubmitStepGradeError";

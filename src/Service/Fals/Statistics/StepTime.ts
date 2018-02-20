@@ -13,4 +13,4 @@ export class StepTime extends StepStatistics {
     this.endTime = null;
   }
 }
-StepTime["__class"] = "Entities.StepTime";
+StepTime["__class"] = "Statistics.StepTime";

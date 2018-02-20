@@ -1,7 +1,8 @@
 package Entities;
 
+import Bank.Entity;
 
-public class Course {
+public class Course extends Entity {
 
 	public String description;
 	public Tree<Module> modules;
@@ -9,20 +10,6 @@ public class Course {
 
 	public Course(){
 
-	}
-
-	public boolean isFinished(){
-		return false;
-	}
-
-	/**
-	 * 
-	 * @param other    other
-	 */
-	public boolean equals(Course other){
-		return this == other || (
-		    other != null &&
-			this.title.equals(other.title));
 	}
 
 }
