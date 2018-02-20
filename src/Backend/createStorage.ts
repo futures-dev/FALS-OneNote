@@ -28,7 +28,9 @@ let storage = new Storage();
 storage.Students = generateStudents(storage);
 storage.Modules = generateModules(storage);
 storage.Courses = generateCourses(storage);
-storage.CourseStates = {};
+storage.CourseStates = {
+  "studentA@gmail.com": generateCourseStates(storage),
+};
 
 function generateModules(storage: Storage): { [i: number]: Tree<Module> } {
   var map = {};

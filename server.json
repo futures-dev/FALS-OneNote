@@ -976,5 +976,38 @@
       "title": "CourseB"
     }
   ],
-  "CourseStates": {}
+  "CourseStates": {
+    "studentA@gmail.com": [
+      {
+        "currentModule": null,
+        "course": {
+          "description": null,
+          "modules": null,
+          "title": null,
+          "IUrl": "/course?courseId=0"
+        },
+        "index": 0,
+        "currentStep": null,
+        "student": {
+          "email": "studentA@gmail.com",
+          "displayName": "Иван Смирнов"
+        }
+      },
+      {
+        "currentModule": null,
+        "course": {
+          "description": null,
+          "modules": null,
+          "title": null,
+          "IUrl": "/course?courseId=1"
+        },
+        "index": 0,
+        "currentStep": null,
+        "student": {
+          "email": "studentB@gmail.com",
+          "displayName": "Иван Смирнов"
+        }
+      }
+    ]
+  }
 }
