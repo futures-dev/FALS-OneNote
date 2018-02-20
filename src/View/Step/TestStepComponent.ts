@@ -3,10 +3,10 @@ import { Input } from "@angular/core/src/metadata/directives";
 import { Step } from "Service/Fals/Entities/Step";
 import { TestStep } from "Service/Fals/Entities/TestStep";
 import { StepService } from "Service/CourseLogic/StepService";
-import { StepStatistics } from "Service/Fals/Entities/StepStatistics";
+import { StepStatistics } from "Service/Fals/Statistics/StepStatistics";
 import { CourseService } from "Service/CourseLogic/CourseService";
 import { Course } from "Service/Fals/Entities/Course";
-import { StepAnswer } from "Service/Fals/Entities/StepAnswer";
+import { StepAnswer } from "Service/Fals/Statistics/StepAnswer";
 
 @Component({
   selector: "testStep",

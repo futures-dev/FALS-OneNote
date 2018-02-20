@@ -4,8 +4,8 @@ import { BehaviorSubject } from "rxjs/BehaviorSubject";
 import { ConnectionService } from "Service/Socket/Connection";
 import { ModuleService } from "Service/CourseLogic/ModuleService";
 import { CourseService } from "Service/CourseLogic/CourseService";
-import { StepAnswer } from "Service/Fals/Entities/StepAnswer";
-import { StepStatistics } from "Service/Fals/Entities/StepStatistics";
+import { StepAnswer } from "Service/Fals/Statistics/StepAnswer";
+import { StepStatistics } from "Service/Fals/Statistics/StepStatistics";
 import { SubmitStepResultScenario } from "Service/CourseLogic/Scenarios/SendStepResultScenario";
 
 @Injectable()

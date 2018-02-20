@@ -1,7 +1,7 @@
 import { ScenarioBase } from "Service/Socket/Scenario";
 import { ConnectionService } from "Service/Socket/Connection";
 import { SubmitModuleResult } from "Service/Socket/Events";
-import { ModuleStatistics } from "Service/Fals/Entities/ModuleStatistics";
+import { ModuleStatistics } from "Service/Fals/Statistics/ModuleStatistics";
 import { SubmitModuleResultError } from "Service/Fals/Facades/SubmitModuleResultError";
 
 export class SubmitModuleResultScenario extends ScenarioBase<

@@ -1,7 +1,7 @@
 import { ScenarioBase } from "Service/Socket/Scenario";
 import { ConnectionService } from "Service/Socket/Connection";
 import { SubmitStepResult } from "Service/Socket/Events";
-import { StepStatistics } from "Service/Fals/Entities/StepStatistics";
+import { StepStatistics } from "Service/Fals/Statistics/StepStatistics";
 import { SubmitStepResultError } from "Service/Fals/Facades/SubmitStepResultError";
 
 export class SubmitStepResultScenario extends ScenarioBase<
