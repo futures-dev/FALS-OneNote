@@ -14,13 +14,13 @@ export class ConnectionService {
   static userId = "studentA@gmail.com";
 
   constructor() {
-    this.connection = si.connect(
-      ConnectionService.url + "?userId=" + ConnectionService.userId,
-      {
-        upgrade: false,
-        transports: ["polling"],
-      }
-    );
+    this.connection = si.connect(ConnectionService.url, {
+      upgrade: false,
+      transports: ["polling"],
+      query: {
+        userId: ConnectionService.userId,
+      },
+    });
     this.connection.on("connection", () => {
       console.log("connected");
       console.log(this.connection);
@@ -37,7 +37,7 @@ export class ConnectionService {
   }
 
   Send(event: string, data: any): void {
-    console.log("Send " + event + ". " + data);
+    console.log("Send " + event + ". " + JSON.stringify(data));
     this.connection.emit(event, data);
   }
 }

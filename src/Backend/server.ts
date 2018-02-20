@@ -72,13 +72,16 @@ app.post("/selectCourse", (req: Request, res: Response) => {
 let clients: { [id: string]: Client } = {};
 
 io.on("connection", (socket: SocketIO.Socket) => {
+  console.log("connection ", JSON.stringify(socket.handshake.query.userId));
   let client = (clients[socket.id] = new Client(
+    socket,
     socket.client,
     socket.handshake,
     storage.Students[socket.handshake.query.userId]
   ));
 
   socket.on(SelectCourse, (course: Course) => {
+    console.log("SelectCourse " + client.userId);
     if (!storage.CourseStates[client.userId]) {
       storage.CourseStates[client.userId] = [];
     }

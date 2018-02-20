@@ -47,6 +47,7 @@ export class Client {
   public userId: string;
 
   constructor(
+    public Socket: SocketIO.Socket,
     public SocketClient: SocketIO.Client,
     public Handshake: Handshake,
     public Student: Student
