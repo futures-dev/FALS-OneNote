@@ -1,10 +1,20 @@
-<div>
-    <input id="course_expander_{{$id}}" [checked]="IsExpanded.value" (change)="IsExpanded.next(!IsExpanded.value)" type=checkbox>
-    <label for="course_expander{{$id}}">{{(Course | async)?.courseModel?.title}}</label>
-    <div *ngIf="IsExpanded | async">
-        {{(Course | async)?.courseModel?.modules?.Children[0]?.Value?.problem?.content}}
-    </div>    
-    <div>
-        <input type="button" id="course_select_button_{{$id}}" (click)="SelectCourse()">
+<div class="ms-Callout ms-Callout--arrowLeft">
+    <div class="ms-Callout-main">
+        <div class="ms-Callout-header">
+            <span class="ms-Callout-title">{{(Course | async).title}}</span>
+        </div>
+        <div class="ms-Callout-inner">
+            <div class="ms-Callout-content">
+                <p class="ms-Callout-subText">{{(Course | async).description}}</p>
+            </div>
+            <div class="ms-Callout-actions">
+                <button class="ms-Callout-action ms-Button ms-Button--command" (click)="SelectCourse()">
+                    <span class="ms-Callout-actionText ms-Button-icon">
+                        <i class="ms-Icon ms-Icon--check"></i>
+                    </span>
+                    <span class="ms-Button-label">Activate</span>
+                </button>
+            </div>
+        </div>
     </div>
 </div>

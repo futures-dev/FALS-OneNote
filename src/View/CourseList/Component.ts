@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from "@angular/core";
+import { Component, OnInit, Input, Output } from "@angular/core";
 import { CourseProvider } from "Service/Providers/CourseProvider";
 import { Course } from "Service/Fals/Entities/Course";
 import { BehaviorSubject } from "rxjs/BehaviorSubject";

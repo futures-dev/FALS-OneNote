@@ -488,7 +488,7 @@
   },
   "Courses": [
     {
-      "description": null,
+      "description": "It is an easy course!",
       "modules": {
         "Value": null,
         "Children": [
@@ -732,7 +732,7 @@
       "title": "CourseA"
     },
     {
-      "description": null,
+      "description": "You shall not pass",
       "modules": {
         "Value": null,
         "Children": [

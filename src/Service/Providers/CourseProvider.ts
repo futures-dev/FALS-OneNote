@@ -22,9 +22,8 @@ export class CourseProvider {
   }
 
   populateCourse(course: Course): Observable<Course> {
-    let courseModelLazy = course as CourseWrapper;
-    if (courseModelLazy) {
-      return this.http.getLazy(courseModelLazy);
+    if (course instanceof CourseWrapper) {
+      return this.http.getLazy(course);
     }
 
     return new BehaviorSubject<Course>(course);

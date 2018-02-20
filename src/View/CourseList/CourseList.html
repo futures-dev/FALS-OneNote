@@ -1,3 +1,7 @@
-<div *ngFor="let course of Courses | async; let courseIdx = index">
-    <course [Course] = "course"></course>
+<div>
+    <ul class="ms-List">
+        <li class="ms-ListItem" *ngFor="let course of Courses | async; let courseIdx = index">
+            <course [Course]="course"></course>
+        </li>
+    </ul>
 </div>

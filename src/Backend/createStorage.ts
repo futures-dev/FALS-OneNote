@@ -122,10 +122,12 @@ function generateCourses(storage: Storage): Course[] {
 
   let courseA = new Course();
   courseA.title = "CourseA";
+  courseA.description = "It is an easy course!";
   courseA.modules = storage.Modules[0];
 
   let courseB = new Course();
   courseB.title = "CourseB";
+  courseB.description = "You shall not pass";
   courseB.modules = storage.Modules[0];
 
   return [courseA, courseB];

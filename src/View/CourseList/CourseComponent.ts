@@ -19,16 +19,15 @@ export class CourseComponent implements OnInit {
     LoadingState.Unload
   );
 
-  @Input() Course: BehaviorSubject<Course>;
+  Course: BehaviorSubject<Course> = new BehaviorSubject(null);
+
+  @Input("Course")
+  set setCourse(course: BehaviorSubject<Course>) {
+    console.log("setCourse(" + course.value.title);
+    this.Course.next(course.value);
+  }
 
   IsExpanded: BehaviorSubject<boolean> = new BehaviorSubject(false);
-
-  onIsExpandedChanged(expand: boolean) {
-    console.log("onIsExpandedChanged " + expand);
-    if (expand && this.LoadState.value == LoadingState.Unload) {
-      this.load();
-    }
-  }
 
   constructor(
     private courseProvider: CourseProvider,
@@ -40,6 +39,7 @@ export class CourseComponent implements OnInit {
     this.LoadState.next(LoadingState.Loading);
     this.courseProvider.populateCourse(this.Course.value).subscribe(q => {
       this.Course.next(q);
+      console.log("this.course.next(" + q.title);
       this.LoadState.next(LoadingState.Loaded);
     });
   }
@@ -53,6 +53,6 @@ export class CourseComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.IsExpanded.subscribe(q => this.onIsExpandedChanged(q));
+    this.load();
   }
 }
