@@ -12,6 +12,7 @@ import { HttpClientModule } from "@angular/common/http";
 import { CourseDashboardModule } from "View/CourseDashboard/Module";
 import { ConnectionService } from "Service/Socket/Connection";
 import { CourseService } from "Service/CourseLogic/CourseService";
+import { StepModule } from "View/Step/Module";
 
 @NgModule({
   imports: [
@@ -29,6 +30,7 @@ import { CourseService } from "Service/CourseLogic/CourseService";
     SocketModule,
     CourseListModule,
     CourseDashboardModule,
+    StepModule,
   ],
   exports: [],
   declarations: [MainComponent],

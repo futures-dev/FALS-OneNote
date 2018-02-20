@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { CourseService } from "Service/CourseLogic/CourseService";
 import { Course } from "Service/Fals/Entities/Course";
 import { BehaviorSubject } from "rxjs/BehaviorSubject";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "course-dashboard",
@@ -12,7 +13,17 @@ export class CourseDashboardComponent implements OnInit {
     return this.courseService.CurrentCourseState;
   }
 
-  constructor(private courseService: CourseService) {}
+  get moduleCount() {
+    return this.courseService.CurrentCourseState.value.currentModule.steps
+      .length;
+  }
+
+  constructor(private courseService: CourseService, private router: Router) {}
+
+  SelectModule() {
+    console.log("SelectModule()");
+    this.router.navigateByUrl("/step");
+  }
 
   ngOnInit() {
     console.log(this.Course.value);

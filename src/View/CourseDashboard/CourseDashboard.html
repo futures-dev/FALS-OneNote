@@ -1,13 +1,22 @@
 <div>
-    Dashboard
-    <div *ngFor="let module of (Course|async)?.courseModel?.modules?.Children; let i=index">
+    <label class="ms-Label">Dashboard</label>
+    <div class="ms-Breadcrumb">
+        <div class="ms-Breadcrumb-overflow">
+            <div class="ms-Breadcrumb-overflowButton ms-Icon ms-Icon--ellipsis" tabindex="1"></div>
+            <i class="ms-Breadcrumb-chevron ms-Icon ms-Icon--chevronRight"></i>
+            <div class="ms-Breadcrumb-overflowMenu">
+                <ul class="ms-ContextualMenu is-open"></ul>
+            </div>
+        </div>
+        <ul class="ms-Breadcrumb-list">
+            <li class="ms-Breadcrumb-listItem" *ngFor="let module of (Course|async)?.courseModel?.modules?.Children; let i=index;">
+                <a class="ms-Breadcrumb-itemLink" tabindex="" ng-click="SelectModule()" ng-disabled="i < moduleCount">Module {{i + 1}}</a>
+                <i class="ms-Breadcrumb-chevron ms-Icon ms-Icon--chevronRight"></i>
+            </li>
+        </ul>
+    </div>
+    <div *ngFor="let module of (Course|async)?.course?.modules?.Children; let i=index">
         Module {{i}}
         <course-dashboard-module [Module]="module"></course-dashboard-module>
     </div>
-    <button class="ms-welcome__action ms-Button ms-Button--hero ms-u-slideUpIn20" [routerLink]="['/module']">
-        <span class="ms-Button-label">Debug socket</span>
-        <span class="ms-Button-icon">
-            <i class="ms-Icon ms-Icon--ChevronRight"></i>
-        </span>
-    </button>
 </div>

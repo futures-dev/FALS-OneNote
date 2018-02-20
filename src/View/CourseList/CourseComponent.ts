@@ -45,7 +45,9 @@ export class CourseComponent implements OnInit {
   }
 
   SelectCourse(): void {
+    console.log("SelectCourse()");
     this.courseService.Activate(this.Course.value).subscribe(error => {
+      console.log("SelectCourse result " + error);
       if (error == ActivateCourseError.sOk) {
         this.router.navigateByUrl("/courseDashboard");
       }
