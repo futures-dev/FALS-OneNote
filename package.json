@@ -5,7 +5,7 @@
     "version": "0.1.0",
     "scripts": {
         "prettier":
-            "prettier --loglevel warn --write fix \"src/**/*.{ts,json,js}",
+            "prettier --loglevel warn --write fix \"src/**/*.{ts,json,js}\"",
         "tsc": "npm run prettier && tsc -p tsconfig.json -w",
         "server": "browser-sync start --config bsconfig.json",
         "copy": "cpx \"src/**/!(*.ts|*.java)\" dist --watch",
