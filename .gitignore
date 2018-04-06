@@ -64,3 +64,6 @@ dist/
 target/
 .settings/
 .project
+
+# prod config
+config/**/
