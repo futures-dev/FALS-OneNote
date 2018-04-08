@@ -12,18 +12,15 @@ import { BehaviorSubject } from "rxjs/BehaviorSubject";
 
 @Injectable()
 export class CourseProvider {
-  constructor(private http: ServerProvider) {}
+  constructor(private server: ServerProvider) {}
 
   getCourses(): Observable<Course[]> {
-    return this.http
-      .get("/courses")
-      .do(x => console.log(x))
-      .map(x => x as Course[]);
+    return this.server.get<Course[]>("/courses").do(x => console.log(x));
   }
 
   populateCourse(course: Course): Observable<Course> {
     if (course instanceof CourseWrapper) {
-      return this.http.getLazy(course);
+      return this.server.getLazy(course);
     }
 
     return new BehaviorSubject<Course>(course);

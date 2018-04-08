@@ -16,7 +16,11 @@ export class CourseDashboardComponent implements OnInit {
   }
 
   isCurrentModule(module: Module): boolean {
-    return module.equals(this.Course.value.currentModule);
+    if (module) {
+      return module.equals(this.Course.value.currentModule);
+    } else {
+      return false;
+    }
   }
 
   constructor(private courseService: CourseService, private router: Router) {}
@@ -28,5 +32,7 @@ export class CourseDashboardComponent implements OnInit {
 
   ngOnInit() {
     console.log(this.Course.value);
+    console.log("module equals");
+    console.log(this.Course.value.currentModule.equals);
   }
 }
