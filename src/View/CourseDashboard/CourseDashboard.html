@@ -9,8 +9,8 @@
             </div>
         </div>
         <ul class="ms-Breadcrumb-list">
-            <li class="ms-Breadcrumb-listItem" *ngFor="let module of (Course|async)?.course?.modules?.Children; let i=index;">
-                <button class="ms-Button ms-Button--hero" tabindex="" [attr.disabled]="isCurrentModule(module)" ng-click="SelectModule()">Module {{i + 1}}</button>
+            <li class="ms-Breadcrumb-listItem" *ngFor="let module of (Modules|async)">
+                <button class="ms-Button ms-Button--hero" tabindex="" [attr.disabled]="isCurrentModule(module)" ng-click="SelectModule()">Module {{module.description}}</button>
                 <i class="ms-Breadcrumb-chevron ms-Icon ms-Icon--chevronRight"></i>
             </li>
         </ul>
