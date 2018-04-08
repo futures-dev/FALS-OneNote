@@ -1,5 +1,6 @@
 import { HttpClient, HttpResponse } from "@angular/common/http";
 
+import * as settings from "config";
 import { Injectable, Inject } from "@angular/core";
 import { Observable } from "rxjs/Observable";
 import { HttpParams } from "@angular/common/http";
@@ -8,7 +9,7 @@ import "rxjs/add/operator/catch";
 
 @Injectable()
 export class ServerProvider {
-  private readonly url: string = "http://localhost:3003";
+  private readonly url: string = settings.SERVER_URL;
 
   constructor(@Inject(HttpClient) private http: HttpClient) {}
 
