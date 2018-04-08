@@ -1,11 +1,18 @@
 package Bank;
 
+import Serialization.Serialize;
 
 public class Entity {
 
 	public String id;
-	public String type = getClass().toString();
+	public String type = getClass().getName();
 	public Version version;
+
+	 static {
+
+		 Serialize.declare(Entity.class.getName(), Entity.class);
+
+	 }
 
 	public Entity(){
 
