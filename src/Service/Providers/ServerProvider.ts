@@ -7,17 +7,23 @@ import { HttpParams } from "@angular/common/http";
 import { ILazyWrapper } from "Service/Fals/Entities/Lazy/ILazyWrapper";
 import "rxjs/add/operator/catch";
 
+import { Entity } from "Service/Fals/Bank/Entity";
+import { AssignmentStep } from "Service/Fals/Entities/AssignmentStep";
+import * as ser from "Service/Fals/Serialization";
+
 @Injectable()
 export class ServerProvider {
   private readonly url: string = settings.SERVER_URL;
 
   constructor(@Inject(HttpClient) private http: HttpClient) {}
 
-  get(path: string, params: HttpParams = new HttpParams()): Observable<Object> {
-    return this.http.get(this.url + path, { params: params });
+  get<T>(path: string, params: HttpParams = new HttpParams()): Observable<T> {
+    return this.http
+      .get<T>(this.url + path, { params: params })
+      .map(ser.deserialize);
   }
 
   getLazy<T>(lazy: ILazyWrapper<T>): Observable<T> {
-    return this.http.get(this.url + lazy.IUrl).map(q => q as T);
+    return this.http.get<T>(this.url + lazy.IUrl).map(ser.deserialize);
   }
 }

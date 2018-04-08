@@ -17,7 +17,9 @@
         "createStorage":
             "node ./dist/Backend/createStorageLauncher.js ./server.json",
         "gen":
-            "rimraf ./src/Service/Fals/*/ && mvn generate-sources && copyfiles -u 3 ./src/main/java/**/*.ts ./src/Service/Fals && npm run prettier"
+            "rimraf ./src/Service/Fals/*/ && mvn generate-sources -X && copyfiles -u 3 ./src/main/java/**/*.ts ./src/Service/Fals && npm run gen_barrel && npm run prettier",
+        "gen_barrel":
+            "rimraf ./src/Service/Fals/**/index.ts && barrelsby -d src/Service/Fals -l below"
     },
     "prettier": {
         "trailingComma": "es5",
@@ -52,7 +54,8 @@
         "rxjs": "^5.5.5",
         "socket.io-client": "1.7.4",
         "systemjs": "^0.20.19",
-        "zone.js": "^0.8.18"
+        "zone.js": "^0.8.18",
+        "morgan": "^1.9.0"
     },
     "devDependencies": {
         "@types/angular": "^1.6.2",
@@ -67,6 +70,7 @@
         "prettier": "^1.10.2",
         "rimraf": "^2.6.2",
         "socket.io": "1.7.4",
-        "typescript": "^2.6.2"
+        "typescript": "^2.6.2",
+        "barrelsby": "^0.0.8"
     }
 }

@@ -11,25 +11,27 @@
   ],
   "Modules": {
     "0": {
+      "type": "Entities.Tree",
       "Children": [
         {
+          "type": "Entities.Tree",
           "Children": null,
           "Value": {
-            "type": "class Module extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.maxGrade = 0;\r\n        this.possibleInterventions = null;\r\n        this.steps = null;\r\n    }\r\n}",
+            "type": "Entities.Module",
             "id": "module1",
             "version": null,
             "maxGrade": 0,
             "possibleInterventions": null,
             "steps": [
               {
-                "type": "class OpenTestStep extends AssignmentStep_1.AssignmentStep {\r\n    constructor() {\r\n        super();\r\n        this.correctAnswer = null;\r\n        this.resultType = String.toString();\r\n    }\r\n    /**\r\n     *\r\n     * @param {string} answer    answer\r\n     * @return {boolean}\r\n     */\r\n    isAnswerValid(answer) {\r\n        return /* equals */ ((o1, o2) => {\r\n            if (o1 && o1.equals) {\r\n                return o1.equals(o2);\r\n            }\r\n            else {\r\n                return o1 === o2;\r\n            }\r\n        })(this.correctAnswer.value, answer);\r\n    }\r\n}",
+                "type": "Entities.OpenTestStep",
                 "id": "step1",
                 "version": null,
                 "maxGrade": 0,
                 "possibleInterventions": [
                   {
                     "step": {
-                      "type": "class ControlStep extends Step_1.Step {\r\n    constructor() {\r\n        super();\r\n        this.exercises = null;\r\n    }\r\n    getGrade() {\r\n        return 0;\r\n    }\r\n}",
+                      "type": "Entities.ControlStep",
                       "id": "step3",
                       "version": null,
                       "maxGrade": 0,
@@ -37,39 +39,39 @@
                       "resultType": null,
                       "exercises": [
                         {
-                          "type": "class TestStep extends AssignmentStep_1.AssignmentStep {\r\n    constructor() {\r\n        super();\r\n        this.answers = null;\r\n        this.correctAnswer = 0;\r\n        this.resultType = Number.toString();\r\n    }\r\n}",
+                          "type": "Entities.TestStep",
                           "id": "exercise1",
                           "version": null,
                           "maxGrade": 5,
                           "possibleInterventions": null,
                           "resultType": "function Number() { [native code] }",
                           "problem": {
-                            "type": "class Assignment extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.content = null;\r\n    }\r\n}",
+                            "type": "Bank.Assignment",
                             "id": null,
                             "version": null,
                             "content": "2 + 2 = ?"
                           },
                           "answers": [
                             {
-                              "type": "class Key extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.value = null;\r\n    }\r\n}",
+                              "type": "Bank.Key",
                               "id": null,
                               "version": null,
                               "value": "2"
                             },
                             {
-                              "type": "class Key extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.value = null;\r\n    }\r\n}",
+                              "type": "Bank.Key",
                               "id": null,
                               "version": null,
                               "value": "3"
                             },
                             {
-                              "type": "class Key extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.value = null;\r\n    }\r\n}",
+                              "type": "Bank.Key",
                               "id": null,
                               "version": null,
                               "value": "4"
                             },
                             {
-                              "type": "class Key extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.value = null;\r\n    }\r\n}",
+                              "type": "Bank.Key",
                               "id": null,
                               "version": null,
                               "value": "5"
@@ -78,20 +80,20 @@
                           "correctAnswer": 3
                         },
                         {
-                          "type": "class OpenTestStep extends AssignmentStep_1.AssignmentStep {\r\n    constructor() {\r\n        super();\r\n        this.correctAnswer = null;\r\n        this.resultType = String.toString();\r\n    }\r\n    /**\r\n     *\r\n     * @param {string} answer    answer\r\n     * @return {boolean}\r\n     */\r\n    isAnswerValid(answer) {\r\n        return /* equals */ ((o1, o2) => {\r\n            if (o1 && o1.equals) {\r\n                return o1.equals(o2);\r\n            }\r\n            else {\r\n                return o1 === o2;\r\n            }\r\n        })(this.correctAnswer.value, answer);\r\n    }\r\n}",
+                          "type": "Entities.OpenTestStep",
                           "id": "exercise2",
                           "version": null,
                           "maxGrade": 15,
                           "possibleInterventions": null,
                           "resultType": "function String() { [native code] }",
                           "problem": {
-                            "type": "class Assignment extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.content = null;\r\n    }\r\n}",
+                            "type": "Bank.Assignment",
                             "id": null,
                             "version": null,
                             "content": "3 + 3 = ?"
                           },
                           "correctAnswer": {
-                            "type": "class Key extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.value = null;\r\n    }\r\n}",
+                            "type": "Bank.Key",
                             "id": null,
                             "version": null,
                             "value": "6"
@@ -103,34 +105,34 @@
                 ],
                 "resultType": "function String() { [native code] }",
                 "problem": {
-                  "type": "class Assignment extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.content = null;\r\n    }\r\n}",
+                  "type": "Bank.Assignment",
                   "id": null,
                   "version": null,
                   "content": "How much watch?"
                 },
                 "correctAnswer": {
-                  "type": "class Key extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.value = null;\r\n    }\r\n}",
+                  "type": "Bank.Key",
                   "id": null,
                   "version": null,
                   "value": "Whom how"
                 }
               },
               {
-                "type": "class StudyStep extends Step_1.Step {\r\n    constructor() {\r\n        super();\r\n        this.materials = null;\r\n    }\r\n}",
+                "type": "Entities.StudyStep",
                 "id": "step2",
                 "version": null,
                 "maxGrade": 0,
                 "possibleInterventions": null,
                 "resultType": null,
                 "materials": {
-                  "type": "class HypertextMaterial extends Material_1.Material {\r\n    constructor() {\r\n        super();\r\n        this.content = null;\r\n    }\r\n}",
+                  "type": "Bank.HypertextMaterial",
                   "id": null,
                   "version": null,
                   "content": "<div>Material1.Content Image!<img source=\"https://www.google.ru/images/branding/googlelogo/2x/googlelogo_color_120x44dp.png\"></img></div>"
                 }
               },
               {
-                "type": "class ControlStep extends Step_1.Step {\r\n    constructor() {\r\n        super();\r\n        this.exercises = null;\r\n    }\r\n    getGrade() {\r\n        return 0;\r\n    }\r\n}",
+                "type": "Entities.ControlStep",
                 "id": "step3",
                 "version": null,
                 "maxGrade": 0,
@@ -138,39 +140,39 @@
                 "resultType": null,
                 "exercises": [
                   {
-                    "type": "class TestStep extends AssignmentStep_1.AssignmentStep {\r\n    constructor() {\r\n        super();\r\n        this.answers = null;\r\n        this.correctAnswer = 0;\r\n        this.resultType = Number.toString();\r\n    }\r\n}",
+                    "type": "Entities.TestStep",
                     "id": "exercise1",
                     "version": null,
                     "maxGrade": 5,
                     "possibleInterventions": null,
                     "resultType": "function Number() { [native code] }",
                     "problem": {
-                      "type": "class Assignment extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.content = null;\r\n    }\r\n}",
+                      "type": "Bank.Assignment",
                       "id": null,
                       "version": null,
                       "content": "2 + 2 = ?"
                     },
                     "answers": [
                       {
-                        "type": "class Key extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.value = null;\r\n    }\r\n}",
+                        "type": "Bank.Key",
                         "id": null,
                         "version": null,
                         "value": "2"
                       },
                       {
-                        "type": "class Key extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.value = null;\r\n    }\r\n}",
+                        "type": "Bank.Key",
                         "id": null,
                         "version": null,
                         "value": "3"
                       },
                       {
-                        "type": "class Key extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.value = null;\r\n    }\r\n}",
+                        "type": "Bank.Key",
                         "id": null,
                         "version": null,
                         "value": "4"
                       },
                       {
-                        "type": "class Key extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.value = null;\r\n    }\r\n}",
+                        "type": "Bank.Key",
                         "id": null,
                         "version": null,
                         "value": "5"
@@ -179,20 +181,20 @@
                     "correctAnswer": 3
                   },
                   {
-                    "type": "class OpenTestStep extends AssignmentStep_1.AssignmentStep {\r\n    constructor() {\r\n        super();\r\n        this.correctAnswer = null;\r\n        this.resultType = String.toString();\r\n    }\r\n    /**\r\n     *\r\n     * @param {string} answer    answer\r\n     * @return {boolean}\r\n     */\r\n    isAnswerValid(answer) {\r\n        return /* equals */ ((o1, o2) => {\r\n            if (o1 && o1.equals) {\r\n                return o1.equals(o2);\r\n            }\r\n            else {\r\n                return o1 === o2;\r\n            }\r\n        })(this.correctAnswer.value, answer);\r\n    }\r\n}",
+                    "type": "Entities.OpenTestStep",
                     "id": "exercise2",
                     "version": null,
                     "maxGrade": 15,
                     "possibleInterventions": null,
                     "resultType": "function String() { [native code] }",
                     "problem": {
-                      "type": "class Assignment extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.content = null;\r\n    }\r\n}",
+                      "type": "Bank.Assignment",
                       "id": null,
                       "version": null,
                       "content": "3 + 3 = ?"
                     },
                     "correctAnswer": {
-                      "type": "class Key extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.value = null;\r\n    }\r\n}",
+                      "type": "Bank.Key",
                       "id": null,
                       "version": null,
                       "value": "6"
@@ -204,16 +206,17 @@
           }
         },
         {
+          "type": "Entities.Tree",
           "Children": null,
           "Value": {
-            "type": "class Module extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.maxGrade = 0;\r\n        this.possibleInterventions = null;\r\n        this.steps = null;\r\n    }\r\n}",
+            "type": "Entities.Module",
             "id": "module2",
             "version": null,
             "maxGrade": 0,
             "possibleInterventions": null,
             "steps": [
               {
-                "type": "class ControlStep extends Step_1.Step {\r\n    constructor() {\r\n        super();\r\n        this.exercises = null;\r\n    }\r\n    getGrade() {\r\n        return 0;\r\n    }\r\n}",
+                "type": "Entities.ControlStep",
                 "id": "step21",
                 "version": null,
                 "maxGrade": 0,
@@ -221,39 +224,39 @@
                 "resultType": null,
                 "exercises": [
                   {
-                    "type": "class TestStep extends AssignmentStep_1.AssignmentStep {\r\n    constructor() {\r\n        super();\r\n        this.answers = null;\r\n        this.correctAnswer = 0;\r\n        this.resultType = Number.toString();\r\n    }\r\n}",
+                    "type": "Entities.TestStep",
                     "id": "exercise1",
                     "version": null,
                     "maxGrade": 5,
                     "possibleInterventions": null,
                     "resultType": "function Number() { [native code] }",
                     "problem": {
-                      "type": "class Assignment extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.content = null;\r\n    }\r\n}",
+                      "type": "Bank.Assignment",
                       "id": null,
                       "version": null,
                       "content": "2 + 2 = ?"
                     },
                     "answers": [
                       {
-                        "type": "class Key extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.value = null;\r\n    }\r\n}",
+                        "type": "Bank.Key",
                         "id": null,
                         "version": null,
                         "value": "2"
                       },
                       {
-                        "type": "class Key extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.value = null;\r\n    }\r\n}",
+                        "type": "Bank.Key",
                         "id": null,
                         "version": null,
                         "value": "3"
                       },
                       {
-                        "type": "class Key extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.value = null;\r\n    }\r\n}",
+                        "type": "Bank.Key",
                         "id": null,
                         "version": null,
                         "value": "4"
                       },
                       {
-                        "type": "class Key extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.value = null;\r\n    }\r\n}",
+                        "type": "Bank.Key",
                         "id": null,
                         "version": null,
                         "value": "5"
@@ -262,20 +265,20 @@
                     "correctAnswer": 3
                   },
                   {
-                    "type": "class OpenTestStep extends AssignmentStep_1.AssignmentStep {\r\n    constructor() {\r\n        super();\r\n        this.correctAnswer = null;\r\n        this.resultType = String.toString();\r\n    }\r\n    /**\r\n     *\r\n     * @param {string} answer    answer\r\n     * @return {boolean}\r\n     */\r\n    isAnswerValid(answer) {\r\n        return /* equals */ ((o1, o2) => {\r\n            if (o1 && o1.equals) {\r\n                return o1.equals(o2);\r\n            }\r\n            else {\r\n                return o1 === o2;\r\n            }\r\n        })(this.correctAnswer.value, answer);\r\n    }\r\n}",
+                    "type": "Entities.OpenTestStep",
                     "id": "exercise2",
                     "version": null,
                     "maxGrade": 15,
                     "possibleInterventions": null,
                     "resultType": "function String() { [native code] }",
                     "problem": {
-                      "type": "class Assignment extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.content = null;\r\n    }\r\n}",
+                      "type": "Bank.Assignment",
                       "id": null,
                       "version": null,
                       "content": "3 + 3 = ?"
                     },
                     "correctAnswer": {
-                      "type": "class Key extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.value = null;\r\n    }\r\n}",
+                      "type": "Bank.Key",
                       "id": null,
                       "version": null,
                       "value": "6"
@@ -290,23 +293,24 @@
       "Value": null
     },
     "1": {
+      "type": "Entities.Tree",
       "Children": null,
       "Value": {
-        "type": "class Module extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.maxGrade = 0;\r\n        this.possibleInterventions = null;\r\n        this.steps = null;\r\n    }\r\n}",
+        "type": "Entities.Module",
         "id": "module1",
         "version": null,
         "maxGrade": 0,
         "possibleInterventions": null,
         "steps": [
           {
-            "type": "class OpenTestStep extends AssignmentStep_1.AssignmentStep {\r\n    constructor() {\r\n        super();\r\n        this.correctAnswer = null;\r\n        this.resultType = String.toString();\r\n    }\r\n    /**\r\n     *\r\n     * @param {string} answer    answer\r\n     * @return {boolean}\r\n     */\r\n    isAnswerValid(answer) {\r\n        return /* equals */ ((o1, o2) => {\r\n            if (o1 && o1.equals) {\r\n                return o1.equals(o2);\r\n            }\r\n            else {\r\n                return o1 === o2;\r\n            }\r\n        })(this.correctAnswer.value, answer);\r\n    }\r\n}",
+            "type": "Entities.OpenTestStep",
             "id": "step1",
             "version": null,
             "maxGrade": 0,
             "possibleInterventions": [
               {
                 "step": {
-                  "type": "class ControlStep extends Step_1.Step {\r\n    constructor() {\r\n        super();\r\n        this.exercises = null;\r\n    }\r\n    getGrade() {\r\n        return 0;\r\n    }\r\n}",
+                  "type": "Entities.ControlStep",
                   "id": "step3",
                   "version": null,
                   "maxGrade": 0,
@@ -314,39 +318,39 @@
                   "resultType": null,
                   "exercises": [
                     {
-                      "type": "class TestStep extends AssignmentStep_1.AssignmentStep {\r\n    constructor() {\r\n        super();\r\n        this.answers = null;\r\n        this.correctAnswer = 0;\r\n        this.resultType = Number.toString();\r\n    }\r\n}",
+                      "type": "Entities.TestStep",
                       "id": "exercise1",
                       "version": null,
                       "maxGrade": 5,
                       "possibleInterventions": null,
                       "resultType": "function Number() { [native code] }",
                       "problem": {
-                        "type": "class Assignment extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.content = null;\r\n    }\r\n}",
+                        "type": "Bank.Assignment",
                         "id": null,
                         "version": null,
                         "content": "2 + 2 = ?"
                       },
                       "answers": [
                         {
-                          "type": "class Key extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.value = null;\r\n    }\r\n}",
+                          "type": "Bank.Key",
                           "id": null,
                           "version": null,
                           "value": "2"
                         },
                         {
-                          "type": "class Key extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.value = null;\r\n    }\r\n}",
+                          "type": "Bank.Key",
                           "id": null,
                           "version": null,
                           "value": "3"
                         },
                         {
-                          "type": "class Key extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.value = null;\r\n    }\r\n}",
+                          "type": "Bank.Key",
                           "id": null,
                           "version": null,
                           "value": "4"
                         },
                         {
-                          "type": "class Key extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.value = null;\r\n    }\r\n}",
+                          "type": "Bank.Key",
                           "id": null,
                           "version": null,
                           "value": "5"
@@ -355,20 +359,20 @@
                       "correctAnswer": 3
                     },
                     {
-                      "type": "class OpenTestStep extends AssignmentStep_1.AssignmentStep {\r\n    constructor() {\r\n        super();\r\n        this.correctAnswer = null;\r\n        this.resultType = String.toString();\r\n    }\r\n    /**\r\n     *\r\n     * @param {string} answer    answer\r\n     * @return {boolean}\r\n     */\r\n    isAnswerValid(answer) {\r\n        return /* equals */ ((o1, o2) => {\r\n            if (o1 && o1.equals) {\r\n                return o1.equals(o2);\r\n            }\r\n            else {\r\n                return o1 === o2;\r\n            }\r\n        })(this.correctAnswer.value, answer);\r\n    }\r\n}",
+                      "type": "Entities.OpenTestStep",
                       "id": "exercise2",
                       "version": null,
                       "maxGrade": 15,
                       "possibleInterventions": null,
                       "resultType": "function String() { [native code] }",
                       "problem": {
-                        "type": "class Assignment extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.content = null;\r\n    }\r\n}",
+                        "type": "Bank.Assignment",
                         "id": null,
                         "version": null,
                         "content": "3 + 3 = ?"
                       },
                       "correctAnswer": {
-                        "type": "class Key extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.value = null;\r\n    }\r\n}",
+                        "type": "Bank.Key",
                         "id": null,
                         "version": null,
                         "value": "6"
@@ -380,34 +384,34 @@
             ],
             "resultType": "function String() { [native code] }",
             "problem": {
-              "type": "class Assignment extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.content = null;\r\n    }\r\n}",
+              "type": "Bank.Assignment",
               "id": null,
               "version": null,
               "content": "How much watch?"
             },
             "correctAnswer": {
-              "type": "class Key extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.value = null;\r\n    }\r\n}",
+              "type": "Bank.Key",
               "id": null,
               "version": null,
               "value": "Whom how"
             }
           },
           {
-            "type": "class StudyStep extends Step_1.Step {\r\n    constructor() {\r\n        super();\r\n        this.materials = null;\r\n    }\r\n}",
+            "type": "Entities.StudyStep",
             "id": "step2",
             "version": null,
             "maxGrade": 0,
             "possibleInterventions": null,
             "resultType": null,
             "materials": {
-              "type": "class HypertextMaterial extends Material_1.Material {\r\n    constructor() {\r\n        super();\r\n        this.content = null;\r\n    }\r\n}",
+              "type": "Bank.HypertextMaterial",
               "id": null,
               "version": null,
               "content": "<div>Material1.Content Image!<img source=\"https://www.google.ru/images/branding/googlelogo/2x/googlelogo_color_120x44dp.png\"></img></div>"
             }
           },
           {
-            "type": "class ControlStep extends Step_1.Step {\r\n    constructor() {\r\n        super();\r\n        this.exercises = null;\r\n    }\r\n    getGrade() {\r\n        return 0;\r\n    }\r\n}",
+            "type": "Entities.ControlStep",
             "id": "step3",
             "version": null,
             "maxGrade": 0,
@@ -415,39 +419,39 @@
             "resultType": null,
             "exercises": [
               {
-                "type": "class TestStep extends AssignmentStep_1.AssignmentStep {\r\n    constructor() {\r\n        super();\r\n        this.answers = null;\r\n        this.correctAnswer = 0;\r\n        this.resultType = Number.toString();\r\n    }\r\n}",
+                "type": "Entities.TestStep",
                 "id": "exercise1",
                 "version": null,
                 "maxGrade": 5,
                 "possibleInterventions": null,
                 "resultType": "function Number() { [native code] }",
                 "problem": {
-                  "type": "class Assignment extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.content = null;\r\n    }\r\n}",
+                  "type": "Bank.Assignment",
                   "id": null,
                   "version": null,
                   "content": "2 + 2 = ?"
                 },
                 "answers": [
                   {
-                    "type": "class Key extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.value = null;\r\n    }\r\n}",
+                    "type": "Bank.Key",
                     "id": null,
                     "version": null,
                     "value": "2"
                   },
                   {
-                    "type": "class Key extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.value = null;\r\n    }\r\n}",
+                    "type": "Bank.Key",
                     "id": null,
                     "version": null,
                     "value": "3"
                   },
                   {
-                    "type": "class Key extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.value = null;\r\n    }\r\n}",
+                    "type": "Bank.Key",
                     "id": null,
                     "version": null,
                     "value": "4"
                   },
                   {
-                    "type": "class Key extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.value = null;\r\n    }\r\n}",
+                    "type": "Bank.Key",
                     "id": null,
                     "version": null,
                     "value": "5"
@@ -456,20 +460,20 @@
                 "correctAnswer": 3
               },
               {
-                "type": "class OpenTestStep extends AssignmentStep_1.AssignmentStep {\r\n    constructor() {\r\n        super();\r\n        this.correctAnswer = null;\r\n        this.resultType = String.toString();\r\n    }\r\n    /**\r\n     *\r\n     * @param {string} answer    answer\r\n     * @return {boolean}\r\n     */\r\n    isAnswerValid(answer) {\r\n        return /* equals */ ((o1, o2) => {\r\n            if (o1 && o1.equals) {\r\n                return o1.equals(o2);\r\n            }\r\n            else {\r\n                return o1 === o2;\r\n            }\r\n        })(this.correctAnswer.value, answer);\r\n    }\r\n}",
+                "type": "Entities.OpenTestStep",
                 "id": "exercise2",
                 "version": null,
                 "maxGrade": 15,
                 "possibleInterventions": null,
                 "resultType": "function String() { [native code] }",
                 "problem": {
-                  "type": "class Assignment extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.content = null;\r\n    }\r\n}",
+                  "type": "Bank.Assignment",
                   "id": null,
                   "version": null,
                   "content": "3 + 3 = ?"
                 },
                 "correctAnswer": {
-                  "type": "class Key extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.value = null;\r\n    }\r\n}",
+                  "type": "Bank.Key",
                   "id": null,
                   "version": null,
                   "value": "6"
@@ -481,16 +485,17 @@
       }
     },
     "2": {
+      "type": "Entities.Tree",
       "Children": null,
       "Value": {
-        "type": "class Module extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.maxGrade = 0;\r\n        this.possibleInterventions = null;\r\n        this.steps = null;\r\n    }\r\n}",
+        "type": "Entities.Module",
         "id": "module2",
         "version": null,
         "maxGrade": 0,
         "possibleInterventions": null,
         "steps": [
           {
-            "type": "class ControlStep extends Step_1.Step {\r\n    constructor() {\r\n        super();\r\n        this.exercises = null;\r\n    }\r\n    getGrade() {\r\n        return 0;\r\n    }\r\n}",
+            "type": "Entities.ControlStep",
             "id": "step21",
             "version": null,
             "maxGrade": 0,
@@ -498,39 +503,39 @@
             "resultType": null,
             "exercises": [
               {
-                "type": "class TestStep extends AssignmentStep_1.AssignmentStep {\r\n    constructor() {\r\n        super();\r\n        this.answers = null;\r\n        this.correctAnswer = 0;\r\n        this.resultType = Number.toString();\r\n    }\r\n}",
+                "type": "Entities.TestStep",
                 "id": "exercise1",
                 "version": null,
                 "maxGrade": 5,
                 "possibleInterventions": null,
                 "resultType": "function Number() { [native code] }",
                 "problem": {
-                  "type": "class Assignment extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.content = null;\r\n    }\r\n}",
+                  "type": "Bank.Assignment",
                   "id": null,
                   "version": null,
                   "content": "2 + 2 = ?"
                 },
                 "answers": [
                   {
-                    "type": "class Key extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.value = null;\r\n    }\r\n}",
+                    "type": "Bank.Key",
                     "id": null,
                     "version": null,
                     "value": "2"
                   },
                   {
-                    "type": "class Key extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.value = null;\r\n    }\r\n}",
+                    "type": "Bank.Key",
                     "id": null,
                     "version": null,
                     "value": "3"
                   },
                   {
-                    "type": "class Key extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.value = null;\r\n    }\r\n}",
+                    "type": "Bank.Key",
                     "id": null,
                     "version": null,
                     "value": "4"
                   },
                   {
-                    "type": "class Key extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.value = null;\r\n    }\r\n}",
+                    "type": "Bank.Key",
                     "id": null,
                     "version": null,
                     "value": "5"
@@ -539,20 +544,20 @@
                 "correctAnswer": 3
               },
               {
-                "type": "class OpenTestStep extends AssignmentStep_1.AssignmentStep {\r\n    constructor() {\r\n        super();\r\n        this.correctAnswer = null;\r\n        this.resultType = String.toString();\r\n    }\r\n    /**\r\n     *\r\n     * @param {string} answer    answer\r\n     * @return {boolean}\r\n     */\r\n    isAnswerValid(answer) {\r\n        return /* equals */ ((o1, o2) => {\r\n            if (o1 && o1.equals) {\r\n                return o1.equals(o2);\r\n            }\r\n            else {\r\n                return o1 === o2;\r\n            }\r\n        })(this.correctAnswer.value, answer);\r\n    }\r\n}",
+                "type": "Entities.OpenTestStep",
                 "id": "exercise2",
                 "version": null,
                 "maxGrade": 15,
                 "possibleInterventions": null,
                 "resultType": "function String() { [native code] }",
                 "problem": {
-                  "type": "class Assignment extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.content = null;\r\n    }\r\n}",
+                  "type": "Bank.Assignment",
                   "id": null,
                   "version": null,
                   "content": "3 + 3 = ?"
                 },
                 "correctAnswer": {
-                  "type": "class Key extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.value = null;\r\n    }\r\n}",
+                  "type": "Bank.Key",
                   "id": null,
                   "version": null,
                   "value": "6"
@@ -566,30 +571,32 @@
   },
   "Courses": [
     {
-      "type": "class Course extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.description = null;\r\n        this.modules = null;\r\n        this.title = null;\r\n    }\r\n}",
+      "type": "Entities.Course",
       "id": "CourseA",
       "version": null,
       "description": "It is an easy course!",
       "modules": {
+        "type": "Entities.Tree",
         "Children": [
           {
+            "type": "Entities.Tree",
             "Children": null,
             "Value": {
-              "type": "class Module extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.maxGrade = 0;\r\n        this.possibleInterventions = null;\r\n        this.steps = null;\r\n    }\r\n}",
+              "type": "Entities.Module",
               "id": "module1",
               "version": null,
               "maxGrade": 0,
               "possibleInterventions": null,
               "steps": [
                 {
-                  "type": "class OpenTestStep extends AssignmentStep_1.AssignmentStep {\r\n    constructor() {\r\n        super();\r\n        this.correctAnswer = null;\r\n        this.resultType = String.toString();\r\n    }\r\n    /**\r\n     *\r\n     * @param {string} answer    answer\r\n     * @return {boolean}\r\n     */\r\n    isAnswerValid(answer) {\r\n        return /* equals */ ((o1, o2) => {\r\n            if (o1 && o1.equals) {\r\n                return o1.equals(o2);\r\n            }\r\n            else {\r\n                return o1 === o2;\r\n            }\r\n        })(this.correctAnswer.value, answer);\r\n    }\r\n}",
+                  "type": "Entities.OpenTestStep",
                   "id": "step1",
                   "version": null,
                   "maxGrade": 0,
                   "possibleInterventions": [
                     {
                       "step": {
-                        "type": "class ControlStep extends Step_1.Step {\r\n    constructor() {\r\n        super();\r\n        this.exercises = null;\r\n    }\r\n    getGrade() {\r\n        return 0;\r\n    }\r\n}",
+                        "type": "Entities.ControlStep",
                         "id": "step3",
                         "version": null,
                         "maxGrade": 0,
@@ -597,39 +604,39 @@
                         "resultType": null,
                         "exercises": [
                           {
-                            "type": "class TestStep extends AssignmentStep_1.AssignmentStep {\r\n    constructor() {\r\n        super();\r\n        this.answers = null;\r\n        this.correctAnswer = 0;\r\n        this.resultType = Number.toString();\r\n    }\r\n}",
+                            "type": "Entities.TestStep",
                             "id": "exercise1",
                             "version": null,
                             "maxGrade": 5,
                             "possibleInterventions": null,
                             "resultType": "function Number() { [native code] }",
                             "problem": {
-                              "type": "class Assignment extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.content = null;\r\n    }\r\n}",
+                              "type": "Bank.Assignment",
                               "id": null,
                               "version": null,
                               "content": "2 + 2 = ?"
                             },
                             "answers": [
                               {
-                                "type": "class Key extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.value = null;\r\n    }\r\n}",
+                                "type": "Bank.Key",
                                 "id": null,
                                 "version": null,
                                 "value": "2"
                               },
                               {
-                                "type": "class Key extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.value = null;\r\n    }\r\n}",
+                                "type": "Bank.Key",
                                 "id": null,
                                 "version": null,
                                 "value": "3"
                               },
                               {
-                                "type": "class Key extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.value = null;\r\n    }\r\n}",
+                                "type": "Bank.Key",
                                 "id": null,
                                 "version": null,
                                 "value": "4"
                               },
                               {
-                                "type": "class Key extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.value = null;\r\n    }\r\n}",
+                                "type": "Bank.Key",
                                 "id": null,
                                 "version": null,
                                 "value": "5"
@@ -638,20 +645,20 @@
                             "correctAnswer": 3
                           },
                           {
-                            "type": "class OpenTestStep extends AssignmentStep_1.AssignmentStep {\r\n    constructor() {\r\n        super();\r\n        this.correctAnswer = null;\r\n        this.resultType = String.toString();\r\n    }\r\n    /**\r\n     *\r\n     * @param {string} answer    answer\r\n     * @return {boolean}\r\n     */\r\n    isAnswerValid(answer) {\r\n        return /* equals */ ((o1, o2) => {\r\n            if (o1 && o1.equals) {\r\n                return o1.equals(o2);\r\n            }\r\n            else {\r\n                return o1 === o2;\r\n            }\r\n        })(this.correctAnswer.value, answer);\r\n    }\r\n}",
+                            "type": "Entities.OpenTestStep",
                             "id": "exercise2",
                             "version": null,
                             "maxGrade": 15,
                             "possibleInterventions": null,
                             "resultType": "function String() { [native code] }",
                             "problem": {
-                              "type": "class Assignment extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.content = null;\r\n    }\r\n}",
+                              "type": "Bank.Assignment",
                               "id": null,
                               "version": null,
                               "content": "3 + 3 = ?"
                             },
                             "correctAnswer": {
-                              "type": "class Key extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.value = null;\r\n    }\r\n}",
+                              "type": "Bank.Key",
                               "id": null,
                               "version": null,
                               "value": "6"
@@ -663,34 +670,34 @@
                   ],
                   "resultType": "function String() { [native code] }",
                   "problem": {
-                    "type": "class Assignment extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.content = null;\r\n    }\r\n}",
+                    "type": "Bank.Assignment",
                     "id": null,
                     "version": null,
                     "content": "How much watch?"
                   },
                   "correctAnswer": {
-                    "type": "class Key extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.value = null;\r\n    }\r\n}",
+                    "type": "Bank.Key",
                     "id": null,
                     "version": null,
                     "value": "Whom how"
                   }
                 },
                 {
-                  "type": "class StudyStep extends Step_1.Step {\r\n    constructor() {\r\n        super();\r\n        this.materials = null;\r\n    }\r\n}",
+                  "type": "Entities.StudyStep",
                   "id": "step2",
                   "version": null,
                   "maxGrade": 0,
                   "possibleInterventions": null,
                   "resultType": null,
                   "materials": {
-                    "type": "class HypertextMaterial extends Material_1.Material {\r\n    constructor() {\r\n        super();\r\n        this.content = null;\r\n    }\r\n}",
+                    "type": "Bank.HypertextMaterial",
                     "id": null,
                     "version": null,
                     "content": "<div>Material1.Content Image!<img source=\"https://www.google.ru/images/branding/googlelogo/2x/googlelogo_color_120x44dp.png\"></img></div>"
                   }
                 },
                 {
-                  "type": "class ControlStep extends Step_1.Step {\r\n    constructor() {\r\n        super();\r\n        this.exercises = null;\r\n    }\r\n    getGrade() {\r\n        return 0;\r\n    }\r\n}",
+                  "type": "Entities.ControlStep",
                   "id": "step3",
                   "version": null,
                   "maxGrade": 0,
@@ -698,39 +705,39 @@
                   "resultType": null,
                   "exercises": [
                     {
-                      "type": "class TestStep extends AssignmentStep_1.AssignmentStep {\r\n    constructor() {\r\n        super();\r\n        this.answers = null;\r\n        this.correctAnswer = 0;\r\n        this.resultType = Number.toString();\r\n    }\r\n}",
+                      "type": "Entities.TestStep",
                       "id": "exercise1",
                       "version": null,
                       "maxGrade": 5,
                       "possibleInterventions": null,
                       "resultType": "function Number() { [native code] }",
                       "problem": {
-                        "type": "class Assignment extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.content = null;\r\n    }\r\n}",
+                        "type": "Bank.Assignment",
                         "id": null,
                         "version": null,
                         "content": "2 + 2 = ?"
                       },
                       "answers": [
                         {
-                          "type": "class Key extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.value = null;\r\n    }\r\n}",
+                          "type": "Bank.Key",
                           "id": null,
                           "version": null,
                           "value": "2"
                         },
                         {
-                          "type": "class Key extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.value = null;\r\n    }\r\n}",
+                          "type": "Bank.Key",
                           "id": null,
                           "version": null,
                           "value": "3"
                         },
                         {
-                          "type": "class Key extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.value = null;\r\n    }\r\n}",
+                          "type": "Bank.Key",
                           "id": null,
                           "version": null,
                           "value": "4"
                         },
                         {
-                          "type": "class Key extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.value = null;\r\n    }\r\n}",
+                          "type": "Bank.Key",
                           "id": null,
                           "version": null,
                           "value": "5"
@@ -739,20 +746,20 @@
                       "correctAnswer": 3
                     },
                     {
-                      "type": "class OpenTestStep extends AssignmentStep_1.AssignmentStep {\r\n    constructor() {\r\n        super();\r\n        this.correctAnswer = null;\r\n        this.resultType = String.toString();\r\n    }\r\n    /**\r\n     *\r\n     * @param {string} answer    answer\r\n     * @return {boolean}\r\n     */\r\n    isAnswerValid(answer) {\r\n        return /* equals */ ((o1, o2) => {\r\n            if (o1 && o1.equals) {\r\n                return o1.equals(o2);\r\n            }\r\n            else {\r\n                return o1 === o2;\r\n            }\r\n        })(this.correctAnswer.value, answer);\r\n    }\r\n}",
+                      "type": "Entities.OpenTestStep",
                       "id": "exercise2",
                       "version": null,
                       "maxGrade": 15,
                       "possibleInterventions": null,
                       "resultType": "function String() { [native code] }",
                       "problem": {
-                        "type": "class Assignment extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.content = null;\r\n    }\r\n}",
+                        "type": "Bank.Assignment",
                         "id": null,
                         "version": null,
                         "content": "3 + 3 = ?"
                       },
                       "correctAnswer": {
-                        "type": "class Key extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.value = null;\r\n    }\r\n}",
+                        "type": "Bank.Key",
                         "id": null,
                         "version": null,
                         "value": "6"
@@ -764,16 +771,17 @@
             }
           },
           {
+            "type": "Entities.Tree",
             "Children": null,
             "Value": {
-              "type": "class Module extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.maxGrade = 0;\r\n        this.possibleInterventions = null;\r\n        this.steps = null;\r\n    }\r\n}",
+              "type": "Entities.Module",
               "id": "module2",
               "version": null,
               "maxGrade": 0,
               "possibleInterventions": null,
               "steps": [
                 {
-                  "type": "class ControlStep extends Step_1.Step {\r\n    constructor() {\r\n        super();\r\n        this.exercises = null;\r\n    }\r\n    getGrade() {\r\n        return 0;\r\n    }\r\n}",
+                  "type": "Entities.ControlStep",
                   "id": "step21",
                   "version": null,
                   "maxGrade": 0,
@@ -781,39 +789,39 @@
                   "resultType": null,
                   "exercises": [
                     {
-                      "type": "class TestStep extends AssignmentStep_1.AssignmentStep {\r\n    constructor() {\r\n        super();\r\n        this.answers = null;\r\n        this.correctAnswer = 0;\r\n        this.resultType = Number.toString();\r\n    }\r\n}",
+                      "type": "Entities.TestStep",
                       "id": "exercise1",
                       "version": null,
                       "maxGrade": 5,
                       "possibleInterventions": null,
                       "resultType": "function Number() { [native code] }",
                       "problem": {
-                        "type": "class Assignment extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.content = null;\r\n    }\r\n}",
+                        "type": "Bank.Assignment",
                         "id": null,
                         "version": null,
                         "content": "2 + 2 = ?"
                       },
                       "answers": [
                         {
-                          "type": "class Key extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.value = null;\r\n    }\r\n}",
+                          "type": "Bank.Key",
                           "id": null,
                           "version": null,
                           "value": "2"
                         },
                         {
-                          "type": "class Key extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.value = null;\r\n    }\r\n}",
+                          "type": "Bank.Key",
                           "id": null,
                           "version": null,
                           "value": "3"
                         },
                         {
-                          "type": "class Key extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.value = null;\r\n    }\r\n}",
+                          "type": "Bank.Key",
                           "id": null,
                           "version": null,
                           "value": "4"
                         },
                         {
-                          "type": "class Key extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.value = null;\r\n    }\r\n}",
+                          "type": "Bank.Key",
                           "id": null,
                           "version": null,
                           "value": "5"
@@ -822,20 +830,20 @@
                       "correctAnswer": 3
                     },
                     {
-                      "type": "class OpenTestStep extends AssignmentStep_1.AssignmentStep {\r\n    constructor() {\r\n        super();\r\n        this.correctAnswer = null;\r\n        this.resultType = String.toString();\r\n    }\r\n    /**\r\n     *\r\n     * @param {string} answer    answer\r\n     * @return {boolean}\r\n     */\r\n    isAnswerValid(answer) {\r\n        return /* equals */ ((o1, o2) => {\r\n            if (o1 && o1.equals) {\r\n                return o1.equals(o2);\r\n            }\r\n            else {\r\n                return o1 === o2;\r\n            }\r\n        })(this.correctAnswer.value, answer);\r\n    }\r\n}",
+                      "type": "Entities.OpenTestStep",
                       "id": "exercise2",
                       "version": null,
                       "maxGrade": 15,
                       "possibleInterventions": null,
                       "resultType": "function String() { [native code] }",
                       "problem": {
-                        "type": "class Assignment extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.content = null;\r\n    }\r\n}",
+                        "type": "Bank.Assignment",
                         "id": null,
                         "version": null,
                         "content": "3 + 3 = ?"
                       },
                       "correctAnswer": {
-                        "type": "class Key extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.value = null;\r\n    }\r\n}",
+                        "type": "Bank.Key",
                         "id": null,
                         "version": null,
                         "value": "6"
@@ -852,30 +860,32 @@
       "title": "CourseA"
     },
     {
-      "type": "class Course extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.description = null;\r\n        this.modules = null;\r\n        this.title = null;\r\n    }\r\n}",
+      "type": "Entities.Course",
       "id": "CourseB",
       "version": null,
       "description": "You shall not pass",
       "modules": {
+        "type": "Entities.Tree",
         "Children": [
           {
+            "type": "Entities.Tree",
             "Children": null,
             "Value": {
-              "type": "class Module extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.maxGrade = 0;\r\n        this.possibleInterventions = null;\r\n        this.steps = null;\r\n    }\r\n}",
+              "type": "Entities.Module",
               "id": "module1",
               "version": null,
               "maxGrade": 0,
               "possibleInterventions": null,
               "steps": [
                 {
-                  "type": "class OpenTestStep extends AssignmentStep_1.AssignmentStep {\r\n    constructor() {\r\n        super();\r\n        this.correctAnswer = null;\r\n        this.resultType = String.toString();\r\n    }\r\n    /**\r\n     *\r\n     * @param {string} answer    answer\r\n     * @return {boolean}\r\n     */\r\n    isAnswerValid(answer) {\r\n        return /* equals */ ((o1, o2) => {\r\n            if (o1 && o1.equals) {\r\n                return o1.equals(o2);\r\n            }\r\n            else {\r\n                return o1 === o2;\r\n            }\r\n        })(this.correctAnswer.value, answer);\r\n    }\r\n}",
+                  "type": "Entities.OpenTestStep",
                   "id": "step1",
                   "version": null,
                   "maxGrade": 0,
                   "possibleInterventions": [
                     {
                       "step": {
-                        "type": "class ControlStep extends Step_1.Step {\r\n    constructor() {\r\n        super();\r\n        this.exercises = null;\r\n    }\r\n    getGrade() {\r\n        return 0;\r\n    }\r\n}",
+                        "type": "Entities.ControlStep",
                         "id": "step3",
                         "version": null,
                         "maxGrade": 0,
@@ -883,39 +893,39 @@
                         "resultType": null,
                         "exercises": [
                           {
-                            "type": "class TestStep extends AssignmentStep_1.AssignmentStep {\r\n    constructor() {\r\n        super();\r\n        this.answers = null;\r\n        this.correctAnswer = 0;\r\n        this.resultType = Number.toString();\r\n    }\r\n}",
+                            "type": "Entities.TestStep",
                             "id": "exercise1",
                             "version": null,
                             "maxGrade": 5,
                             "possibleInterventions": null,
                             "resultType": "function Number() { [native code] }",
                             "problem": {
-                              "type": "class Assignment extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.content = null;\r\n    }\r\n}",
+                              "type": "Bank.Assignment",
                               "id": null,
                               "version": null,
                               "content": "2 + 2 = ?"
                             },
                             "answers": [
                               {
-                                "type": "class Key extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.value = null;\r\n    }\r\n}",
+                                "type": "Bank.Key",
                                 "id": null,
                                 "version": null,
                                 "value": "2"
                               },
                               {
-                                "type": "class Key extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.value = null;\r\n    }\r\n}",
+                                "type": "Bank.Key",
                                 "id": null,
                                 "version": null,
                                 "value": "3"
                               },
                               {
-                                "type": "class Key extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.value = null;\r\n    }\r\n}",
+                                "type": "Bank.Key",
                                 "id": null,
                                 "version": null,
                                 "value": "4"
                               },
                               {
-                                "type": "class Key extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.value = null;\r\n    }\r\n}",
+                                "type": "Bank.Key",
                                 "id": null,
                                 "version": null,
                                 "value": "5"
@@ -924,20 +934,20 @@
                             "correctAnswer": 3
                           },
                           {
-                            "type": "class OpenTestStep extends AssignmentStep_1.AssignmentStep {\r\n    constructor() {\r\n        super();\r\n        this.correctAnswer = null;\r\n        this.resultType = String.toString();\r\n    }\r\n    /**\r\n     *\r\n     * @param {string} answer    answer\r\n     * @return {boolean}\r\n     */\r\n    isAnswerValid(answer) {\r\n        return /* equals */ ((o1, o2) => {\r\n            if (o1 && o1.equals) {\r\n                return o1.equals(o2);\r\n            }\r\n            else {\r\n                return o1 === o2;\r\n            }\r\n        })(this.correctAnswer.value, answer);\r\n    }\r\n}",
+                            "type": "Entities.OpenTestStep",
                             "id": "exercise2",
                             "version": null,
                             "maxGrade": 15,
                             "possibleInterventions": null,
                             "resultType": "function String() { [native code] }",
                             "problem": {
-                              "type": "class Assignment extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.content = null;\r\n    }\r\n}",
+                              "type": "Bank.Assignment",
                               "id": null,
                               "version": null,
                               "content": "3 + 3 = ?"
                             },
                             "correctAnswer": {
-                              "type": "class Key extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.value = null;\r\n    }\r\n}",
+                              "type": "Bank.Key",
                               "id": null,
                               "version": null,
                               "value": "6"
@@ -949,34 +959,34 @@
                   ],
                   "resultType": "function String() { [native code] }",
                   "problem": {
-                    "type": "class Assignment extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.content = null;\r\n    }\r\n}",
+                    "type": "Bank.Assignment",
                     "id": null,
                     "version": null,
                     "content": "How much watch?"
                   },
                   "correctAnswer": {
-                    "type": "class Key extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.value = null;\r\n    }\r\n}",
+                    "type": "Bank.Key",
                     "id": null,
                     "version": null,
                     "value": "Whom how"
                   }
                 },
                 {
-                  "type": "class StudyStep extends Step_1.Step {\r\n    constructor() {\r\n        super();\r\n        this.materials = null;\r\n    }\r\n}",
+                  "type": "Entities.StudyStep",
                   "id": "step2",
                   "version": null,
                   "maxGrade": 0,
                   "possibleInterventions": null,
                   "resultType": null,
                   "materials": {
-                    "type": "class HypertextMaterial extends Material_1.Material {\r\n    constructor() {\r\n        super();\r\n        this.content = null;\r\n    }\r\n}",
+                    "type": "Bank.HypertextMaterial",
                     "id": null,
                     "version": null,
                     "content": "<div>Material1.Content Image!<img source=\"https://www.google.ru/images/branding/googlelogo/2x/googlelogo_color_120x44dp.png\"></img></div>"
                   }
                 },
                 {
-                  "type": "class ControlStep extends Step_1.Step {\r\n    constructor() {\r\n        super();\r\n        this.exercises = null;\r\n    }\r\n    getGrade() {\r\n        return 0;\r\n    }\r\n}",
+                  "type": "Entities.ControlStep",
                   "id": "step3",
                   "version": null,
                   "maxGrade": 0,
@@ -984,39 +994,39 @@
                   "resultType": null,
                   "exercises": [
                     {
-                      "type": "class TestStep extends AssignmentStep_1.AssignmentStep {\r\n    constructor() {\r\n        super();\r\n        this.answers = null;\r\n        this.correctAnswer = 0;\r\n        this.resultType = Number.toString();\r\n    }\r\n}",
+                      "type": "Entities.TestStep",
                       "id": "exercise1",
                       "version": null,
                       "maxGrade": 5,
                       "possibleInterventions": null,
                       "resultType": "function Number() { [native code] }",
                       "problem": {
-                        "type": "class Assignment extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.content = null;\r\n    }\r\n}",
+                        "type": "Bank.Assignment",
                         "id": null,
                         "version": null,
                         "content": "2 + 2 = ?"
                       },
                       "answers": [
                         {
-                          "type": "class Key extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.value = null;\r\n    }\r\n}",
+                          "type": "Bank.Key",
                           "id": null,
                           "version": null,
                           "value": "2"
                         },
                         {
-                          "type": "class Key extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.value = null;\r\n    }\r\n}",
+                          "type": "Bank.Key",
                           "id": null,
                           "version": null,
                           "value": "3"
                         },
                         {
-                          "type": "class Key extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.value = null;\r\n    }\r\n}",
+                          "type": "Bank.Key",
                           "id": null,
                           "version": null,
                           "value": "4"
                         },
                         {
-                          "type": "class Key extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.value = null;\r\n    }\r\n}",
+                          "type": "Bank.Key",
                           "id": null,
                           "version": null,
                           "value": "5"
@@ -1025,20 +1035,20 @@
                       "correctAnswer": 3
                     },
                     {
-                      "type": "class OpenTestStep extends AssignmentStep_1.AssignmentStep {\r\n    constructor() {\r\n        super();\r\n        this.correctAnswer = null;\r\n        this.resultType = String.toString();\r\n    }\r\n    /**\r\n     *\r\n     * @param {string} answer    answer\r\n     * @return {boolean}\r\n     */\r\n    isAnswerValid(answer) {\r\n        return /* equals */ ((o1, o2) => {\r\n            if (o1 && o1.equals) {\r\n                return o1.equals(o2);\r\n            }\r\n            else {\r\n                return o1 === o2;\r\n            }\r\n        })(this.correctAnswer.value, answer);\r\n    }\r\n}",
+                      "type": "Entities.OpenTestStep",
                       "id": "exercise2",
                       "version": null,
                       "maxGrade": 15,
                       "possibleInterventions": null,
                       "resultType": "function String() { [native code] }",
                       "problem": {
-                        "type": "class Assignment extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.content = null;\r\n    }\r\n}",
+                        "type": "Bank.Assignment",
                         "id": null,
                         "version": null,
                         "content": "3 + 3 = ?"
                       },
                       "correctAnswer": {
-                        "type": "class Key extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.value = null;\r\n    }\r\n}",
+                        "type": "Bank.Key",
                         "id": null,
                         "version": null,
                         "value": "6"
@@ -1050,16 +1060,17 @@
             }
           },
           {
+            "type": "Entities.Tree",
             "Children": null,
             "Value": {
-              "type": "class Module extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.maxGrade = 0;\r\n        this.possibleInterventions = null;\r\n        this.steps = null;\r\n    }\r\n}",
+              "type": "Entities.Module",
               "id": "module2",
               "version": null,
               "maxGrade": 0,
               "possibleInterventions": null,
               "steps": [
                 {
-                  "type": "class ControlStep extends Step_1.Step {\r\n    constructor() {\r\n        super();\r\n        this.exercises = null;\r\n    }\r\n    getGrade() {\r\n        return 0;\r\n    }\r\n}",
+                  "type": "Entities.ControlStep",
                   "id": "step21",
                   "version": null,
                   "maxGrade": 0,
@@ -1067,39 +1078,39 @@
                   "resultType": null,
                   "exercises": [
                     {
-                      "type": "class TestStep extends AssignmentStep_1.AssignmentStep {\r\n    constructor() {\r\n        super();\r\n        this.answers = null;\r\n        this.correctAnswer = 0;\r\n        this.resultType = Number.toString();\r\n    }\r\n}",
+                      "type": "Entities.TestStep",
                       "id": "exercise1",
                       "version": null,
                       "maxGrade": 5,
                       "possibleInterventions": null,
                       "resultType": "function Number() { [native code] }",
                       "problem": {
-                        "type": "class Assignment extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.content = null;\r\n    }\r\n}",
+                        "type": "Bank.Assignment",
                         "id": null,
                         "version": null,
                         "content": "2 + 2 = ?"
                       },
                       "answers": [
                         {
-                          "type": "class Key extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.value = null;\r\n    }\r\n}",
+                          "type": "Bank.Key",
                           "id": null,
                           "version": null,
                           "value": "2"
                         },
                         {
-                          "type": "class Key extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.value = null;\r\n    }\r\n}",
+                          "type": "Bank.Key",
                           "id": null,
                           "version": null,
                           "value": "3"
                         },
                         {
-                          "type": "class Key extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.value = null;\r\n    }\r\n}",
+                          "type": "Bank.Key",
                           "id": null,
                           "version": null,
                           "value": "4"
                         },
                         {
-                          "type": "class Key extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.value = null;\r\n    }\r\n}",
+                          "type": "Bank.Key",
                           "id": null,
                           "version": null,
                           "value": "5"
@@ -1108,20 +1119,20 @@
                       "correctAnswer": 3
                     },
                     {
-                      "type": "class OpenTestStep extends AssignmentStep_1.AssignmentStep {\r\n    constructor() {\r\n        super();\r\n        this.correctAnswer = null;\r\n        this.resultType = String.toString();\r\n    }\r\n    /**\r\n     *\r\n     * @param {string} answer    answer\r\n     * @return {boolean}\r\n     */\r\n    isAnswerValid(answer) {\r\n        return /* equals */ ((o1, o2) => {\r\n            if (o1 && o1.equals) {\r\n                return o1.equals(o2);\r\n            }\r\n            else {\r\n                return o1 === o2;\r\n            }\r\n        })(this.correctAnswer.value, answer);\r\n    }\r\n}",
+                      "type": "Entities.OpenTestStep",
                       "id": "exercise2",
                       "version": null,
                       "maxGrade": 15,
                       "possibleInterventions": null,
                       "resultType": "function String() { [native code] }",
                       "problem": {
-                        "type": "class Assignment extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.content = null;\r\n    }\r\n}",
+                        "type": "Bank.Assignment",
                         "id": null,
                         "version": null,
                         "content": "3 + 3 = ?"
                       },
                       "correctAnswer": {
-                        "type": "class Key extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.value = null;\r\n    }\r\n}",
+                        "type": "Bank.Key",
                         "id": null,
                         "version": null,
                         "value": "6"
@@ -1141,11 +1152,11 @@
   "CourseStates": {
     "studentA@gmail.com": [
       {
-        "type": "class CourseState extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.course = null;\r\n        this.currentModule = null;\r\n        this.currentStep = null;\r\n        this.index = 0;\r\n        this.student = null;\r\n    }\r\n    /**\r\n     *\r\n     * @param {CourseState} other\r\n     * @return {boolean}\r\n     */\r\n    hasChanged(other) {\r\n        return (!super.equals(other) &&\r\n            !(this.student.equals(other.student) &&\r\n                this.course.equals(other.course) &&\r\n                this.currentModule.equals(other.currentModule) &&\r\n                this.currentStep.equals(other.currentStep)));\r\n    }\r\n}",
+        "type": "Entities.CourseState",
         "id": null,
         "version": null,
         "course": {
-          "type": "class CourseWrapper extends Course_1.Course {\r\n    constructor() {\r\n        super();\r\n        this.IUrl = null;\r\n    }\r\n}",
+          "type": "Entities.Lazy.CourseWrapper",
           "id": null,
           "version": null,
           "description": null,
@@ -1162,11 +1173,11 @@
         }
       },
       {
-        "type": "class CourseState extends Entity_1.Entity {\r\n    constructor() {\r\n        super();\r\n        this.course = null;\r\n        this.currentModule = null;\r\n        this.currentStep = null;\r\n        this.index = 0;\r\n        this.student = null;\r\n    }\r\n    /**\r\n     *\r\n     * @param {CourseState} other\r\n     * @return {boolean}\r\n     */\r\n    hasChanged(other) {\r\n        return (!super.equals(other) &&\r\n            !(this.student.equals(other.student) &&\r\n                this.course.equals(other.course) &&\r\n                this.currentModule.equals(other.currentModule) &&\r\n                this.currentStep.equals(other.currentStep)));\r\n    }\r\n}",
+        "type": "Entities.CourseState",
         "id": null,
         "version": null,
         "course": {
-          "type": "class CourseWrapper extends Course_1.Course {\r\n    constructor() {\r\n        super();\r\n        this.IUrl = null;\r\n    }\r\n}",
+          "type": "Entities.Lazy.CourseWrapper",
           "id": null,
           "version": null,
           "description": null,
