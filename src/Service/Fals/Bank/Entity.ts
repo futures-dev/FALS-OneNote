@@ -1,13 +1,30 @@
 /* Auto-generated file */
 
 import { Period, Type } from "Service/Fals/TypeMap";
+import { Serialize } from "../Serialization/Serialize";
 import { Version } from "./Version";
 export class Entity {
+  static __static_initialized: boolean = false;
+  static __static_initialize() {
+    if (!Entity.__static_initialized) {
+      Entity.__static_initialized = true;
+      Entity.__static_initializer_0();
+    }
+  }
+
   public id: string;
 
-  public type: string = (<any>this.constructor).toString();
+  public type: string = /* getName */ (c =>
+    c["__class"] ? c["__class"] : c["name"])(<any>this.constructor);
 
   public version: Version;
+
+  static __static_initializer_0() {
+    Serialize.declare(
+      /* getName */ (c => (c["__class"] ? c["__class"] : c["name"]))(Entity),
+      Entity
+    );
+  }
 
   public constructor() {
     this.id = null;
@@ -42,3 +59,5 @@ export class Entity {
   }
 }
 Entity["__class"] = "Bank.Entity";
+
+Entity.__static_initialize();

@@ -1,5 +1,5 @@
 export interface Type {
-  FullName: string;
+  prototype: any;
 }
 
 export interface Period extends Date {}

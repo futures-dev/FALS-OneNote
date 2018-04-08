@@ -1,10 +1,17 @@
 package Entities;
 
+import Serialization.Serialize;
 
 public class Student {
 
 	public String displayName;
 	public String email;
+
+	 static {
+
+		 Serialize.declare(Student.class.getName(), Student.class);
+
+	 }
 
 	public Student(){
 

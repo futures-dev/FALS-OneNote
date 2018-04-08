@@ -1,5 +1,6 @@
 package Entities;
 
+import Serialization.Serialize;
 import Bank.Entity;
 
 public class CourseState extends Entity {
@@ -9,6 +10,12 @@ public class CourseState extends Entity {
 	public Step currentStep;
 	public int index;
 	public Student student;
+
+	 static {
+
+		 Serialize.declare(CourseState.class.getName(), CourseState.class);
+
+	 }
 
 	public CourseState(){
 

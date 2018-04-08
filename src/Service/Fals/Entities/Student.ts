@@ -1,10 +1,26 @@
 /* Auto-generated file */
 
 import { Period, Type } from "Service/Fals/TypeMap";
+import { Serialize } from "../Serialization/Serialize";
 export class Student {
+  static __static_initialized: boolean = false;
+  static __static_initialize() {
+    if (!Student.__static_initialized) {
+      Student.__static_initialized = true;
+      Student.__static_initializer_0();
+    }
+  }
+
   public displayName: string;
 
   public email: string;
+
+  static __static_initializer_0() {
+    Serialize.declare(
+      /* getName */ (c => (c["__class"] ? c["__class"] : c["name"]))(Student),
+      Student
+    );
+  }
 
   public constructor() {
     this.displayName = null;
@@ -31,3 +47,5 @@ export class Student {
   }
 }
 Student["__class"] = "Entities.Student";
+
+Student.__static_initialize();
