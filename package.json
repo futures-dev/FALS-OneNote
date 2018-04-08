@@ -9,13 +9,13 @@
         "tsc": "npm run prettier && tsc -p tsconfig.json -w",
         "server": "browser-sync start --config bsconfig.json",
         "copy": "cpx \"src/**/!(*.ts|*.java)\" dist --watch",
-        "backend":
-            "node --harmony_default_parameters ./dist/Backend/serverLauncher.js ./server.json",
+        "cfg": "cpx \"config/cfg.js\" dist --watch",
+        "backend": "node ./dist/Backend/serverLauncher.js ./server.json",
         "start":
-            "rimraf dist && concurrently \"npm run tsc\" \"npm run copy\" \"npm run server\"",
+            "rimraf dist && concurrently \"npm run cfg\" \"npm run tsc\" \"npm run copy\" \"npm run server\"",
         "validate": "./node_modules/.bin/validate-office-addin",
         "createStorage":
-            "node --harmony_default_parameters ./dist/Backend/createStorageLauncher.js ./server.json",
+            "node ./dist/Backend/createStorageLauncher.js ./server.json",
         "gen":
             "rimraf ./src/Service/Fals/*/ && mvn generate-sources && copyfiles -u 3 ./src/main/java/**/*.ts ./src/Service/Fals && npm run prettier"
     },
