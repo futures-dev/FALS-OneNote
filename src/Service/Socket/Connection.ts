@@ -1,11 +1,11 @@
 import { Injectable } from "@angular/core";
 
 import * as si from "socket.io-client";
+import * as settings from "config";
 import { Listener } from "Service/Socket/Scenario";
 
 @Injectable()
 export class ConnectionService {
-  static url = "http://localhost:3003";
   connection: SocketIOClient.Socket;
 
   /*
@@ -14,7 +14,7 @@ export class ConnectionService {
   static userId = "studentA@gmail.com";
 
   constructor() {
-    this.connection = si.connect(ConnectionService.url, {
+    this.connection = si.connect(settings.SOCKET_URL, {
       upgrade: false,
       transports: ["polling"],
       query: {

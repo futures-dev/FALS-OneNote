@@ -4,20 +4,11 @@
     "author": "",
     "version": "0.1.0",
     "scripts": {
-        "prettier":
-            "prettier --loglevel warn --write fix \"src/**/*.{ts,json,js}\"",
-        "tsc": "npm run prettier && tsc -p tsconfig.json -w",
-        "server": "browser-sync start --config bsconfig.json",
-        "copy": "cpx \"src/**/!(*.ts|*.java)\" dist --watch",
-        "backend":
-            "node --harmony_default_parameters ./dist/Backend/serverLauncher.js ./server.json",
-        "start":
-            "rimraf dist && concurrently \"npm run tsc\" \"npm run copy\" \"npm run server\"",
-        "validate": "./node_modules/.bin/validate-office-addin",
+        "start": "node ./dist/Backend/serverLauncher.js ./server.json",
+        "postinstall":
+            "rimraf dist && tsc -p tsconfig.json && cpx \"src/**/!(*.ts|*.java)\" dist && cpx \"config/heroku/cfg.js\" dist",
         "createStorage":
-            "node --harmony_default_parameters ./dist/Backend/createStorageLauncher.js ./server.json",
-        "gen":
-            "rimraf ./src/Service/Fals/*/ && mvn generate-sources && copyfiles -u 3 ./src/main/java/**/*.ts ./src/Service/Fals && npm run prettier"
+            "node ./dist/Backend/createStorageLauncher.js ./server.json"
     },
     "prettier": {
         "trailingComma": "es5",
@@ -43,6 +34,9 @@
         "@types/socket.io-client": "^1.4.32",
         "bootstrap": "^3.3.7",
         "core-js": "^2.5.3",
+        "concurrently": "^3.1.0",
+        "morgan": "^1.9.0",
+        "rimraf": "^2.6.2",
         "cors": "^2.8.4",
         "express": "^4.16.2",
         "jquery": "^3.2.1",
@@ -52,21 +46,18 @@
         "rxjs": "^5.5.5",
         "socket.io-client": "1.7.4",
         "systemjs": "^0.20.19",
-        "zone.js": "^0.8.18"
-    },
-    "devDependencies": {
+        "zone.js": "^0.8.18",
         "@types/angular": "^1.6.2",
         "@types/jquery": "^2.0.39",
         "@types/office-js": "^0.0.37",
         "browser-sync": "^2.18.13",
-        "concurrently": "^3.1.0",
         "copyfiles": "^1.2.0",
         "cpx": "^1.5.0",
         "debug": "^3.1.0",
         "module-alias": "^2.0.3",
         "prettier": "^1.10.2",
-        "rimraf": "^2.6.2",
         "socket.io": "1.7.4",
         "typescript": "^2.6.2"
-    }
+    },
+    "devDependencies": {}
 }
