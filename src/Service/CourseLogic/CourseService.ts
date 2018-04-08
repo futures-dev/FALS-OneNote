@@ -20,14 +20,12 @@ export class CourseService {
     private courseProvider: CourseProvider
   ) {
     console.log("ctor");
-    socket.AddListener(CurrentStateChanged, (cs: CourseState) =>
-      this.CurrentCourseState.next(cs)
-    );
+    socket.AddListener(CurrentStateChanged, (cs: CourseState) => {
+      this.CurrentCourseState.next(cs);
+    });
   }
 
   public Activate(course: Course): Observable<ActivateCourseError> {
-    this.CurrentCourseState.next(null);
-
     let activate = new ActivateCourseScenario(course, this.socket);
     activate.Result.subscribe(result => {
       if (result != ActivateCourseError.sOk) {

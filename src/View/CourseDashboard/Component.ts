@@ -5,6 +5,7 @@ import { BehaviorSubject } from "rxjs/BehaviorSubject";
 import { Router } from "@angular/router";
 import { Module } from "Service/Fals/Entities/Module";
 import { Entity } from "Service/Fals/Bank/Entity";
+import "rxjs/add/operator/filter";
 
 @Component({
   selector: "course-dashboard",
@@ -13,6 +14,10 @@ import { Entity } from "Service/Fals/Bank/Entity";
 export class CourseDashboardComponent implements OnInit {
   get Course() {
     return this.courseService.CurrentCourseState;
+  }
+
+  get Modules() {
+    return this.Course.map(q => q.course.modules.Children.map(v => v.Value));
   }
 
   isCurrentModule(module: Module): boolean {
@@ -32,7 +37,5 @@ export class CourseDashboardComponent implements OnInit {
 
   ngOnInit() {
     console.log(this.Course.value);
-    console.log("module equals");
-    console.log(this.Course.value.currentModule.equals);
   }
 }

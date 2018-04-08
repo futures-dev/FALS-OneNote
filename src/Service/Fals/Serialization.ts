@@ -8,7 +8,11 @@ import "./Statistics/index";
 import { Serialize } from "Service/Fals/Serialization/Serialize";
 
 export function deserialize(obj: any) {
-  if (obj === false || obj === true) {
+  if (
+    typeof obj === "boolean" ||
+    typeof obj == "number" ||
+    typeof obj === "string"
+  ) {
     return obj;
   }
   if (Array.isArray(obj)) {
