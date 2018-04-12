@@ -14,7 +14,7 @@
         "validate": "./node_modules/.bin/validate-office-addin",
         "createStorage": "node ./dist/Backend/createStorageLauncher.js ./server.json",
         "gen": "rimraf ./src/Service/Fals/*/ && mvn generate-sources -X && copyfiles -u 3 ./src/main/java/**/*.ts ./src/Service/Fals && npm run gen_barrel && npm run prettier",
-        "gen_barrel": "rimraf ./src/Service/Fals/**/index.ts && barrelsby -d src/Service/Fals -l below"
+        "gen_barrel": "rimraf ./src/Service/Fals/*/index.ts && barrelsby -d src/Service/Fals -l below"
     },
     "prettier": {
         "trailingComma": "es5",
