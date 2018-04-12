@@ -1,22 +1,21 @@
-<div>
-    <label class="ms-Label">Dashboard</label>
-    <div class="ms-Breadcrumb">
-        <div class="ms-Breadcrumb-overflow">
-            <div class="ms-Breadcrumb-overflowButton ms-Icon ms-Icon--ellipsis" tabindex="1"></div>
-            <i class="ms-Breadcrumb-chevron ms-Icon ms-Icon--chevronRight"></i>
-            <div class="ms-Breadcrumb-overflowMenu">
-                <ul class="ms-ContextualMenu is-open"></ul>
-            </div>
+<div class="ms-Breadcrumb" maxDisplayedItems=1>
+    <div class="ms-Breadcrumb-overflow">
+        <div class="ms-Breadcrumb-overflowButton ms-Icon ms-Icon--More"></div>
+        <div class="ms-Breadcrumb-overflowMenu">
+            <ul class="ms-ContextualMenu is-open"></ul>
         </div>
-        <ul class="ms-Breadcrumb-list">
-            <li class="ms-Breadcrumb-listItem" *ngFor="let module of (Modules|async)">
-                <button class="ms-Button ms-Button--hero" tabindex="" [attr.disabled]="isCurrentModule(module)" ng-click="SelectModule()">Module {{module.description}}</button>
-                <i class="ms-Breadcrumb-chevron ms-Icon ms-Icon--chevronRight"></i>
-            </li>
-        </ul>
     </div>
-    <!-- <div *ngFor="let module of (Course|async)?.course?.modules?.Children; let i=index">
-        Module {{i}}
-        <course-dashboard-module [Module]="module"></course-dashboard-module>
-    </div> -->
+    <ul class="ms-Breadcrumb-list">
+        <li class="ms-Breadcrumb-listItem" *ngFor="let module of (Modules|async)">
+            <a class="ms-Breadcrumb-itemLink" tabindex="" [ngStyle]="{
+                'pointer-events': isCurrentModule(module) ? 'auto' : 'none',
+                'opacity': isCurrentModule(module) ? '1' : '0.6'
+            }" (click)="SelectModule(module)">{{module.title}}</a>
+            <i class="ms-Breadcrumb-chevron ms-Icon ms-Icon--ChevronRight"></i>
+        </li>
+    </ul>
 </div>
+<script type="text/javascript">
+    var BreadcrumbHTML = document.querySelector('.ms-Breadcrumb');
+    var Breadcrumb = new fabric['Breadcrumb'](BreadcrumbHTML);
+</script>

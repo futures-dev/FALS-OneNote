@@ -20,6 +20,8 @@ export class Module extends Entity {
 
   public steps: Step[];
 
+  public title: string;
+
   static __static_initializer_0() {
     Serialize.declare(
       /* getName */ (c => (c["__class"] ? c["__class"] : c["name"]))(Module),
@@ -32,6 +34,7 @@ export class Module extends Entity {
     this.maxGrade = 0;
     this.possibleInterventions = null;
     this.steps = null;
+    this.title = null;
   }
 }
 Module["__class"] = "Entities.Module";

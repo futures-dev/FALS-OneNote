@@ -22,6 +22,7 @@ import {
 } from "Service/Socket/Events";
 import { Result } from "Service/Socket/Results";
 import { CourseState } from "Service/Fals/Entities/CourseState";
+import { deserialize } from "Service/Fals/Serialization";
 
 let app = express();
 
@@ -37,7 +38,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors());
 
-app.get("/", function(req, res) {
+app.get("/", function (req, res) {
   console.log("get/");
   res.sendfile(path.resolve(__dirname, "..", "index.html"));
 });
@@ -104,6 +105,9 @@ io.on("connection", (socket: SocketIO.Socket) => {
       storage.CourseStates[client.userId] = [];
     }
 
+    course = deserialize(course);
+    course = storage.Courses.find(q => course.equals(q));
+
     let courseStates = storage.CourseStates[client.userId];
     let lastState = courseStates[courseStates.length - 1];
 
@@ -117,10 +121,25 @@ io.on("connection", (socket: SocketIO.Socket) => {
       .find(q => q.course == course);
 
     if (previousState) {
-      currentState.currentModule = previousState.currentModule;
-    } else {
-      currentState.currentModule = course.modules.Value;
+      if (previousState.currentModule) {
+        currentState.currentModule = previousState.currentModule;
+      }
+      if (previousState.currentStep) {
+        currentState.currentStep = previousState.currentStep;
+      }
     }
+    if (!currentState.currentModule) {
+      let node = course.modules;
+      if (node.Value) {
+        currentState.currentModule = node.Value;
+      } else {
+        // node is top
+        currentState.currentModule = node.Children[0].Value;
+      }
+    }
+
+    currentState.currentStep = currentState.currentModule.steps[0];
+    Assert(currentState.currentStep, "SelectCourse: currentSate.currentStep is null");
 
     socket.emit(CurrentStateChanged, currentState);
 

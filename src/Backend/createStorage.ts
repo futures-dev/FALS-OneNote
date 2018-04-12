@@ -41,11 +41,13 @@ function generateModules(storage: Storage): { [i: number]: Tree<Module> } {
   map[1] = module1Node;
   let module1 = new Module();
   module1.id = "module1";
+  module1.title = "module1";
   module1Node.Value = module1;
   let module2Node = new Tree<Module>();
   map[2] = module2Node;
   let module2 = new Module();
   module2.id = "module2";
+  module2.title = "module2";
   module2Node.Value = module2;
 
   let step1 = new OpenTestStep();

@@ -4,22 +4,17 @@
     "author": "",
     "version": "0.1.0",
     "scripts": {
-        "prettier":
-            "prettier --loglevel warn --write fix \"src/**/*.{ts,json,js}\"",
+        "prettier": "prettier --loglevel warn --write fix \"src/**/*.{ts,json,js}\"",
         "tsc": "npm run prettier && tsc -p tsconfig.json -w",
         "server": "browser-sync start --config bsconfig.json",
         "copy": "cpx \"src/**/!(*.ts|*.java)\" dist --watch",
         "cfg": "cpx \"config/cfg.js\" dist --watch",
         "backend": "node ./dist/Backend/serverLauncher.js ./server.json",
-        "start":
-            "rimraf dist && concurrently \"npm run cfg\" \"npm run tsc\" \"npm run copy\" \"npm run server\"",
+        "start": "rimraf dist && concurrently \"npm run cfg\" \"npm run tsc\" \"npm run copy\" \"npm run server\"",
         "validate": "./node_modules/.bin/validate-office-addin",
-        "createStorage":
-            "node ./dist/Backend/createStorageLauncher.js ./server.json",
-        "gen":
-            "rimraf ./src/Service/Fals/*/ && mvn generate-sources -X && copyfiles -u 3 ./src/main/java/**/*.ts ./src/Service/Fals && npm run gen_barrel && npm run prettier",
-        "gen_barrel":
-            "rimraf ./src/Service/Fals/**/index.ts && barrelsby -d src/Service/Fals -l below"
+        "createStorage": "node ./dist/Backend/createStorageLauncher.js ./server.json",
+        "gen": "rimraf ./src/Service/Fals/*/ && mvn generate-sources -X && copyfiles -u 3 ./src/main/java/**/*.ts ./src/Service/Fals && npm run gen_barrel && npm run prettier",
+        "gen_barrel": "rimraf ./src/Service/Fals/**/index.ts && barrelsby -d src/Service/Fals -l below"
     },
     "prettier": {
         "trailingComma": "es5",
@@ -49,7 +44,7 @@
         "express": "^4.16.2",
         "jquery": "^3.2.1",
         "office-addin-validator": "^1.0.5",
-        "office-ui-fabric-js": "^1.4.0",
+        "office-ui-fabric-js": "^1.5.0",
         "reflect-metadata": "^0.1.10",
         "rxjs": "^5.5.5",
         "socket.io-client": "1.7.4",

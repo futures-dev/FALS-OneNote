@@ -1,17 +1,31 @@
 import { Component, OnInit } from "@angular/core";
 import { Input } from "@angular/core/src/metadata/directives";
-import { StepService } from "Service/CourseLogic/StepService";
+import { CourseService } from "Service/CourseLogic/CourseService";
+import { BehaviorSubject } from "rxjs/BehaviorSubject";
+import { CourseState, Step } from "Service/Fals";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "step",
   templateUrl: "View/Step/Step.html",
 })
 export class StepComponent implements OnInit {
-  get Step() {
-    return this.StepService.CurrentStep;
+  public Step: Step;
+
+  constructor(private CourseService: CourseService, private Router: Router) {
+    CourseService.CurrentCourseState.subscribe(cs => {
+      if (!cs.currentStep.equals(this.Step)) {
+        this.onStepChanged(cs.currentStep);
+      }
+    });
+
+    this.Step = this.CourseService.CurrentCourseState.getValue().currentStep;
   }
 
-  constructor(private StepService: StepService) {}
+  onStepChanged(newStep: Step) {
+    // todo: warn user
+    this.Router.navigateByUrl("/step");
+  }
 
-  ngOnInit() {}
+  ngOnInit() { }
 }
