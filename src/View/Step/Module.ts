@@ -12,7 +12,7 @@ import { TestStepComponent } from "View/Step/TestStepComponent";
 @NgModule({
   imports: [RouterModule, FormsModule, CommonModule, CourseLogicModule],
   exports: [],
-  declarations: [StepComponent],
+  declarations: [StepComponent, OpenTestStepComponent, TestStepComponent],
   providers: [CourseService],
 })
-export class StepModule {}
+export class StepModule { }

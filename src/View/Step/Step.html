@@ -1,3 +1,6 @@
-<div>
-    "todo"
-</div>
+<div [ngSwitch]="Step.type">
+    <openTestStep *ngSwitchCase="'Entities.OpenTestStep'" [Step]="Step">
+
+        <testStep *ngSwitchCase="'Entities.TestStep'" [Step]="Step">
+            <div *ngSwitchDefault>
+            </div>

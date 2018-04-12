@@ -1,8 +1,4 @@
-import "./Bank/index";
-import "./Entities/index";
-import "./Facades/index";
-import "./Pasca/index";
-import "./Serialization/index";
+import "./index";
 import "./Statistics/index";
 
 import { Serialize } from "Service/Fals/Serialization/Serialize";
@@ -35,7 +31,6 @@ export function deserialize(obj: any) {
         instance[prop] = deserialize(obj[prop]);
       }
 
-      console.log(instance.type + " , equals=" + instance.equals);
       return instance;
     } else {
       return obj;

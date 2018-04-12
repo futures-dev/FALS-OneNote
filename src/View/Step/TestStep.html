@@ -1,9 +1,34 @@
-<div>
-    <textarea [ngModel]="Answer"></textarea>
-    <button class="ms-welcome__action ms-Button ms-Button--hero ms-u-slideUpIn20" (click)="tryProceed()">
-        <span class="ms-Button-label">Submit</span>
-        <span class="ms-Button-icon">
-            <i class="ms-Icon ms-Icon--ChevronRight"></i>
-        </span>
+<div [innerHTML]="Problem">
+
+    <ul class="ms-List">
+        <li [ngClass]="{
+            'ms-ListItem': true,
+            'is-selectable': true,
+            'is-selected': isSelected(i)       
+        }" *ngFor="let option of Answers; let i=index">
+            <span class="ms-ListItem-primaryText">{{option}}</span>
+            <div class="ms-ListItem-selectionTarget" (click)="toggle(i)"></div>
+        </li>
+    </ul>
+
+    <button class="ms-Button ms-Button--primary" (click)="tryProceed()">
+        <span class="ms-Button-label">Отправить</span>
     </button>
 </div>
+
+<script type="text/javascript">
+    var TextFieldElements = document.querySelectorAll(".ms-TextField");
+    for (var i = 0; i < TextFieldElements.length; i++) {
+        new fabric['TextField'](TextFieldElements[i]);
+    }
+
+    var ListElements = document.querySelectorAll(".ms-List");
+    for (var i = 0; i < ListElements.length; i++) {
+        new fabric['List'](ListElements[i]);
+    }
+
+    var ListItemElements = document.querySelectorAll(".ms-ListItem");
+    for (var i = 0; i < ListItemElements.length; i++) {
+        new fabric['ListItem'](ListItemElements[i]);
+    }
+</script>
