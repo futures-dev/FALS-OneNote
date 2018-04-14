@@ -11,13 +11,11 @@ const routes: Routes = [
   { path: "socket", component: SocketComponent },
   { path: "courseList", component: CourseListComponent },
   { path: "courseDashboard", component: CourseDashboardComponent },
-  { path: "step", component: StepComponent },
+  { path: "step", component: StepComponent, runGuardsAndResolvers: "always" },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { onSameUrlNavigation: "reload" })],
   exports: [RouterModule],
 })
-export class RoutingModule {}
-
-export const routedComponents = [MainComponent];
+export class RoutingModule { }

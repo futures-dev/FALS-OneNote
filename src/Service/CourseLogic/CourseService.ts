@@ -13,13 +13,13 @@ import { StepAnswer } from "Service/Fals/Statistics";
 import { Assert } from "Service/Common/Assert";
 import { SubmitStepResultScenario } from "Service/CourseLogic/Scenarios/SendStepResultScenario";
 import "rxjs/add/operator/mergeMap";
-
+import { Router } from "@angular/router";
 
 @Injectable()
 export class CourseService {
   public readonly CurrentCourseState: BehaviorSubject<
     CourseState
-    > = new BehaviorSubject<CourseState>(null);
+  > = new BehaviorSubject<CourseState>(null);
   public get Modules(): Observable<Module> {
     return Observable.from(
       this.CurrentCourseState.getValue().course.modules.Children
@@ -30,11 +30,19 @@ export class CourseService {
 
   constructor(
     private socket: ConnectionService,
-    private courseProvider: CourseProvider
+    private courseProvider: CourseProvider,
+    private router: Router
   ) {
     console.log("ctor");
     socket.AddListener(CurrentStateChanged, (cs: CourseState) => {
       this.CurrentCourseState.next(cs);
+
+      if (cs.currentStep) {
+        console.log("navigating to step" + cs.currentStep.id);
+        router.navigateByUrl("/step?id=" + cs.currentStep.id);
+      } else {
+        router.navigateByUrl("courseDashboard");
+      }
     });
   }
 
@@ -55,9 +63,9 @@ export class CourseService {
     return activate.Result;
   }
 
-  public SubmitStepResult(step: Step, result: StepAnswer) {
+  public SubmitStepResult(result: StepAnswer) {
     Assert(
-      step.equals(this.CurrentCourseState.getValue().currentStep),
+      result.step.equals(this.CurrentCourseState.getValue().currentStep),
       "SubmitStepResult: step is not current"
     );
 

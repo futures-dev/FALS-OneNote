@@ -1,0 +1,8 @@
+<div [ngSwitch]="(Step | async).materials.type">
+    <hypertextMaterial *ngSwitchCase="'Bank.HypertextMaterial'" [Material]="(Step | async).materials">
+    </hypertextMaterial>
+
+    <div *ngSwitchDefault>
+        No type!! {{(Material | async).type}}
+    </div>
+</div>

@@ -5,6 +5,7 @@ import { StepStatistics } from "Service/Fals/Statistics/StepStatistics";
 import { CourseService } from "Service/CourseLogic/CourseService";
 import { Course } from "Service/Fals/Entities/Course";
 import { StepAnswer } from "Service/Fals/Statistics/StepAnswer";
+import { BehaviorSubject } from "rxjs/BehaviorSubject";
 
 @Component({
   selector: "testStep",
@@ -13,20 +14,15 @@ import { StepAnswer } from "Service/Fals/Statistics/StepAnswer";
 export class TestStepComponent implements OnInit {
   @Input("Step")
   public setStep(step: TestStep) {
-    this.Step = step;
+    this.Step.next(step);
   }
 
-  public Step: TestStep;
+  public Step: BehaviorSubject<TestStep> = new BehaviorSubject<TestStep>(null);
 
-  public Problem: string;
   public Answers: string[];
-  public Answer: number;
+  public Answer: number = 0;
 
-  constructor(private CourseService: CourseService) {
-    this.Problem = this.Step.problem.content;
-    this.Answers = this.Step.answers.map(k => k.value);
-    this.Answer = 0;
-  }
+  constructor(private CourseService: CourseService) {}
 
   isSelected(i: number) {
     return i == this.Answer;
@@ -39,11 +35,11 @@ export class TestStepComponent implements OnInit {
   tryProceed() {
     let result = new StepAnswer();
     result.module = this.CourseService.CurrentCourseState.value.currentModule;
-    result.step = this.Step;
+    result.step = this.Step.getValue();
     result.course = this.CourseService.CurrentCourseState.value.course;
     result.value = this.Answer.toString();
-    this.CourseService.SubmitStepResult(this.Step, result);
+    this.CourseService.SubmitStepResult(result);
   }
 
-  ngOnInit() { }
+  ngOnInit() {}
 }

@@ -29,6 +29,46 @@ export class Tree<T> {
     this.Children = null;
     this.Value = null;
   }
+
+  /**
+   *
+   * @param {*} predicate
+   * @param {Tree[]} outParents
+   * @return {Tree}
+   */
+  public search(
+    predicate: (p1: T) => boolean,
+    outParents: Array<Tree<T>>
+  ): Tree<T> {
+    let stack: Array<Tree<T>> = <any>[];
+    let parents: any = <any>{};
+    /* push */ stack.push(this) > 0;
+    while (/* size */ stack.length > 0) {
+      let node: Tree<T> = /* pop */ stack.pop();
+      if (
+        (target =>
+          typeof target === "function"
+            ? target(node.Value)
+            : (<any>target).apply(node.Value))(predicate)
+      ) {
+        let parent: Tree<T> = node;
+        do {
+          parent = parents.getOrDefault(parent, null);
+          /* add */ outParents.push(parent) > 0;
+        } while (parent != null);
+        return node;
+      } else {
+        for (let index121 = 0; index121 < node.Children.length; index121++) {
+          let child = node.Children[index121];
+          {
+            parents.putIfAbsent(child, node);
+            /* push */ stack.push(child) > 0;
+          }
+        }
+      }
+    }
+    return null;
+  }
 }
 Tree["__class"] = "Entities.Tree";
 

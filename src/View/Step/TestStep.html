@@ -1,4 +1,4 @@
-<div [innerHTML]="Problem">
+<div [innerHTML]="(Step | async).problem.content">
 
     <ul class="ms-List">
         <li [ngClass]="{
