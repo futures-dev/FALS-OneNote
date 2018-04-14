@@ -24,7 +24,11 @@ export class CourseState extends Entity {
 
   public index: number;
 
+  public isCourseFinished: boolean;
+
   public student: Student;
+
+  public unfinishedSteps: Array<Step>;
 
   static __static_initializer_0() {
     Serialize.declare(
@@ -41,7 +45,9 @@ export class CourseState extends Entity {
     this.currentModule = null;
     this.currentStep = null;
     this.index = 0;
+    this.isCourseFinished = false;
     this.student = null;
+    this.unfinishedSteps = null;
   }
 
   /**

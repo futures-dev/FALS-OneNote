@@ -9,7 +9,7 @@
             "/src": "src"
         }
     },
-    "https": false,
+    "https": true,
     "watch": true,
     "files": "dist/**/*"
 }

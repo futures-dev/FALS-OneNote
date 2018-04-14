@@ -1,6 +1,14 @@
-<div [ngSwitch]="Step.type">
-    <openTestStep *ngSwitchCase="'Entities.OpenTestStep'" [Step]="Step">
+<div [ngSwitch]="(Step | async).type">
+    <openTestStep *ngSwitchCase="'Entities.OpenTestStep'" [Step]="Step | async">
+    </openTestStep>
 
-        <testStep *ngSwitchCase="'Entities.TestStep'" [Step]="Step">
-            <div *ngSwitchDefault>
-            </div>
+    <testStep *ngSwitchCase="'Entities.TestStep'" [Step]="Step | async">
+    </testStep>
+
+    <studyStep *ngSwitchCase="'Entities.StudyStep'" [Step]="Step | async">
+    </studyStep>
+
+    <div *ngSwitchDefault>
+        No type!! {{(Step | async).type}}
+    </div>
+</div>

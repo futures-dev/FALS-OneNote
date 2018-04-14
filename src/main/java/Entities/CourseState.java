@@ -1,6 +1,7 @@
 package Entities;
 
 import Serialization.Serialize;
+import java.util.List;
 import Bank.Entity;
 
 public class CourseState extends Entity {
@@ -9,7 +10,9 @@ public class CourseState extends Entity {
 	public Module currentModule;
 	public Step currentStep;
 	public int index;
+	public boolean isCourseFinished;
 	public Student student;
+	public List<Step> unfinishedSteps;
 
 	 static {
 

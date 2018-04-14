@@ -37,7 +37,7 @@ export class CourseDashboardComponent implements OnInit {
     }
   }
 
-  constructor(private courseService: CourseService, private router: Router) { }
+  constructor(private courseService: CourseService, private router: Router) {}
 
   SelectModule(module: Module) {
     console.log("SelectModule()");

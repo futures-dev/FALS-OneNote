@@ -67,3 +67,6 @@ target/
 
 # prod config
 config/**/
+
+# sll certs
+certs/*

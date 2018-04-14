@@ -2,19 +2,45 @@
     <img width="90" height="90" src="assets/logo-filled.png" alt="FALS-OneNote" title="FALS-OneNote" />
     <h1 class="ms-fontSize-su ms-fontWeight-light ms-fontColor-neutralPrimary">Welcome</h1>
 </header>
+<div class="ms-CommandBar">
+    <div class="ms-CommandBar-sideCommands">
+    </div>
+    <div class="ms-CommandBar-mainArea">
+        <div class="ms-CommandButton">
+            <button class="ms-CommandButton-button">
+                <span class="ms-CommandButton-icon ms-fontColor-themePrimary">
+                    <i class="ms-Icon ms-Icon--CircleRing"></i>
+                </span>
+                <span class="ms-CommandButton-label">New</span>
+                <span class="ms-CommandButton-dropdownIcon">
+                    <i class="ms-Icon ms-Icon--ChevronDown"></i>
+                </span>
+            </button>
+            <ul class="ms-ContextualMenu is-opened ms-ContextualMenu--hasIcons">
+                <li class="ms-ContextualMenu-item">
+                    <a class="ms-ContextualMenu-link" tabindex="1" [routerLink]="'/courseList'">Folder</a>
+                    <i class="ms-Icon ms-Icon--Folder"></i>
+                </li>
+                <li class="ms-ContextualMenu-item ms-ContextualMenu-item--divider"></li>
+                <li class="ms-ContextualMenu-item">
+                    <a class="ms-ContextualMenu-link" tabindex="1">Plain Text Document</a>
+                    <i class="ms-Icon ms-Icon--Document"></i>
+                </li>
+                <li class="ms-ContextualMenu-item">
+                    <a class="ms-ContextualMenu-link" tabindex="1">Smile</a>
+                    <i class="ms-Icon ms-Icon--Emoji2"></i>
+                </li>
+                <li class="ms-ContextualMenu-item">
+                    <a class="ms-ContextualMenu-link" tabindex="1">Globe</a>
+                    <i class="ms-Icon ms-Icon--Globe"></i>
+                </li>
+                <li class="ms-ContextualMenu-item">
+                    <a class="ms-ContextualMenu-link" tabindex="1">Money</a>
+                    <i class="ms-Icon ms-Icon--Money"></i>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
 <router-outlet>
 </router-outlet>
-<div>
-    <button class="ms-welcome__action ms-Button ms-Button--hero ms-u-slideUpIn20" [routerLink]="['/courseList']">
-        <span class="ms-Button-label">Select course</span>
-        <span class="ms-Button-icon">
-            <i class="ms-Icon ms-Icon--ChevronRight"></i>
-        </span>
-    </button>
-    <button class="ms-welcome__action ms-Button ms-Button--hero ms-u-slideUpIn20" [routerLink]="['/socket']">
-        <span class="ms-Button-label">Debug socket</span>
-        <span class="ms-Button-icon">
-            <i class="ms-Icon ms-Icon--ChevronRight"></i>
-        </span>
-    </button>
-</div>

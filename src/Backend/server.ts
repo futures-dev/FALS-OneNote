@@ -1,5 +1,6 @@
 import * as socketio from "socket.io";
 import * as express from "express";
+import * as https from "https";
 import * as cors from "cors";
 import * as path from "path";
 import * as morgan from "morgan";
@@ -19,10 +20,13 @@ import {
   SelectCourse,
   GetCurrentState,
   CurrentStateChanged,
+  SubmitStepResult,
 } from "Service/Socket/Events";
 import { Result } from "Service/Socket/Results";
 import { CourseState } from "Service/Fals/Entities/CourseState";
 import { deserialize } from "Service/Fals/Serialization";
+import { StepStatistics } from "Service/Fals/Statistics";
+import { SubmitStepResultError, Module, Tree } from "Service/Fals";
 
 let app = express();
 
@@ -38,16 +42,24 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors());
 
-app.get("/", function (req, res) {
+app.get("/", function(req, res) {
   console.log("get/");
   res.sendfile(path.resolve(__dirname, "..", "index.html"));
 });
 
 //#region Listen
 
-let server = app.listen(port, () => {
-  console.log("Listening on port " + port);
-});
+let server = https
+  .createServer(
+    {
+      key: fs.readFileSync("certs/server-key.pem"),
+      cert: fs.readFileSync("certs/server-cert.pem"),
+    },
+    app
+  )
+  .listen(port, () => {
+    console.log("Listening on port " + port);
+  });
 let io = socketio(server);
 
 //#region Storage
@@ -137,13 +149,77 @@ io.on("connection", (socket: SocketIO.Socket) => {
         currentState.currentModule = node.Children[0].Value;
       }
     }
+    Assert(
+      currentState.currentModule,
+      "SelectCourse: currentState.currentModule is null"
+    );
 
     currentState.currentStep = currentState.currentModule.steps[0];
-    Assert(currentState.currentStep, "SelectCourse: currentSate.currentStep is null");
+    Assert(
+      currentState.currentStep,
+      "SelectCourse: currentState.currentStep is null"
+    );
+
+    storage.CourseStates[client.userId].push(currentState);
 
     socket.emit(CurrentStateChanged, currentState);
 
     socket.emit(SelectCourse, Result.sOk);
+  });
+
+  socket.on(SubmitStepResult, (result: StepStatistics) => {
+    console.log(SubmitStepResult, client.userId);
+
+    let courseState = storage.CourseStates[client.userId].pop();
+    let stepIdx = courseState.currentModule.steps.findIndex(q =>
+      q.equals(result.step)
+    );
+    let step = courseState.currentModule.steps[stepIdx];
+    if (!step) {
+      socket.emit(
+        SubmitStepResult,
+        SubmitStepResultError.eStepDoesNotBelongToModule
+      );
+    }
+
+    let newState = new CourseState();
+    if (stepIdx + 1 < courseState.currentModule.steps.length) {
+      Object.assign(newState, courseState);
+      newState.currentStep = courseState.currentModule.steps[stepIdx + 1];
+    } else {
+      // todo: check unfinished steps
+      // todo: make grade
+
+      let parents: Array<Tree<Module>> = [];
+      let currentModuleNode = courseState.course.modules.search(
+        courseState.currentModule.equals,
+        parents
+      );
+      parents = parents.reverse();
+      let parent = parents.pop();
+      let nextModuleNode: Tree<Module> = null;
+      while (parent) {
+        let currentIdx = parent.Children.findIndex(q => q == currentModuleNode);
+        if (parent.Children.length > currentIdx + 1) {
+          nextModuleNode = parent.Children[currentIdx + 1];
+          break;
+        } else {
+          parent = parents.pop();
+        }
+      }
+      if (nextModuleNode) {
+        newState.currentModule = nextModuleNode.Value;
+        newState.currentStep = newState.currentModule.steps[0];
+      } else {
+        // course is over!
+        newState.isCourseFinished = true;
+      }
+    }
+
+    console.log("new step: " + newState.currentStep.id);
+    socket.emit(CurrentStateChanged, newState);
+
+    socket.emit(SubmitStepResult, SubmitStepResultError.sOk);
   });
 
   socket.on(GetCurrentState, (course: Course) => {

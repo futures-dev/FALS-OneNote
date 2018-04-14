@@ -8,11 +8,20 @@ import { CourseService } from "Service/CourseLogic/CourseService";
 import { StepComponent } from "View/Step/Component";
 import { OpenTestStepComponent } from "View/Step/OpenTestStepComponent";
 import { TestStepComponent } from "View/Step/TestStepComponent";
+import { StudyStepComponent } from "View/Step/StudyStepComponent";
+import { HypertextMaterial } from "Service/Fals";
+import { HypertextMaterialComponent } from "View/Step/HypertextMaterialComponent";
 
 @NgModule({
   imports: [RouterModule, FormsModule, CommonModule, CourseLogicModule],
   exports: [],
-  declarations: [StepComponent, OpenTestStepComponent, TestStepComponent],
+  declarations: [
+    StepComponent,
+    OpenTestStepComponent,
+    TestStepComponent,
+    StudyStepComponent,
+    HypertextMaterialComponent,
+  ],
   providers: [CourseService],
 })
-export class StepModule { }
+export class StepModule {}

@@ -1,12 +1,16 @@
-import { Component, OnInit, Input } from "@angular/core";
+import { Component, OnInit, Input, AfterViewInit } from "@angular/core";
 import { InitializationPublisher } from "Service/Office/InitializationPublisher";
+declare var fabric: any;
 
 @Component({
-  selector: "main",
+  selector: "mc",
   templateUrl: "View/Main/Main.html",
   providers: [InitializationPublisher],
 })
-export class MainComponent implements OnInit {
+export class MainComponent implements AfterViewInit {
+  ngAfterViewInit(): void {
+    this.initFabric();
+  }
   title: string = "AppComponent Title";
 
   constructor(private _initializationPublisher: InitializationPublisher) {
@@ -14,7 +18,7 @@ export class MainComponent implements OnInit {
 
     _initializationPublisher.subscribe(this.onOfficeInitialized);
 
-    Office.initialize = function() {
+    Office.initialize = function () {
       console.log("Office initialized");
 
       _initializationPublisher.publish();
@@ -22,7 +26,9 @@ export class MainComponent implements OnInit {
   }
 
   onOfficeInitialized(): void {
+
     OneNote.run(async context => {
+
       const nb = context.application.getActiveNotebook();
       nb.load();
 
@@ -32,7 +38,14 @@ export class MainComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
-    console.log("AppComponent OnInit");
+  initFabric() {
+    var CommandButtonElements = document.querySelectorAll(".ms-CommandButton");
+    for (var i = 0; i < CommandButtonElements.length; i++) {
+      new fabric["CommandButton"](CommandButtonElements[i]);
+    }
+    var CommandBarElements = document.querySelectorAll(".ms-CommandBar");
+    for (var i = 0; i < CommandBarElements.length; i++) {
+      new fabric["CommandBar"](CommandBarElements[i]);
+    }
   }
 }
