@@ -113,9 +113,8 @@ export class Api {
           return await context.sync().then(() => {
             restEntity.restId = restId.value;
             return entity;
-          })
-        }
-        else {
+          });
+        } else {
           return entity;
         }
       });

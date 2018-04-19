@@ -1,8 +1,8 @@
 export interface IGetRestApiId {
-    getRestApiId(): IValue;
-    restId: string;
+  getRestApiId(): IValue;
+  restId: string;
 }
 
 interface IValue {
-    value: string;
+  value: string;
 }

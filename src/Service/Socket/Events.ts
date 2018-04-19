@@ -17,3 +17,8 @@ export const SubmitModuleResult = "ModuleResult";
 export const SubmitStepResult = "StepResult";
 
 // Statistics
+
+// Interventions
+
+export const StepIntervene = "StepIntervene";
+export const ModuleIntervene = "ModuleIntervene";
