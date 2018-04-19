@@ -1,3 +1,7 @@
 <div>
-    <a href="{{OnenoteLink | async}}">{{OnenoteLink | async}}</a>
+    Материалы будут доступны в странице
+    <button (click)="gotoMaterials()">{{OnenoteLinkText | async}}</button>
+</div>
+<div>
+    <button (click)="putMaterials()">Создать страницу с материалами</button>
 </div>

@@ -22,10 +22,34 @@ export class HypertextMaterialComponent implements OnInit {
       state.course.title,
       state.currentModule.title,
       state.currentStep.id
-    ).subscribe(q => this.OnenoteLink.next(q));
+    ).then(q => {
+      this.MaterialPage.next(q);
+      this.OnenoteLinkText.next(
+        `${state.course.title}->${state.currentModule.title}->${
+          state.currentStep.id
+        }`
+      );
+    });
   }
 
-  public OnenoteLink: BehaviorSubject<string> = new BehaviorSubject<string>("");
+  putMaterials() {
+    this.SectionStructure.putContent(
+      this.Material.getValue().content,
+      this.MaterialPage.getValue()
+    );
+  }
+
+  gotoMaterials() {
+    this.SectionStructure.open(this.MaterialPage.getValue());
+  }
+
+  public OnenoteLinkText: BehaviorSubject<string> = new BehaviorSubject<string>(
+    ""
+  );
+  private MaterialPage: BehaviorSubject<OneNote.Page> = new BehaviorSubject<
+    OneNote.Page
+  >(null);
+
   public Material: BehaviorSubject<HypertextMaterial> = new BehaviorSubject<
     HypertextMaterial
   >(null);

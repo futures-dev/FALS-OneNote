@@ -1,0 +1,40 @@
+<div class="ms-CommandBar" [ngStyle]="commandBarStyle">
+    <div class="ms-CommandBar-sideCommands">
+    </div>
+    <div class="ms-CommandBar-mainArea">
+        <div class="ms-CommandButton">
+            <button class="ms-CommandButton-button">
+                <span class="ms-CommandButton-icon ms-fontColor-themePrimary">
+                    <i class="ms-Icon ms-Icon--CircleRing"></i>
+                </span>
+                <span class="ms-CommandButton-label">Меню</span>
+                <span class="ms-CommandButton-dropdownIcon">
+                    <i class="ms-Icon ms-Icon--ChevronDown"></i>
+                </span>
+            </button>
+            <ul class="ms-ContextualMenu is-opened ms-ContextualMenu--hasIcons">
+                <li class="ms-ContextualMenu-item">
+                    <a class="ms-ContextualMenu-link" tabindex="1" routerLink="/courseList">Выбрать курс</a>
+                    <i class="ms-Icon ms-Icon--Folder"></i>
+                </li>
+                <li class="ms-ContextualMenu-item ms-ContextualMenu-item--divider"></li>
+                <li class="ms-ContextualMenu-item">
+                    <a class="ms-ContextualMenu-link" tabindex="1" (click)="logout()">Сменить учетную запись</a>
+                    <i class="ms-Icon ms-Icon--Document"></i>
+                </li>
+                <li class="ms-ContextualMenu-item">
+                    <a class="ms-ContextualMenu-link" tabindex="1">Smile</a>
+                    <i class="ms-Icon ms-Icon--Emoji2"></i>
+                </li>
+                <li class="ms-ContextualMenu-item">
+                    <a class="ms-ContextualMenu-link" tabindex="1">Globe</a>
+                    <i class="ms-Icon ms-Icon--Globe"></i>
+                </li>
+                <li class="ms-ContextualMenu-item">
+                    <a class="ms-ContextualMenu-link" tabindex="1">Money</a>
+                    <i class="ms-Icon ms-Icon--Money"></i>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

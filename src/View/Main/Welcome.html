@@ -1,0 +1,11 @@
+<header *ngIf="enabled|async" class="ms-welcome__header ms-bgColor-neutralLighter ms-u-fadeIn500">
+    <img width="90" height="90" src="assets/logo-filled.png" alt="FALS-OneNote" title="FALS-OneNote" />
+    <h1 class="ms-fontSize-su ms-fontWeight-light ms-fontColor-neutralPrimary">Welcome</h1>
+</header>
+<header *ngIf="!(enabled|async)">
+    <img width="90" height="90" src="assets/logo-filled.png" alt="FALS-OneNote" title="FALS-OneNote" />
+    <h1 class="ms-fontSize-su ms-fontWeight-light ms-fontColor-neutralPrimary">Пожалуйста, войдите в учетную запись Microsoft Office</h1>
+    <div>
+        <button (click)="login()">Войти</button>
+    </div>
+</header>
