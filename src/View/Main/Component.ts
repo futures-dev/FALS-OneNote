@@ -33,18 +33,16 @@ export class MainComponent implements OnInit, AfterViewInit {
       if (!this.onenote.tryRegister(parse(location.href, true).query["code"])) {
         this.onenote.tryLogin();
       }
-    }
-    );
+    });
 
-    Office.initialize = function () {
+    Office.initialize = function() {
       console.log("Office initialized");
 
       _initializationPublisher.publish();
     };
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   onOfficeInitialized(): void {
     OneNote.run(async context => {

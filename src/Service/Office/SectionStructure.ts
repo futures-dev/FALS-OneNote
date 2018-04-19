@@ -9,7 +9,7 @@ import { Cast } from "Service/Common/Cast";
 
 @Injectable()
 export class SectionStructure {
-  constructor(private Api: Api, private Web: Web) { }
+  constructor(private Api: Api, private Web: Web) {}
 
   getMaterialPage(
     course: string,
@@ -45,8 +45,8 @@ export class SectionStructure {
     return OneNote.run(async context => {
       const id = Cast<IGetRestApiId>(page).restId;
       console.log("rest: " + id);
-      return this.Web.replacePageBody("<p>Hello World</p>", id).subscribe(
-        q => console.log(q)
+      return this.Web.replacePageBody("<p>Hello World</p>", id).subscribe(q =>
+        console.log(q)
       );
     });
   }

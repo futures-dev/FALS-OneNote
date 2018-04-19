@@ -15,21 +15,23 @@ export class OneNoteAuth extends BearerTokenAuthBase {
     if (guid) {
       this.http
         .post<any>(settings.SERVER_URL + "/checkCode", {
-          guid: guid
+          guid: guid,
         })
-        .subscribe(q => {
-          if (q.success) {
-            console.log("already logged in");
-            this.isAuth.next(true);
-          } else {
-            this.isAuth.next(false);
-            this.loginImpl();
-          }
-        },
+        .subscribe(
+          q => {
+            if (q.success) {
+              console.log("already logged in");
+              this.isAuth.next(true);
+            } else {
+              this.isAuth.next(false);
+              this.loginImpl();
+            }
+          },
           error => {
             this.isAuth.next(false);
             this.loginImpl();
-          });
+          }
+        );
     } else {
       localStorage[settings.GUID] = (
         window.performance.timing.navigationStart + window.performance.now()
@@ -61,10 +63,11 @@ export class OneNoteAuth extends BearerTokenAuthBase {
 
   public tryRegister(code: string) {
     if (code) {
-      this.submitCode(code).subscribe(q => Office.context.ui.messageParent(JSON.stringify(q)));
+      this.submitCode(code).subscribe(q =>
+        Office.context.ui.messageParent(JSON.stringify(q))
+      );
       return true;
-    }
-    else {
+    } else {
       return false;
     }
   }

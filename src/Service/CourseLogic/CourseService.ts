@@ -14,6 +14,8 @@ import { Assert } from "Service/Common/Assert";
 import { SubmitStepResultScenario } from "Service/CourseLogic/Scenarios/SendStepResultScenario";
 import "rxjs/add/operator/mergeMap";
 import { Router } from "@angular/router";
+import { StepInterventionController } from "Service/CourseLogic/StepInterventionController";
+import { ModuleInterventionController } from "Service/CourseLogic/ModuleInterventionController";
 
 @Injectable()
 export class CourseService {
@@ -28,12 +30,23 @@ export class CourseService {
       .map(z => z.Value);
   }
 
+  private readonly stepInterventionController;
+  private readonly moduleInterventionController;
+
   constructor(
     private socket: ConnectionService,
     private courseProvider: CourseProvider,
     private router: Router
   ) {
-    console.log("ctor");
+    this.stepInterventionController = new StepInterventionController(
+      this,
+      socket
+    );
+    this.moduleInterventionController = new ModuleInterventionController(
+      this,
+      socket
+    );
+
     socket.AddListener(CurrentStateChanged, (cs: CourseState) => {
       this.CurrentCourseState.next(cs);
 
