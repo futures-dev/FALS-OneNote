@@ -1,5 +1,12 @@
 import { Component, OnInit, Input, AfterViewInit } from "@angular/core";
 import { InitializationPublisher } from "Service/Office/InitializationPublisher";
+import { HttpClient } from "@angular/common/http";
+import { BehaviorSubject } from "rxjs";
+import { OneNoteAuth } from "Service/Office/Auth/OneNoteAuth";
+import { DOCUMENT } from "@angular/platform-browser";
+import * as settings from "config";
+import { ActivatedRoute, Router } from "@angular/router";
+import * as parse from "url-parse";
 declare var fabric: any;
 
 @Component({
@@ -7,16 +14,27 @@ declare var fabric: any;
   templateUrl: "View/Main/Main.html",
   providers: [InitializationPublisher],
 })
-export class MainComponent implements AfterViewInit {
+export class MainComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     this.initFabric();
   }
   title: string = "AppComponent Title";
+  hasCode: boolean = false;
 
-  constructor(private _initializationPublisher: InitializationPublisher) {
+  constructor(
+    private _initializationPublisher: InitializationPublisher,
+    private onenote: OneNoteAuth
+  ) {
     console.log("AppComponent ctor");
 
-    _initializationPublisher.subscribe(this.onOfficeInitialized);
+    _initializationPublisher.executeAfterInit(this.onOfficeInitialized);
+
+    _initializationPublisher.executeAfterInit(() => {
+      if (!this.onenote.tryRegister(parse(location.href, true).query["code"])) {
+        this.onenote.tryLogin();
+      }
+    }
+    );
 
     Office.initialize = function () {
       console.log("Office initialized");
@@ -25,10 +43,11 @@ export class MainComponent implements AfterViewInit {
     };
   }
 
+  ngOnInit() {
+  }
+
   onOfficeInitialized(): void {
-
     OneNote.run(async context => {
-
       const nb = context.application.getActiveNotebook();
       nb.load();
 

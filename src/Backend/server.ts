@@ -5,7 +5,12 @@ import * as cors from "cors";
 import * as path from "path";
 import * as morgan from "morgan";
 import * as bodyParser from "body-parser";
+import * as request from "request";
 import { Request, Response } from "express";
+
+import * as dotenv from "dotenv";
+import * as mongo from "mongodb";
+
 import { Client } from "Backend/Socket/Client";
 
 import * as fs from "fs";
@@ -27,8 +32,13 @@ import { CourseState } from "Service/Fals/Entities/CourseState";
 import { deserialize } from "Service/Fals/Serialization";
 import { StepStatistics } from "Service/Fals/Statistics";
 import { SubmitStepResultError, Module, Tree } from "Service/Fals";
+import { Auth } from "Backend/Office/Auth";
+
+dotenv.load();
 
 let app = express();
+
+console.log(process.env.DATABASE_URL);
 
 var port = process.env.PORT || 3003;
 
@@ -42,10 +52,342 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors());
 
-app.get("/", function(req, res) {
-  console.log("get/");
+app.get("/", function (req, res) {
   res.sendfile(path.resolve(__dirname, "..", "index.html"));
 });
+
+//#region Database
+var db: mongo.Db;
+var tokens: mongo.Collection;
+mongo.MongoClient.connect(process.env.DATABASE_URL).then(mongodb => {
+  db = mongodb.db("fals-on");
+  tokens = db.collection("Tokens");
+});
+//#endregion
+
+//#region OneNote
+
+const onAuth = new Auth();
+
+app.post("/checkCode", function (req, res) {
+  const guid = req.params.guid;
+  if (guid) {
+    tokens
+      .findOne({
+        guid: guid,
+        access_token: { $exists: true },
+        refresh_token: { $exists: true }
+      })
+      .then(
+        record => {
+          if (record) {
+            res.status(200).send({ success: true });
+          }
+          else {
+            res.status(404).send({ error: "no record found with guid" });
+          }
+        },
+        reason => {
+          tokens.deleteMany({ guid: guid });
+          res.status(404).send({
+            error: "no record found with guid, access and refresh in db",
+          });
+        }
+      );
+  } else {
+    res.status(404).send("Need ?code=");
+  }
+});
+
+app.post("/refreshToken", function (req, res) {
+  const guid = req.body.guid;
+  if (guid) {
+    tokens
+      .findOne({ guid: guid })
+      .then(
+        record => {
+          if (record) {
+            request.post(
+              onAuth.RefreshTokenUrl,
+              { formData: onAuth.RefreshTokenContent(record.refresh_token) },
+              (error, response, body) => {
+                if (error) {
+                  console.log(error);
+                  console.log(response);
+                  res.sendStatus(500);
+                } else {
+                  const access_token = body.access_token;
+                  const refresh_token = body.refresh_token;
+                  tokens.update(
+                    { guid: guid },
+                    {
+                      guid: guid,
+                      access_token: access_token,
+                      refresh_token: refresh_token,
+                    },
+                    {
+                      upsert: true,
+                    }
+                  );
+                  res.status(200).send({ success: true });
+                }
+              }
+            );
+          } else {
+            res.status(404).send({
+              error: "no record found with guid",
+            });
+          }
+        },
+        reason => {
+          tokens.deleteMany({ guid: guid });
+          res.status(404).send({
+            error: "no record found with guid, access and refresh in db",
+          });
+        }
+      );
+  } else {
+    res.status(404).send("Need guid param");
+  }
+});
+
+app.post("/submitCode", function (req, res) {
+  const code = req.body.code;
+  const guid = req.body.guid;
+  if (code && guid) {
+    request.post(
+      onAuth.AuthTokenUrl,
+      {
+        formData: onAuth.TokenContent(code),
+      },
+      (error, response, body) => {
+        if (error) {
+          console.log(error);
+          console.log(response);
+          res.sendStatus(500);
+        } else {
+          console.log(body);
+          const access_token = JSON.parse(body).access_token;
+          const refresh_token = JSON.parse(body).refresh_token;
+          tokens.update(
+            { guid: guid },
+            {
+              guid: guid,
+              access_token: access_token,
+              refresh_token: refresh_token,
+            },
+            {
+              upsert: true,
+            }
+          );
+          res.status(200).send({ success: true });
+        }
+      }
+    );
+  } else {
+    res.status(404).send("Need guid and code param");
+  }
+});
+
+app.post("/logout", function (req, res) {
+  console.log("/logout");
+  const guid = req.body.guid;
+  if (guid) {
+    tokens.deleteMany({ guid: guid });
+    res.status(200).send({ success: true });
+  } else {
+    res.status(404).send("Need guid param")
+  }
+});
+
+app.put("/put", function (req, res) {
+  console.log("put/" + req.body.url);
+  console.log(JSON.stringify(req.body));
+  const guid = req.body.guid;
+  const url = req.body.url;
+  if (guid && url) {
+    tokens
+      .findOne({
+        guid: guid,
+        access_token: { $exists: true },
+        refresh_token: { $exists: true }
+      })
+      .then(
+        record => {
+          if (record) {
+            request.put(
+              req.body.url,
+              {
+                json: req.body.body,
+                headers: {
+                  Authorization: "Bearer " + record.access_token,
+                },
+              },
+              (error, response, body) => {
+                console.log("put completed");
+                res.json(response);
+              }
+            );
+          }
+          else {
+            res.status(404).send({
+              error: "no record found with guid",
+            });
+          }
+        },
+        reason => {
+          tokens.deleteMany({ guid: guid });
+          res.status(404).send({
+            error: "no record found with guid, access and refresh in db",
+          });
+        }
+      );
+  } else {
+    res.status(404).send("Need guid and url param");
+  }
+});
+
+app.post("/post", function (req, res) {
+  console.log("post/" + req.body.url);
+  console.log(JSON.stringify(req.body));
+  const guid = req.body.guid;
+  const url = req.body.url;
+  if (guid && url) {
+    tokens
+      .findOne({
+        guid: guid,
+        access_token: { $exists: true },
+        refresh_token: { $exists: true }
+      })
+      .then(
+        record => {
+          if (record) {
+            request.post(
+              req.body.url,
+              {
+                formData: req.body.body,
+                headers: {
+                  Authorization: "Bearer " + record.access_token,
+                },
+              },
+              (error, response, body) => {
+                console.log("post completed");
+                res.json(response);
+              }
+            );
+          }
+          else {
+            res.status(404).send({
+              error: "no record found with guid",
+            });
+          }
+        },
+        reason => {
+          tokens.deleteMany({ guid: guid });
+          res.status(404).send({
+            error: "no record found with guid, access and refresh in db",
+          });
+        }
+      );
+  } else {
+    res.status(404).send("Need guid and url param");
+  }
+});
+
+app.patch("/patch", function (req, res) {
+  console.log("patch/" + req.body.url);
+  console.log(JSON.stringify(req.body));
+  const guid = req.body.guid;
+  const url = req.body.url;
+  if (guid && url) {
+    tokens
+      .findOne({
+        guid: guid,
+        access_token: { $exists: true },
+        refresh_token: { $exists: true }
+      })
+      .then(
+        record => {
+          if (record) {
+            console.log(record);
+            request.patch(
+              req.body.url,
+              {
+                json: req.body.body,
+                headers: {
+                  Authorization: "Bearer " + record.access_token,
+                },
+              },
+              (error, response, body) => {
+                console.log("patch completed");
+                res.json(response);
+              }
+            );
+          }
+          else {
+            res.status(404).send({
+              error: "no record found with guid",
+            });
+          }
+        },
+        reason => {
+          tokens.deleteMany({ guid: guid });
+          res.status(404).send({
+            error: "no record found with guid, access and refresh in db",
+          });
+        }
+      );
+  } else {
+    res.status(404).send("Need guid and url param");
+  }
+});
+
+app.get("/get", function (req, res) {
+  console.log("get/" + req.url);
+  const guid = req.query.guid;
+  const url = req.query.url;
+  if (guid && url) {
+    tokens
+      .findOne({
+        guid: guid,
+        access_token: { $exists: true },
+        refresh_token: { $exists: true }
+      })
+      .then(
+        record => {
+          if (record) {
+            request.get(
+              url,
+              {
+                headers: {
+                  Authorization: "Bearer " + record.access_token,
+                },
+              },
+              (error, response, body) => {
+                console.log("get completed");
+                res.json(response);
+              }
+            );
+          }
+          else {
+            res.status(404).send({
+              error: "no record found with guid",
+            });
+          }
+        },
+        reason => {
+          tokens.deleteMany({ guid: guid });
+          res.status(404).send({
+            error: "no record found with guid, access and refresh in db",
+          });
+        }
+      );
+  } else {
+    res.status(404).send("Need guid and url param");
+  }
+});
+
+//#endregion
 
 //#region Listen
 

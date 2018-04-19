@@ -13,6 +13,8 @@ import { CourseDashboardModule } from "View/CourseDashboard/Module";
 import { ConnectionService } from "Service/Socket/Connection";
 import { CourseService } from "Service/CourseLogic/CourseService";
 import { StepModule } from "View/Step/Module";
+import { CommandBarComponent } from "View/Main/CommandBarComponent";
+import { WelcomeComponent } from "View/Main/WelcomeComponent";
 
 @NgModule({
   imports: [
@@ -33,7 +35,7 @@ import { StepModule } from "View/Step/Module";
     StepModule,
   ],
   exports: [],
-  declarations: [MainComponent],
+  declarations: [MainComponent, CommandBarComponent, WelcomeComponent],
   bootstrap: [MainComponent],
   providers: [
     // all container controlled services to be registered here
