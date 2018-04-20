@@ -26,12 +26,18 @@ import {
   GetCurrentState,
   CurrentStateChanged,
   SubmitStepResult,
+  StepIntervene,
 } from "Service/Socket/Events";
 import { Results } from "Service/Socket/Results";
 import { CourseState } from "Service/Fals/Entities/CourseState";
 import { deserialize } from "Service/Fals/Serialization";
-import { StepStatistics } from "Service/Fals/Statistics";
-import { SubmitStepResultError, Module, Tree } from "Service/Fals";
+import { StepStatistics, StepIntervention } from "Service/Fals/Statistics";
+import {
+  SubmitStepResultError,
+  Module,
+  Tree,
+  GotoStepIntervention,
+} from "Service/Fals";
 import { Auth } from "Backend/Office/Auth";
 
 dotenv.load();
@@ -70,8 +76,9 @@ mongo.MongoClient.connect(process.env.DATABASE_URL).then(mongodb => {
 const onAuth = new Auth();
 
 app.post("/checkCode", function(req, res) {
-  const guid = req.params.guid;
+  const guid = req.body.guid;
   if (guid) {
+    console.log("guid = " + guid);
     tokens
       .findOne({
         guid: guid,
@@ -80,6 +87,7 @@ app.post("/checkCode", function(req, res) {
       })
       .then(
         record => {
+          console.log("record = " + record);
           if (record) {
             res.status(200).send({ success: true });
           } else {
@@ -555,6 +563,28 @@ io.on("connection", (socket: SocketIO.Socket) => {
     socket.emit(CurrentStateChanged, newState);
 
     socket.emit(SubmitStepResult, SubmitStepResultError.sOk);
+
+    // temp intervention test
+
+    setTimeout(
+      arg => {
+        const intervention = new StepIntervention();
+        intervention.module = newState.currentModule;
+        intervention.step = newState.currentStep;
+        intervention.course = newState.course;
+
+        const gotoStep = new GotoStepIntervention();
+        intervention.intervention = gotoStep;
+        gotoStep.step = step;
+
+        socket.emit(StepIntervene, intervention);
+        socket.addListener(StepIntervene, result => {
+          console.log("Intervention approve result: " + result);
+        });
+      },
+      5000,
+      ""
+    );
   });
 
   socket.on(GetCurrentState, (course: Course) => {
