@@ -5,8 +5,8 @@ import { Component, OnInit } from "@angular/core";
   templateUrl: "View/Interaction/GotoModuleInteractionDialog.html",
 })
 export class GotoModuleInteractionComponent implements OnInit {
-  constructor() { }
+  constructor() {}
   //constructor(@Inject(MAT_DIALOG_DATA) public data: any) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 }

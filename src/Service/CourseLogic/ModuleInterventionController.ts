@@ -29,6 +29,10 @@ export class ModuleInterventionController {
   }
 
   private onCourseStateChanged(courseState: CourseState) {
+    if (!courseState) {
+      return;
+    }
+
     if (courseState.currentModule.equals(this.previousModule.getValue())) {
       return;
     }

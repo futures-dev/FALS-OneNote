@@ -25,11 +25,11 @@ export class ModuleInterventionScenario extends ObserveScenarioBase<
 
   Cancel(): void {
     super.Cancel();
-    this.RemoveListener(ModuleIntervene, this.moduleInterveneAction);
+    this.RemoveListener(ModuleIntervene, this.moduleIntervene);
   }
 
   Observe(): void {
-    this.AddListener(ModuleIntervene, this.moduleInterveneAction);
+    this.AddListener(ModuleIntervene, this.moduleIntervene);
   }
 
   OnModuleIntervene(intervention: ModuleIntervention): void {
@@ -44,6 +44,6 @@ export class ModuleInterventionScenario extends ObserveScenarioBase<
     }
   }
 
-  private readonly moduleInterveneAction: (s: ModuleIntervention) => void = s =>
+  private readonly moduleIntervene: (s: ModuleIntervention) => void = s =>
     this.OnModuleIntervene(s);
 }

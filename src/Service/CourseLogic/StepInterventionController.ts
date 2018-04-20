@@ -29,6 +29,10 @@ export class StepInterventionController {
   }
 
   private onCourseStateChanged(courseState: CourseState) {
+    if (!courseState) {
+      return;
+    }
+
     if (courseState.currentStep.equals(this.previousStep.getValue())) {
       return;
     }

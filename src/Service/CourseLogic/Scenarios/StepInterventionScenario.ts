@@ -24,11 +24,11 @@ export class StepInterventionScenario extends ObserveScenarioBase<
 
   Cancel(): void {
     super.Cancel();
-    this.RemoveListener(StepIntervene, this.StepInterveneAction);
+    this.RemoveListener(StepIntervene, this.stepIntervene);
   }
 
   Observe(): void {
-    this.AddListener(StepIntervene, this.StepInterveneAction);
+    this.AddListener(StepIntervene, this.stepIntervene);
   }
 
   OnStepIntervene(intervention: StepIntervention): void {
@@ -43,6 +43,6 @@ export class StepInterventionScenario extends ObserveScenarioBase<
     }
   }
 
-  private readonly StepInterveneAction: (s: StepIntervention) => void = s =>
+  private readonly stepIntervene: (s: StepIntervention) => void = s =>
     this.OnStepIntervene(s);
 }

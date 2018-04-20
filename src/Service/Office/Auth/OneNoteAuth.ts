@@ -28,6 +28,7 @@ export class OneNoteAuth extends BearerTokenAuthBase {
             }
           },
           error => {
+            console.log(".next(false), error = " + error);
             this.isAuth.next(false);
             this.loginImpl();
           }
