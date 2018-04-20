@@ -18,15 +18,15 @@ export class SubmitStepResultScenario extends RequestScenarioBase<
   }
 
   SubmitStepResultStage(): void {
-    this.AddListener(SubmitStepResult, this.onSubmitStepResult);
+    this.AddListener(SubmitStepResult, this.submitStepResult);
     this.Send(SubmitStepResult, this.result);
   }
 
   OnSubmitStepResult(error: SubmitStepResultError) {
     this.EmitResult(this.result, error);
-    this.RemoveListener(SubmitStepResult, this.onSubmitStepResult);
+    this.RemoveListener(SubmitStepResult, this.submitStepResult);
   }
 
-  private readonly onSubmitStepResult: (s: SubmitStepResultError) => void = s =>
-    this.onSubmitStepResult(s);
+  private readonly submitStepResult: (s: SubmitStepResultError) => void = s =>
+    this.OnSubmitStepResult(s);
 }

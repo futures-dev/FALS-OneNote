@@ -7,17 +7,13 @@ import { DOCUMENT } from "@angular/platform-browser";
 import * as settings from "config";
 import { ActivatedRoute, Router } from "@angular/router";
 import * as parse from "url-parse";
-declare var fabric: any;
 
 @Component({
   selector: "mc",
   templateUrl: "View/Main/Main.html",
   providers: [InitializationPublisher],
 })
-export class MainComponent implements OnInit, AfterViewInit {
-  ngAfterViewInit(): void {
-    this.initFabric();
-  }
+export class MainComponent implements OnInit {
   title: string = "AppComponent Title";
   hasCode: boolean = false;
 
@@ -53,16 +49,5 @@ export class MainComponent implements OnInit, AfterViewInit {
         console.log(`${nb.id}`);
       });
     });
-  }
-
-  initFabric() {
-    var CommandButtonElements = document.querySelectorAll(".ms-CommandButton");
-    for (var i = 0; i < CommandButtonElements.length; i++) {
-      new fabric["CommandButton"](CommandButtonElements[i]);
-    }
-    var CommandBarElements = document.querySelectorAll(".ms-CommandBar");
-    for (var i = 0; i < CommandBarElements.length; i++) {
-      new fabric["CommandBar"](CommandBarElements[i]);
-    }
   }
 }

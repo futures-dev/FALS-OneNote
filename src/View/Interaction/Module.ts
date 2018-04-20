@@ -10,4 +10,4 @@ import { GotoModuleInteractionComponent } from "View/Interaction/GotoModuleInter
   exports: [],
   providers: [],
 })
-export class InteractionModule { }
+export class InteractionModule {}

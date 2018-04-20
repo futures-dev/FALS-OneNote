@@ -54,4 +54,4 @@ import { MatDialogModule } from "@angular/material";
     CourseService,
   ],
 })
-export class MainModule { }
+export class MainModule {}

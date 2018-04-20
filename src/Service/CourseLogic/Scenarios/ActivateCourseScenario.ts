@@ -19,15 +19,15 @@ export class ActivateCourseScenario extends RequestScenarioBase<
   }
 
   private SelectCourseStage(): void {
-    this.AddListener(SelectCourse, this.onSelectCourse);
+    this.AddListener(SelectCourse, this.selectCourse);
     this.Send(SelectCourse, this.course);
   }
 
   private OnSelectCourse(activateCourseError: ActivateCourseError): void {
     this.EmitResult(this.course, activateCourseError);
-    this.RemoveListener(SelectCourse, this.onSelectCourse);
+    this.RemoveListener(SelectCourse, this.selectCourse);
   }
 
-  private onSelectCourse: (s: ActivateCourseError) => void = s =>
+  private selectCourse: (s: ActivateCourseError) => void = s =>
     this.OnSelectCourse(s);
 }
