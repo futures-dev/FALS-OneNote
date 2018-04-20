@@ -1,10 +1,12 @@
-import { ScenarioBase } from "Service/Socket/Scenario";
+import { RequestScenarioBase } from "Service/CourseLogic/Scenarios/Scenario";
 import { ConnectionService } from "Service/Socket/Connection";
 import { SubmitModuleResult } from "Service/Socket/Events";
 import { ModuleStatistics } from "Service/Fals/Statistics/ModuleStatistics";
 import { SubmitModuleResultError } from "Service/Fals/Facades/SubmitModuleResultError";
 
-export class SubmitModuleResultScenario extends ScenarioBase<
+export class SubmitModuleResultScenario extends RequestScenarioBase<
+  ModuleStatistics,
+  SubmitModuleResultError,
   SubmitModuleResultError
 > {
   constructor(private result: ModuleStatistics, connection: ConnectionService) {
@@ -16,13 +18,15 @@ export class SubmitModuleResultScenario extends ScenarioBase<
   }
 
   SubmitModuleResultStage(): void {
-    this.connection.AddListener(SubmitModuleResult, s =>
-      this.OnSubmitModuleResult(s)
-    );
-    this.connection.Send(SubmitModuleResult, this.result);
+    this.AddListener(SubmitModuleResult, this.onSubmitModule);
+    this.Send(SubmitModuleResult, this.result);
   }
 
   OnSubmitModuleResult(error: SubmitModuleResultError) {
-    this.Result.next(error);
+    this.EmitResult(this.result, error);
+    this.RemoveListener(SubmitModuleResult, this.onSubmitModule);
   }
+
+  private readonly onSubmitModule: (s: SubmitModuleResultError) => void = s =>
+    this.OnSubmitModuleResult(s);
 }

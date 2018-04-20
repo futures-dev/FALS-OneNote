@@ -7,7 +7,24 @@
   var map = {
     "socket.io-client": "socket.io-client/dist",
     app: "/",
-    config: "/cfg.js"
+    config: "/cfg.js",
+
+    '@angular/cdk': '@angular/cdk/bundles/cdk.umd.js',
+    '@angular/cdk/a11y': '@angular/cdk/bundles/cdk-a11y.umd.js',
+    '@angular/cdk/accordion': '@angular/cdk/bundles/cdk-accordion.umd.js',
+    '@angular/cdk/bidi': '@angular/cdk/bundles/cdk-bidi.umd.js',
+    '@angular/cdk/coercion': '@angular/cdk/bundles/cdk-coercion.umd.js',
+    '@angular/cdk/collections': '@angular/cdk/bundles/cdk-collections.umd.js',
+    '@angular/cdk/keycodes': '@angular/cdk/bundles/cdk-keycodes.umd.js',
+    '@angular/cdk/layout': '@angular/cdk/bundles/cdk-layout.umd.js',
+    '@angular/cdk/observers': '@angular/cdk/bundles/cdk-observers.umd.js',
+    '@angular/cdk/overlay': '@angular/cdk/bundles/cdk-overlay.umd.js',
+    '@angular/cdk/platform': '@angular/cdk/bundles/cdk-platform.umd.js',
+    '@angular/cdk/portal': '@angular/cdk/bundles/cdk-portal.umd.js',
+    '@angular/cdk/rxjs': '@angular/cdk/bundles/cdk-rxjs.umd.js',
+    '@angular/cdk/table': '@angular/cdk/bundles/cdk-table.umd.js',
+    '@angular/cdk/scrolling': '@angular/cdk/bundles/cdk-scrolling.umd.js',
+    '@angular/cdk/stepper': '@angular/cdk/bundles/cdk-stepper.umd.js'
   };
   // packages tells the System loader how to load when no filename and/or no extension
   var packages = {
@@ -33,6 +50,8 @@
     querystringify: { main: "index.js" }
   };
   var ngPackageNames = [
+    "animations",
+    "material",
     "common",
     "compiler",
     "core",
@@ -40,7 +59,7 @@
     "http",
     "platform-browser",
     "platform-browser-dynamic",
-    "router",
+    "router"
   ];
   // Individual files (~300 requests):
   function packIndex(pkgName) {

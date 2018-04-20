@@ -7,17 +7,23 @@ import {
   RepeatIntervention,
   GotoModuleIntervention,
   Hint,
+  Result,
+  ModuleInterventionResult,
 } from "Service/Fals";
 import { BehaviorSubject } from "rxjs";
 import { ModuleIntervention } from "Service/Fals/Statistics";
 import { ModuleInterventionScenario } from "Service/CourseLogic/Scenarios/ModuleInterventionScenario";
 import { ConnectionService } from "Service/Socket/Connection";
 import { Cast } from "Service/Common/Cast";
+import { InteractionRequester } from "Service/Interaction/InteractionRequester";
+import { AsyncResult } from "Service/CourseLogic/AsyncResult";
+import { GotoModuleInteractionComponent } from "View/Interaction/GotoModuleInteractionComponent";
 
 export class ModuleInterventionController {
   constructor(
     private courseService: CourseService,
-    private connection: ConnectionService
+    private connection: ConnectionService,
+    private interaction: InteractionRequester
   ) {
     courseService.CurrentCourseState.subscribe(this.courseStateChangedAction);
   }
@@ -42,12 +48,18 @@ export class ModuleInterventionController {
     this.interventionScenario.Start();
   }
 
-  private onIntervention(intervention: ModuleIntervention) {
+  private onIntervention(
+    interventionResult: AsyncResult<
+      any,
+      ModuleIntervention,
+      ModuleInterventionResult
+    >
+  ) {
+    const intervention = interventionResult.request;
+
     switch (intervention.type) {
       case "Entities.GotoModuleInterventiton":
-        this.onGotoModuleIntervention(
-          Cast<GotoModuleIntervention>(intervention)
-        );
+        this.onGotoModuleIntervention(interventionResult);
         return;
       case "Entities.RepeatIntervention":
         this.onHint(Cast<RepeatIntervention>(intervention));
@@ -56,7 +68,24 @@ export class ModuleInterventionController {
     }
   }
 
-  private onGotoModuleIntervention(intervention: GotoModuleIntervention) {}
+  private onGotoModuleIntervention(
+    interventionResult: AsyncResult<
+      any,
+      GotoModuleIntervention,
+      ModuleInterventionResult
+    >
+  ) {
+    const intervention = interventionResult.request;
+
+    this.interaction
+      .Request<ModuleInterventionResult>(typeof GotoModuleInteractionComponent)
+      .subscribe(r => {
+        console.log(
+          `Goto module Intervention ${intervention.id} approval result: ${r}`
+        );
+        interventionResult.ResultSubject.next(r);
+      });
+  }
 
   private onHint(intervention: RepeatIntervention) {}
 
@@ -64,5 +93,7 @@ export class ModuleInterventionController {
   private interventionScenario: ModuleInterventionScenario;
 
   private readonly courseStateChangedAction = s => this.onCourseStateChanged(s);
-  private readonly interventionAction = s => this.onIntervention(s);
+  private readonly interventionAction: (
+    s: AsyncResult<any, ModuleIntervention, ModuleInterventionResult>
+  ) => void = s => this.onIntervention(s);
 }

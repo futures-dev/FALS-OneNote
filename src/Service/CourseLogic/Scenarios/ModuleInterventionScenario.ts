@@ -1,11 +1,19 @@
-import { ScenarioBase } from "Service/Socket/Scenario";
-import { CourseState, Student, Module } from "Service/Fals";
+import {
+  CourseState,
+  Student,
+  Module,
+  ModuleInterventionResult,
+  ModuleInterventionModel,
+} from "Service/Fals";
 import { ConnectionService } from "Service/Socket/Connection";
 import { ModuleIntervention } from "Service/Fals/Statistics";
 import { ModuleIntervene } from "Service/Socket/Events";
+import { ObserveScenarioBase } from "Service/CourseLogic/Scenarios/Scenario";
 
-export class ModuleInterventionScenario extends ScenarioBase<
-  ModuleIntervention
+export class ModuleInterventionScenario extends ObserveScenarioBase<
+  ModuleIntervention,
+  ModuleIntervention,
+  ModuleInterventionResult
 > {
   constructor(private Module: Module, connection: ConnectionService) {
     super(connection);
@@ -16,17 +24,17 @@ export class ModuleInterventionScenario extends ScenarioBase<
   }
 
   Cancel(): void {
-    this.connection.RemoveListener(ModuleIntervene, this.moduleInterveneAction);
+    super.Cancel();
+    this.RemoveListener(ModuleIntervene, this.moduleInterveneAction);
   }
 
   Observe(): void {
-    this.connection.AddListener(ModuleIntervene, this.moduleInterveneAction);
+    this.AddListener(ModuleIntervene, this.moduleInterveneAction);
   }
 
   OnModuleIntervene(intervention: ModuleIntervention): void {
     if (intervention.module.equals(this.Module)) {
-      this.connection.Send(ModuleIntervene, true);
-      this.Result.next(intervention);
+      this.Respond(ModuleIntervene, intervention, intervention);
     } else {
       console.log(
         `OnModuleIntervene: Module ${intervention.module.id} is not expected ${
@@ -36,5 +44,6 @@ export class ModuleInterventionScenario extends ScenarioBase<
     }
   }
 
-  private readonly moduleInterveneAction = s => this.OnModuleIntervene(s);
+  private readonly moduleInterveneAction: (s: ModuleIntervention) => void = s =>
+    this.OnModuleIntervene(s);
 }

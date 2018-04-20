@@ -1,11 +1,15 @@
-import { Listener, ScenarioBase } from "Service/Socket/Scenario";
+import { RequestScenarioBase } from "Service/CourseLogic/Scenarios/Scenario";
 import { Observable } from "rxjs/Observable";
 import { ConnectionService } from "Service/Socket/Connection";
 import { Course } from "Service/Fals/Entities/Course";
 import { SelectCourse } from "Service/Socket/Events";
 import { ActivateCourseError } from "Service/Fals/Facades/ActivateCourseError";
 
-export class ActivateCourseScenario extends ScenarioBase<ActivateCourseError> {
+export class ActivateCourseScenario extends RequestScenarioBase<
+  Course,
+  ActivateCourseError,
+  ActivateCourseError
+> {
   constructor(private course: Course, connection: ConnectionService) {
     super(connection);
   }
@@ -15,11 +19,15 @@ export class ActivateCourseScenario extends ScenarioBase<ActivateCourseError> {
   }
 
   private SelectCourseStage(): void {
-    this.connection.AddListener(SelectCourse, s => this.OnSelectCourse(s));
-    this.connection.Send(SelectCourse, this.course);
+    this.AddListener(SelectCourse, this.onSelectCourse);
+    this.Send(SelectCourse, this.course);
   }
 
-  private OnSelectCourse(message: string): void {
-    this.Result.next(ActivateCourseError.sOk);
+  private OnSelectCourse(activateCourseError: ActivateCourseError): void {
+    this.EmitResult(this.course, activateCourseError);
+    this.RemoveListener(SelectCourse, this.onSelectCourse);
   }
+
+  private onSelectCourse: (s: ActivateCourseError) => void = s =>
+    this.OnSelectCourse(s);
 }

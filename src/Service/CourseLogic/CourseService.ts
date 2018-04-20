@@ -16,6 +16,7 @@ import "rxjs/add/operator/mergeMap";
 import { Router } from "@angular/router";
 import { StepInterventionController } from "Service/CourseLogic/StepInterventionController";
 import { ModuleInterventionController } from "Service/CourseLogic/ModuleInterventionController";
+import { InteractionRequester } from "Service/Interaction/InteractionRequester";
 
 @Injectable()
 export class CourseService {
@@ -36,15 +37,18 @@ export class CourseService {
   constructor(
     private socket: ConnectionService,
     private courseProvider: CourseProvider,
-    private router: Router
+    private router: Router,
+    interaction: InteractionRequester
   ) {
     this.stepInterventionController = new StepInterventionController(
       this,
-      socket
+      socket,
+      interaction
     );
     this.moduleInterventionController = new ModuleInterventionController(
       this,
-      socket
+      socket,
+      interaction
     );
 
     socket.AddListener(CurrentStateChanged, (cs: CourseState) => {
@@ -62,7 +66,7 @@ export class CourseService {
   public Activate(course: Course): Observable<ActivateCourseError> {
     let activate = new ActivateCourseScenario(course, this.socket);
     activate.Result.subscribe(result => {
-      if (result != ActivateCourseError.sOk) {
+      if (result.result != ActivateCourseError.sOk) {
         console.log("ActivateScenarioError: " + result);
         return;
       }
@@ -73,7 +77,7 @@ export class CourseService {
     });
     activate.Start();
 
-    return activate.Result;
+    return activate.Result.map(r => r.result);
   }
 
   public SubmitStepResult(result: StepAnswer) {
@@ -84,7 +88,7 @@ export class CourseService {
 
     let submit = new SubmitStepResultScenario(result, this.socket);
     submit.Result.subscribe(result => {
-      if (result != SubmitStepResultError.sOk) {
+      if (result.result != SubmitStepResultError.sOk) {
         console.log("SubmitStepResultError: " + result);
         return;
       }
