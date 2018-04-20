@@ -1,10 +1,12 @@
-import { ScenarioBase } from "Service/Socket/Scenario";
+import { RequestScenarioBase } from "Service/CourseLogic/Scenarios/Scenario";
 import { ConnectionService } from "Service/Socket/Connection";
 import { SubmitStepResult } from "Service/Socket/Events";
 import { StepStatistics } from "Service/Fals/Statistics/StepStatistics";
 import { SubmitStepResultError } from "Service/Fals/Facades/SubmitStepResultError";
 
-export class SubmitStepResultScenario extends ScenarioBase<
+export class SubmitStepResultScenario extends RequestScenarioBase<
+  StepStatistics,
+  SubmitStepResultError,
   SubmitStepResultError
 > {
   constructor(private result: StepStatistics, connection: ConnectionService) {
@@ -16,13 +18,15 @@ export class SubmitStepResultScenario extends ScenarioBase<
   }
 
   SubmitStepResultStage(): void {
-    this.connection.AddListener(SubmitStepResult, s =>
-      this.OnSubmitStepResult(s)
-    );
-    this.connection.Send(SubmitStepResult, this.result);
+    this.AddListener(SubmitStepResult, this.onSubmitStepResult);
+    this.Send(SubmitStepResult, this.result);
   }
 
   OnSubmitStepResult(error: SubmitStepResultError) {
-    this.Result.next(error);
+    this.EmitResult(this.result, error);
+    this.RemoveListener(SubmitStepResult, this.onSubmitStepResult);
   }
+
+  private readonly onSubmitStepResult: (s: SubmitStepResultError) => void = s =>
+    this.onSubmitStepResult(s);
 }

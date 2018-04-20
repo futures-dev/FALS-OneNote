@@ -4,7 +4,7 @@ import { ConnectionService } from "Service/Socket/Connection";
 import { Observable } from "rxjs/Observable";
 import { Subject } from "rxjs/Subject";
 import { EventEmitter } from "@angular/core";
-import { Listener } from "Service/Socket/Scenario";
+import { Listener } from "Service/Socket/Listener";
 
 @Component({
   selector: "socket",
@@ -17,7 +17,7 @@ export class SocketComponent implements OnInit {
 
   Output: Subject<string> = new Subject();
 
-  private eventListener: Listener;
+  private eventListener: Listener<any>;
   private eventListened: string;
 
   EventChanged(event: string): void {

@@ -15,6 +15,10 @@ import { CourseService } from "Service/CourseLogic/CourseService";
 import { StepModule } from "View/Step/Module";
 import { CommandBarComponent } from "View/Main/CommandBarComponent";
 import { WelcomeComponent } from "View/Main/WelcomeComponent";
+import { GotoModuleInteractionComponent } from "View/Interaction/GotoModuleInteractionComponent";
+import { GotoStepInteractionComponent } from "View/Interaction/GotoStepInteractionComponent";
+import { InteractionModule } from "View/Interaction/Module";
+import { MatDialogModule } from "@angular/material";
 
 @NgModule({
   imports: [
@@ -24,17 +28,23 @@ import { WelcomeComponent } from "View/Main/WelcomeComponent";
     RouterModule,
     RoutingModule,
     HttpClientModule,
+    MatDialogModule,
 
     // local modules
     OfficeModule,
 
     // View modules
+    InteractionModule,
     SocketModule,
     CourseListModule,
     CourseDashboardModule,
     StepModule,
   ],
   exports: [],
+  entryComponents: [
+    GotoModuleInteractionComponent,
+    GotoStepInteractionComponent,
+  ],
   declarations: [MainComponent, CommandBarComponent, WelcomeComponent],
   bootstrap: [MainComponent],
   providers: [
@@ -44,4 +54,4 @@ import { WelcomeComponent } from "View/Main/WelcomeComponent";
     CourseService,
   ],
 })
-export class MainModule {}
+export class MainModule { }

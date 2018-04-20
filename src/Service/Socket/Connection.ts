@@ -2,8 +2,8 @@ import { Injectable } from "@angular/core";
 
 import * as si from "socket.io-client";
 import * as settings from "config";
-import { Listener } from "Service/Socket/Scenario";
 import { deserialize } from "Service/Fals/Serialization";
+import { Listener } from "Service/Socket/Listener";
 
 @Injectable()
 export class ConnectionService {
@@ -29,13 +29,13 @@ export class ConnectionService {
     this.connection.on("error", m => console.log(m));
   }
 
-  AddListener(event: string, callback: Listener): Listener {
+  AddListener(event: string, callback: Listener<any>): Listener<any> {
     let listener = message => callback(deserialize(message));
     this.connection.addEventListener(event, listener);
     return listener;
   }
 
-  RemoveListener(event: string, callback: Listener): void {
+  RemoveListener(event: string, callback: Listener<any>): void {
     this.connection.removeEventListener(event, callback);
   }
 

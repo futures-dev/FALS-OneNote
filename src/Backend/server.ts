@@ -27,7 +27,7 @@ import {
   CurrentStateChanged,
   SubmitStepResult,
 } from "Service/Socket/Events";
-import { Result } from "Service/Socket/Results";
+import { Results } from "Service/Socket/Results";
 import { CourseState } from "Service/Fals/Entities/CourseState";
 import { deserialize } from "Service/Fals/Serialization";
 import { StepStatistics } from "Service/Fals/Statistics";
@@ -499,7 +499,7 @@ io.on("connection", (socket: SocketIO.Socket) => {
 
     socket.emit(CurrentStateChanged, currentState);
 
-    socket.emit(SelectCourse, Result.sOk);
+    socket.emit(SelectCourse, Results.sOk);
   });
 
   socket.on(SubmitStepResult, (result: StepStatistics) => {
@@ -563,7 +563,7 @@ io.on("connection", (socket: SocketIO.Socket) => {
     let courseStates = storage.CourseStates[client.userId];
     if (!courseStates) {
       courseStates = storage.CourseStates[client.userId] = [];
-      socket.emit(GetCurrentState, Result.eNotFound);
+      socket.emit(GetCurrentState, Results.eNotFound);
     }
 
     let courseState = courseStates
@@ -573,7 +573,7 @@ io.on("connection", (socket: SocketIO.Socket) => {
     if (courseState) {
       socket.emit(GetCurrentState, courseState);
     } else {
-      socket.emit(GetCurrentState, Result.eNotFound);
+      socket.emit(GetCurrentState, Results.eNotFound);
     }
   });
 
