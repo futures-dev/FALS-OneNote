@@ -1,15 +1,5 @@
 import { Injectable } from "@angular/core";
 import { CourseService } from "Service/CourseLogic/CourseService";
-import {
-  CourseState,
-  Step,
-  Entity,
-  RepeatIntervention,
-  GotoStepIntervention,
-  Hint,
-  Result,
-  StepInterventionResult,
-} from "Service/Fals";
 import { BehaviorSubject } from "rxjs";
 import { StepIntervention } from "Service/Fals/Statistics";
 import { StepInterventionScenario } from "Service/CourseLogic/Scenarios/StepInterventionScenario";
@@ -18,6 +8,11 @@ import { Cast } from "Service/Common/Cast";
 import { InteractionRequester } from "Service/Interaction/InteractionRequester";
 import { AsyncResult } from "Service/CourseLogic/AsyncResult";
 import { GotoStepInteractionComponent } from "View/Interaction/GotoStepInteractionComponent";
+import { CourseState } from "Service/Fals/Entities/CourseState";
+import { StepInterventionResult } from "Service/Fals/Facades/StepInterventionResult";
+import { RepeatIntervention } from "Service/Fals/Entities/RepeatIntervention";
+import { GotoStepIntervention } from "Service/Fals/Entities/GotoStepIntervention";
+import { Step } from "Service/Fals/Entities/Step";
 
 export class StepInterventionController {
   constructor(
@@ -54,50 +49,51 @@ export class StepInterventionController {
 
   private onIntervention(
     interventionResult: AsyncResult<
-      any,
+      StepIntervention,
       StepIntervention,
       StepInterventionResult
-    >
+      >
   ) {
-    const intervention = interventionResult.request;
+    const intervention = interventionResult.request.intervention;
 
     switch (intervention.type) {
-      case "Entities.GotoStepInterventiton":
+      case "Entities.GotoStepIntervention":
         this.onGotoStepIntervention(interventionResult);
         return;
       case "Entities.RepeatIntervention":
         this.onHint(Cast<RepeatIntervention>(intervention));
       default:
         console.log("Unknown Step intervention: " + intervention.type);
+        interventionResult.result = StepInterventionResult.eNotSupported;
     }
   }
 
   private onGotoStepIntervention(
     interventionResult: AsyncResult<
-      any,
-      GotoStepIntervention,
+      StepIntervention,
+      StepIntervention,
       StepInterventionResult
-    >
+      >
   ) {
     const intervention = interventionResult.request;
 
     this.interaction
-      .Request<StepInterventionResult>(typeof GotoStepInteractionComponent)
+      .Request<StepInterventionResult>(GotoStepInteractionComponent)
       .subscribe(r => {
         console.log(
           `Goto Step Intervention ${intervention.id} approval result: ${r}`
         );
-        interventionResult.ResultSubject.next(r);
+        interventionResult.ResultSubject.next(r ? StepInterventionResult.sOk : StepInterventionResult.eDeclined);
       });
   }
 
-  private onHint(intervention: RepeatIntervention) {}
+  private onHint(intervention: RepeatIntervention) { }
 
   private readonly previousStep = new BehaviorSubject<Step>(null);
   private interventionScenario: StepInterventionScenario;
 
   private readonly courseStateChangedAction = s => this.onCourseStateChanged(s);
   private readonly interventionAction: (
-    s: AsyncResult<any, StepIntervention, StepInterventionResult>
+    s: AsyncResult<StepIntervention, StepIntervention, StepInterventionResult>
   ) => void = s => this.onIntervention(s);
 }

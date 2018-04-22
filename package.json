@@ -47,6 +47,8 @@
         "rxjs": "^5.5.5",
         "socket.io-client": "1.7.4",
         "systemjs": "^0.20.19",
+        "typemoq": "^2.1.0",
+        "url-parse": "1.1.0",
         "zone.js": "^0.8.18",
         "@types/angular": "^1.6.2",
         "@types/jquery": "^2.0.39",

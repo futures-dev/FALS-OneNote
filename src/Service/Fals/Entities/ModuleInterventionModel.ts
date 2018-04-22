@@ -2,7 +2,8 @@
 
 import { Period, Type } from "Service/Fals/TypeMap";
 import { Serialize } from "../Serialization/Serialize";
-export class ModuleInterventionModel {
+import { Entity } from "../Bank/Entity";
+export class ModuleInterventionModel extends Entity {
   static __static_initialized: boolean = false;
   static __static_initialize() {
     if (!ModuleInterventionModel.__static_initialized) {
@@ -20,7 +21,9 @@ export class ModuleInterventionModel {
     );
   }
 
-  public constructor() {}
+  public constructor() {
+    super();
+  }
 }
 ModuleInterventionModel["__class"] = "Entities.ModuleInterventionModel";
 

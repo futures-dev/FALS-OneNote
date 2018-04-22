@@ -1,15 +1,5 @@
 import { Injectable } from "@angular/core";
 import { CourseService } from "Service/CourseLogic/CourseService";
-import {
-  CourseState,
-  Module,
-  Entity,
-  RepeatIntervention,
-  GotoModuleIntervention,
-  Hint,
-  Result,
-  ModuleInterventionResult,
-} from "Service/Fals";
 import { BehaviorSubject } from "rxjs";
 import { ModuleIntervention } from "Service/Fals/Statistics";
 import { ModuleInterventionScenario } from "Service/CourseLogic/Scenarios/ModuleInterventionScenario";
@@ -18,6 +8,11 @@ import { Cast } from "Service/Common/Cast";
 import { InteractionRequester } from "Service/Interaction/InteractionRequester";
 import { AsyncResult } from "Service/CourseLogic/AsyncResult";
 import { GotoModuleInteractionComponent } from "View/Interaction/GotoModuleInteractionComponent";
+import { CourseState } from "Service/Fals/Entities/CourseState";
+import { ModuleInterventionResult } from "Service/Fals/Facades/ModuleInterventionResult";
+import { RepeatIntervention } from "Service/Fals/Entities/RepeatIntervention";
+import { GotoModuleIntervention } from "Service/Fals/Entities/GotoModuleIntervention";
+import { Module } from "Service/Fals/Entities/Module";
 
 export class ModuleInterventionController {
   constructor(
@@ -54,10 +49,10 @@ export class ModuleInterventionController {
 
   private onIntervention(
     interventionResult: AsyncResult<
-      any,
+      ModuleIntervention,
       ModuleIntervention,
       ModuleInterventionResult
-    >
+      >
   ) {
     const intervention = interventionResult.request;
 
@@ -74,10 +69,10 @@ export class ModuleInterventionController {
 
   private onGotoModuleIntervention(
     interventionResult: AsyncResult<
-      any,
+      ModuleIntervention,
       GotoModuleIntervention,
       ModuleInterventionResult
-    >
+      >
   ) {
     const intervention = interventionResult.request;
 
@@ -91,13 +86,17 @@ export class ModuleInterventionController {
       });
   }
 
-  private onHint(intervention: RepeatIntervention) {}
+  private onHint(intervention: RepeatIntervention) { }
 
   private readonly previousModule = new BehaviorSubject<Module>(null);
   private interventionScenario: ModuleInterventionScenario;
 
   private readonly courseStateChangedAction = s => this.onCourseStateChanged(s);
   private readonly interventionAction: (
-    s: AsyncResult<any, ModuleIntervention, ModuleInterventionResult>
+    s: AsyncResult<
+      ModuleIntervention,
+      ModuleIntervention,
+      ModuleInterventionResult
+      >
   ) => void = s => this.onIntervention(s);
 }

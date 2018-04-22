@@ -11,6 +11,8 @@ import { Request, Response } from "express";
 import * as dotenv from "dotenv";
 import * as mongo from "mongodb";
 
+import { } from "typemoq";
+
 import { Client } from "Backend/Socket/Client";
 
 import * as fs from "fs";
@@ -37,8 +39,12 @@ import {
   Module,
   Tree,
   GotoStepIntervention,
+  StepInterventionResult,
+  Result,
 } from "Service/Fals";
 import { Auth } from "Backend/Office/Auth";
+import { ResponseStub } from "Backend/Mocks";
+import { Cast } from "Service/Common/Cast";
 
 dotenv.load();
 
@@ -58,7 +64,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors());
 
-app.get("/", function(req, res) {
+app.get("/", function (req, res) {
   res.sendfile(path.resolve(__dirname, "..", "index.html"));
 });
 
@@ -69,22 +75,25 @@ mongo.MongoClient.connect(process.env.DATABASE_URL).then(mongodb => {
   db = mongodb.db("fals-on");
   tokens = db.collection("Tokens");
 });
+function getTokenAsync(guid: string) {
+  return tokens
+    .findOne({
+      guid: guid,
+      access_token: { $exists: true, $ne: null },
+      refresh_token: { $exists: true, $ne: null },
+    });
+}
 //#endregion
 
 //#region OneNote
 
 const onAuth = new Auth();
 
-app.post("/checkCode", function(req, res) {
+app.post("/checkCode", function (req, res) {
   const guid = req.body.guid;
   if (guid) {
     console.log("guid = " + guid);
-    tokens
-      .findOne({
-        guid: guid,
-        access_token: { $exists: true },
-        refresh_token: { $exists: true },
-      })
+    getTokenAsync(guid)
       .then(
         record => {
           console.log("record = " + record);
@@ -106,10 +115,10 @@ app.post("/checkCode", function(req, res) {
   }
 });
 
-app.post("/refreshToken", function(req, res) {
+const refreshTokenFunction = function (req: Request, res: Response) {
   const guid = req.body.guid;
   if (guid) {
-    tokens.findOne({ guid: guid }).then(
+    getTokenAsync(guid).then(
       record => {
         if (record) {
           request.post(
@@ -133,8 +142,10 @@ app.post("/refreshToken", function(req, res) {
                   {
                     upsert: true,
                   }
-                );
-                res.status(200).send({ success: true });
+                ).then(q => {
+                  res.status(200).send({ success: true });
+                },
+                  r => console.log("rejected " + r));
               }
             }
           );
@@ -154,9 +165,11 @@ app.post("/refreshToken", function(req, res) {
   } else {
     res.status(404).send("Need guid param");
   }
-});
+};
 
-app.post("/submitCode", function(req, res) {
+app.post("/refreshToken", refreshTokenFunction);
+
+app.post("/submitCode", function (req, res) {
   const code = req.body.code;
   const guid = req.body.guid;
   if (code && guid) {
@@ -194,7 +207,7 @@ app.post("/submitCode", function(req, res) {
   }
 });
 
-app.post("/logout", function(req, res) {
+app.post("/logout", function (req, res) {
   console.log("/logout");
   const guid = req.body.guid;
   if (guid) {
@@ -205,7 +218,7 @@ app.post("/logout", function(req, res) {
   }
 });
 
-app.put("/put", function(req, res) {
+app.put("/put", function (req, res) {
   console.log("put/" + req.body.url);
   console.log(JSON.stringify(req.body));
   const guid = req.body.guid;
@@ -229,8 +242,35 @@ app.put("/put", function(req, res) {
                 },
               },
               (error, response, body) => {
-                console.log("put completed");
-                res.json(response);
+                if (response.statusCode == 401) {
+                  console.log("need refresh");
+                  refreshTokenFunction(
+                    req,
+                    Cast<Response>(
+                      new ResponseStub(() => {
+                        getTokenAsync(guid).then(record => {
+                          request.post(
+                            req.body.url,
+                            {
+                              json: req.body.body,
+                              headers: {
+                                Authorization: "Bearer " + record.access_token,
+                              },
+                            },
+                            (error, response, body) => {
+                              console.log("complete");
+                              res.send(body);
+                            }
+                          );
+                        }
+                        );
+                      }
+                      )
+                    ));
+                } else {
+                  console.log("complete");
+                  res.send(body);
+                }
               }
             );
           } else {
@@ -251,7 +291,7 @@ app.put("/put", function(req, res) {
   }
 });
 
-app.post("/post", function(req, res) {
+app.post("/post", function (req, res) {
   console.log("post/" + req.body.url);
   console.log(JSON.stringify(req.body));
   const guid = req.body.guid;
@@ -275,8 +315,34 @@ app.post("/post", function(req, res) {
                 },
               },
               (error, response, body) => {
-                console.log("post completed");
-                res.json(response);
+                if (response.statusCode == 401) {
+                  console.log("need refresh");
+                  refreshTokenFunction(
+                    req,
+                    Cast<Response>(
+                      new ResponseStub(() => {
+                        getTokenAsync(guid).then(record => {
+                          request.post(
+                            req.body.url,
+                            {
+                              formData: req.body.body,
+                              headers: {
+                                Authorization: "Bearer " + record.access_token,
+                              },
+                            },
+                            (error, response, body) => {
+                              console.log("complete");
+                              res.send(body);
+                            }
+                          );
+                        });
+                      })
+                    )
+                  );
+                } else {
+                  console.log("complete");
+                  res.send(body);
+                }
               }
             );
           } else {
@@ -297,7 +363,7 @@ app.post("/post", function(req, res) {
   }
 });
 
-app.patch("/patch", function(req, res) {
+app.patch("/patch", function (req, res) {
   console.log("patch/" + req.body.url);
   console.log(JSON.stringify(req.body));
   const guid = req.body.guid;
@@ -322,8 +388,35 @@ app.patch("/patch", function(req, res) {
                 },
               },
               (error, response, body) => {
-                console.log("patch completed");
-                res.json(response);
+                if (response.statusCode == 401) {
+                  console.log("need refresh");
+                  refreshTokenFunction(
+                    req,
+                    Cast<Response>(
+                      new ResponseStub(() => {
+                        getTokenAsync(guid).then(record => {
+                          request.patch(
+                            req.body.url,
+                            {
+                              json: req.body.body,
+                              headers: {
+                                Authorization: "Bearer " + record.access_token,
+                              },
+                            },
+                            (error, response, body) => {
+                              console.log("complete");
+                              res.send(body);
+                            }
+                          )
+                        }
+                        )
+                      })
+                    )
+                  );
+                } else {
+                  console.log("complete");
+                  res.send(body);
+                }
               }
             );
           } else {
@@ -344,7 +437,8 @@ app.patch("/patch", function(req, res) {
   }
 });
 
-app.get("/get", function(req, res) {
+
+app.get("/get", function (req, res) {
   console.log("get/" + req.url);
   const guid = req.query.guid;
   const url = req.query.url;
@@ -366,8 +460,33 @@ app.get("/get", function(req, res) {
                 },
               },
               (error, response, body) => {
-                console.log("get completed");
-                res.json(response);
+                if (response.statusCode == 401) {
+                  console.log("need refresh");
+                  refreshTokenFunction(
+                    req,
+                    Cast<Response>(
+                      new ResponseStub(() => {
+                        getTokenAsync(guid).then(record => {
+                          request.get(
+                            req.body.url,
+                            {
+                              headers: {
+                                Authorization: "Bearer " + record.access_token,
+                              },
+                            },
+                            (error, response, body) => {
+                              console.log("complete");
+                              res.send(body);
+                            }
+                          );
+                        });
+                      })
+                    )
+                  );
+                } else {
+                  console.log("complete");
+                  res.send(body);
+                }
               }
             );
           } else {
@@ -514,6 +633,7 @@ io.on("connection", (socket: SocketIO.Socket) => {
     console.log(SubmitStepResult, client.userId);
 
     let courseState = storage.CourseStates[client.userId].pop();
+    storage.CourseStates[client.userId].push(courseState);
     let stepIdx = courseState.currentModule.steps.findIndex(q =>
       q.equals(result.step)
     );
@@ -560,6 +680,7 @@ io.on("connection", (socket: SocketIO.Socket) => {
     }
 
     console.log("new step: " + newState.currentStep.id);
+    storage.CourseStates[client.userId].push(newState);
     socket.emit(CurrentStateChanged, newState);
 
     socket.emit(SubmitStepResult, SubmitStepResultError.sOk);
@@ -575,11 +696,24 @@ io.on("connection", (socket: SocketIO.Socket) => {
 
         const gotoStep = new GotoStepIntervention();
         intervention.intervention = gotoStep;
-        gotoStep.step = step;
+        gotoStep.step = newState.currentModule.steps[2];
 
         socket.emit(StepIntervene, intervention);
-        socket.addListener(StepIntervene, result => {
-          console.log("Intervention approve result: " + result);
+        socket.addListener(StepIntervene, (result: Result<StepIntervention, StepIntervention, StepInterventionResult>) => {
+          console.log("Intervention approve result: " + result.result);
+          if (result.result == StepInterventionResult.sOk) {
+            const states = storage.CourseStates[client.userId];
+            const state = states[states.length - 1];
+
+            const newState = new CourseState();
+            Object.assign(newState, state);
+
+            newState.currentStep = Cast<GotoStepIntervention>(result.response.intervention).step;
+            console.log(JSON.stringify(newState));
+
+            states.push(newState);
+            socket.emit(CurrentStateChanged, newState);
+          }
         });
       },
       5000,

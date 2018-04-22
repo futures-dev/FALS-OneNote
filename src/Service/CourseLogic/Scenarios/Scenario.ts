@@ -3,7 +3,7 @@ import { ConnectionService } from "Service/Socket/Connection";
 import { Cancel } from "Service/Socket/Events";
 import { Results } from "Service/Socket/Results";
 import { AsyncResult } from "Service/CourseLogic/AsyncResult";
-import { Result } from "Service/Fals";
+import { Result } from "Service/Fals/Facades/Result";
 import { Listener } from "Service/Socket/Listener";
 
 export interface Scenario<TRequest, TResponse, TResult> {
@@ -48,7 +48,7 @@ export abstract class RequestScenarioBase<
   TRequest,
   TResponse,
   TResult
-> extends ScenarioBase<TRequest, TResponse, TResult> {
+  > extends ScenarioBase<TRequest, TResponse, TResult> {
   constructor(private connection: ConnectionService) {
     super(connection);
   }
@@ -66,7 +66,7 @@ export abstract class ObserveScenarioBase<
   TRequest,
   TResponse,
   TResult
-> extends ScenarioBase<TRequest, TResponse, TResult> {
+  > extends ScenarioBase<TRequest, TResponse, TResult> {
   constructor(private connection: ConnectionService) {
     super(connection);
   }
@@ -83,7 +83,8 @@ export abstract class ObserveScenarioBase<
     const result = this.EmitResult(request, response);
 
     result.ResultSubject.subscribe(q => {
-      this.connection.Send(message, result);
+      const serializableResult = new Result(result.request, result.response, q);
+      this.connection.Send(message, serializableResult);
     });
   }
 }
