@@ -1,4 +1,10 @@
-import { Component, OnInit, AfterViewInit, EventEmitter } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  AfterViewInit,
+  EventEmitter,
+  AfterContentInit,
+} from "@angular/core";
 import { OneNoteAuth } from "Service/Office/Auth/OneNoteAuth";
 import { InitializationPublisher } from "Service/Office/InitializationPublisher";
 import { BehaviorSubject } from "rxjs";
@@ -8,7 +14,7 @@ import { Observable } from "rxjs/Observable";
   selector: "welcome",
   templateUrl: "View/Main/Welcome.html",
 })
-export class WelcomeComponent implements AfterViewInit {
+export class WelcomeComponent implements AfterContentInit {
   constructor(
     private onenote: OneNoteAuth,
     private initializationPublisher: InitializationPublisher
@@ -39,7 +45,7 @@ export class WelcomeComponent implements AfterViewInit {
 
   // GODDAMN CRUTCH
 
-  ngAfterViewInit(): void {
+  ngAfterContentInit(): void {
     this.qqq.emit(this.t2);
     this.onenote.isAuth.subscribe(q => {
       console.log("Welcome: auth = " + q);

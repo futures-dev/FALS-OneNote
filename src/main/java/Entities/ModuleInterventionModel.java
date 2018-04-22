@@ -1,8 +1,9 @@
 package Entities;
 
 import Serialization.Serialize;
+import Bank.Entity;
 
-public class ModuleInterventionModel {
+public class ModuleInterventionModel extends Entity {
 
 	 static {
 

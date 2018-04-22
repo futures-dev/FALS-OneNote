@@ -2,7 +2,8 @@
 
 import { Period, Type } from "Service/Fals/TypeMap";
 import { Serialize } from "../Serialization/Serialize";
-export abstract class StepInterventionModel {
+import { Entity } from "../Bank/Entity";
+export abstract class StepInterventionModel extends Entity {
   static __static_initialized: boolean = false;
   static __static_initialize() {
     if (!StepInterventionModel.__static_initialized) {
@@ -20,7 +21,9 @@ export abstract class StepInterventionModel {
     );
   }
 
-  public constructor() {}
+  public constructor() {
+    super();
+  }
 }
 StepInterventionModel["__class"] = "Entities.StepInterventionModel";
 

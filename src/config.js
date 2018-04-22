@@ -9,6 +9,8 @@
     app: "/",
     config: "/cfg.js",
 
+    '@angular/animations/browser': '@angular/animations/bundles/animations-browser.umd.js',
+    '@angular/platform-browser/animations': '@angular/platform-browser/bundles/platform-browser-animations.umd.js',
     '@angular/cdk': '@angular/cdk/bundles/cdk.umd.js',
     '@angular/cdk/a11y': '@angular/cdk/bundles/cdk-a11y.umd.js',
     '@angular/cdk/accordion': '@angular/cdk/bundles/cdk-accordion.umd.js',
