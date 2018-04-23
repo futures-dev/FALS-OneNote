@@ -4,12 +4,12 @@ import { Observable } from "rxjs/Observable";
 import { ISectionContainer } from "Service/Office/Interface/ISectionContainer";
 import { Api } from "Service/Office/Api";
 import { Web } from "Service/Office/Web";
-import { IGetRestApiId } from "Service/Office/Interface/IGetRestApiID";
+import { IGetRestApiId } from "Service/Office/Interface/IGetRestApiId";
 import { Cast } from "Service/Common/Cast";
 
 @Injectable()
 export class SectionStructure {
-  constructor(private Api: Api, private Web: Web) {}
+  constructor(private Api: Api, private Web: Web) { }
 
   getMaterialPage(
     course: string,

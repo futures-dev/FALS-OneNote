@@ -3,7 +3,7 @@ import { ILoad } from "Service/Office/Interface/ILoad";
 import { IPageContainer } from "Service/Office/Interface/IPageContainer";
 import { ISectionGroupContainer } from "Service/Office/Interface/ISectionGroupContainer";
 import { Injectable } from "@angular/core";
-import { IGetRestApiId } from "Service/Office/Interface/IGetRestApiID";
+import { IGetRestApiId } from "Service/Office/Interface/IGetRestApiId";
 import { Cast } from "Service/Common/Cast";
 
 @Injectable()
