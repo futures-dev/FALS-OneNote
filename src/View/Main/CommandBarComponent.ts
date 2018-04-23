@@ -2,7 +2,7 @@ import { Component, OnInit, AfterViewInit } from "@angular/core";
 import { OneNoteAuth } from "Service/Office/Auth/OneNoteAuth";
 import { Router } from "@angular/router";
 import { InitializationPublisher } from "Service/Office/InitializationPublisher";
-import { BehaviorSubject } from "rxjs";
+import { BehaviorSubject } from "rxjs/BehaviorSubject";
 declare var fabric: any;
 
 @Component({
@@ -47,7 +47,7 @@ export class CommandBarComponent implements OnInit, AfterViewInit {
 
   public enabled = this.onenote.isAuth;
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   initFabric() {
     var CommandButtonElements = document.querySelectorAll(".ms-CommandButton");
