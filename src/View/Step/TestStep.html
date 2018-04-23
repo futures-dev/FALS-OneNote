@@ -1,17 +1,23 @@
-<div [innerHTML]="(Step | async).problem.content">
+<div>
+    <div [innerHTML]="Problem|async"></div>
 
-    <ul class="ms-List">
-        <li [ngClass]="{
-            'ms-ListItem': true,
-            'is-selectable': true,
-            'is-selected': isSelected(i)       
-        }" *ngFor="let option of Answers; let i=index">
-            <span class="ms-ListItem-primaryText">{{option}}</span>
-            <div class="ms-ListItem-selectionTarget" (click)="toggle(i)"></div>
-        </li>
+    <ul>
+        <ng-container *ngFor="let option of (Answers|async); let i=index">
+            <li [ngClass]="{
+                'ms-ListItem': true,
+                'is-selectable': true,
+                'is-selected': isSelected(i)       
+            }">
+                <span class="ms-ListItem-primaryText">{{option}}</span>
+                <div class="ms-ListItem-selectionTarget" (click)="toggle(i)"></div>
+            </li>
+        </ng-container>
     </ul>
 
-    <button class="ms-Button ms-Button--primary" (click)="tryProceed()">
+    <button class="ms-Button ms-Button--primary" style="color:white" (click)="tryProceed()" *ngIf="showProceed|async">
+        <span class="ms-Button-label">Отправить</span>
+    </button>
+    <button class="btn btn-success" style="color:white" disabled (click)="tryProceed()" *ngIf="!(showProceed|async)">
         <span class="ms-Button-label">Отправить</span>
     </button>
 </div>

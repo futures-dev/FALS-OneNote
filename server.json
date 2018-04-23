@@ -30,6 +30,9 @@
                 "maxGrade": 0,
                 "possibleInterventions": [
                   {
+                    "type": "Entities.GotoStepIntervention",
+                    "id": null,
+                    "version": null,
                     "step": {
                       "type": "Entities.ControlStep",
                       "id": "step3",
@@ -108,7 +111,7 @@
                   "type": "Bank.Assignment",
                   "id": null,
                   "version": null,
-                  "content": "How much watch?"
+                  "content": "<div>Что изображено на рисунке?\n  \n  <img src=\"https://www.hse.ru/f/src/global/i/btn-example.png\">\n  \n  </div>"
                 },
                 "correctAnswer": {
                   "type": "Bank.Key",
@@ -311,6 +314,9 @@
             "maxGrade": 0,
             "possibleInterventions": [
               {
+                "type": "Entities.GotoStepIntervention",
+                "id": null,
+                "version": null,
                 "step": {
                   "type": "Entities.ControlStep",
                   "id": "step3",
@@ -389,7 +395,7 @@
               "type": "Bank.Assignment",
               "id": null,
               "version": null,
-              "content": "How much watch?"
+              "content": "<div>Что изображено на рисунке?\n  \n  <img src=\"https://www.hse.ru/f/src/global/i/btn-example.png\">\n  \n  </div>"
             },
             "correctAnswer": {
               "type": "Bank.Key",
@@ -599,6 +605,9 @@
                   "maxGrade": 0,
                   "possibleInterventions": [
                     {
+                      "type": "Entities.GotoStepIntervention",
+                      "id": null,
+                      "version": null,
                       "step": {
                         "type": "Entities.ControlStep",
                         "id": "step3",
@@ -677,7 +686,7 @@
                     "type": "Bank.Assignment",
                     "id": null,
                     "version": null,
-                    "content": "How much watch?"
+                    "content": "<div>Что изображено на рисунке?\n  \n  <img src=\"https://www.hse.ru/f/src/global/i/btn-example.png\">\n  \n  </div>"
                   },
                   "correctAnswer": {
                     "type": "Bank.Key",
@@ -890,6 +899,9 @@
                   "maxGrade": 0,
                   "possibleInterventions": [
                     {
+                      "type": "Entities.GotoStepIntervention",
+                      "id": null,
+                      "version": null,
                       "step": {
                         "type": "Entities.ControlStep",
                         "id": "step3",
@@ -968,7 +980,7 @@
                     "type": "Bank.Assignment",
                     "id": null,
                     "version": null,
-                    "content": "How much watch?"
+                    "content": "<div>Что изображено на рисунке?\n  \n  <img src=\"https://www.hse.ru/f/src/global/i/btn-example.png\">\n  \n  </div>"
                   },
                   "correctAnswer": {
                     "type": "Bank.Key",
@@ -1175,10 +1187,12 @@
         "currentModule": null,
         "currentStep": null,
         "index": 0,
+        "isCourseFinished": false,
         "student": {
           "displayName": "Иван Смирнов",
           "email": "studentA@gmail.com"
-        }
+        },
+        "unfinishedSteps": null
       },
       {
         "type": "Entities.CourseState",
@@ -1196,10 +1210,12 @@
         "currentModule": null,
         "currentStep": null,
         "index": 0,
+        "isCourseFinished": false,
         "student": {
           "displayName": "Иван Смирнов",
           "email": "studentB@gmail.com"
-        }
+        },
+        "unfinishedSteps": null
       }
     ]
   }

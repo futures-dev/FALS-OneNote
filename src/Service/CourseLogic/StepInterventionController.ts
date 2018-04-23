@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { CourseService } from "Service/CourseLogic/CourseService";
-import { BehaviorSubject } from "rxjs";
+import { BehaviorSubject, Subscription } from "rxjs";
 import { StepIntervention } from "Service/Fals/Statistics";
 import { StepInterventionScenario } from "Service/CourseLogic/Scenarios/StepInterventionScenario";
 import { ConnectionService } from "Service/Socket/Connection";
@@ -13,12 +13,14 @@ import { StepInterventionResult } from "Service/Fals/Facades/StepInterventionRes
 import { RepeatIntervention } from "Service/Fals/Entities/RepeatIntervention";
 import { GotoStepIntervention } from "Service/Fals/Entities/GotoStepIntervention";
 import { Step } from "Service/Fals/Entities/Step";
+import { Router } from "@angular/router";
 
 export class StepInterventionController {
   constructor(
     private courseService: CourseService,
     private connection: ConnectionService,
-    private interaction: InteractionRequester
+    private interaction: InteractionRequester,
+    private router: Router
   ) {
     courseService.CurrentCourseState.subscribe(this.courseStateChangedAction);
   }
@@ -52,7 +54,7 @@ export class StepInterventionController {
       StepIntervention,
       StepIntervention,
       StepInterventionResult
-      >
+    >
   ) {
     const intervention = interventionResult.request.intervention;
 
@@ -73,7 +75,7 @@ export class StepInterventionController {
       StepIntervention,
       StepIntervention,
       StepInterventionResult
-      >
+    >
   ) {
     const intervention = interventionResult.request;
 
@@ -83,11 +85,21 @@ export class StepInterventionController {
         console.log(
           `Goto Step Intervention ${intervention.id} approval result: ${r}`
         );
-        interventionResult.ResultSubject.next(r ? StepInterventionResult.sOk : StepInterventionResult.eDeclined);
+        if (r) {
+          this.courseService.CurrentCourseState.skip(1)
+            .take(1)
+            .subscribe(ns => {
+              console.log("navigating " + ns.currentStep.id);
+              this.router.navigateByUrl("/step?id=" + ns.currentStep.id);
+            });
+        }
+        interventionResult.ResultSubject.next(
+          r ? StepInterventionResult.sOk : StepInterventionResult.eDeclined
+        );
       });
   }
 
-  private onHint(intervention: RepeatIntervention) { }
+  private onHint(intervention: RepeatIntervention) {}
 
   private readonly previousStep = new BehaviorSubject<Step>(null);
   private interventionScenario: StepInterventionScenario;

@@ -13,7 +13,7 @@ export class StepInterventionScenario extends ObserveScenarioBase<
   StepIntervention,
   StepIntervention,
   StepInterventionResult
-  > {
+> {
   constructor(private Step: Step, connection: ConnectionService) {
     super(connection);
   }
@@ -37,7 +37,7 @@ export class StepInterventionScenario extends ObserveScenarioBase<
     } else {
       console.log(
         `OnStepIntervene: Step ${intervention.step.id} is not expected ${
-        this.Step.id
+          this.Step.id
         }`
       );
     }

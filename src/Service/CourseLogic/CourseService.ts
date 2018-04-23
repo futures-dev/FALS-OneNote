@@ -9,7 +9,7 @@ import { ActivateCourseError } from "Service/Fals/Facades/ActivateCourseError";
 import { ActivateCourseScenario } from "Service/CourseLogic/Scenarios/ActivateCourseScenario";
 import { CourseState } from "Service/Fals/Entities/CourseState";
 import { Tree, Module, SubmitStepResultError, Step } from "Service/Fals/index";
-import { StepAnswer } from "Service/Fals/Statistics";
+import { StepAnswer, StepStatistics } from "Service/Fals/Statistics";
 import { Assert } from "Service/Common/Assert";
 import { SubmitStepResultScenario } from "Service/CourseLogic/Scenarios/SendStepResultScenario";
 import "rxjs/add/operator/mergeMap";
@@ -22,7 +22,7 @@ import { InteractionRequester } from "Service/Interaction/InteractionRequester";
 export class CourseService {
   public readonly CurrentCourseState: BehaviorSubject<
     CourseState
-  > = new BehaviorSubject<CourseState>(null);
+    > = new BehaviorSubject<CourseState>(null);
   public get Modules(): Observable<Module> {
     return Observable.from(
       this.CurrentCourseState.getValue().course.modules.Children
@@ -43,7 +43,8 @@ export class CourseService {
     this.stepInterventionController = new StepInterventionController(
       this,
       socket,
-      interaction
+      interaction,
+      this.router
     );
     this.moduleInterventionController = new ModuleInterventionController(
       this,
@@ -54,10 +55,7 @@ export class CourseService {
     socket.AddListener(CurrentStateChanged, (cs: CourseState) => {
       this.CurrentCourseState.next(cs);
 
-      if (cs.currentStep) {
-        console.log("navigating to step" + cs.currentStep.id);
-        router.navigateByUrl("/step?id=" + cs.currentStep.id);
-      } else {
+      if (!cs.currentStep) {
         router.navigateByUrl("courseDashboard");
       }
     });
@@ -80,11 +78,7 @@ export class CourseService {
     return activate.Result.map(r => r.result);
   }
 
-  public SubmitStepResult(result: StepAnswer) {
-    Assert(
-      result.step.equals(this.CurrentCourseState.getValue().currentStep),
-      "SubmitStepResult: step is not current"
-    );
+  public SubmitStepResult(result: StepStatistics) {
 
     let submit = new SubmitStepResultScenario(result, this.socket);
     submit.Result.subscribe(result => {
