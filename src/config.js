@@ -48,6 +48,9 @@
     },
     "angular2-in-memory-web-api": { main: "index.js" },
     "socket.io-client": { main: "socket.io.js" },
+    "url-parse": { main: "index.js" },
+    "requires-port": { main: "index.js" },
+    querystringify: { main: "index.js" }
   };
   var ngPackageNames = [
     "animations",
