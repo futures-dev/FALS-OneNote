@@ -45,7 +45,7 @@ export class SectionStructure {
     return OneNote.run(async context => {
       const id = Cast<IGetRestApiId>(page).restId;
       console.log("rest: " + id);
-      return this.Web.replacePageBody("<p>Hello World</p>", id).subscribe(q =>
+      return this.Web.replacePageBody(content, id).subscribe(q =>
         console.log(q)
       );
     });

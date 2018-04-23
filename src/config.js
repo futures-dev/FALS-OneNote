@@ -26,7 +26,8 @@
     '@angular/cdk/rxjs': '@angular/cdk/bundles/cdk-rxjs.umd.js',
     '@angular/cdk/table': '@angular/cdk/bundles/cdk-table.umd.js',
     '@angular/cdk/scrolling': '@angular/cdk/bundles/cdk-scrolling.umd.js',
-    '@angular/cdk/stepper': '@angular/cdk/bundles/cdk-stepper.umd.js'
+    '@angular/cdk/stepper': '@angular/cdk/bundles/cdk-stepper.umd.js',
+    '@clr/angular': '@clr/angular/bundles/clr-angular.umd.min.js'
   };
   // packages tells the System loader how to load when no filename and/or no extension
   var packages = {

@@ -59,7 +59,11 @@ function generateModules(storage: Storage): { [i: number]: Tree<Module> } {
   module1.steps = [step1, step2, step3];
 
   step1.problem = new Assignment();
-  step1.problem.content = "How much watch?";
+  step1.problem.content = `<div>Что изображено на рисунке?
+  
+  <img src="https://www.hse.ru/f/src/global/i/btn-example.png">
+  
+  </div>`;
   step1.correctAnswer = new Key();
   step1.correctAnswer.value = "Whom how";
   let gotoIntervention1 = new GotoStepIntervention();

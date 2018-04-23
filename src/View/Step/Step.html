@@ -1,4 +1,4 @@
-<div [ngSwitch]="(Step | async).type">
+<div style="margin:20px" [ngSwitch]="(Step | async).type">
     <openTestStep *ngSwitchCase="'Entities.OpenTestStep'" [Step]="Step | async">
     </openTestStep>
 
@@ -8,7 +8,13 @@
     <studyStep *ngSwitchCase="'Entities.StudyStep'" [Step]="Step | async">
     </studyStep>
 
+    <controlStep *ngSwitchCase="'Entities.ControlStep'" [Step]="Step | async">
+    </controlStep>
+
     <div *ngSwitchDefault>
         No type!! {{(Step | async).type}}
     </div>
 </div>
+<button class="btn btn-primary" style="margin:20px" (click)="clickNext()" *ngIf="showNext|async">
+    <span class="ms-Button-label" style="color:white">К следующему шагу</span>
+</button>

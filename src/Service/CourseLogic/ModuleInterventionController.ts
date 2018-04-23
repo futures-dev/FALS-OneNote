@@ -52,7 +52,7 @@ export class ModuleInterventionController {
       ModuleIntervention,
       ModuleIntervention,
       ModuleInterventionResult
-      >
+    >
   ) {
     const intervention = interventionResult.request;
 
@@ -72,7 +72,7 @@ export class ModuleInterventionController {
       ModuleIntervention,
       GotoModuleIntervention,
       ModuleInterventionResult
-      >
+    >
   ) {
     const intervention = interventionResult.request;
 
@@ -86,7 +86,7 @@ export class ModuleInterventionController {
       });
   }
 
-  private onHint(intervention: RepeatIntervention) { }
+  private onHint(intervention: RepeatIntervention) {}
 
   private readonly previousModule = new BehaviorSubject<Module>(null);
   private interventionScenario: ModuleInterventionScenario;
@@ -97,6 +97,6 @@ export class ModuleInterventionController {
       ModuleIntervention,
       ModuleIntervention,
       ModuleInterventionResult
-      >
+    >
   ) => void = s => this.onIntervention(s);
 }

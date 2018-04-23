@@ -5,6 +5,7 @@ import { Results } from "Service/Socket/Results";
 import { AsyncResult } from "Service/CourseLogic/AsyncResult";
 import { Result } from "Service/Fals/Facades/Result";
 import { Listener } from "Service/Socket/Listener";
+import { Subscription } from "rxjs/Subscription";
 
 export interface Scenario<TRequest, TResponse, TResult> {
   Start(): void;
@@ -24,6 +25,7 @@ abstract class ScenarioBase<TRequest, TResponse, TResult> {
   abstract Start(): void;
 
   protected Cancel(): void {
+    this.Result.unsubscribe();
     this._connection.Send(Cancel, this.id);
   }
 
@@ -82,7 +84,7 @@ export abstract class ObserveScenarioBase<
   protected Respond(message: string, request: TRequest, response: TResponse) {
     const result = this.EmitResult(request, response);
 
-    result.ResultSubject.subscribe(q => {
+    result.ResultSubject.take(1).subscribe(q => {
       const serializableResult = new Result(result.request, result.response, q);
       this.connection.Send(message, serializableResult);
     });

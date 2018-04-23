@@ -11,6 +11,7 @@ import { TestStepComponent } from "View/Step/TestStepComponent";
 import { StudyStepComponent } from "View/Step/StudyStepComponent";
 import { HypertextMaterial } from "Service/Fals";
 import { HypertextMaterialComponent } from "View/Step/HypertextMaterialComponent";
+import { ControlStepComponent } from "View/Step/ControlStepComponent";
 
 @NgModule({
   imports: [RouterModule, FormsModule, CommonModule, CourseLogicModule],
@@ -21,6 +22,7 @@ import { HypertextMaterialComponent } from "View/Step/HypertextMaterialComponent
     TestStepComponent,
     StudyStepComponent,
     HypertextMaterialComponent,
+    ControlStepComponent,
   ],
   providers: [CourseService],
 })

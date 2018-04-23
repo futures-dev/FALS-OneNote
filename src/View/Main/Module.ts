@@ -2,7 +2,8 @@ import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { FormsModule } from "@angular/forms";
 import { RouterModule } from "@angular/router";
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations"
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { ClarityModule } from "@clr/angular";
 
 import { MainComponent } from "View/Main/Component";
 import { RoutingModule } from "View/RoutingModule";
@@ -31,6 +32,7 @@ import { MatDialogModule } from "@angular/material";
     RoutingModule,
     HttpClientModule,
     MatDialogModule,
+    ClarityModule,
 
     // local modules
     OfficeModule,
@@ -56,4 +58,4 @@ import { MatDialogModule } from "@angular/material";
     CourseService,
   ],
 })
-export class MainModule { }
+export class MainModule {}

@@ -11,7 +11,7 @@ import { Request, Response } from "express";
 import * as dotenv from "dotenv";
 import * as mongo from "mongodb";
 
-import { } from "typemoq";
+import {} from "typemoq";
 
 import { Client } from "Backend/Socket/Client";
 
@@ -33,7 +33,11 @@ import {
 import { Results } from "Service/Socket/Results";
 import { CourseState } from "Service/Fals/Entities/CourseState";
 import { deserialize } from "Service/Fals/Serialization";
-import { StepStatistics, StepIntervention } from "Service/Fals/Statistics";
+import {
+  StepStatistics,
+  StepIntervention,
+  StepAnswer,
+} from "Service/Fals/Statistics";
 import {
   SubmitStepResultError,
   Module,
@@ -64,7 +68,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors());
 
-app.get("/", function (req, res) {
+app.get("/", function(req, res) {
   res.sendfile(path.resolve(__dirname, "..", "index.html"));
 });
 
@@ -76,12 +80,11 @@ mongo.MongoClient.connect(process.env.DATABASE_URL).then(mongodb => {
   tokens = db.collection("Tokens");
 });
 function getTokenAsync(guid: string) {
-  return tokens
-    .findOne({
-      guid: guid,
-      access_token: { $exists: true, $ne: null },
-      refresh_token: { $exists: true, $ne: null },
-    });
+  return tokens.findOne({
+    guid: guid,
+    access_token: { $exists: true, $ne: null },
+    refresh_token: { $exists: true, $ne: null },
+  });
 }
 //#endregion
 
@@ -89,33 +92,32 @@ function getTokenAsync(guid: string) {
 
 const onAuth = new Auth();
 
-app.post("/checkCode", function (req, res) {
+app.post("/checkCode", function(req, res) {
   const guid = req.body.guid;
   if (guid) {
     console.log("guid = " + guid);
-    getTokenAsync(guid)
-      .then(
-        record => {
-          console.log("record = " + record);
-          if (record) {
-            res.status(200).send({ success: true });
-          } else {
-            res.status(404).send({ error: "no record found with guid" });
-          }
-        },
-        reason => {
-          tokens.deleteMany({ guid: guid });
-          res.status(404).send({
-            error: "no record found with guid, access and refresh in db",
-          });
+    getTokenAsync(guid).then(
+      record => {
+        console.log("record = " + record);
+        if (record) {
+          res.status(200).send({ success: true });
+        } else {
+          res.status(404).send({ error: "no record found with guid" });
         }
-      );
+      },
+      reason => {
+        tokens.deleteMany({ guid: guid });
+        res.status(404).send({
+          error: "no record found with guid, access and refresh in db",
+        });
+      }
+    );
   } else {
     res.status(404).send("Need ?code=");
   }
 });
 
-const refreshTokenFunction = function (req: Request, res: Response) {
+const refreshTokenFunction = function(req: Request, res: Response) {
   const guid = req.body.guid;
   if (guid) {
     getTokenAsync(guid).then(
@@ -132,20 +134,24 @@ const refreshTokenFunction = function (req: Request, res: Response) {
               } else {
                 const access_token = body.access_token;
                 const refresh_token = body.refresh_token;
-                tokens.update(
-                  { guid: guid },
-                  {
-                    guid: guid,
-                    access_token: access_token,
-                    refresh_token: refresh_token,
-                  },
-                  {
-                    upsert: true,
-                  }
-                ).then(q => {
-                  res.status(200).send({ success: true });
-                },
-                  r => console.log("rejected " + r));
+                tokens
+                  .update(
+                    { guid: guid },
+                    {
+                      guid: guid,
+                      access_token: access_token,
+                      refresh_token: refresh_token,
+                    },
+                    {
+                      upsert: true,
+                    }
+                  )
+                  .then(
+                    q => {
+                      res.status(200).send({ success: true });
+                    },
+                    r => console.log("rejected " + r)
+                  );
               }
             }
           );
@@ -169,7 +175,7 @@ const refreshTokenFunction = function (req: Request, res: Response) {
 
 app.post("/refreshToken", refreshTokenFunction);
 
-app.post("/submitCode", function (req, res) {
+app.post("/submitCode", function(req, res) {
   const code = req.body.code;
   const guid = req.body.guid;
   if (code && guid) {
@@ -207,7 +213,7 @@ app.post("/submitCode", function (req, res) {
   }
 });
 
-app.post("/logout", function (req, res) {
+app.post("/logout", function(req, res) {
   console.log("/logout");
   const guid = req.body.guid;
   if (guid) {
@@ -218,7 +224,7 @@ app.post("/logout", function (req, res) {
   }
 });
 
-app.put("/put", function (req, res) {
+app.put("/put", function(req, res) {
   console.log("put/" + req.body.url);
   console.log(JSON.stringify(req.body));
   const guid = req.body.guid;
@@ -262,11 +268,10 @@ app.put("/put", function (req, res) {
                               res.send(body);
                             }
                           );
-                        }
-                        );
-                      }
-                      )
-                    ));
+                        });
+                      })
+                    )
+                  );
                 } else {
                   console.log("complete");
                   res.send(body);
@@ -291,7 +296,7 @@ app.put("/put", function (req, res) {
   }
 });
 
-app.post("/post", function (req, res) {
+app.post("/post", function(req, res) {
   console.log("post/" + req.body.url);
   console.log(JSON.stringify(req.body));
   const guid = req.body.guid;
@@ -363,7 +368,7 @@ app.post("/post", function (req, res) {
   }
 });
 
-app.patch("/patch", function (req, res) {
+app.patch("/patch", function(req, res) {
   console.log("patch/" + req.body.url);
   console.log(JSON.stringify(req.body));
   const guid = req.body.guid;
@@ -407,9 +412,8 @@ app.patch("/patch", function (req, res) {
                               console.log("complete");
                               res.send(body);
                             }
-                          )
-                        }
-                        )
+                          );
+                        });
                       })
                     )
                   );
@@ -437,8 +441,7 @@ app.patch("/patch", function (req, res) {
   }
 });
 
-
-app.get("/get", function (req, res) {
+app.get("/get", function(req, res) {
   console.log("get/" + req.url);
   const guid = req.query.guid;
   const url = req.query.url;
@@ -645,80 +648,95 @@ io.on("connection", (socket: SocketIO.Socket) => {
       );
     }
 
-    let newState = new CourseState();
-    if (stepIdx + 1 < courseState.currentModule.steps.length) {
-      Object.assign(newState, courseState);
-      newState.currentStep = courseState.currentModule.steps[stepIdx + 1];
-    } else {
-      // todo: check unfinished steps
-      // todo: make grade
+    if (result.type == "Statistics.StepAnswer") {
+      let newState = new CourseState();
+      if (stepIdx + 1 < courseState.currentModule.steps.length) {
+        Object.assign(newState, courseState);
+        newState.currentStep = courseState.currentModule.steps[stepIdx + 1];
+      } else {
+        // todo: check unfinished steps
+        // todo: make grade
 
-      let parents: Array<Tree<Module>> = [];
-      let currentModuleNode = courseState.course.modules.search(
-        courseState.currentModule.equals,
-        parents
-      );
-      parents = parents.reverse();
-      let parent = parents.pop();
-      let nextModuleNode: Tree<Module> = null;
-      while (parent) {
-        let currentIdx = parent.Children.findIndex(q => q == currentModuleNode);
-        if (parent.Children.length > currentIdx + 1) {
-          nextModuleNode = parent.Children[currentIdx + 1];
-          break;
+        let parents: Array<Tree<Module>> = [];
+        let currentModuleNode = courseState.course.modules.search(
+          courseState.currentModule.equals,
+          parents
+        );
+        parents = parents.reverse();
+        let parent = parents.pop();
+        let nextModuleNode: Tree<Module> = null;
+        while (parent) {
+          let currentIdx = parent.Children.findIndex(
+            q => q == currentModuleNode
+          );
+          if (parent.Children.length > currentIdx + 1) {
+            nextModuleNode = parent.Children[currentIdx + 1];
+            break;
+          } else {
+            parent = parents.pop();
+          }
+        }
+        if (nextModuleNode) {
+          newState.currentModule = nextModuleNode.Value;
+          newState.currentStep = newState.currentModule.steps[0];
         } else {
-          parent = parents.pop();
+          // course is over!
+          newState.isCourseFinished = true;
         }
       }
-      if (nextModuleNode) {
-        newState.currentModule = nextModuleNode.Value;
-        newState.currentStep = newState.currentModule.steps[0];
-      } else {
-        // course is over!
-        newState.isCourseFinished = true;
-      }
+
+      console.log("new step: " + newState.currentStep.id);
+      storage.CourseStates[client.userId].push(newState);
+      socket.emit(CurrentStateChanged, newState);
+
+      socket.emit(SubmitStepResult, SubmitStepResultError.sOk);
+    } else if (step.id == "step2") {
+      // temp intervention test
+
+      setTimeout(
+        arg => {
+          const intervention = new StepIntervention();
+          intervention.module = courseState.currentModule;
+          intervention.step = courseState.currentStep;
+          intervention.course = courseState.course;
+
+          const gotoStep = new GotoStepIntervention();
+          intervention.intervention = gotoStep;
+          gotoStep.step = courseState.currentModule.steps[2];
+
+          socket.emit(StepIntervene, intervention);
+          socket.addListener(
+            StepIntervene,
+            (
+              result: Result<
+                StepIntervention,
+                StepIntervention,
+                StepInterventionResult
+              >
+            ) => {
+              console.log("Intervention approve result: " + result.result);
+              if (result.result == StepInterventionResult.sOk) {
+                const states = storage.CourseStates[client.userId];
+                const state = states[states.length - 1];
+
+                const newState = new CourseState();
+                Object.assign(newState, state);
+
+                newState.currentStep = Cast<GotoStepIntervention>(
+                  result.response.intervention
+                ).step;
+                console.log(JSON.stringify(newState));
+
+                states.push(newState);
+                socket.emit(CurrentStateChanged, newState);
+              }
+            }
+          );
+        },
+        5000,
+        ""
+      );
     }
-
-    console.log("new step: " + newState.currentStep.id);
-    storage.CourseStates[client.userId].push(newState);
-    socket.emit(CurrentStateChanged, newState);
-
-    socket.emit(SubmitStepResult, SubmitStepResultError.sOk);
-
-    // temp intervention test
-
-    setTimeout(
-      arg => {
-        const intervention = new StepIntervention();
-        intervention.module = newState.currentModule;
-        intervention.step = newState.currentStep;
-        intervention.course = newState.course;
-
-        const gotoStep = new GotoStepIntervention();
-        intervention.intervention = gotoStep;
-        gotoStep.step = newState.currentModule.steps[2];
-
-        socket.emit(StepIntervene, intervention);
-        socket.addListener(StepIntervene, (result: Result<StepIntervention, StepIntervention, StepInterventionResult>) => {
-          console.log("Intervention approve result: " + result.result);
-          if (result.result == StepInterventionResult.sOk) {
-            const states = storage.CourseStates[client.userId];
-            const state = states[states.length - 1];
-
-            const newState = new CourseState();
-            Object.assign(newState, state);
-
-            newState.currentStep = Cast<GotoStepIntervention>(result.response.intervention).step;
-            console.log(JSON.stringify(newState));
-
-            states.push(newState);
-            socket.emit(CurrentStateChanged, newState);
-          }
-        });
-      },
-      5000,
-      ""
-    );
   });
 
   socket.on(GetCurrentState, (course: Course) => {

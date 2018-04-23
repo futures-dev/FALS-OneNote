@@ -5,6 +5,6 @@ export class AsyncResult<TRequest, TResponse, TResult> extends Result<
   TRequest,
   TResponse,
   TResult
-  > {
+> {
   public ResultSubject: EventEmitter<TResult> = new EventEmitter<TResult>();
 }
