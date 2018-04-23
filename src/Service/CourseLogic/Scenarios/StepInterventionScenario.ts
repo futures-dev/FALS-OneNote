@@ -1,19 +1,16 @@
-import {
-  CourseState,
-  Student,
-  Step,
-  StepInterventionResult,
-} from "Service/Fals";
+
 import { ConnectionService } from "Service/Socket/Connection";
 import { StepIntervention } from "Service/Fals/Statistics";
 import { StepIntervene } from "Service/Socket/Events";
 import { ObserveScenarioBase } from "Service/CourseLogic/Scenarios/Scenario";
+import { StepInterventionResult } from "Service/Fals/Facades/StepInterventionResult";
+import { Step } from "Service/Fals/Entities/Step";
 
 export class StepInterventionScenario extends ObserveScenarioBase<
   StepIntervention,
   StepIntervention,
   StepInterventionResult
-> {
+  > {
   constructor(private Step: Step, connection: ConnectionService) {
     super(connection);
   }
@@ -37,7 +34,7 @@ export class StepInterventionScenario extends ObserveScenarioBase<
     } else {
       console.log(
         `OnStepIntervene: Step ${intervention.step.id} is not expected ${
-          this.Step.id
+        this.Step.id
         }`
       );
     }

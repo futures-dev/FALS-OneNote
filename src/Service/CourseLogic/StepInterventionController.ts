@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { CourseService } from "Service/CourseLogic/CourseService";
-import { BehaviorSubject, Subscription } from "rxjs";
+import { BehaviorSubject } from "rxjs/BehaviorSubject";
 import { StepIntervention } from "Service/Fals/Statistics";
 import { StepInterventionScenario } from "Service/CourseLogic/Scenarios/StepInterventionScenario";
 import { ConnectionService } from "Service/Socket/Connection";
@@ -54,7 +54,7 @@ export class StepInterventionController {
       StepIntervention,
       StepIntervention,
       StepInterventionResult
-    >
+      >
   ) {
     const intervention = interventionResult.request.intervention;
 
@@ -75,7 +75,7 @@ export class StepInterventionController {
       StepIntervention,
       StepIntervention,
       StepInterventionResult
-    >
+      >
   ) {
     const intervention = interventionResult.request;
 
@@ -99,7 +99,7 @@ export class StepInterventionController {
       });
   }
 
-  private onHint(intervention: RepeatIntervention) {}
+  private onHint(intervention: RepeatIntervention) { }
 
   private readonly previousStep = new BehaviorSubject<Step>(null);
   private interventionScenario: StepInterventionScenario;

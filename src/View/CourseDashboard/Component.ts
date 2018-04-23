@@ -1,6 +1,5 @@
 import { Component, OnInit } from "@angular/core";
 import { CourseService } from "Service/CourseLogic/CourseService";
-import { Course, Tree, Module, Entity } from "Service/Fals";
 import { BehaviorSubject } from "rxjs/BehaviorSubject";
 import { Router } from "@angular/router";
 import "rxjs/add/operator/takeWhile";
@@ -8,7 +7,7 @@ import "rxjs/add/operator/merge";
 import "rxjs/add/observable/from";
 import "rxjs/add/operator/toArray";
 import { Observable } from "rxjs/Observable";
-import { CourseState } from "Service/Fals/Entities";
+import { CourseState, Module } from "Service/Fals/Entities";
 
 @Component({
   selector: "course-dashboard",
@@ -37,7 +36,7 @@ export class CourseDashboardComponent implements OnInit {
     }
   }
 
-  constructor(private courseService: CourseService, private router: Router) {}
+  constructor(private courseService: CourseService, private router: Router) { }
 
   SelectModule(module: Module) {
     console.log("SelectModule()");

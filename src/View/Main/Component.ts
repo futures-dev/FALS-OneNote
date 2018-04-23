@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, AfterViewInit } from "@angular/core";
 import { InitializationPublisher } from "Service/Office/InitializationPublisher";
 import { HttpClient } from "@angular/common/http";
-import { BehaviorSubject } from "rxjs";
+import { BehaviorSubject } from "rxjs/BehaviorSubject";
 import { OneNoteAuth } from "Service/Office/Auth/OneNoteAuth";
 import { DOCUMENT } from "@angular/platform-browser";
 import * as settings from "config";
@@ -31,14 +31,14 @@ export class MainComponent implements OnInit {
       }
     });
 
-    Office.initialize = function() {
+    Office.initialize = function () {
       console.log("Office initialized");
 
       _initializationPublisher.publish();
     };
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   onOfficeInitialized(): void {
     OneNote.run(async context => {

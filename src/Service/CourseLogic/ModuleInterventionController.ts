@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { CourseService } from "Service/CourseLogic/CourseService";
-import { BehaviorSubject } from "rxjs";
+import { BehaviorSubject } from "rxjs/BehaviorSubject";
 import { ModuleIntervention } from "Service/Fals/Statistics";
 import { ModuleInterventionScenario } from "Service/CourseLogic/Scenarios/ModuleInterventionScenario";
 import { ConnectionService } from "Service/Socket/Connection";
@@ -52,7 +52,7 @@ export class ModuleInterventionController {
       ModuleIntervention,
       ModuleIntervention,
       ModuleInterventionResult
-    >
+      >
   ) {
     const intervention = interventionResult.request;
 
@@ -72,7 +72,7 @@ export class ModuleInterventionController {
       ModuleIntervention,
       GotoModuleIntervention,
       ModuleInterventionResult
-    >
+      >
   ) {
     const intervention = interventionResult.request;
 
@@ -86,7 +86,7 @@ export class ModuleInterventionController {
       });
   }
 
-  private onHint(intervention: RepeatIntervention) {}
+  private onHint(intervention: RepeatIntervention) { }
 
   private readonly previousModule = new BehaviorSubject<Module>(null);
   private interventionScenario: ModuleInterventionScenario;
@@ -97,6 +97,6 @@ export class ModuleInterventionController {
       ModuleIntervention,
       ModuleIntervention,
       ModuleInterventionResult
-    >
+      >
   ) => void = s => this.onIntervention(s);
 }

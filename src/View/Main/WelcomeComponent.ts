@@ -7,7 +7,7 @@ import {
 } from "@angular/core";
 import { OneNoteAuth } from "Service/Office/Auth/OneNoteAuth";
 import { InitializationPublisher } from "Service/Office/InitializationPublisher";
-import { BehaviorSubject } from "rxjs";
+import { BehaviorSubject } from "rxjs/BehaviorSubject";
 import { Observable } from "rxjs/Observable";
 
 @Component({
