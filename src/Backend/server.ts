@@ -1,6 +1,6 @@
 import * as socketio from "socket.io";
 import * as express from "express";
-import * as https from "https";
+import * as http from "http";
 import * as cors from "cors";
 import * as path from "path";
 import * as morgan from "morgan";
@@ -11,7 +11,7 @@ import { Request, Response } from "express";
 import * as dotenv from "dotenv";
 import * as mongo from "mongodb";
 
-import {} from "typemoq";
+import { } from "typemoq";
 
 import { Client } from "Backend/Socket/Client";
 
@@ -68,7 +68,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors());
 
-app.get("/", function(req, res) {
+app.get("/", function (req, res) {
   res.sendfile(path.resolve(__dirname, "..", "index.html"));
 });
 
@@ -92,7 +92,7 @@ function getTokenAsync(guid: string) {
 
 const onAuth = new Auth();
 
-app.post("/checkCode", function(req, res) {
+app.post("/checkCode", function (req, res) {
   const guid = req.body.guid;
   if (guid) {
     console.log("guid = " + guid);
@@ -117,7 +117,7 @@ app.post("/checkCode", function(req, res) {
   }
 });
 
-const refreshTokenFunction = function(req: Request, res: Response) {
+const refreshTokenFunction = function (req: Request, res: Response) {
   const guid = req.body.guid;
   if (guid) {
     getTokenAsync(guid).then(
@@ -175,7 +175,7 @@ const refreshTokenFunction = function(req: Request, res: Response) {
 
 app.post("/refreshToken", refreshTokenFunction);
 
-app.post("/submitCode", function(req, res) {
+app.post("/submitCode", function (req, res) {
   const code = req.body.code;
   const guid = req.body.guid;
   if (code && guid) {
@@ -213,7 +213,7 @@ app.post("/submitCode", function(req, res) {
   }
 });
 
-app.post("/logout", function(req, res) {
+app.post("/logout", function (req, res) {
   console.log("/logout");
   const guid = req.body.guid;
   if (guid) {
@@ -224,7 +224,7 @@ app.post("/logout", function(req, res) {
   }
 });
 
-app.put("/put", function(req, res) {
+app.put("/put", function (req, res) {
   console.log("put/" + req.body.url);
   console.log(JSON.stringify(req.body));
   const guid = req.body.guid;
@@ -296,7 +296,7 @@ app.put("/put", function(req, res) {
   }
 });
 
-app.post("/post", function(req, res) {
+app.post("/post", function (req, res) {
   console.log("post/" + req.body.url);
   console.log(JSON.stringify(req.body));
   const guid = req.body.guid;
@@ -368,7 +368,7 @@ app.post("/post", function(req, res) {
   }
 });
 
-app.patch("/patch", function(req, res) {
+app.patch("/patch", function (req, res) {
   console.log("patch/" + req.body.url);
   console.log(JSON.stringify(req.body));
   const guid = req.body.guid;
@@ -441,7 +441,7 @@ app.patch("/patch", function(req, res) {
   }
 });
 
-app.get("/get", function(req, res) {
+app.get("/get", function (req, res) {
   console.log("get/" + req.url);
   const guid = req.query.guid;
   const url = req.query.url;
@@ -514,14 +514,8 @@ app.get("/get", function(req, res) {
 
 //#region Listen
 
-let server = https
-  .createServer(
-    {
-      key: fs.readFileSync("certs/server-key.pem"),
-      cert: fs.readFileSync("certs/server-cert.pem"),
-    },
-    app
-  )
+let server = new http.Server(app);
+server
   .listen(port, () => {
     console.log("Listening on port " + port);
   });
@@ -712,7 +706,7 @@ io.on("connection", (socket: SocketIO.Socket) => {
                 StepIntervention,
                 StepIntervention,
                 StepInterventionResult
-              >
+                >
             ) => {
               console.log("Intervention approve result: " + result.result);
               if (result.result == StepInterventionResult.sOk) {
