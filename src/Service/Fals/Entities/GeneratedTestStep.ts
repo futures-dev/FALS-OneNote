@@ -3,6 +3,8 @@
 import { Period, Type } from "Service/Fals/TypeMap";
 import { Serialize } from "../Serialization/Serialize";
 import { Step } from "./Step";
+import { GeneratedExerciseType } from "./GeneratedExerciseType";
+import { GeneratedExerciseForm } from "./GeneratedExerciseForm";
 export class GeneratedTestStep extends Step {
   static __static_initialized: boolean = false;
   static __static_initialize() {
@@ -12,9 +14,15 @@ export class GeneratedTestStep extends Step {
     }
   }
 
-  public concepts: Array<string>;
+  public objects: Array<string>;
 
   public batchSize: number;
+
+  public question_type: GeneratedExerciseType;
+
+  public question_form: GeneratedExerciseForm;
+
+  public features: Array<string>;
 
   static __static_initializer_0() {
     Serialize.declare(
@@ -27,8 +35,11 @@ export class GeneratedTestStep extends Step {
 
   public constructor() {
     super();
-    this.concepts = null;
+    this.objects = null;
     this.batchSize = 0;
+    this.question_type = null;
+    this.question_form = null;
+    this.features = null;
   }
 }
 GeneratedTestStep["__class"] = "Entities.GeneratedTestStep";

@@ -23,6 +23,49 @@ h6 {
   padding: 0;
 }
 
+.btn {
+  width: 160px;
+}
+
+.btn .ms-Button-label{
+  color:white
+}
+
+.cdk-overlay-pane {
+  margin-right: 20px
+}
+
+#newWindowNotificaiton * input {
+  width:120px !important;
+}
+
+#dialogNotificationTextPanel {
+  font-size: 16px !important;
+}
+
+.intervention-request{
+  position: fixed;
+  top : 0%;
+}
+
+.ms-MessageBanner{
+  min-width: 0;
+  height: unset;
+}
+
+.ms-MessageBanner-text{
+  margin-left: 10px;
+  margin-right: 35px;
+}
+
+.ms-MessageBanner-clipper{
+  white-space: unset
+}
+
+.ms-Breadcrumb-itemLink{
+  max-width: unset
+}
+
 .ms-welcome {
   position: relative;
   display: -webkit-flex;

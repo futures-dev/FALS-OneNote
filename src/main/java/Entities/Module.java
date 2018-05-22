@@ -5,10 +5,12 @@ import Bank.Entity;
 
 public class Module extends Entity {
 
-	public int maxGrade;
-	public ModuleInterventionModel possibleInterventions[];
 	public Step steps[];
+	public int maxGrade;
+	public int minGrade;
+	public ModuleInterventionModel possibleInterventions[];
 	public String title;
+	public String description;
 
 	 static {
 

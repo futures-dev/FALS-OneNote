@@ -12,6 +12,14 @@ export class Distinction extends Hint {
     }
   }
 
+  public entity1: string;
+
+  public entity2: string;
+
+  public distinctor: string;
+
+  public message: string;
+
   static __static_initializer_0() {
     Serialize.declare(
       /* getName */ (c => (c["__class"] ? c["__class"] : c["name"]))(
@@ -23,6 +31,10 @@ export class Distinction extends Hint {
 
   public constructor() {
     super();
+    this.entity1 = null;
+    this.entity2 = null;
+    this.distinctor = null;
+    this.message = null;
   }
 }
 Distinction["__class"] = "Entities.Distinction";

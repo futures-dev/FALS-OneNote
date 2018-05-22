@@ -12,9 +12,18 @@ import { StudyStepComponent } from "View/Step/StudyStepComponent";
 import { HypertextMaterial } from "Service/Fals";
 import { HypertextMaterialComponent } from "View/Step/HypertextMaterialComponent";
 import { ControlStepComponent } from "View/Step/ControlStepComponent";
+import { ProvidersModule } from "Service/Providers/Module";
+import { MatProgressSpinnerModule } from "@angular/material";
 
 @NgModule({
-  imports: [RouterModule, FormsModule, CommonModule, CourseLogicModule],
+  imports: [
+    RouterModule,
+    FormsModule,
+    CommonModule,
+    CourseLogicModule,
+    ProvidersModule,
+    MatProgressSpinnerModule,
+  ],
   exports: [],
   declarations: [
     StepComponent,

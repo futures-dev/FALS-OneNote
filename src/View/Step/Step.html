@@ -1,3 +1,7 @@
+<div *ngIf="!!((Step|async).title)" style="margin-bottom:10px;margin-left: 20px">
+    <span class="ms-font-l">{{(Step|async).title}}</span>
+</div>
+
 <div style="margin:20px" [ngSwitch]="(Step | async).type">
     <openTestStep *ngSwitchCase="'Entities.OpenTestStep'" [Step]="Step | async">
     </openTestStep>

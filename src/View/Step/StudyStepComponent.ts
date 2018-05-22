@@ -5,7 +5,7 @@ import { CourseService } from "Service/CourseLogic/CourseService";
 import { Course } from "Service/Fals/Entities/Course";
 import { StepAnswer } from "Service/Fals/Statistics/StepAnswer";
 import { BehaviorSubject } from "rxjs/BehaviorSubject";
-import { StudyStep } from "Service/Fals/index";
+import { StudyStep } from "Service/Fals/Entities/StudyStep";
 
 @Component({
   selector: "studyStep",

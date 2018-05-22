@@ -3,8 +3,8 @@
 import { Period, Type } from "Service/Fals/TypeMap";
 import { Serialize } from "../Serialization/Serialize";
 import { Entity } from "../Bank/Entity";
-import { ModuleInterventionModel } from "./ModuleInterventionModel";
 import { Step } from "./Step";
+import { ModuleInterventionModel } from "./ModuleInterventionModel";
 export class Module extends Entity {
   static __static_initialized: boolean = false;
   static __static_initialize() {
@@ -14,13 +14,15 @@ export class Module extends Entity {
     }
   }
 
+  public steps: Step[];
+
   public maxGrade: number;
 
   public possibleInterventions: ModuleInterventionModel[];
 
-  public steps: Step[];
-
   public title: string;
+
+  public description: string;
 
   static __static_initializer_0() {
     Serialize.declare(
@@ -31,10 +33,11 @@ export class Module extends Entity {
 
   public constructor() {
     super();
+    this.steps = null;
     this.maxGrade = 0;
     this.possibleInterventions = null;
-    this.steps = null;
     this.title = null;
+    this.description = null;
   }
 }
 Module["__class"] = "Entities.Module";

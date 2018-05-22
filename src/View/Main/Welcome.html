@@ -1,1 +1,25 @@
-<header [innerHTML]="qqq|async"></header>
+<ng-container *ngIf="(state|async) == StateEnum.LoadingOffice">
+    <header class="ms-welcome__header ms-bgColor-neutralLighter ms-u-fadeIn500">
+        <div class="ms-MessageBar ms-MessageBar-warning" style="margin:20px">
+            <div class="ms-MessageBar-content">
+                <div class="ms-MessageBar-icon">
+                    <i class="ms-Icon ms-Icon--Info"></i>
+                </div>
+                <div class="ms-MessageBar-text" style="font-size: 14px">
+                    MS Office не выполнил инициализацию надстройки. Пожалуйста, запустите надстройку заново из панели меню.
+                </div>
+            </div>
+        </div>
+    </header>
+</ng-container>
+<ng-container *ngIf="(state|async) != StateEnum.LoadingOffice">
+    <header class="ms-welcome__header ms-bgColor-neutralLighter ms-u-fadeIn500">
+        <img width="100" height="100" src="assets/logo-400.png" alt="EdMachine-OneNote" title="EdMachine-OneNote" style="margin-bottom: 50px"
+        />
+
+        <button *ngIf="(state|async) == StateEnum.NeedLogin" class="ms-Button ms-Button--primary" (click)="login()">
+            <span class="ms-Button-label">Войти</span>
+        </button>
+        <h1 *ngIf="(state|async) == StateEnum.Ready" class="ms-fontSize-xxl ms-fontWeight-light ms-fontColor-neutralPrimary">Добро пожаловать!</h1>
+    </header>
+</ng-container>

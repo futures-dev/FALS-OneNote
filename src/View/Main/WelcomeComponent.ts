@@ -4,11 +4,13 @@ import {
   AfterViewInit,
   EventEmitter,
   AfterContentInit,
+  ChangeDetectorRef,
 } from "@angular/core";
 import { OneNoteAuth } from "Service/Office/Auth/OneNoteAuth";
 import { InitializationPublisher } from "Service/Office/InitializationPublisher";
 import { BehaviorSubject } from "rxjs";
 import { Observable } from "rxjs/Observable";
+import { LoginState } from "View/Main/LoginState";
 
 @Component({
   selector: "welcome",
@@ -17,14 +19,21 @@ import { Observable } from "rxjs/Observable";
 export class WelcomeComponent implements AfterContentInit {
   constructor(
     private onenote: OneNoteAuth,
-    private initializationPublisher: InitializationPublisher
+    private initializationPublisher: InitializationPublisher,
+    private ref: ChangeDetectorRef
   ) {
-    console.log("welcome ctor");
+    initializationPublisher.executeAfterInit(() => {
+      this.onenote.isAuth.subscribe(iaAuth => this.updateState());
+      this.updateState();
+    });
   }
 
-  public isAuth = new EventEmitter<boolean>(true);
-
-  qqq = new EventEmitter<string>();
+  updateState() {
+    this.state.next(
+      this.onenote.isAuth ? LoginState.Ready : LoginState.NeedLogin
+    );
+    this.ref.detectChanges();
+  }
 
   login() {
     this.initializationPublisher.executeAfterInit(() =>
@@ -32,39 +41,12 @@ export class WelcomeComponent implements AfterContentInit {
     );
   }
 
-  t1 = `<header class="ms-welcome__header ms-bgColor-neutralLighter ms-u-fadeIn500">
-  <img width="90" height="90" src="assets/logo-filled.png" alt="FALS-OneNote" title="FALS-OneNote" />  
-  <div>
-      <button (click)="login()">Войти</button>
-  </div>
-</header>`;
-  t2 = `<header class="ms-welcome__header ms-bgColor-neutralLighter ms-u-fadeIn500">
-  <img width="90" height="90" src="assets/logo-filled.png" alt="FALS-OneNote" title="FALS-OneNote" />
-  <h1 class="ms-fontSize-su ms-fontWeight-light ms-fontColor-neutralPrimary">Welcome</h1>
-  </header>`;
+  state: BehaviorSubject<LoginState> = new BehaviorSubject<LoginState>(
+    LoginState.LoadingOffice
+  );
+  StateEnum: typeof LoginState = LoginState;
 
-  // GODDAMN CRUTCH
+  ngAfterContentInit(): void {}
 
-  ngAfterContentInit(): void {
-    this.qqq.emit(this.t2);
-    this.onenote.isAuth.subscribe(q => {
-      console.log("Welcome: auth = " + q);
-      //this.qqq.emit(q ? this.t2 : this.t1);
-      this.queue.push(q);
-      window.setTimeout(() => this.popQueue(), 1000);
-    });
-  }
-
-  private popQueue() {
-    const b = this.queue.shift();
-    console.log("settimeout " + b);
-    if (b !== undefined) {
-      this.qqq.emit(b ? this.t2 : this.t1);
-      if (this.queue.length > 0) {
-        window.setTimeout(() => this.popQueue(), 1000);
-      }
-    }
-  }
-
-  private readonly queue = [];
+  q: boolean;
 }

@@ -21,6 +21,7 @@ import { GotoModuleInteractionComponent } from "View/Interaction/GotoModuleInter
 import { GotoStepInteractionComponent } from "View/Interaction/GotoStepInteractionComponent";
 import { InteractionModule } from "View/Interaction/Module";
 import { MatDialogModule } from "@angular/material";
+import { MatProgressSpinnerModule } from "@angular/material";
 
 @NgModule({
   imports: [
@@ -32,6 +33,7 @@ import { MatDialogModule } from "@angular/material";
     RoutingModule,
     HttpClientModule,
     MatDialogModule,
+    MatProgressSpinnerModule,
     ClarityModule,
 
     // local modules

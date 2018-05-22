@@ -5,8 +5,12 @@ import java.util.List;
 
 public class GeneratedTestStep extends Step {
 
-	public List<String> concepts;
+	public List<String> objects;
 	public int batchSize;
+	public GeneratedExerciseType question_type;
+	public GeneratedExerciseForm question_form;
+	public List<String> features;
+	public double minGrade;
 
 	 static {
 

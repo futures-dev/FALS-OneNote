@@ -9,12 +9,12 @@ import { Cast } from "Service/Common/Cast";
 
 @Injectable()
 export class SectionStructure {
-  constructor(private Api: Api, private Web: Web) {}
+  constructor(private Api: Api, private Web: Web) { }
 
   getMaterialPage(
     course: string,
     module: string,
-    step: string
+    step?: string
   ): OfficeExtension.IPromise<OneNote.Page> {
     return OneNote.run(async context => {
       const notebook = context.application.getActiveNotebook();
@@ -36,24 +36,70 @@ export class SectionStructure {
           courseSG,
           context
         );
-        return await this.Api.getOrCreatePage(step, moduleSG, context);
+        if (!step) {
+          const pages = moduleSG.pages;
+          pages.load();
+          return await context.sync().then(async () => {
+            if (pages.count > 0) {
+              const page = pages.getItemAt(0);
+              page.load();
+              return await context
+                .sync()
+                .then(q => page)
+                .then(this.Api.loadAsync(context));
+            } else {
+              return await this.Api.getOrCreatePage(
+                step ? step : "Empty",
+                moduleSG,
+                context
+              );
+            }
+          });
+        }
+        return await this.Api.getOrCreatePage(
+          step ? step : "Empty",
+          moduleSG,
+          context
+        );
       });
     });
   }
 
   putContent(content: string, page: OneNote.Page) {
     return OneNote.run(async context => {
-      const id = Cast<IGetRestApiId>(page).restId;
-      console.log("rest: " + id);
-      return this.Web.replacePageBody(content, id).subscribe(q =>
-        console.log(q)
-      );
+      page = context.application.getActivePage();
+      page.load();
+      context.sync();
+      return context.sync().then(async () => {
+        page.contents.load();
+        const id = Cast<IGetRestApiId>(page).getRestApiId();
+        return context.sync().then(() => {
+          console.log(page.contents);
+          if (page.contents.count > 0) {
+            console.log("rest: " + id.value);
+            console.log(content);
+            if (id.value) {
+              return this.Web.replacePageBody(content, id.value).subscribe(q =>
+                console.log(q)
+              );
+            }
+          }
+          else {
+            let outline = page
+              .addOutline(50, 75, content);
+            console.log(JSON.stringify(outline));
+            console.log(page.contents.items);
+          }
+        });
+      });
     });
   }
 
   open(page: OneNote.Page) {
     return OneNote.run(async context => {
-      return context.application.navigateToPageWithClientUrl(page.clientUrl);
+      return await context.application.navigateToPageWithClientUrl(
+        page.clientUrl
+      );
     });
   }
 }

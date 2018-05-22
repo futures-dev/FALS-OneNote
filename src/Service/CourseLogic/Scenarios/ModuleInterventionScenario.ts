@@ -1,14 +1,9 @@
-import {
-  CourseState,
-  Student,
-  Module,
-  ModuleInterventionResult,
-  ModuleInterventionModel,
-} from "Service/Fals";
 import { ConnectionService } from "Service/Socket/Connection";
 import { ModuleIntervention } from "Service/Fals/Statistics";
 import { ModuleIntervene } from "Service/Socket/Events";
 import { ObserveScenarioBase } from "Service/CourseLogic/Scenarios/Scenario";
+import { ModuleInterventionResult } from "Service/Fals/Facades/ModuleInterventionResult";
+import { Module } from "Service/Fals/Entities/Module";
 
 export class ModuleInterventionScenario extends ObserveScenarioBase<
   ModuleIntervention,

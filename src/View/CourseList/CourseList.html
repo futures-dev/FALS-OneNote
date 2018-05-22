@@ -1,6 +1,6 @@
 <div>
     <ul class="ms-List">
-        <li class="ms-ListItem" *ngFor="let course of Courses | async; let courseIdx = index">
+        <li class="ms-ListItem" style="padding:0px" *ngFor="let course of Courses | async; let courseIdx = index">
             <course [Course]="course"></course>
         </li>
     </ul>

@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { Injectable, EventEmitter } from "@angular/core";
 import { CourseService } from "Service/CourseLogic/CourseService";
 import { BehaviorSubject, Subscription } from "rxjs";
 import { StepIntervention } from "Service/Fals/Statistics";
@@ -14,6 +14,8 @@ import { RepeatIntervention } from "Service/Fals/Entities/RepeatIntervention";
 import { GotoStepIntervention } from "Service/Fals/Entities/GotoStepIntervention";
 import { Step } from "Service/Fals/Entities/Step";
 import { Router } from "@angular/router";
+import { Hint } from "Service/Fals/Entities/Hint";
+import { Distinction } from "Service/Fals/Entities/Distinction";
 
 export class StepInterventionController {
   constructor(
@@ -63,7 +65,14 @@ export class StepInterventionController {
         this.onGotoStepIntervention(interventionResult);
         return;
       case "Entities.RepeatIntervention":
-        this.onHint(Cast<RepeatIntervention>(intervention));
+        this.onRepeat(interventionResult);
+        return;
+      case "Entities.Hint":
+        this.onHint(interventionResult);
+        return;
+      case "Entities.Distinction":
+        this.onDistinction(interventionResult);
+        return;
       default:
         console.log("Unknown Step intervention: " + intervention.type);
         interventionResult.result = StepInterventionResult.eNotSupported;
@@ -99,7 +108,71 @@ export class StepInterventionController {
       });
   }
 
-  private onHint(intervention: RepeatIntervention) {}
+  private onRepeat(
+    interventionResult: AsyncResult<
+      StepIntervention,
+      StepIntervention,
+      StepInterventionResult
+    >
+  ) {
+    const intervention = interventionResult.request;
+
+    this.interaction
+      .Request<StepInterventionResult>(GotoStepInteractionComponent)
+      .subscribe(r => {
+        console.log(
+          `Repeat Step Intervention ${intervention.id} approval result: ${r}`
+        );
+        if (r) {
+          this.courseService.CurrentCourseState.skip(1)
+            .take(1)
+            .subscribe(ns => {
+              console.log("navigating " + ns.currentStep.id);
+              this.router.navigateByUrl(
+                "/step?repeat=true&id=" + ns.currentStep.id
+              );
+            });
+        }
+        interventionResult.ResultSubject.next(
+          r ? StepInterventionResult.sOk : StepInterventionResult.eDeclined
+        );
+      });
+  }
+
+  private onHint(
+    interventionResult: AsyncResult<
+      StepIntervention,
+      StepIntervention,
+      StepInterventionResult
+    >
+  ) {
+    const intervention = interventionResult.request;
+
+    interventionResult.response.interventionTime = new Date();
+    interventionResult.result = StepInterventionResult.sOk;
+    this.HintEvent.emit(interventionResult.response);
+  }
+
+  public HintEvent: EventEmitter<StepIntervention> = new EventEmitter<
+    StepIntervention
+  >();
+  public DistinctionEvent: EventEmitter<StepIntervention> = new EventEmitter<
+    StepIntervention
+  >();
+
+  private onDistinction(
+    interventionResult: AsyncResult<
+      StepIntervention,
+      StepIntervention,
+      StepInterventionResult
+    >
+  ) {
+    const intervention = interventionResult.request;
+
+    interventionResult.response.interventionTime = new Date();
+    interventionResult.result = StepInterventionResult.sOk;
+    this.DistinctionEvent.emit(interventionResult.response);
+  }
 
   private readonly previousStep = new BehaviorSubject<Step>(null);
   private interventionScenario: StepInterventionScenario;

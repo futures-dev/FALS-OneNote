@@ -50,7 +50,7 @@ export abstract class RequestScenarioBase<
   TRequest,
   TResponse,
   TResult
-  > extends ScenarioBase<TRequest, TResponse, TResult> {
+> extends ScenarioBase<TRequest, TResponse, TResult> {
   constructor(private connection: ConnectionService) {
     super(connection);
   }
@@ -68,7 +68,7 @@ export abstract class ObserveScenarioBase<
   TRequest,
   TResponse,
   TResult
-  > extends ScenarioBase<TRequest, TResponse, TResult> {
+> extends ScenarioBase<TRequest, TResponse, TResult> {
   constructor(private connection: ConnectionService) {
     super(connection);
   }

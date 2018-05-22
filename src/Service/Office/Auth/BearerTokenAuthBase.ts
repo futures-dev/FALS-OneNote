@@ -10,11 +10,12 @@ interface submitCodeResponse {
 }
 
 export abstract class BearerTokenAuthBase {
-  constructor(protected http: HttpClient) {}
+  constructor(protected http: HttpClient) { }
 
   public abstract tryLogin();
 
   public isAuth: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  public email: BehaviorSubject<string> = new BehaviorSubject(null);
 
   //#region Auth
 
@@ -36,9 +37,7 @@ export abstract class BearerTokenAuthBase {
         code: code,
       })
       .map(q => q as any);
-    return response.map(json => {
-      return !!json["success"];
-    });
+    return response;
   }
 
   private refreshToken() {
@@ -47,9 +46,7 @@ export abstract class BearerTokenAuthBase {
         guid: localStorage[settings.GUID],
       })
       .map(q => q as any);
-    return response.map(json => {
-      return !!json["success"];
-    });
+    return response;
   }
 
   //#endregion Auth
@@ -62,7 +59,7 @@ export abstract class BearerTokenAuthBase {
       .catch(error => {
         console.log(error);
         return this.refreshToken().map(q => {
-          if (q) {
+          if (q.success) {
             return this.GetImpl(uri).map(response => response.body);
           } else {
             return Observable.throw("Authorize before API " + uri);
@@ -77,7 +74,7 @@ export abstract class BearerTokenAuthBase {
       .catch(error => {
         console.log(error);
         return this.refreshToken().map(q => {
-          if (q) {
+          if (q.success) {
             return this.PostImpl(uri, body).map(response => response.body);
           } else {
             return Observable.throw("Authorize before API " + uri);
@@ -92,7 +89,7 @@ export abstract class BearerTokenAuthBase {
       .catch(error => {
         console.log(error);
         return this.refreshToken().map(q => {
-          if (q) {
+          if (q.success) {
             return this.PutImpl(uri, body).map(response => response.body);
           } else {
             return Observable.throw("Authorize before API " + uri);
@@ -107,7 +104,7 @@ export abstract class BearerTokenAuthBase {
       .catch(error => {
         console.log(error);
         return this.refreshToken().map(q => {
-          if (q) {
+          if (q.success) {
             return this.PatchImpl(uri, body).map(response => response.body);
           } else {
             return Observable.throw("Authorize before API " + uri);

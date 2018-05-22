@@ -1,8 +1,15 @@
-import { Component, OnInit, AfterViewInit } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  AfterContentInit,
+  AfterViewInit,
+} from "@angular/core";
 import { OneNoteAuth } from "Service/Office/Auth/OneNoteAuth";
 import { Router } from "@angular/router";
 import { InitializationPublisher } from "Service/Office/InitializationPublisher";
 import { BehaviorSubject } from "rxjs";
+import { Cast } from "Service/Common/Cast";
+
 declare var fabric: any;
 
 @Component({
@@ -16,7 +23,8 @@ export class CommandBarComponent implements OnInit, AfterViewInit {
 
   constructor(
     private onenote: OneNoteAuth,
-    private initializationPublisher: InitializationPublisher
+    private initializationPublisher: InitializationPublisher,
+    private router: Router
   ) {
     this.enabled.subscribe(en => {
       const dict = {};
@@ -36,27 +44,36 @@ export class CommandBarComponent implements OnInit, AfterViewInit {
     this.dropdownClick();
 
     this.onenote.logout();
-    this.initializationPublisher.executeAfterInit(() =>
-      this.onenote.tryLogin()
-    );
+    this.onenote.tryLogin();
+  }
+
+  openCourseList() {
+    this.dropdownClick();
+
+    this.router.navigateByUrl("/courseList");
   }
 
   dropdownClick() {
-    this.dropdownClass.next({ ".is-open": false });
+    //this.toggleMenu = !this.toggleMenu;
+    var hosts = document.querySelectorAll(".ms-ContextualHost");
+    for (var i = 0; i < 1 /* hosts.length*/; i++) {
+      Cast<any>(hosts[i]).style.display = "none";
+    }
   }
 
   public enabled = this.onenote.isAuth;
+  toggleMenu: boolean;
 
   ngOnInit(): void {}
 
   initFabric() {
-    var CommandButtonElements = document.querySelectorAll(".ms-CommandButton");
-    for (var i = 0; i < CommandButtonElements.length; i++) {
-      new fabric["CommandButton"](CommandButtonElements[i]);
-    }
     var CommandBarElements = document.querySelectorAll(".ms-CommandBar");
     for (var i = 0; i < CommandBarElements.length; i++) {
       new fabric["CommandBar"](CommandBarElements[i]);
+    }
+    var CommandButtonElements = document.querySelectorAll(".ms-CommandButton");
+    for (var i = 0; i < CommandButtonElements.length; i++) {
+      new fabric["CommandButton"](CommandButtonElements[i]);
     }
   }
 }

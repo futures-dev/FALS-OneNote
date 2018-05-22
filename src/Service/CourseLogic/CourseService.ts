@@ -8,7 +8,6 @@ import { CourseProvider } from "Service/Providers/CourseProvider";
 import { ActivateCourseError } from "Service/Fals/Facades/ActivateCourseError";
 import { ActivateCourseScenario } from "Service/CourseLogic/Scenarios/ActivateCourseScenario";
 import { CourseState } from "Service/Fals/Entities/CourseState";
-import { Tree, Module, SubmitStepResultError, Step } from "Service/Fals/index";
 import { StepAnswer, StepStatistics } from "Service/Fals/Statistics";
 import { Assert } from "Service/Common/Assert";
 import { SubmitStepResultScenario } from "Service/CourseLogic/Scenarios/SendStepResultScenario";
@@ -17,12 +16,15 @@ import { Router } from "@angular/router";
 import { StepInterventionController } from "Service/CourseLogic/StepInterventionController";
 import { ModuleInterventionController } from "Service/CourseLogic/ModuleInterventionController";
 import { InteractionRequester } from "Service/Interaction/InteractionRequester";
+import { Module } from "Service/Fals/Entities/Module";
+import { SubmitStepResultError } from "Service/Fals/Facades/SubmitStepResultError";
+import { Tree } from "Service/Fals/Entities/Tree";
 
 @Injectable()
 export class CourseService {
   public readonly CurrentCourseState: BehaviorSubject<
     CourseState
-    > = new BehaviorSubject<CourseState>(null);
+  > = new BehaviorSubject<CourseState>(null);
   public get Modules(): Observable<Module> {
     return Observable.from(
       this.CurrentCourseState.getValue().course.modules.Children
@@ -31,8 +33,8 @@ export class CourseService {
       .map(z => z.Value);
   }
 
-  private readonly stepInterventionController;
-  private readonly moduleInterventionController;
+  public readonly stepInterventionController: StepInterventionController;
+  public readonly moduleInterventionController: ModuleInterventionController;
 
   constructor(
     private socket: ConnectionService,
@@ -79,10 +81,9 @@ export class CourseService {
   }
 
   public SubmitStepResult(result: StepStatistics) {
-
     let submit = new SubmitStepResultScenario(result, this.socket);
     submit.Result.subscribe(result => {
-      if (result.result != SubmitStepResultError.sOk) {
+      if (result.response != SubmitStepResultError.sOk) {
         console.log("SubmitStepResultError: " + result);
         return;
       }

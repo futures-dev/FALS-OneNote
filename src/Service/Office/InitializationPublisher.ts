@@ -1,16 +1,17 @@
 import { Injectable, Output } from "@angular/core";
 import { EventEmitter } from "@angular/core";
 import { Subject } from "rxjs/Subject";
-import { OneNoteAuth } from "Service/Office/Auth/OneNoteAuth";
+import * as settings from "config";
 
 @Injectable()
 export class InitializationPublisher {
-  constructor(private onenote: OneNoteAuth) {}
+  constructor() {
+    if (settings.NO_OFFICE) {
+      this._initialized.complete();
+    }
+  }
 
-  code?: string;
-
-  publish(code?: string): void {
-    this.code = code;
+  publish(): void {
     this._initialized.complete();
   }
 

@@ -4,22 +4,37 @@ import * as si from "socket.io-client";
 import * as settings from "config";
 import { deserialize } from "Service/Fals/Serialization";
 import { Listener } from "Service/Socket/Listener";
+import { InitializationPublisher } from "Service/Office/InitializationPublisher";
+import { OneNoteAuth } from "Service/Office/Auth/OneNoteAuth";
+import { BehaviorSubject } from "rxjs/BehaviorSubject";
 
 @Injectable()
 export class ConnectionService {
   connection: SocketIOClient.Socket;
 
-  /*
-    TODO: OFFICE CREDENTIALS
-  */
-  static userId = "studentA@gmail.com";
+  constructor(oneNote: OneNoteAuth) {
+    const email = oneNote.email.getValue();
+    if (email) {
+      this.init(email);
+    }
+    else {
+      oneNote.email.subscribe(email => {
+        if (!this.isInit && email) {
+          this.init(email);
+        }
+      });
+    }
+  }
 
-  constructor() {
+  isInit: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+
+  init(email: string) {
+    this.isInit.next(true);
     this.connection = si.connect(settings.SOCKET_URL, {
       upgrade: false,
       transports: ["polling"],
       query: {
-        userId: ConnectionService.userId,
+        userId: email,
       },
     });
     this.connection.on("connection", () => {
@@ -29,18 +44,24 @@ export class ConnectionService {
     this.connection.on("error", m => console.log(m));
   }
 
-  AddListener(event: string, callback: Listener<any>): Listener<any> {
-    let listener = message => callback(deserialize(message));
-    this.connection.addEventListener(event, listener);
-    return listener;
+  AddListener(event: string, callback: Listener<any>): void {
+    this.isInit.first(q => !!q).subscribe(() => {
+      let listener = message => callback(deserialize(message));
+      this.connection.addEventListener(event, listener);
+      return listener;
+    });
   }
 
   RemoveListener(event: string, callback: Listener<any>): void {
-    this.connection.removeEventListener(event, callback);
+    this.isInit.first(q => !!q).subscribe(() => {
+      this.connection.removeEventListener(event, callback);
+    });
   }
 
   Send(event: string, data: any): void {
-    console.log("Send " + event + ". " + JSON.stringify(data));
-    this.connection.emit(event, data);
+    this.isInit.first(q => !!q).subscribe(() => {
+      console.log("Send " + event + ". " + JSON.stringify(data));
+      this.connection.emit(event, data);
+    });
   }
 }

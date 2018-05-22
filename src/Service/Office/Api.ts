@@ -83,12 +83,20 @@ export class Api {
     return context
       .sync()
       .then(async () => {
-        let falsSG = Pages.items.find(q => q.title == sgName);
-        if (falsSG) {
-          return falsSG;
-        } else {
-          return await this.createPage(sgName, parent, context);
-        }
+        const titlePages = Pages.getByTitle(sgName);
+        titlePages.load();
+
+        return context.sync()
+          .then(async () => {
+            if (titlePages.count > 0) {
+              const falsSG = titlePages.getItemAt(titlePages.count - 1);
+              if (falsSG) {
+                return falsSG;
+              }
+            }
+            return await this.createPage(sgName, parent, context);
+          })
+
       })
       .then(this.loadAsync(context));
   }
@@ -103,7 +111,7 @@ export class Api {
     return context.sync().then(() => newSG);
   }
 
-  private loadAsync<T extends ILoad<T>>(context: OneNote.RequestContext) {
+  public loadAsync<T extends ILoad<T>>(context: OneNote.RequestContext) {
     return async (entity: T) => {
       entity.load();
       return await context.sync().then(async () => {
@@ -111,6 +119,7 @@ export class Api {
         if (restEntity.getRestApiId) {
           const restId = restEntity.getRestApiId();
           return await context.sync().then(() => {
+            console.log("restId = " + restId.value);
             restEntity.restId = restId.value;
             return entity;
           });

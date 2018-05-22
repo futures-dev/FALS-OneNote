@@ -23,8 +23,6 @@ export class MainComponent implements OnInit {
   ) {
     console.log("AppComponent ctor");
 
-    _initializationPublisher.executeAfterInit(this.onOfficeInitialized);
-
     _initializationPublisher.executeAfterInit(() => {
       if (!this.onenote.tryRegister(parse(location.href, true).query["code"])) {
         this.onenote.tryLogin();
@@ -39,15 +37,4 @@ export class MainComponent implements OnInit {
   }
 
   ngOnInit() {}
-
-  onOfficeInitialized(): void {
-    OneNote.run(async context => {
-      const nb = context.application.getActiveNotebook();
-      nb.load();
-
-      await context.sync().then(async context => {
-        console.log(`${nb.id}`);
-      });
-    });
-  }
 }
