@@ -2,6 +2,7 @@ export * from "./Answer";
 export * from "./Assignment";
 export * from "./Entity";
 export * from "./ExternalMaterial";
+export * from "./HyperlinkMaterial";
 export * from "./HypertextMaterial";
 export * from "./Key";
 export * from "./Material";

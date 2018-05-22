@@ -13,11 +13,13 @@ export abstract class Step extends Entity {
     }
   }
 
+  public resultType: string;
+
   public maxGrade: number;
 
-  public possibleInterventions: StepInterventionModel[];
+  public possibleInterventions: Array<StepInterventionModel> = <any>[];
 
-  public resultType: string;
+  public title: string;
 
   static __static_initializer_0() {
     Serialize.declare(
@@ -28,9 +30,9 @@ export abstract class Step extends Entity {
 
   public constructor() {
     super();
-    this.maxGrade = 0;
-    this.possibleInterventions = null;
     this.resultType = null;
+    this.maxGrade = 0;
+    this.title = null;
   }
 }
 Step["__class"] = "Entities.Step";

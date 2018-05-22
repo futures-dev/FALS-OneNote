@@ -6,6 +6,7 @@ import Bank.Material;
 public class StudyStep extends Step {
 
 	public Material materials;
+	public String title;
 
 	 static {
 

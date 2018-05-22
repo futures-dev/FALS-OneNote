@@ -9,7 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>
-        FALS-OneNote
+        EdMachine OneNote
     </title>
 
     <!-- Office JavaScript API -->
@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="node_modules/angular/angular-csp.css" />
     <link rel="stylesheet" href="node_modules/office-ui-fabric-js/dist/css/fabric.min.css" />
     <link rel="stylesheet" href="node_modules/office-ui-fabric-js/dist/css/fabric.components.css" />
+    <link href="node_modules/@angular/material/prebuilt-themes/indigo-pink.css" rel="stylesheet">
 
     <!-- CDN -->
     <!-- For the Office UI Fabric, go to http://aka.ms/office-ui-fabric to learn more. -->
@@ -57,35 +58,6 @@
     <script type="text/javascript">System.import('app').catch(function (err) { console.error(err); });</script>
 </head>
 
-<body>
+<body class="mat-app-background">
     <mc></mc>
 </body>
-<!--
-<router-outlet><main class="ms-welcome__main" ng-controller="HomeController as home">
-        <h2 class="ms-font-xl ms-fontWeight-semilight ms-fontColor-neutralPrimary ms-u-slideUpIn20"> Discover what
-            FALS-OneNote can do for you today! </h2>
-        <ul class="ms-List ms-welcome__features ms-u-slideUpIn10">
-            <li class="ms-ListItem">
-                <i class="ms-Icon ms-Icon--Ribbon"></i>
-                <span class="ms-font-m ms-fontColor-neutralPrimary">Achieve more with Office integration</span>
-            </li>
-            <li class="ms-ListItem">
-                <i class="ms-Icon ms-Icon--Unlock"></i>
-                <span class="ms-font-m ms-fontColor-neutralPrimary">Unlock features and functionality</span>
-            </li>
-            <li class="ms-ListItem">
-                <i class="ms-Icon ms-Icon--Design"></i>
-                <span class="ms-font-m ms-fontColor-neutralPrimary">Create and visualize like a pro</span>
-            </li>
-        </ul>
-        <br />
-        <br />
-        <p class="ms-font-l">Modify the source files, then click <b>Run</b>.</p>
-        <button class="ms-welcome__action ms-Button ms-Button--hero ms-u-slideUpIn20" [routerLink]="['/']" >
-            <span class="ms-Button-label">Run</span>
-            <span class="ms-Button-icon"><i class="ms-Icon ms-Icon--ChevronRight"></i></span>
-        </button>
-    </main></router-outlet>
--->
-
-</html>

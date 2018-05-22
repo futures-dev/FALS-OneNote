@@ -15,6 +15,8 @@ export class StudyStep extends Step {
 
   public materials: Material;
 
+  public title: string;
+
   static __static_initializer_0() {
     Serialize.declare(
       /* getName */ (c => (c["__class"] ? c["__class"] : c["name"]))(StudyStep),
@@ -25,6 +27,7 @@ export class StudyStep extends Step {
   public constructor() {
     super();
     this.materials = null;
+    this.title = null;
   }
 }
 StudyStep["__class"] = "Entities.StudyStep";

@@ -1,6 +1,18 @@
 <div>
+    <mat-spinner *ngIf="IsLoading|async"></mat-spinner>
     <div [innerHTML]="Problem|async"></div>
-
+    <div class="ms-MessageBanner" *ngIf="!!(Hint|async)">
+        <div class="ms-MessageBanner-content">
+            <div class="ms-MessageBanner-text">
+                <div class="ms-MessageBanner-clipper">
+                    {{Hint|async}}
+                </div>
+            </div>
+        </div>
+        <button class="ms-MessageBanner-close" (click)="clearHint()">
+            <i class="ms-Icon ms-Icon--Clear"></i>
+        </button>
+    </div>
     <ul>
         <ng-container *ngFor="let option of (Answers|async); let i=index">
             <li [ngClass]="{
@@ -14,11 +26,12 @@
         </ng-container>
     </ul>
 
-    <button class="ms-Button ms-Button--primary" style="color:white" (click)="tryProceed()" *ngIf="showProceed|async">
-        <span class="ms-Button-label">Отправить</span>
-    </button>
-    <button class="btn btn-success" style="color:white" disabled (click)="tryProceed()" *ngIf="!(showProceed|async)">
-        <span class="ms-Button-label">Отправить</span>
+    <button class="btn" [ngClass]="{
+        'btn-success': (state|async)==StateEnum.Correct,
+        'btn-danger': (state|async)==StateEnum.Wrong,
+        'btn-info': (state|async)==StateEnum.Loading||(state|async)==StateEnum.Default
+    }" style="color:white" disabled (click)="tryProceed()" [disabled]="(state|async)==StateEnum.Correct||(state|async)==StateEnum.Loading">
+        <span class="ms-Button-label" style="color:white">{{((state|async)==StateEnum.Correct)?"Верно":"Отправить"}}</span>
     </button>
 </div>
 

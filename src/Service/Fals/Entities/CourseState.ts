@@ -3,8 +3,8 @@
 import { Period, Type } from "Service/Fals/TypeMap";
 import { Serialize } from "../Serialization/Serialize";
 import { Entity } from "../Bank/Entity";
-import { Course } from "./Course";
 import { Module } from "./Module";
+import { Course } from "./Course";
 import { Step } from "./Step";
 import { Student } from "./Student";
 export class CourseState extends Entity {
@@ -16,19 +16,21 @@ export class CourseState extends Entity {
     }
   }
 
-  public course: Course;
-
   public currentModule: Module;
 
-  public currentStep: Step;
+  public course: Course;
 
   public index: number;
 
-  public isCourseFinished: boolean;
+  public currentStep: Step;
 
   public student: Student;
 
-  public unfinishedSteps: Array<Step>;
+  public unfinishedSteps: Array<Step> = <any>[];
+
+  public isCourseFinished: boolean;
+
+  public isModuleActive: boolean;
 
   static __static_initializer_0() {
     Serialize.declare(
@@ -41,13 +43,13 @@ export class CourseState extends Entity {
 
   public constructor() {
     super();
-    this.course = null;
     this.currentModule = null;
-    this.currentStep = null;
+    this.course = null;
     this.index = 0;
-    this.isCourseFinished = false;
+    this.currentStep = null;
     this.student = null;
-    this.unfinishedSteps = null;
+    this.isCourseFinished = false;
+    this.isModuleActive = false;
   }
 
   /**

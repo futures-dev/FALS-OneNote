@@ -2,17 +2,19 @@ package Entities;
 
 import Serialization.Serialize;
 import java.util.List;
+import java.util.LinkedList;
 import Bank.Entity;
 
 public class CourseState extends Entity {
 
-	public Course course;
 	public Module currentModule;
-	public Step currentStep;
+	public Course course;
 	public int index;
-	public boolean isCourseFinished;
+	public Step currentStep;
 	public Student student;
-	public List<Step> unfinishedSteps;
+	public List<Step> unfinishedSteps = new LinkedList<Step>();
+	public boolean isCourseFinished;
+	public boolean isModuleActive;
 
 	 static {
 

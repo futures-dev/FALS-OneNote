@@ -11,7 +11,9 @@ export class OneNoteAuth extends BearerTokenAuthBase {
 
   public tryLogin() {
     const guid = localStorage[settings.GUID];
+    const email = localStorage[settings.EMAIL];
     console.log("guid = " + guid);
+    console.log("email = " + email);
     if (guid) {
       this.http
         .post<any>(settings.SERVER_URL + "/checkCode", {
@@ -19,9 +21,11 @@ export class OneNoteAuth extends BearerTokenAuthBase {
         })
         .subscribe(
           q => {
-            if (q.success) {
+            if (q.success && q.email) {
               console.log("already logged in");
+              localStorage[settings.EMAIL] = q.email;
               this.isAuth.next(true);
+              this.email.next(q.email);
             } else {
               this.isAuth.next(false);
               this.loginImpl();
@@ -37,7 +41,6 @@ export class OneNoteAuth extends BearerTokenAuthBase {
       localStorage[settings.GUID] = (
         window.performance.timing.navigationStart + window.performance.now()
       ).toString();
-      console.log("UUID: " + localStorage[settings.GUID]);
       this.loginImpl();
     }
   }
@@ -46,14 +49,19 @@ export class OneNoteAuth extends BearerTokenAuthBase {
     console.log("need login");
     Office.context.ui.displayDialogAsync(
       settings.CLIENT_URL + "/onenoteLogin.html",
-      {},
+      {
+        height: 50,
+        width: 50,
+        xFrameDenySafe: false,
+      },
       result => {
         console.log("Dialog opened: " + JSON.stringify(result.status));
         const dialog = result.value as Office.DialogHandler;
         dialog.addEventHandler(
           Office.EventType.DialogMessageReceived,
           message => {
-            console.log("Dialog result: " + message.message);
+            console.log("Dialog result, email: " + message.message);
+            this.email.next(message.message);
             this.isAuth.next(!!message.message);
             dialog.close();
           }
@@ -65,7 +73,7 @@ export class OneNoteAuth extends BearerTokenAuthBase {
   public tryRegister(code: string) {
     if (code) {
       this.submitCode(code).subscribe(q =>
-        Office.context.ui.messageParent(JSON.stringify(q))
+        Office.context.ui.messageParent(q.email ? q.email : false)
       );
       return true;
     } else {

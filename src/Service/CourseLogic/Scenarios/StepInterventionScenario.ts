@@ -1,10 +1,9 @@
-
 import { ConnectionService } from "Service/Socket/Connection";
 import { StepIntervention } from "Service/Fals/Statistics";
 import { StepIntervene } from "Service/Socket/Events";
 import { ObserveScenarioBase } from "Service/CourseLogic/Scenarios/Scenario";
-import { StepInterventionResult } from "Service/Fals/Facades/StepInterventionResult";
 import { Step } from "Service/Fals/Entities/Step";
+import { StepInterventionResult } from "Service/Fals/Facades/StepInterventionResult";
 
 export class StepInterventionScenario extends ObserveScenarioBase<
   StepIntervention,
