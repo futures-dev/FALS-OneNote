@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from "@angular/core";
 import { CourseService } from "Service/CourseLogic/CourseService";
-import { BehaviorSubject } from "rxjs";
+import { BehaviorSubject } from "rxjs/BehaviorSubject";
 import { GeneratedTestStep } from "Service/Fals/Entities/GeneratedTestStep";
 import { Step } from "Service/Fals/Entities/Step";
 import { GeneratedTestProvider } from "Service/Providers/GeneratedTestProvider";
@@ -21,9 +21,9 @@ export class GeneratedTestStepComponent implements OnInit {
   constructor(
     private courseService: CourseService,
     private generatedTestProvider: GeneratedTestProvider
-  ) {}
+  ) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   public Exercises: BehaviorSubject<Step[]> = new BehaviorSubject([]);
 

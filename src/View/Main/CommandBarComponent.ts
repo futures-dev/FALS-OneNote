@@ -7,7 +7,7 @@ import {
 import { OneNoteAuth } from "Service/Office/Auth/OneNoteAuth";
 import { Router } from "@angular/router";
 import { InitializationPublisher } from "Service/Office/InitializationPublisher";
-import { BehaviorSubject } from "rxjs";
+import { BehaviorSubject } from "rxjs/BehaviorSubject";
 import { Cast } from "Service/Common/Cast";
 
 declare var fabric: any;
