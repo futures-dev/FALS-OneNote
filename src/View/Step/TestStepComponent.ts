@@ -93,7 +93,7 @@ export class TestStepComponent implements OnInit {
 
   state: BehaviorSubject<StepAnswerState> = new BehaviorSubject<
     StepAnswerState
-    >(StepAnswerState.Default);
+  >(StepAnswerState.Default);
   StateEnum: typeof StepAnswerState = StepAnswerState;
   public IsLoading: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
     true
@@ -121,5 +121,5 @@ export class TestStepComponent implements OnInit {
     });
   }
 
-  ngOnInit() { }
+  ngOnInit() {}
 }

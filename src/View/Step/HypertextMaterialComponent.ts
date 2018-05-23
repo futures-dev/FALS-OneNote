@@ -26,12 +26,14 @@ export class HypertextMaterialComponent implements OnInit {
       this.MaterialPage.next(q);
       this.OnenoteLinkText.next(
         `${state.course.title}->${state.currentModule.title}->${
-        state.currentStep.id
+          state.currentStep.id
         }`
       );
-      this.SectionStructure.open(q).then(
-        () => this.SectionStructure.putContent(this.Material.getValue().content, q)
-          .then(() => this.IsLoading.next(false))
+      this.SectionStructure.open(q).then(() =>
+        this.SectionStructure.putContent(
+          this.Material.getValue().content,
+          q
+        ).then(() => this.IsLoading.next(false))
       );
     });
   }
@@ -52,11 +54,11 @@ export class HypertextMaterialComponent implements OnInit {
   );
   private MaterialPage: BehaviorSubject<OneNote.Page> = new BehaviorSubject<
     OneNote.Page
-    >(null);
+  >(null);
 
   public Material: BehaviorSubject<HypertextMaterial> = new BehaviorSubject<
     HypertextMaterial
-    >(null);
+  >(null);
 
   public IsLoading: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
     true
@@ -65,7 +67,7 @@ export class HypertextMaterialComponent implements OnInit {
   constructor(
     private CourseService: CourseService,
     private SectionStructure: SectionStructure
-  ) { }
+  ) {}
 
-  ngOnInit() { }
+  ngOnInit() {}
 }

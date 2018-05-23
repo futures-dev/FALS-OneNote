@@ -9,7 +9,7 @@ import { Cast } from "Service/Common/Cast";
 
 @Injectable()
 export class SectionStructure {
-  constructor(private Api: Api, private Web: Web) { }
+  constructor(private Api: Api, private Web: Web) {}
 
   getMaterialPage(
     course: string,
@@ -83,10 +83,8 @@ export class SectionStructure {
                 console.log(q)
               );
             }
-          }
-          else {
-            let outline = page
-              .addOutline(50, 75, content);
+          } else {
+            let outline = page.addOutline(50, 75, content);
             console.log(JSON.stringify(outline));
             console.log(page.contents.items);
           }
