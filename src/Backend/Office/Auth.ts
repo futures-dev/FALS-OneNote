@@ -24,11 +24,11 @@ export class Auth {
   }
 
   public GraphRefreshTokenContent(code: string) {
-    return this.RefreshTokenContent(code, "https://graph.microsoft.com")
+    return this.RefreshTokenContent(code, "https://graph.microsoft.com");
   }
 
   public OneNoteRefreshTokenContent(code: string) {
-    return this.RefreshTokenContent(code, "https://onenote.com/")
+    return this.RefreshTokenContent(code, "https://onenote.com/");
   }
 
   public RefreshTokenContent(refreshToken: string, resource: string) {
@@ -47,8 +47,8 @@ export class Auth {
       email: { $exists: true, $ne: null },
       access_token: { $exists: true, $ne: null },
       refresh_token: { $exists: true, $ne: null },
-      onenote_token: { $exists: true, $ne: null }
-    }
+      onenote_token: { $exists: true, $ne: null },
+    };
   }
 
   private buildMap(obj) {

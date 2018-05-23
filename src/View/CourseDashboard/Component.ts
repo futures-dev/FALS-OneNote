@@ -4,7 +4,6 @@ import {
   EventEmitter,
   AfterContentInit,
   AfterViewInit,
-  ChangeDetectorRef,
 } from "@angular/core";
 import { CourseService } from "Service/CourseLogic/CourseService";
 import { BehaviorSubject } from "rxjs/BehaviorSubject";
@@ -14,13 +13,10 @@ import "rxjs/add/operator/merge";
 import "rxjs/add/observable/from";
 import "rxjs/add/operator/toArray";
 import { Observable } from "rxjs/Observable";
-import { CourseState } from "Service/Fals/Entities/CourseState";
+import { CourseState } from "Service/Fals/Entities";
 import { Module } from "Service/Fals/Entities/Module";
 import { SectionStructure } from "Service/Office/SectionStructure";
 import { Cast } from "Service/Common/Cast";
-import { GradeController } from "Service/CourseLogic/GradeController";
-import { IfNull } from "Service/Common/IfNull";
-import { PascaStep } from "Service/Fals/Entities/PascaStep";
 declare var fabric: any;
 
 @Component({
@@ -32,10 +28,6 @@ export class CourseDashboardComponent implements AfterViewInit {
     return this.courseService.CurrentCourseState;
   }
 
-  public isPascaStep(q) {
-    return q.type == PascaStep["__class"];
-  }
-
   displayCallout = new EventEmitter<number>();
   toggleMenu: boolean;
 
@@ -43,10 +35,10 @@ export class CourseDashboardComponent implements AfterViewInit {
     this.toggleMenu = !this.toggleMenu;
   }
 
-  modules: Module[] = [];
-
   get Modules() {
-    return this.modules;
+    return this.courseService.Modules.takeWhile(z => !this.isCurrentModule(z))
+      .merge(Observable.from([this.Course.getValue().currentModule]))
+      .toArray();
   }
 
   isCurrentModule(module: Module): boolean {
@@ -57,58 +49,18 @@ export class CourseDashboardComponent implements AfterViewInit {
     }
   }
 
-  grades: { [moduleId: string]: number } = {};
-
-  getGrade(module: Module): Observable<number> {
-    var obs = this.grader.getModuleGrade(module).map(q => IfNull(q.grade, 0));
-    obs.subscribe(q => {
-      console.log("grade received " + q);
-    });
-    return obs;
-  }
-
   constructor(
     private courseService: CourseService,
     private router: Router,
-    private sectionStructure: SectionStructure,
-    private grader: GradeController,
-    private ref: ChangeDetectorRef
-  ) {
-    courseService.CurrentCourseState.subscribe(courseState => {
-      courseService.Modules.takeWhile(z => {
-        console.log("taking module " + z.id);
-        return !this.isCurrentModule(z);
-      })
-        .merge(Observable.from([this.Course.getValue().currentModule]))
-        .map(m => {
-          if (!this.grades[m.id])
-            this.grader
-              .getModuleGrade(m)
-              .subscribe(v => {
-                this.grades[m.id] = IfNull(v.grade, 0);
-                try {
-                  this.ref.detectChanges();
-                } catch{ }
-              });
-
-          return m;
-        })
-        .toArray()
-        .subscribe(m => {
-          this.modules = m;
-          try {
-            this.ref.detectChanges();
-          } catch{ }
-        });
-    });
-  }
+    private sectionStructure: SectionStructure
+  ) {}
 
   SelectModule(module: Module, index: number) {
     console.log("SelectModule()");
     if (this.isCurrentModule(module)) {
       try {
         this.Callouts[index]._closeHandler(null);
-      } catch { }
+      } catch {}
       this.router.navigateByUrl("/step");
     } else {
       this.displayCallout.emit(index);
@@ -117,7 +69,7 @@ export class CourseDashboardComponent implements AfterViewInit {
 
   OpenModule(module: Module) {
     return this.sectionStructure
-      .getMaterialPage(this.Course.getValue().course.title, module.title)
+      .getMaterialPage(this.Course.getValue().course.id, module.id)
       .then(page => this.sectionStructure.open(page));
   }
 
@@ -138,7 +90,7 @@ export class CourseDashboardComponent implements AfterViewInit {
       );
     }
     var Modules = document.querySelectorAll(".ms-Breadcrumb-itemLink");
-    for (var j = 0; i < Callouts.length && j < Modules.length; j++ , i++) {
+    for (var j = 0; i < Callouts.length && j < Modules.length; j++, i++) {
       this.Callouts.push(
         new fabric["Callout"](Callouts[i], Modules[j], "bottom")
       );

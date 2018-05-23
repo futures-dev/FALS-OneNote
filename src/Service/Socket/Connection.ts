@@ -17,8 +17,7 @@ export class ConnectionService {
     const email = oneNote.email.getValue();
     if (email) {
       this.init(email);
-    }
-    else {
+    } else {
       oneNote.email.subscribe(email => {
         if (!this.isInit && email) {
           this.init(email);

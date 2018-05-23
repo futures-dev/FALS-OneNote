@@ -28,6 +28,8 @@ export class GeneratedTestStep extends Step {
 
   public features: Array<string>;
 
+  public minGrade: number;
+
   static __static_initializer_0() {
     Serialize.declare(
       /* getName */ (c => (c["__class"] ? c["__class"] : c["name"]))(
@@ -44,6 +46,7 @@ export class GeneratedTestStep extends Step {
     this.question_type = null;
     this.question_form = null;
     this.features = null;
+    this.minGrade = 0;
   }
 }
 GeneratedTestStep["__class"] = "Entities.GeneratedTestStep";

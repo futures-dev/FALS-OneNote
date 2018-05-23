@@ -86,17 +86,15 @@ export class Api {
         const titlePages = Pages.getByTitle(sgName);
         titlePages.load();
 
-        return context.sync()
-          .then(async () => {
-            if (titlePages.count > 0) {
-              const falsSG = titlePages.getItemAt(titlePages.count - 1);
-              if (falsSG) {
-                return falsSG;
-              }
+        return context.sync().then(async () => {
+          if (titlePages.count > 0) {
+            const falsSG = titlePages.getItemAt(titlePages.count - 1);
+            if (falsSG) {
+              return falsSG;
             }
-            return await this.createPage(sgName, parent, context);
-          })
-
+          }
+          return await this.createPage(sgName, parent, context);
+        });
       })
       .then(this.loadAsync(context));
   }
