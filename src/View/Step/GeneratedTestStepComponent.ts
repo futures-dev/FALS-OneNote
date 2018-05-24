@@ -8,8 +8,8 @@ import { ConnectionService } from "Service/Socket/Connection";
 import { GeneratedTestStepChangedScenario } from "Service/CourseLogic/Scenarios/GeneratedTestStepChangedScenario";
 
 @Component({
-  selector: "GeneratedTestStep",
-  templateUrl: "View/Step/GeneratedTestStepComponent.html",
+  selector: "generatedTestStep",
+  templateUrl: "View/Step/GeneratedTestStep.html",
 })
 export class GeneratedTestStepComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {

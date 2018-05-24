@@ -8,6 +8,7 @@ public class Module extends Entity {
 	public Step steps[];
 	public int maxGrade;
 	public int minGrade;
+	public int grade;
 	public ModuleInterventionModel possibleInterventions[];
 	public String title;
 	public String description;

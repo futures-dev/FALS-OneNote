@@ -36,9 +36,10 @@ export class CourseDashboardComponent implements AfterViewInit {
   }
 
   get Modules() {
-    return this.courseService.Modules.takeWhile(z => !this.isCurrentModule(z))
-      .merge(Observable.from([this.Course.getValue().currentModule]))
-      .toArray();
+    return this.courseService.Modules.toArray();
+    // .takeWhile(z => !this.isCurrentModule(z))
+    //   .merge(Observable.from([this.Course.getValue().currentModule]))
+    //   .toArray();
   }
 
   isCurrentModule(module: Module): boolean {
@@ -53,14 +54,14 @@ export class CourseDashboardComponent implements AfterViewInit {
     private courseService: CourseService,
     private router: Router,
     private sectionStructure: SectionStructure
-  ) {}
+  ) { }
 
   SelectModule(module: Module, index: number) {
     console.log("SelectModule()");
     if (this.isCurrentModule(module)) {
       try {
         this.Callouts[index]._closeHandler(null);
-      } catch {}
+      } catch { }
       this.router.navigateByUrl("/step");
     } else {
       this.displayCallout.emit(index);
@@ -90,7 +91,7 @@ export class CourseDashboardComponent implements AfterViewInit {
       );
     }
     var Modules = document.querySelectorAll(".ms-Breadcrumb-itemLink");
-    for (var j = 0; i < Callouts.length && j < Modules.length; j++, i++) {
+    for (var j = 0; i < Callouts.length && j < Modules.length; j++ , i++) {
       this.Callouts.push(
         new fabric["Callout"](Callouts[i], Modules[j], "bottom")
       );

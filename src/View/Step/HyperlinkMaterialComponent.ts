@@ -8,17 +8,23 @@ import { BehaviorSubject } from "rxjs/BehaviorSubject";
 import { StudyStep } from "Service/Fals/Entities/StudyStep";
 import { SectionStructure } from "Service/Office/SectionStructure";
 import { HyperlinkMaterial } from "Service/Fals/Bank/HyperlinkMaterial";
+import { Subject } from "rxjs/Subject";
 
 @Component({
-  selector: "HyperlinkMaterial",
+  selector: "hyperlinkMaterial",
   templateUrl: "View/Step/HyperlinkMaterial.html",
   providers: [SectionStructure],
 })
 export class HyperlinkMaterialComponent implements OnInit {
+  @Input("IsLoading")
+  set setIsLoading(parentIsLoading: Subject<boolean>) {
+    this.IsLoading.subscribe(q => parentIsLoading.next(q));
+  }
+
   @Input("Material")
   set setMaterial(material: HyperlinkMaterial) {
     this.Material.next(material);
-    this.IsLoading.next(false);
+    setTimeout(() => this.IsLoading.next(false), 1);
   }
 
   gotoMaterials() {

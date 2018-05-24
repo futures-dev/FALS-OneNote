@@ -10,7 +10,7 @@ interface submitCodeResponse {
 }
 
 export abstract class BearerTokenAuthBase {
-  constructor(protected http: HttpClient) {}
+  constructor(protected http: HttpClient) { }
 
   public abstract tryLogin();
 
@@ -26,6 +26,7 @@ export abstract class BearerTokenAuthBase {
         guid: localStorage[settings.GUID],
       })
       .map(q => {
+        localStorage[settings.GUID] = null;
         this.isAuth.next(false);
         return true;
       });

@@ -24,6 +24,8 @@ export class Module extends Entity {
 
   public minGrade: number;
 
+  public grade: number;
+
   public possibleInterventions: ModuleInterventionModel[];
 
   public title: string;
@@ -42,6 +44,7 @@ export class Module extends Entity {
     this.steps = null;
     this.maxGrade = 0;
     this.minGrade = 0;
+    this.grade = 0;
     this.possibleInterventions = null;
     this.title = null;
     this.description = null;
