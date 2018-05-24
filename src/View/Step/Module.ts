@@ -14,6 +14,8 @@ import { HypertextMaterialComponent } from "View/Step/HypertextMaterialComponent
 import { ControlStepComponent } from "View/Step/ControlStepComponent";
 import { ProvidersModule } from "Service/Providers/Module";
 import { MatProgressSpinnerModule } from "@angular/material";
+import { GeneratedTestStepComponent } from "View/Step/GeneratedTestStepComponent";
+import { HyperlinkMaterialComponent } from "View/Step/HyperlinkMaterialComponent";
 
 @NgModule({
   imports: [
@@ -31,7 +33,9 @@ import { MatProgressSpinnerModule } from "@angular/material";
     TestStepComponent,
     StudyStepComponent,
     HypertextMaterialComponent,
+    HyperlinkMaterialComponent,
     ControlStepComponent,
+    GeneratedTestStepComponent,
   ],
   providers: [CourseService],
 })

@@ -29,7 +29,7 @@
                     <div class="ms-Callout-inner">
                         <div class="ms-Callout-content">
                             <p class="ms-Callout-subText">{{module.description}}</p>
-                            <p class="ms-Callout-subText">Оценка: 5/{{10 + module.maxGrade}}</p>
+                            <p class="ms-Callout-subText">Оценка: {{module.grade ? module.grade : 0}}/{{module.maxGrade}}</p>
                         </div>
                         <div class="ms-Callout-actions">
                             <div class="ms-CommandButton ms-CommandButton--inline">

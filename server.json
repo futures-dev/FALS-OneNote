@@ -22,17 +22,90 @@
             "version": null,
             "steps": [
               {
-                "type": "Entities.OpenTestStep",
+                "type": "Entities.StudyStep",
+                "id": "step01",
+                "version": null,
+                "possibleInterventions": [],
+                "resultType": null,
+                "maxGrade": 0,
+                "title": null,
+                "materials": {
+                  "type": "Bank.HypertextMaterial",
+                  "id": null,
+                  "version": null,
+                  "content": "<div>Приветствуем Вас на курсе ПДД 2018. Надеемся, вы узнаете много нового.</div>"
+                }
+              },
+              {
+                "type": "Entities.StudyStep",
+                "id": "step02",
+                "version": null,
+                "possibleInterventions": [],
+                "resultType": null,
+                "maxGrade": 0,
+                "title": null,
+                "materials": {
+                  "type": "Bank.HyperlinkMaterial",
+                  "id": null,
+                  "version": null,
+                  "link": "https://pdde.ru/pdd/"
+                }
+              },
+              {
+                "type": "Entities.TestStep",
                 "id": "step1",
+                "version": null,
+                "possibleInterventions": [
+                  {
+                    "type": "Entities.Hint",
+                    "id": null,
+                    "version": null,
+                    "message": "Действие знака 4.1.1 «Движение прямо», установленного перед перекрёстком, распространяется только на первое пересечение проезжих частей за знаком."
+                  }
+                ],
+                "resultType": "function Number() { [native code] }",
+                "maxGrade": 1,
+                "title": null,
+                "problem": {
+                  "type": "Bank.Assignment",
+                  "id": null,
+                  "version": null,
+                  "content": "<div style=\"left:50px;top:75px\">Вам можно продолжить движение на перекрёстке:\n  <img src=\"https://pdde.ru/static/data/images/questions/13.jpg\" width=\"250\"></img>\n  </div>"
+                },
+                "answers": [
+                  {
+                    "type": "Bank.Key",
+                    "id": null,
+                    "version": null,
+                    "value": "В направлениях Б и В"
+                  },
+                  {
+                    "type": "Bank.Key",
+                    "id": null,
+                    "version": null,
+                    "value": "Только в направлении Б"
+                  },
+                  {
+                    "type": "Bank.Key",
+                    "id": null,
+                    "version": null,
+                    "value": "В направлениях А и Б"
+                  }
+                ],
+                "correctAnswer": 2
+              },
+              {
+                "type": "Entities.OpenTestStep",
+                "id": "step12",
                 "version": null,
                 "possibleInterventions": [
                   {
                     "type": "Entities.Distinction",
                     "id": null,
                     "version": null,
-                    "message": "Лампа зелёного цвета располагается сверху, лампа жёлтого цвета располагается снизу",
-                    "entity1": "зелёный",
-                    "entity2": "жёлтый",
+                    "message": "Лампа красного цвета располагается сверху, лампа зелёного цвета располагается снизу",
+                    "entity1": "красный",
+                    "entity2": "зелёный",
                     "distinctor": null
                   },
                   {
@@ -43,63 +116,20 @@
                   }
                 ],
                 "resultType": "function String() { [native code] }",
-                "maxGrade": 0,
+                "maxGrade": 1,
                 "title": null,
                 "problem": {
                   "type": "Bank.Assignment",
                   "id": null,
                   "version": null,
-                  "content": "<div style=\"left:200px;top:200px\">Какой цвет светофора изображен на рисунке?\n  <img src=\"http://clipart-library.com/img/1287030.jpg\" width=\"250\"></img>\n  </div>"
+                  "content": "Какой цвет светофора требует остановки?"
                 },
                 "correctAnswer": {
                   "type": "Bank.Key",
                   "id": null,
                   "version": null,
-                  "value": "зелёный"
+                  "value": "красный"
                 }
-              },
-              {
-                "type": "Entities.TestStep",
-                "id": "step12",
-                "version": null,
-                "possibleInterventions": [
-                  {
-                    "type": "Entities.Hint",
-                    "id": null,
-                    "version": null,
-                    "message": "Колёса, вывернутые в сторону кювета («А» и «Г») уведут неуправляемый автомобиль в кювет."
-                  }
-                ],
-                "resultType": "function Number() { [native code] }",
-                "maxGrade": 2,
-                "title": null,
-                "problem": {
-                  "type": "Bank.Assignment",
-                  "id": null,
-                  "version": null,
-                  "content": "<div style=\"left:200px;top:200px\">В случае остановки на подъеме (спуске) при наличии обочины можно предотвратить самопроизвольное скатывание автомобиля на проезжую часть, повернув его передние колеса в положение:\n  <img src=\"http://pdd.bit-world.ru/assets/ab/pdd/0619.jpg\" width=\"350\"></img>\n  </div>"
-                },
-                "answers": [
-                  {
-                    "type": "Bank.Key",
-                    "id": null,
-                    "version": null,
-                    "value": "Б и В"
-                  },
-                  {
-                    "type": "Bank.Key",
-                    "id": null,
-                    "version": null,
-                    "value": "А и Г"
-                  },
-                  {
-                    "type": "Bank.Key",
-                    "id": null,
-                    "version": null,
-                    "value": "А и В"
-                  }
-                ],
-                "correctAnswer": 1
               },
               {
                 "type": "Entities.StudyStep",
@@ -120,61 +150,50 @@
                       "title": null,
                       "exercises": [
                         {
-                          "type": "Entities.TestStep",
+                          "type": "Entities.OpenTestStep",
                           "id": "exercise1",
                           "version": null,
                           "possibleInterventions": [],
-                          "resultType": "function Number() { [native code] }",
-                          "maxGrade": 5,
-                          "title": null,
-                          "problem": {
-                            "type": "Bank.Assignment",
-                            "id": null,
-                            "version": null,
-                            "content": "Что следует предпринять водителю для предотвращения опасных последствий заноса автомобиля при резком повороте рулевого колеса на скользкой дороге?"
-                          },
-                          "answers": [
-                            {
-                              "type": "Bank.Key",
-                              "id": null,
-                              "version": null,
-                              "value": "Быстро, но плавно повернуть рулевое колесо в сторону заноса, затем опережающим воздействием на рулевое колесо выровнять траекторию движения."
-                            },
-                            {
-                              "type": "Bank.Key",
-                              "id": null,
-                              "version": null,
-                              "value": "Выключить сцепление и повернуть рулевое колесо в сторону заноса."
-                            },
-                            {
-                              "type": "Bank.Key",
-                              "id": null,
-                              "version": null,
-                              "value": "Нажать на педаль тормоза и воздействием на рулевое колесо выровнять траекторию движения."
-                            }
-                          ],
-                          "correctAnswer": 0
-                        },
-                        {
-                          "type": "Entities.OpenTestStep",
-                          "id": "exercise2",
-                          "version": null,
-                          "possibleInterventions": [],
                           "resultType": "function String() { [native code] }",
-                          "maxGrade": 15,
+                          "maxGrade": 2,
                           "title": null,
                           "problem": {
                             "type": "Bank.Assignment",
                             "id": null,
                             "version": null,
-                            "content": "Какие сведения необходимо сообщить диспетчеру для вызова «Скорой медицинской помощи» при ДТП?"
+                            "content": "Единица деления всех транспортных средств по грузоподъемности, мощности двигателя, количеству колес и пассажирских мест - это?"
                           },
                           "correctAnswer": {
                             "type": "Bank.Key",
                             "id": null,
                             "version": null,
-                            "value": "Точное место ДТП"
+                            "value": "категория"
                           }
+                        },
+                        {
+                          "type": "Entities.GeneratedTestStep",
+                          "id": "exercise2",
+                          "version": null,
+                          "possibleInterventions": [],
+                          "resultType": null,
+                          "maxGrade": 1,
+                          "title": null,
+                          "objects": [
+                            "Категория А",
+                            "Категория А1",
+                            "Категория В",
+                            "Категория В1",
+                            "Категория ВЕ"
+                          ],
+                          "batchSize": 10,
+                          "question_type": 0,
+                          "question_form": 1,
+                          "features": [
+                            "Тип ТС",
+                            "Максимальная масса ТС",
+                            "Минимальный возраст"
+                          ],
+                          "minGrade": 0.9
                         }
                       ]
                     }
@@ -187,7 +206,7 @@
                   "type": "Bank.HypertextMaterial",
                   "id": null,
                   "version": null,
-                  "content": "<div style=\"left:200px;top:200px\">Светофо́р (от свет + греч. φορός «несущий») — оптическое устройство, подающее световые сигналы, регулирующие движение автомобильного, железнодорожного, водного и другого транспорта, а также пешеходов на пешеходных переходах\n    <img src=\"https://ds03.infourok.ru/uploads/ex/07e6/0005ad35-95e22fd3/1/img1.jpg\" width=\"450\"></img></div>"
+                  "content": "<div style=\"left:50px;top:75px\">Светофо́р (от свет + греч. φορός «несущий») — оптическое устройство, подающее световые сигналы, регулирующие движение автомобильного, железнодорожного, водного и другого транспорта, а также пешеходов на пешеходных переходах\n    <img src=\"https://ds03.infourok.ru/uploads/ex/07e6/0005ad35-95e22fd3/1/img1.jpg\" width=\"450\"></img></div>"
                 }
               },
               {
@@ -200,69 +219,65 @@
                 "title": null,
                 "exercises": [
                   {
-                    "type": "Entities.TestStep",
+                    "type": "Entities.OpenTestStep",
                     "id": "exercise1",
                     "version": null,
                     "possibleInterventions": [],
-                    "resultType": "function Number() { [native code] }",
-                    "maxGrade": 5,
-                    "title": null,
-                    "problem": {
-                      "type": "Bank.Assignment",
-                      "id": null,
-                      "version": null,
-                      "content": "Что следует предпринять водителю для предотвращения опасных последствий заноса автомобиля при резком повороте рулевого колеса на скользкой дороге?"
-                    },
-                    "answers": [
-                      {
-                        "type": "Bank.Key",
-                        "id": null,
-                        "version": null,
-                        "value": "Быстро, но плавно повернуть рулевое колесо в сторону заноса, затем опережающим воздействием на рулевое колесо выровнять траекторию движения."
-                      },
-                      {
-                        "type": "Bank.Key",
-                        "id": null,
-                        "version": null,
-                        "value": "Выключить сцепление и повернуть рулевое колесо в сторону заноса."
-                      },
-                      {
-                        "type": "Bank.Key",
-                        "id": null,
-                        "version": null,
-                        "value": "Нажать на педаль тормоза и воздействием на рулевое колесо выровнять траекторию движения."
-                      }
-                    ],
-                    "correctAnswer": 0
-                  },
-                  {
-                    "type": "Entities.OpenTestStep",
-                    "id": "exercise2",
-                    "version": null,
-                    "possibleInterventions": [],
                     "resultType": "function String() { [native code] }",
-                    "maxGrade": 15,
+                    "maxGrade": 2,
                     "title": null,
                     "problem": {
                       "type": "Bank.Assignment",
                       "id": null,
                       "version": null,
-                      "content": "Какие сведения необходимо сообщить диспетчеру для вызова «Скорой медицинской помощи» при ДТП?"
+                      "content": "Единица деления всех транспортных средств по грузоподъемности, мощности двигателя, количеству колес и пассажирских мест - это?"
                     },
                     "correctAnswer": {
                       "type": "Bank.Key",
                       "id": null,
                       "version": null,
-                      "value": "Точное место ДТП"
+                      "value": "категория"
                     }
+                  },
+                  {
+                    "type": "Entities.GeneratedTestStep",
+                    "id": "exercise2",
+                    "version": null,
+                    "possibleInterventions": [],
+                    "resultType": null,
+                    "maxGrade": 1,
+                    "title": null,
+                    "objects": [
+                      "Категория А",
+                      "Категория А1",
+                      "Категория В",
+                      "Категория В1",
+                      "Категория ВЕ"
+                    ],
+                    "batchSize": 10,
+                    "question_type": 0,
+                    "question_form": 1,
+                    "features": [
+                      "Тип ТС",
+                      "Максимальная масса ТС",
+                      "Минимальный возраст"
+                    ],
+                    "minGrade": 0.9
                   }
                 ]
               }
             ],
-            "maxGrade": 0,
-            "possibleInterventions": null,
-            "title": "Базовые правила",
-            "description": "В этом модуле вы изучите самые главные правила дорожного движения"
+            "maxGrade": 5,
+            "minGrade": 3,
+            "possibleInterventions": [
+              {
+                "type": "Entities.RepeatIntervention",
+                "id": null,
+                "version": null
+              }
+            ],
+            "title": "Основы ПДД",
+            "description": "В этом модуле вы пройдете первые шаги в изучении ПДД"
           }
         },
         {
@@ -274,78 +289,442 @@
             "version": null,
             "steps": [
               {
-                "type": "Entities.ControlStep",
+                "type": "Entities.TestStep",
                 "id": "step21",
+                "version": null,
+                "possibleInterventions": [],
+                "resultType": "function Number() { [native code] }",
+                "maxGrade": 1,
+                "title": null,
+                "problem": {
+                  "type": "Bank.Assignment",
+                  "id": null,
+                  "version": null,
+                  "content": "Вспомним пройденное. Сколько цветов у светофора?"
+                },
+                "answers": [
+                  {
+                    "type": "Bank.Key",
+                    "id": null,
+                    "version": null,
+                    "value": "1"
+                  },
+                  {
+                    "type": "Bank.Key",
+                    "id": null,
+                    "version": null,
+                    "value": "2"
+                  },
+                  {
+                    "type": "Bank.Key",
+                    "id": null,
+                    "version": null,
+                    "value": "3"
+                  },
+                  {
+                    "type": "Bank.Key",
+                    "id": null,
+                    "version": null,
+                    "value": "4"
+                  }
+                ],
+                "correctAnswer": 2
+              },
+              {
+                "type": "Entities.StudyStep",
+                "id": "step22",
                 "version": null,
                 "possibleInterventions": [],
                 "resultType": null,
                 "maxGrade": 0,
                 "title": null,
-                "exercises": [
+                "materials": {
+                  "type": "Bank.HyperlinkMaterial",
+                  "id": null,
+                  "version": null,
+                  "link": "onenotelink"
+                }
+              },
+              {
+                "type": "Entities.OpenTestStep",
+                "id": "step23",
+                "version": null,
+                "possibleInterventions": [],
+                "resultType": "function String() { [native code] }",
+                "maxGrade": 1,
+                "title": null,
+                "problem": {
+                  "type": "Bank.Assignment",
+                  "id": null,
+                  "version": null,
+                  "content": "<div style=\"left:50px;top:75px\">Какой тип светофора изображен на рисунке?\n<img src=\"http://clipart-library.com/img/1287030.jpg\" width=\"250\"></img>\n</div>"
+                },
+                "correctAnswer": {
+                  "type": "Bank.Key",
+                  "id": null,
+                  "version": null,
+                  "value": "транспортный"
+                }
+              },
+              {
+                "type": "Entities.TestStep",
+                "id": "step24",
+                "version": null,
+                "possibleInterventions": [],
+                "resultType": "function Number() { [native code] }",
+                "maxGrade": 2,
+                "title": null,
+                "problem": {
+                  "type": "Bank.Assignment",
+                  "id": null,
+                  "version": null,
+                  "content": "В местах, где движение регулируется, пешеходы должны руководствоваться в первую очередь сигналами "
+                },
+                "answers": [
                   {
-                    "type": "Entities.TestStep",
-                    "id": "exercise1",
+                    "type": "Bank.Key",
+                    "id": null,
                     "version": null,
-                    "possibleInterventions": [],
-                    "resultType": "function Number() { [native code] }",
-                    "maxGrade": 5,
-                    "title": null,
-                    "problem": {
-                      "type": "Bank.Assignment",
-                      "id": null,
-                      "version": null,
-                      "content": "Что следует предпринять водителю для предотвращения опасных последствий заноса автомобиля при резком повороте рулевого колеса на скользкой дороге?"
-                    },
-                    "answers": [
-                      {
-                        "type": "Bank.Key",
-                        "id": null,
-                        "version": null,
-                        "value": "Быстро, но плавно повернуть рулевое колесо в сторону заноса, затем опережающим воздействием на рулевое колесо выровнять траекторию движения."
-                      },
-                      {
-                        "type": "Bank.Key",
-                        "id": null,
-                        "version": null,
-                        "value": "Выключить сцепление и повернуть рулевое колесо в сторону заноса."
-                      },
-                      {
-                        "type": "Bank.Key",
-                        "id": null,
-                        "version": null,
-                        "value": "Нажать на педаль тормоза и воздействием на рулевое колесо выровнять траекторию движения."
-                      }
-                    ],
-                    "correctAnswer": 0
+                    "value": "регулировщика"
                   },
                   {
+                    "type": "Bank.Key",
+                    "id": null,
+                    "version": null,
+                    "value": "транспортного светофора"
+                  },
+                  {
+                    "type": "Bank.Key",
+                    "id": null,
+                    "version": null,
+                    "value": "пешеходного светофора"
+                  }
+                ],
+                "correctAnswer": 0
+              },
+              {
+                "type": "Entities.ControlStep",
+                "id": "step25",
+                "version": null,
+                "possibleInterventions": [],
+                "resultType": null,
+                "maxGrade": 6,
+                "title": null,
+                "exercises": [
+                  {
                     "type": "Entities.OpenTestStep",
-                    "id": "exercise2",
+                    "id": "exercise21",
                     "version": null,
                     "possibleInterventions": [],
                     "resultType": "function String() { [native code] }",
-                    "maxGrade": 15,
+                    "maxGrade": 1,
                     "title": null,
                     "problem": {
                       "type": "Bank.Assignment",
                       "id": null,
                       "version": null,
-                      "content": "Какие сведения необходимо сообщить диспетчеру для вызова «Скорой медицинской помощи» при ДТП?"
+                      "content": "<div style=\"left:50px;top:75px\">Светофор какого типа изображен на рисунке?\n  <img width=\"250\" src=\"https://arhivurokov.ru/multiurok/1/7/d/17dc7de6d066e259ca97319fa0183bc996409fa6/bukliet-pravila-dorozhnogho-dvizhieniia-v-zimnii-p_14.jpeg\"></img>\n  </div>"
                     },
                     "correctAnswer": {
                       "type": "Bank.Key",
                       "id": null,
                       "version": null,
-                      "value": "Точное место ДТП"
+                      "value": "Т.5"
                     }
+                  },
+                  {
+                    "type": "Entities.PascaStep",
+                    "id": "exercise22",
+                    "version": null,
+                    "possibleInterventions": [],
+                    "resultType": "class PascaStepResult {\r\n    constructor() {\r\n        this.ArtifactUri = null;\r\n        this.FinalGrade = 0;\r\n        this.Grades = null;\r\n        this.Reviewers = null;\r\n    }\r\n}",
+                    "maxGrade": 5,
+                    "title": null,
+                    "pascaFalsSettings": {
+                      "authorsCountToBeginAssessment": 2,
+                      "delayDates": true
+                    },
+                    "pascaOnenoteSettings": {},
+                    "pascaSessionSettings": {},
+                    "m_PascaFalsSettings": null
                   }
                 ]
               }
             ],
-            "maxGrade": 0,
-            "possibleInterventions": null,
-            "title": "Зимняя езда",
-            "description": "Какой русски не любит быстрой зимней езды?"
+            "maxGrade": 10,
+            "minGrade": 5,
+            "possibleInterventions": [
+              {
+                "type": "Entities.GotoModuleIntervention",
+                "id": null,
+                "version": null,
+                "module": {
+                  "type": "Entities.Module",
+                  "id": "module1",
+                  "version": null,
+                  "steps": [
+                    {
+                      "type": "Entities.StudyStep",
+                      "id": "step01",
+                      "version": null,
+                      "possibleInterventions": [],
+                      "resultType": null,
+                      "maxGrade": 0,
+                      "title": null,
+                      "materials": {
+                        "type": "Bank.HypertextMaterial",
+                        "id": null,
+                        "version": null,
+                        "content": "<div>Приветствуем Вас на курсе ПДД 2018. Надеемся, вы узнаете много нового.</div>"
+                      }
+                    },
+                    {
+                      "type": "Entities.StudyStep",
+                      "id": "step02",
+                      "version": null,
+                      "possibleInterventions": [],
+                      "resultType": null,
+                      "maxGrade": 0,
+                      "title": null,
+                      "materials": {
+                        "type": "Bank.HyperlinkMaterial",
+                        "id": null,
+                        "version": null,
+                        "link": "https://pdde.ru/pdd/"
+                      }
+                    },
+                    {
+                      "type": "Entities.TestStep",
+                      "id": "step1",
+                      "version": null,
+                      "possibleInterventions": [
+                        {
+                          "type": "Entities.Hint",
+                          "id": null,
+                          "version": null,
+                          "message": "Действие знака 4.1.1 «Движение прямо», установленного перед перекрёстком, распространяется только на первое пересечение проезжих частей за знаком."
+                        }
+                      ],
+                      "resultType": "function Number() { [native code] }",
+                      "maxGrade": 1,
+                      "title": null,
+                      "problem": {
+                        "type": "Bank.Assignment",
+                        "id": null,
+                        "version": null,
+                        "content": "<div style=\"left:50px;top:75px\">Вам можно продолжить движение на перекрёстке:\n  <img src=\"https://pdde.ru/static/data/images/questions/13.jpg\" width=\"250\"></img>\n  </div>"
+                      },
+                      "answers": [
+                        {
+                          "type": "Bank.Key",
+                          "id": null,
+                          "version": null,
+                          "value": "В направлениях Б и В"
+                        },
+                        {
+                          "type": "Bank.Key",
+                          "id": null,
+                          "version": null,
+                          "value": "Только в направлении Б"
+                        },
+                        {
+                          "type": "Bank.Key",
+                          "id": null,
+                          "version": null,
+                          "value": "В направлениях А и Б"
+                        }
+                      ],
+                      "correctAnswer": 2
+                    },
+                    {
+                      "type": "Entities.OpenTestStep",
+                      "id": "step12",
+                      "version": null,
+                      "possibleInterventions": [
+                        {
+                          "type": "Entities.Distinction",
+                          "id": null,
+                          "version": null,
+                          "message": "Лампа красного цвета располагается сверху, лампа зелёного цвета располагается снизу",
+                          "entity1": "красный",
+                          "entity2": "зелёный",
+                          "distinctor": null
+                        },
+                        {
+                          "type": "Entities.Hint",
+                          "id": null,
+                          "version": null,
+                          "message": "Цвет светофора может быть одним из трёх: красный, жёлтый или зелёный"
+                        }
+                      ],
+                      "resultType": "function String() { [native code] }",
+                      "maxGrade": 1,
+                      "title": null,
+                      "problem": {
+                        "type": "Bank.Assignment",
+                        "id": null,
+                        "version": null,
+                        "content": "Какой цвет светофора требует остановки?"
+                      },
+                      "correctAnswer": {
+                        "type": "Bank.Key",
+                        "id": null,
+                        "version": null,
+                        "value": "красный"
+                      }
+                    },
+                    {
+                      "type": "Entities.StudyStep",
+                      "id": "step2",
+                      "version": null,
+                      "possibleInterventions": [
+                        {
+                          "type": "Entities.GotoStepIntervention",
+                          "id": null,
+                          "version": null,
+                          "step": {
+                            "type": "Entities.ControlStep",
+                            "id": "step3",
+                            "version": null,
+                            "possibleInterventions": [],
+                            "resultType": null,
+                            "maxGrade": 0,
+                            "title": null,
+                            "exercises": [
+                              {
+                                "type": "Entities.OpenTestStep",
+                                "id": "exercise1",
+                                "version": null,
+                                "possibleInterventions": [],
+                                "resultType": "function String() { [native code] }",
+                                "maxGrade": 2,
+                                "title": null,
+                                "problem": {
+                                  "type": "Bank.Assignment",
+                                  "id": null,
+                                  "version": null,
+                                  "content": "Единица деления всех транспортных средств по грузоподъемности, мощности двигателя, количеству колес и пассажирских мест - это?"
+                                },
+                                "correctAnswer": {
+                                  "type": "Bank.Key",
+                                  "id": null,
+                                  "version": null,
+                                  "value": "категория"
+                                }
+                              },
+                              {
+                                "type": "Entities.GeneratedTestStep",
+                                "id": "exercise2",
+                                "version": null,
+                                "possibleInterventions": [],
+                                "resultType": null,
+                                "maxGrade": 1,
+                                "title": null,
+                                "objects": [
+                                  "Категория А",
+                                  "Категория А1",
+                                  "Категория В",
+                                  "Категория В1",
+                                  "Категория ВЕ"
+                                ],
+                                "batchSize": 10,
+                                "question_type": 0,
+                                "question_form": 1,
+                                "features": [
+                                  "Тип ТС",
+                                  "Максимальная масса ТС",
+                                  "Минимальный возраст"
+                                ],
+                                "minGrade": 0.9
+                              }
+                            ]
+                          }
+                        }
+                      ],
+                      "resultType": null,
+                      "maxGrade": 0,
+                      "title": "Изучение светофора",
+                      "materials": {
+                        "type": "Bank.HypertextMaterial",
+                        "id": null,
+                        "version": null,
+                        "content": "<div style=\"left:50px;top:75px\">Светофо́р (от свет + греч. φορός «несущий») — оптическое устройство, подающее световые сигналы, регулирующие движение автомобильного, железнодорожного, водного и другого транспорта, а также пешеходов на пешеходных переходах\n    <img src=\"https://ds03.infourok.ru/uploads/ex/07e6/0005ad35-95e22fd3/1/img1.jpg\" width=\"450\"></img></div>"
+                      }
+                    },
+                    {
+                      "type": "Entities.ControlStep",
+                      "id": "step3",
+                      "version": null,
+                      "possibleInterventions": [],
+                      "resultType": null,
+                      "maxGrade": 0,
+                      "title": null,
+                      "exercises": [
+                        {
+                          "type": "Entities.OpenTestStep",
+                          "id": "exercise1",
+                          "version": null,
+                          "possibleInterventions": [],
+                          "resultType": "function String() { [native code] }",
+                          "maxGrade": 2,
+                          "title": null,
+                          "problem": {
+                            "type": "Bank.Assignment",
+                            "id": null,
+                            "version": null,
+                            "content": "Единица деления всех транспортных средств по грузоподъемности, мощности двигателя, количеству колес и пассажирских мест - это?"
+                          },
+                          "correctAnswer": {
+                            "type": "Bank.Key",
+                            "id": null,
+                            "version": null,
+                            "value": "категория"
+                          }
+                        },
+                        {
+                          "type": "Entities.GeneratedTestStep",
+                          "id": "exercise2",
+                          "version": null,
+                          "possibleInterventions": [],
+                          "resultType": null,
+                          "maxGrade": 1,
+                          "title": null,
+                          "objects": [
+                            "Категория А",
+                            "Категория А1",
+                            "Категория В",
+                            "Категория В1",
+                            "Категория ВЕ"
+                          ],
+                          "batchSize": 10,
+                          "question_type": 0,
+                          "question_form": 1,
+                          "features": [
+                            "Тип ТС",
+                            "Максимальная масса ТС",
+                            "Минимальный возраст"
+                          ],
+                          "minGrade": 0.9
+                        }
+                      ]
+                    }
+                  ],
+                  "maxGrade": 5,
+                  "minGrade": 3,
+                  "possibleInterventions": [
+                    {
+                      "type": "Entities.RepeatIntervention",
+                      "id": null,
+                      "version": null
+                    }
+                  ],
+                  "title": "Основы ПДД",
+                  "description": "В этом модуле вы пройдете первые шаги в изучении ПДД"
+                }
+              }
+            ],
+            "title": "Светофоры",
+            "description": "Детальное изучение светофоров"
           }
         }
       ],
@@ -360,17 +739,90 @@
         "version": null,
         "steps": [
           {
-            "type": "Entities.OpenTestStep",
+            "type": "Entities.StudyStep",
+            "id": "step01",
+            "version": null,
+            "possibleInterventions": [],
+            "resultType": null,
+            "maxGrade": 0,
+            "title": null,
+            "materials": {
+              "type": "Bank.HypertextMaterial",
+              "id": null,
+              "version": null,
+              "content": "<div>Приветствуем Вас на курсе ПДД 2018. Надеемся, вы узнаете много нового.</div>"
+            }
+          },
+          {
+            "type": "Entities.StudyStep",
+            "id": "step02",
+            "version": null,
+            "possibleInterventions": [],
+            "resultType": null,
+            "maxGrade": 0,
+            "title": null,
+            "materials": {
+              "type": "Bank.HyperlinkMaterial",
+              "id": null,
+              "version": null,
+              "link": "https://pdde.ru/pdd/"
+            }
+          },
+          {
+            "type": "Entities.TestStep",
             "id": "step1",
+            "version": null,
+            "possibleInterventions": [
+              {
+                "type": "Entities.Hint",
+                "id": null,
+                "version": null,
+                "message": "Действие знака 4.1.1 «Движение прямо», установленного перед перекрёстком, распространяется только на первое пересечение проезжих частей за знаком."
+              }
+            ],
+            "resultType": "function Number() { [native code] }",
+            "maxGrade": 1,
+            "title": null,
+            "problem": {
+              "type": "Bank.Assignment",
+              "id": null,
+              "version": null,
+              "content": "<div style=\"left:50px;top:75px\">Вам можно продолжить движение на перекрёстке:\n  <img src=\"https://pdde.ru/static/data/images/questions/13.jpg\" width=\"250\"></img>\n  </div>"
+            },
+            "answers": [
+              {
+                "type": "Bank.Key",
+                "id": null,
+                "version": null,
+                "value": "В направлениях Б и В"
+              },
+              {
+                "type": "Bank.Key",
+                "id": null,
+                "version": null,
+                "value": "Только в направлении Б"
+              },
+              {
+                "type": "Bank.Key",
+                "id": null,
+                "version": null,
+                "value": "В направлениях А и Б"
+              }
+            ],
+            "correctAnswer": 2
+          },
+          {
+            "type": "Entities.OpenTestStep",
+            "id": "step12",
             "version": null,
             "possibleInterventions": [
               {
                 "type": "Entities.Distinction",
                 "id": null,
                 "version": null,
-                "message": "Лампа зелёного цвета располагается сверху, лампа жёлтого цвета располагается снизу",
-                "entity1": "зелёный",
-                "entity2": "жёлтый",
+                "message": "Лампа красного цвета располагается сверху, лампа зелёного цвета располагается снизу",
+                "entity1": "красный",
+                "entity2": "зелёный",
                 "distinctor": null
               },
               {
@@ -381,63 +833,20 @@
               }
             ],
             "resultType": "function String() { [native code] }",
-            "maxGrade": 0,
+            "maxGrade": 1,
             "title": null,
             "problem": {
               "type": "Bank.Assignment",
               "id": null,
               "version": null,
-              "content": "<div style=\"left:200px;top:200px\">Какой цвет светофора изображен на рисунке?\n  <img src=\"http://clipart-library.com/img/1287030.jpg\" width=\"250\"></img>\n  </div>"
+              "content": "Какой цвет светофора требует остановки?"
             },
             "correctAnswer": {
               "type": "Bank.Key",
               "id": null,
               "version": null,
-              "value": "зелёный"
+              "value": "красный"
             }
-          },
-          {
-            "type": "Entities.TestStep",
-            "id": "step12",
-            "version": null,
-            "possibleInterventions": [
-              {
-                "type": "Entities.Hint",
-                "id": null,
-                "version": null,
-                "message": "Колёса, вывернутые в сторону кювета («А» и «Г») уведут неуправляемый автомобиль в кювет."
-              }
-            ],
-            "resultType": "function Number() { [native code] }",
-            "maxGrade": 2,
-            "title": null,
-            "problem": {
-              "type": "Bank.Assignment",
-              "id": null,
-              "version": null,
-              "content": "<div style=\"left:200px;top:200px\">В случае остановки на подъеме (спуске) при наличии обочины можно предотвратить самопроизвольное скатывание автомобиля на проезжую часть, повернув его передние колеса в положение:\n  <img src=\"http://pdd.bit-world.ru/assets/ab/pdd/0619.jpg\" width=\"350\"></img>\n  </div>"
-            },
-            "answers": [
-              {
-                "type": "Bank.Key",
-                "id": null,
-                "version": null,
-                "value": "Б и В"
-              },
-              {
-                "type": "Bank.Key",
-                "id": null,
-                "version": null,
-                "value": "А и Г"
-              },
-              {
-                "type": "Bank.Key",
-                "id": null,
-                "version": null,
-                "value": "А и В"
-              }
-            ],
-            "correctAnswer": 1
           },
           {
             "type": "Entities.StudyStep",
@@ -458,61 +867,50 @@
                   "title": null,
                   "exercises": [
                     {
-                      "type": "Entities.TestStep",
+                      "type": "Entities.OpenTestStep",
                       "id": "exercise1",
                       "version": null,
                       "possibleInterventions": [],
-                      "resultType": "function Number() { [native code] }",
-                      "maxGrade": 5,
-                      "title": null,
-                      "problem": {
-                        "type": "Bank.Assignment",
-                        "id": null,
-                        "version": null,
-                        "content": "Что следует предпринять водителю для предотвращения опасных последствий заноса автомобиля при резком повороте рулевого колеса на скользкой дороге?"
-                      },
-                      "answers": [
-                        {
-                          "type": "Bank.Key",
-                          "id": null,
-                          "version": null,
-                          "value": "Быстро, но плавно повернуть рулевое колесо в сторону заноса, затем опережающим воздействием на рулевое колесо выровнять траекторию движения."
-                        },
-                        {
-                          "type": "Bank.Key",
-                          "id": null,
-                          "version": null,
-                          "value": "Выключить сцепление и повернуть рулевое колесо в сторону заноса."
-                        },
-                        {
-                          "type": "Bank.Key",
-                          "id": null,
-                          "version": null,
-                          "value": "Нажать на педаль тормоза и воздействием на рулевое колесо выровнять траекторию движения."
-                        }
-                      ],
-                      "correctAnswer": 0
-                    },
-                    {
-                      "type": "Entities.OpenTestStep",
-                      "id": "exercise2",
-                      "version": null,
-                      "possibleInterventions": [],
                       "resultType": "function String() { [native code] }",
-                      "maxGrade": 15,
+                      "maxGrade": 2,
                       "title": null,
                       "problem": {
                         "type": "Bank.Assignment",
                         "id": null,
                         "version": null,
-                        "content": "Какие сведения необходимо сообщить диспетчеру для вызова «Скорой медицинской помощи» при ДТП?"
+                        "content": "Единица деления всех транспортных средств по грузоподъемности, мощности двигателя, количеству колес и пассажирских мест - это?"
                       },
                       "correctAnswer": {
                         "type": "Bank.Key",
                         "id": null,
                         "version": null,
-                        "value": "Точное место ДТП"
+                        "value": "категория"
                       }
+                    },
+                    {
+                      "type": "Entities.GeneratedTestStep",
+                      "id": "exercise2",
+                      "version": null,
+                      "possibleInterventions": [],
+                      "resultType": null,
+                      "maxGrade": 1,
+                      "title": null,
+                      "objects": [
+                        "Категория А",
+                        "Категория А1",
+                        "Категория В",
+                        "Категория В1",
+                        "Категория ВЕ"
+                      ],
+                      "batchSize": 10,
+                      "question_type": 0,
+                      "question_form": 1,
+                      "features": [
+                        "Тип ТС",
+                        "Максимальная масса ТС",
+                        "Минимальный возраст"
+                      ],
+                      "minGrade": 0.9
                     }
                   ]
                 }
@@ -525,7 +923,7 @@
               "type": "Bank.HypertextMaterial",
               "id": null,
               "version": null,
-              "content": "<div style=\"left:200px;top:200px\">Светофо́р (от свет + греч. φορός «несущий») — оптическое устройство, подающее световые сигналы, регулирующие движение автомобильного, железнодорожного, водного и другого транспорта, а также пешеходов на пешеходных переходах\n    <img src=\"https://ds03.infourok.ru/uploads/ex/07e6/0005ad35-95e22fd3/1/img1.jpg\" width=\"450\"></img></div>"
+              "content": "<div style=\"left:50px;top:75px\">Светофо́р (от свет + греч. φορός «несущий») — оптическое устройство, подающее световые сигналы, регулирующие движение автомобильного, железнодорожного, водного и другого транспорта, а также пешеходов на пешеходных переходах\n    <img src=\"https://ds03.infourok.ru/uploads/ex/07e6/0005ad35-95e22fd3/1/img1.jpg\" width=\"450\"></img></div>"
             }
           },
           {
@@ -538,69 +936,65 @@
             "title": null,
             "exercises": [
               {
-                "type": "Entities.TestStep",
+                "type": "Entities.OpenTestStep",
                 "id": "exercise1",
                 "version": null,
                 "possibleInterventions": [],
-                "resultType": "function Number() { [native code] }",
-                "maxGrade": 5,
-                "title": null,
-                "problem": {
-                  "type": "Bank.Assignment",
-                  "id": null,
-                  "version": null,
-                  "content": "Что следует предпринять водителю для предотвращения опасных последствий заноса автомобиля при резком повороте рулевого колеса на скользкой дороге?"
-                },
-                "answers": [
-                  {
-                    "type": "Bank.Key",
-                    "id": null,
-                    "version": null,
-                    "value": "Быстро, но плавно повернуть рулевое колесо в сторону заноса, затем опережающим воздействием на рулевое колесо выровнять траекторию движения."
-                  },
-                  {
-                    "type": "Bank.Key",
-                    "id": null,
-                    "version": null,
-                    "value": "Выключить сцепление и повернуть рулевое колесо в сторону заноса."
-                  },
-                  {
-                    "type": "Bank.Key",
-                    "id": null,
-                    "version": null,
-                    "value": "Нажать на педаль тормоза и воздействием на рулевое колесо выровнять траекторию движения."
-                  }
-                ],
-                "correctAnswer": 0
-              },
-              {
-                "type": "Entities.OpenTestStep",
-                "id": "exercise2",
-                "version": null,
-                "possibleInterventions": [],
                 "resultType": "function String() { [native code] }",
-                "maxGrade": 15,
+                "maxGrade": 2,
                 "title": null,
                 "problem": {
                   "type": "Bank.Assignment",
                   "id": null,
                   "version": null,
-                  "content": "Какие сведения необходимо сообщить диспетчеру для вызова «Скорой медицинской помощи» при ДТП?"
+                  "content": "Единица деления всех транспортных средств по грузоподъемности, мощности двигателя, количеству колес и пассажирских мест - это?"
                 },
                 "correctAnswer": {
                   "type": "Bank.Key",
                   "id": null,
                   "version": null,
-                  "value": "Точное место ДТП"
+                  "value": "категория"
                 }
+              },
+              {
+                "type": "Entities.GeneratedTestStep",
+                "id": "exercise2",
+                "version": null,
+                "possibleInterventions": [],
+                "resultType": null,
+                "maxGrade": 1,
+                "title": null,
+                "objects": [
+                  "Категория А",
+                  "Категория А1",
+                  "Категория В",
+                  "Категория В1",
+                  "Категория ВЕ"
+                ],
+                "batchSize": 10,
+                "question_type": 0,
+                "question_form": 1,
+                "features": [
+                  "Тип ТС",
+                  "Максимальная масса ТС",
+                  "Минимальный возраст"
+                ],
+                "minGrade": 0.9
               }
             ]
           }
         ],
-        "maxGrade": 0,
-        "possibleInterventions": null,
-        "title": "Базовые правила",
-        "description": "В этом модуле вы изучите самые главные правила дорожного движения"
+        "maxGrade": 5,
+        "minGrade": 3,
+        "possibleInterventions": [
+          {
+            "type": "Entities.RepeatIntervention",
+            "id": null,
+            "version": null
+          }
+        ],
+        "title": "Основы ПДД",
+        "description": "В этом модуле вы пройдете первые шаги в изучении ПДД"
       }
     },
     "2": {
@@ -612,78 +1006,442 @@
         "version": null,
         "steps": [
           {
-            "type": "Entities.ControlStep",
+            "type": "Entities.TestStep",
             "id": "step21",
+            "version": null,
+            "possibleInterventions": [],
+            "resultType": "function Number() { [native code] }",
+            "maxGrade": 1,
+            "title": null,
+            "problem": {
+              "type": "Bank.Assignment",
+              "id": null,
+              "version": null,
+              "content": "Вспомним пройденное. Сколько цветов у светофора?"
+            },
+            "answers": [
+              {
+                "type": "Bank.Key",
+                "id": null,
+                "version": null,
+                "value": "1"
+              },
+              {
+                "type": "Bank.Key",
+                "id": null,
+                "version": null,
+                "value": "2"
+              },
+              {
+                "type": "Bank.Key",
+                "id": null,
+                "version": null,
+                "value": "3"
+              },
+              {
+                "type": "Bank.Key",
+                "id": null,
+                "version": null,
+                "value": "4"
+              }
+            ],
+            "correctAnswer": 2
+          },
+          {
+            "type": "Entities.StudyStep",
+            "id": "step22",
             "version": null,
             "possibleInterventions": [],
             "resultType": null,
             "maxGrade": 0,
             "title": null,
-            "exercises": [
+            "materials": {
+              "type": "Bank.HyperlinkMaterial",
+              "id": null,
+              "version": null,
+              "link": "onenotelink"
+            }
+          },
+          {
+            "type": "Entities.OpenTestStep",
+            "id": "step23",
+            "version": null,
+            "possibleInterventions": [],
+            "resultType": "function String() { [native code] }",
+            "maxGrade": 1,
+            "title": null,
+            "problem": {
+              "type": "Bank.Assignment",
+              "id": null,
+              "version": null,
+              "content": "<div style=\"left:50px;top:75px\">Какой тип светофора изображен на рисунке?\n<img src=\"http://clipart-library.com/img/1287030.jpg\" width=\"250\"></img>\n</div>"
+            },
+            "correctAnswer": {
+              "type": "Bank.Key",
+              "id": null,
+              "version": null,
+              "value": "транспортный"
+            }
+          },
+          {
+            "type": "Entities.TestStep",
+            "id": "step24",
+            "version": null,
+            "possibleInterventions": [],
+            "resultType": "function Number() { [native code] }",
+            "maxGrade": 2,
+            "title": null,
+            "problem": {
+              "type": "Bank.Assignment",
+              "id": null,
+              "version": null,
+              "content": "В местах, где движение регулируется, пешеходы должны руководствоваться в первую очередь сигналами "
+            },
+            "answers": [
               {
-                "type": "Entities.TestStep",
-                "id": "exercise1",
+                "type": "Bank.Key",
+                "id": null,
                 "version": null,
-                "possibleInterventions": [],
-                "resultType": "function Number() { [native code] }",
-                "maxGrade": 5,
-                "title": null,
-                "problem": {
-                  "type": "Bank.Assignment",
-                  "id": null,
-                  "version": null,
-                  "content": "Что следует предпринять водителю для предотвращения опасных последствий заноса автомобиля при резком повороте рулевого колеса на скользкой дороге?"
-                },
-                "answers": [
-                  {
-                    "type": "Bank.Key",
-                    "id": null,
-                    "version": null,
-                    "value": "Быстро, но плавно повернуть рулевое колесо в сторону заноса, затем опережающим воздействием на рулевое колесо выровнять траекторию движения."
-                  },
-                  {
-                    "type": "Bank.Key",
-                    "id": null,
-                    "version": null,
-                    "value": "Выключить сцепление и повернуть рулевое колесо в сторону заноса."
-                  },
-                  {
-                    "type": "Bank.Key",
-                    "id": null,
-                    "version": null,
-                    "value": "Нажать на педаль тормоза и воздействием на рулевое колесо выровнять траекторию движения."
-                  }
-                ],
-                "correctAnswer": 0
+                "value": "регулировщика"
               },
               {
+                "type": "Bank.Key",
+                "id": null,
+                "version": null,
+                "value": "транспортного светофора"
+              },
+              {
+                "type": "Bank.Key",
+                "id": null,
+                "version": null,
+                "value": "пешеходного светофора"
+              }
+            ],
+            "correctAnswer": 0
+          },
+          {
+            "type": "Entities.ControlStep",
+            "id": "step25",
+            "version": null,
+            "possibleInterventions": [],
+            "resultType": null,
+            "maxGrade": 6,
+            "title": null,
+            "exercises": [
+              {
                 "type": "Entities.OpenTestStep",
-                "id": "exercise2",
+                "id": "exercise21",
                 "version": null,
                 "possibleInterventions": [],
                 "resultType": "function String() { [native code] }",
-                "maxGrade": 15,
+                "maxGrade": 1,
                 "title": null,
                 "problem": {
                   "type": "Bank.Assignment",
                   "id": null,
                   "version": null,
-                  "content": "Какие сведения необходимо сообщить диспетчеру для вызова «Скорой медицинской помощи» при ДТП?"
+                  "content": "<div style=\"left:50px;top:75px\">Светофор какого типа изображен на рисунке?\n  <img width=\"250\" src=\"https://arhivurokov.ru/multiurok/1/7/d/17dc7de6d066e259ca97319fa0183bc996409fa6/bukliet-pravila-dorozhnogho-dvizhieniia-v-zimnii-p_14.jpeg\"></img>\n  </div>"
                 },
                 "correctAnswer": {
                   "type": "Bank.Key",
                   "id": null,
                   "version": null,
-                  "value": "Точное место ДТП"
+                  "value": "Т.5"
                 }
+              },
+              {
+                "type": "Entities.PascaStep",
+                "id": "exercise22",
+                "version": null,
+                "possibleInterventions": [],
+                "resultType": "class PascaStepResult {\r\n    constructor() {\r\n        this.ArtifactUri = null;\r\n        this.FinalGrade = 0;\r\n        this.Grades = null;\r\n        this.Reviewers = null;\r\n    }\r\n}",
+                "maxGrade": 5,
+                "title": null,
+                "pascaFalsSettings": {
+                  "authorsCountToBeginAssessment": 2,
+                  "delayDates": true
+                },
+                "pascaOnenoteSettings": {},
+                "pascaSessionSettings": {},
+                "m_PascaFalsSettings": null
               }
             ]
           }
         ],
-        "maxGrade": 0,
-        "possibleInterventions": null,
-        "title": "Зимняя езда",
-        "description": "Какой русски не любит быстрой зимней езды?"
+        "maxGrade": 10,
+        "minGrade": 5,
+        "possibleInterventions": [
+          {
+            "type": "Entities.GotoModuleIntervention",
+            "id": null,
+            "version": null,
+            "module": {
+              "type": "Entities.Module",
+              "id": "module1",
+              "version": null,
+              "steps": [
+                {
+                  "type": "Entities.StudyStep",
+                  "id": "step01",
+                  "version": null,
+                  "possibleInterventions": [],
+                  "resultType": null,
+                  "maxGrade": 0,
+                  "title": null,
+                  "materials": {
+                    "type": "Bank.HypertextMaterial",
+                    "id": null,
+                    "version": null,
+                    "content": "<div>Приветствуем Вас на курсе ПДД 2018. Надеемся, вы узнаете много нового.</div>"
+                  }
+                },
+                {
+                  "type": "Entities.StudyStep",
+                  "id": "step02",
+                  "version": null,
+                  "possibleInterventions": [],
+                  "resultType": null,
+                  "maxGrade": 0,
+                  "title": null,
+                  "materials": {
+                    "type": "Bank.HyperlinkMaterial",
+                    "id": null,
+                    "version": null,
+                    "link": "https://pdde.ru/pdd/"
+                  }
+                },
+                {
+                  "type": "Entities.TestStep",
+                  "id": "step1",
+                  "version": null,
+                  "possibleInterventions": [
+                    {
+                      "type": "Entities.Hint",
+                      "id": null,
+                      "version": null,
+                      "message": "Действие знака 4.1.1 «Движение прямо», установленного перед перекрёстком, распространяется только на первое пересечение проезжих частей за знаком."
+                    }
+                  ],
+                  "resultType": "function Number() { [native code] }",
+                  "maxGrade": 1,
+                  "title": null,
+                  "problem": {
+                    "type": "Bank.Assignment",
+                    "id": null,
+                    "version": null,
+                    "content": "<div style=\"left:50px;top:75px\">Вам можно продолжить движение на перекрёстке:\n  <img src=\"https://pdde.ru/static/data/images/questions/13.jpg\" width=\"250\"></img>\n  </div>"
+                  },
+                  "answers": [
+                    {
+                      "type": "Bank.Key",
+                      "id": null,
+                      "version": null,
+                      "value": "В направлениях Б и В"
+                    },
+                    {
+                      "type": "Bank.Key",
+                      "id": null,
+                      "version": null,
+                      "value": "Только в направлении Б"
+                    },
+                    {
+                      "type": "Bank.Key",
+                      "id": null,
+                      "version": null,
+                      "value": "В направлениях А и Б"
+                    }
+                  ],
+                  "correctAnswer": 2
+                },
+                {
+                  "type": "Entities.OpenTestStep",
+                  "id": "step12",
+                  "version": null,
+                  "possibleInterventions": [
+                    {
+                      "type": "Entities.Distinction",
+                      "id": null,
+                      "version": null,
+                      "message": "Лампа красного цвета располагается сверху, лампа зелёного цвета располагается снизу",
+                      "entity1": "красный",
+                      "entity2": "зелёный",
+                      "distinctor": null
+                    },
+                    {
+                      "type": "Entities.Hint",
+                      "id": null,
+                      "version": null,
+                      "message": "Цвет светофора может быть одним из трёх: красный, жёлтый или зелёный"
+                    }
+                  ],
+                  "resultType": "function String() { [native code] }",
+                  "maxGrade": 1,
+                  "title": null,
+                  "problem": {
+                    "type": "Bank.Assignment",
+                    "id": null,
+                    "version": null,
+                    "content": "Какой цвет светофора требует остановки?"
+                  },
+                  "correctAnswer": {
+                    "type": "Bank.Key",
+                    "id": null,
+                    "version": null,
+                    "value": "красный"
+                  }
+                },
+                {
+                  "type": "Entities.StudyStep",
+                  "id": "step2",
+                  "version": null,
+                  "possibleInterventions": [
+                    {
+                      "type": "Entities.GotoStepIntervention",
+                      "id": null,
+                      "version": null,
+                      "step": {
+                        "type": "Entities.ControlStep",
+                        "id": "step3",
+                        "version": null,
+                        "possibleInterventions": [],
+                        "resultType": null,
+                        "maxGrade": 0,
+                        "title": null,
+                        "exercises": [
+                          {
+                            "type": "Entities.OpenTestStep",
+                            "id": "exercise1",
+                            "version": null,
+                            "possibleInterventions": [],
+                            "resultType": "function String() { [native code] }",
+                            "maxGrade": 2,
+                            "title": null,
+                            "problem": {
+                              "type": "Bank.Assignment",
+                              "id": null,
+                              "version": null,
+                              "content": "Единица деления всех транспортных средств по грузоподъемности, мощности двигателя, количеству колес и пассажирских мест - это?"
+                            },
+                            "correctAnswer": {
+                              "type": "Bank.Key",
+                              "id": null,
+                              "version": null,
+                              "value": "категория"
+                            }
+                          },
+                          {
+                            "type": "Entities.GeneratedTestStep",
+                            "id": "exercise2",
+                            "version": null,
+                            "possibleInterventions": [],
+                            "resultType": null,
+                            "maxGrade": 1,
+                            "title": null,
+                            "objects": [
+                              "Категория А",
+                              "Категория А1",
+                              "Категория В",
+                              "Категория В1",
+                              "Категория ВЕ"
+                            ],
+                            "batchSize": 10,
+                            "question_type": 0,
+                            "question_form": 1,
+                            "features": [
+                              "Тип ТС",
+                              "Максимальная масса ТС",
+                              "Минимальный возраст"
+                            ],
+                            "minGrade": 0.9
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "resultType": null,
+                  "maxGrade": 0,
+                  "title": "Изучение светофора",
+                  "materials": {
+                    "type": "Bank.HypertextMaterial",
+                    "id": null,
+                    "version": null,
+                    "content": "<div style=\"left:50px;top:75px\">Светофо́р (от свет + греч. φορός «несущий») — оптическое устройство, подающее световые сигналы, регулирующие движение автомобильного, железнодорожного, водного и другого транспорта, а также пешеходов на пешеходных переходах\n    <img src=\"https://ds03.infourok.ru/uploads/ex/07e6/0005ad35-95e22fd3/1/img1.jpg\" width=\"450\"></img></div>"
+                  }
+                },
+                {
+                  "type": "Entities.ControlStep",
+                  "id": "step3",
+                  "version": null,
+                  "possibleInterventions": [],
+                  "resultType": null,
+                  "maxGrade": 0,
+                  "title": null,
+                  "exercises": [
+                    {
+                      "type": "Entities.OpenTestStep",
+                      "id": "exercise1",
+                      "version": null,
+                      "possibleInterventions": [],
+                      "resultType": "function String() { [native code] }",
+                      "maxGrade": 2,
+                      "title": null,
+                      "problem": {
+                        "type": "Bank.Assignment",
+                        "id": null,
+                        "version": null,
+                        "content": "Единица деления всех транспортных средств по грузоподъемности, мощности двигателя, количеству колес и пассажирских мест - это?"
+                      },
+                      "correctAnswer": {
+                        "type": "Bank.Key",
+                        "id": null,
+                        "version": null,
+                        "value": "категория"
+                      }
+                    },
+                    {
+                      "type": "Entities.GeneratedTestStep",
+                      "id": "exercise2",
+                      "version": null,
+                      "possibleInterventions": [],
+                      "resultType": null,
+                      "maxGrade": 1,
+                      "title": null,
+                      "objects": [
+                        "Категория А",
+                        "Категория А1",
+                        "Категория В",
+                        "Категория В1",
+                        "Категория ВЕ"
+                      ],
+                      "batchSize": 10,
+                      "question_type": 0,
+                      "question_form": 1,
+                      "features": [
+                        "Тип ТС",
+                        "Максимальная масса ТС",
+                        "Минимальный возраст"
+                      ],
+                      "minGrade": 0.9
+                    }
+                  ]
+                }
+              ],
+              "maxGrade": 5,
+              "minGrade": 3,
+              "possibleInterventions": [
+                {
+                  "type": "Entities.RepeatIntervention",
+                  "id": null,
+                  "version": null
+                }
+              ],
+              "title": "Основы ПДД",
+              "description": "В этом модуле вы пройдете первые шаги в изучении ПДД"
+            }
+          }
+        ],
+        "title": "Светофоры",
+        "description": "Детальное изучение светофоров"
       }
     }
   },
@@ -705,17 +1463,90 @@
               "version": null,
               "steps": [
                 {
-                  "type": "Entities.OpenTestStep",
+                  "type": "Entities.StudyStep",
+                  "id": "step01",
+                  "version": null,
+                  "possibleInterventions": [],
+                  "resultType": null,
+                  "maxGrade": 0,
+                  "title": null,
+                  "materials": {
+                    "type": "Bank.HypertextMaterial",
+                    "id": null,
+                    "version": null,
+                    "content": "<div>Приветствуем Вас на курсе ПДД 2018. Надеемся, вы узнаете много нового.</div>"
+                  }
+                },
+                {
+                  "type": "Entities.StudyStep",
+                  "id": "step02",
+                  "version": null,
+                  "possibleInterventions": [],
+                  "resultType": null,
+                  "maxGrade": 0,
+                  "title": null,
+                  "materials": {
+                    "type": "Bank.HyperlinkMaterial",
+                    "id": null,
+                    "version": null,
+                    "link": "https://pdde.ru/pdd/"
+                  }
+                },
+                {
+                  "type": "Entities.TestStep",
                   "id": "step1",
+                  "version": null,
+                  "possibleInterventions": [
+                    {
+                      "type": "Entities.Hint",
+                      "id": null,
+                      "version": null,
+                      "message": "Действие знака 4.1.1 «Движение прямо», установленного перед перекрёстком, распространяется только на первое пересечение проезжих частей за знаком."
+                    }
+                  ],
+                  "resultType": "function Number() { [native code] }",
+                  "maxGrade": 1,
+                  "title": null,
+                  "problem": {
+                    "type": "Bank.Assignment",
+                    "id": null,
+                    "version": null,
+                    "content": "<div style=\"left:50px;top:75px\">Вам можно продолжить движение на перекрёстке:\n  <img src=\"https://pdde.ru/static/data/images/questions/13.jpg\" width=\"250\"></img>\n  </div>"
+                  },
+                  "answers": [
+                    {
+                      "type": "Bank.Key",
+                      "id": null,
+                      "version": null,
+                      "value": "В направлениях Б и В"
+                    },
+                    {
+                      "type": "Bank.Key",
+                      "id": null,
+                      "version": null,
+                      "value": "Только в направлении Б"
+                    },
+                    {
+                      "type": "Bank.Key",
+                      "id": null,
+                      "version": null,
+                      "value": "В направлениях А и Б"
+                    }
+                  ],
+                  "correctAnswer": 2
+                },
+                {
+                  "type": "Entities.OpenTestStep",
+                  "id": "step12",
                   "version": null,
                   "possibleInterventions": [
                     {
                       "type": "Entities.Distinction",
                       "id": null,
                       "version": null,
-                      "message": "Лампа зелёного цвета располагается сверху, лампа жёлтого цвета располагается снизу",
-                      "entity1": "зелёный",
-                      "entity2": "жёлтый",
+                      "message": "Лампа красного цвета располагается сверху, лампа зелёного цвета располагается снизу",
+                      "entity1": "красный",
+                      "entity2": "зелёный",
                       "distinctor": null
                     },
                     {
@@ -726,63 +1557,20 @@
                     }
                   ],
                   "resultType": "function String() { [native code] }",
-                  "maxGrade": 0,
+                  "maxGrade": 1,
                   "title": null,
                   "problem": {
                     "type": "Bank.Assignment",
                     "id": null,
                     "version": null,
-                    "content": "<div style=\"left:200px;top:200px\">Какой цвет светофора изображен на рисунке?\n  <img src=\"http://clipart-library.com/img/1287030.jpg\" width=\"250\"></img>\n  </div>"
+                    "content": "Какой цвет светофора требует остановки?"
                   },
                   "correctAnswer": {
                     "type": "Bank.Key",
                     "id": null,
                     "version": null,
-                    "value": "зелёный"
+                    "value": "красный"
                   }
-                },
-                {
-                  "type": "Entities.TestStep",
-                  "id": "step12",
-                  "version": null,
-                  "possibleInterventions": [
-                    {
-                      "type": "Entities.Hint",
-                      "id": null,
-                      "version": null,
-                      "message": "Колёса, вывернутые в сторону кювета («А» и «Г») уведут неуправляемый автомобиль в кювет."
-                    }
-                  ],
-                  "resultType": "function Number() { [native code] }",
-                  "maxGrade": 2,
-                  "title": null,
-                  "problem": {
-                    "type": "Bank.Assignment",
-                    "id": null,
-                    "version": null,
-                    "content": "<div style=\"left:200px;top:200px\">В случае остановки на подъеме (спуске) при наличии обочины можно предотвратить самопроизвольное скатывание автомобиля на проезжую часть, повернув его передние колеса в положение:\n  <img src=\"http://pdd.bit-world.ru/assets/ab/pdd/0619.jpg\" width=\"350\"></img>\n  </div>"
-                  },
-                  "answers": [
-                    {
-                      "type": "Bank.Key",
-                      "id": null,
-                      "version": null,
-                      "value": "Б и В"
-                    },
-                    {
-                      "type": "Bank.Key",
-                      "id": null,
-                      "version": null,
-                      "value": "А и Г"
-                    },
-                    {
-                      "type": "Bank.Key",
-                      "id": null,
-                      "version": null,
-                      "value": "А и В"
-                    }
-                  ],
-                  "correctAnswer": 1
                 },
                 {
                   "type": "Entities.StudyStep",
@@ -803,61 +1591,50 @@
                         "title": null,
                         "exercises": [
                           {
-                            "type": "Entities.TestStep",
+                            "type": "Entities.OpenTestStep",
                             "id": "exercise1",
                             "version": null,
                             "possibleInterventions": [],
-                            "resultType": "function Number() { [native code] }",
-                            "maxGrade": 5,
-                            "title": null,
-                            "problem": {
-                              "type": "Bank.Assignment",
-                              "id": null,
-                              "version": null,
-                              "content": "Что следует предпринять водителю для предотвращения опасных последствий заноса автомобиля при резком повороте рулевого колеса на скользкой дороге?"
-                            },
-                            "answers": [
-                              {
-                                "type": "Bank.Key",
-                                "id": null,
-                                "version": null,
-                                "value": "Быстро, но плавно повернуть рулевое колесо в сторону заноса, затем опережающим воздействием на рулевое колесо выровнять траекторию движения."
-                              },
-                              {
-                                "type": "Bank.Key",
-                                "id": null,
-                                "version": null,
-                                "value": "Выключить сцепление и повернуть рулевое колесо в сторону заноса."
-                              },
-                              {
-                                "type": "Bank.Key",
-                                "id": null,
-                                "version": null,
-                                "value": "Нажать на педаль тормоза и воздействием на рулевое колесо выровнять траекторию движения."
-                              }
-                            ],
-                            "correctAnswer": 0
-                          },
-                          {
-                            "type": "Entities.OpenTestStep",
-                            "id": "exercise2",
-                            "version": null,
-                            "possibleInterventions": [],
                             "resultType": "function String() { [native code] }",
-                            "maxGrade": 15,
+                            "maxGrade": 2,
                             "title": null,
                             "problem": {
                               "type": "Bank.Assignment",
                               "id": null,
                               "version": null,
-                              "content": "Какие сведения необходимо сообщить диспетчеру для вызова «Скорой медицинской помощи» при ДТП?"
+                              "content": "Единица деления всех транспортных средств по грузоподъемности, мощности двигателя, количеству колес и пассажирских мест - это?"
                             },
                             "correctAnswer": {
                               "type": "Bank.Key",
                               "id": null,
                               "version": null,
-                              "value": "Точное место ДТП"
+                              "value": "категория"
                             }
+                          },
+                          {
+                            "type": "Entities.GeneratedTestStep",
+                            "id": "exercise2",
+                            "version": null,
+                            "possibleInterventions": [],
+                            "resultType": null,
+                            "maxGrade": 1,
+                            "title": null,
+                            "objects": [
+                              "Категория А",
+                              "Категория А1",
+                              "Категория В",
+                              "Категория В1",
+                              "Категория ВЕ"
+                            ],
+                            "batchSize": 10,
+                            "question_type": 0,
+                            "question_form": 1,
+                            "features": [
+                              "Тип ТС",
+                              "Максимальная масса ТС",
+                              "Минимальный возраст"
+                            ],
+                            "minGrade": 0.9
                           }
                         ]
                       }
@@ -870,7 +1647,7 @@
                     "type": "Bank.HypertextMaterial",
                     "id": null,
                     "version": null,
-                    "content": "<div style=\"left:200px;top:200px\">Светофо́р (от свет + греч. φορός «несущий») — оптическое устройство, подающее световые сигналы, регулирующие движение автомобильного, железнодорожного, водного и другого транспорта, а также пешеходов на пешеходных переходах\n    <img src=\"https://ds03.infourok.ru/uploads/ex/07e6/0005ad35-95e22fd3/1/img1.jpg\" width=\"450\"></img></div>"
+                    "content": "<div style=\"left:50px;top:75px\">Светофо́р (от свет + греч. φορός «несущий») — оптическое устройство, подающее световые сигналы, регулирующие движение автомобильного, железнодорожного, водного и другого транспорта, а также пешеходов на пешеходных переходах\n    <img src=\"https://ds03.infourok.ru/uploads/ex/07e6/0005ad35-95e22fd3/1/img1.jpg\" width=\"450\"></img></div>"
                   }
                 },
                 {
@@ -883,69 +1660,65 @@
                   "title": null,
                   "exercises": [
                     {
-                      "type": "Entities.TestStep",
+                      "type": "Entities.OpenTestStep",
                       "id": "exercise1",
                       "version": null,
                       "possibleInterventions": [],
-                      "resultType": "function Number() { [native code] }",
-                      "maxGrade": 5,
-                      "title": null,
-                      "problem": {
-                        "type": "Bank.Assignment",
-                        "id": null,
-                        "version": null,
-                        "content": "Что следует предпринять водителю для предотвращения опасных последствий заноса автомобиля при резком повороте рулевого колеса на скользкой дороге?"
-                      },
-                      "answers": [
-                        {
-                          "type": "Bank.Key",
-                          "id": null,
-                          "version": null,
-                          "value": "Быстро, но плавно повернуть рулевое колесо в сторону заноса, затем опережающим воздействием на рулевое колесо выровнять траекторию движения."
-                        },
-                        {
-                          "type": "Bank.Key",
-                          "id": null,
-                          "version": null,
-                          "value": "Выключить сцепление и повернуть рулевое колесо в сторону заноса."
-                        },
-                        {
-                          "type": "Bank.Key",
-                          "id": null,
-                          "version": null,
-                          "value": "Нажать на педаль тормоза и воздействием на рулевое колесо выровнять траекторию движения."
-                        }
-                      ],
-                      "correctAnswer": 0
-                    },
-                    {
-                      "type": "Entities.OpenTestStep",
-                      "id": "exercise2",
-                      "version": null,
-                      "possibleInterventions": [],
                       "resultType": "function String() { [native code] }",
-                      "maxGrade": 15,
+                      "maxGrade": 2,
                       "title": null,
                       "problem": {
                         "type": "Bank.Assignment",
                         "id": null,
                         "version": null,
-                        "content": "Какие сведения необходимо сообщить диспетчеру для вызова «Скорой медицинской помощи» при ДТП?"
+                        "content": "Единица деления всех транспортных средств по грузоподъемности, мощности двигателя, количеству колес и пассажирских мест - это?"
                       },
                       "correctAnswer": {
                         "type": "Bank.Key",
                         "id": null,
                         "version": null,
-                        "value": "Точное место ДТП"
+                        "value": "категория"
                       }
+                    },
+                    {
+                      "type": "Entities.GeneratedTestStep",
+                      "id": "exercise2",
+                      "version": null,
+                      "possibleInterventions": [],
+                      "resultType": null,
+                      "maxGrade": 1,
+                      "title": null,
+                      "objects": [
+                        "Категория А",
+                        "Категория А1",
+                        "Категория В",
+                        "Категория В1",
+                        "Категория ВЕ"
+                      ],
+                      "batchSize": 10,
+                      "question_type": 0,
+                      "question_form": 1,
+                      "features": [
+                        "Тип ТС",
+                        "Максимальная масса ТС",
+                        "Минимальный возраст"
+                      ],
+                      "minGrade": 0.9
                     }
                   ]
                 }
               ],
-              "maxGrade": 0,
-              "possibleInterventions": null,
-              "title": "Базовые правила",
-              "description": "В этом модуле вы изучите самые главные правила дорожного движения"
+              "maxGrade": 5,
+              "minGrade": 3,
+              "possibleInterventions": [
+                {
+                  "type": "Entities.RepeatIntervention",
+                  "id": null,
+                  "version": null
+                }
+              ],
+              "title": "Основы ПДД",
+              "description": "В этом модуле вы пройдете первые шаги в изучении ПДД"
             }
           },
           {
@@ -957,78 +1730,442 @@
               "version": null,
               "steps": [
                 {
-                  "type": "Entities.ControlStep",
+                  "type": "Entities.TestStep",
                   "id": "step21",
+                  "version": null,
+                  "possibleInterventions": [],
+                  "resultType": "function Number() { [native code] }",
+                  "maxGrade": 1,
+                  "title": null,
+                  "problem": {
+                    "type": "Bank.Assignment",
+                    "id": null,
+                    "version": null,
+                    "content": "Вспомним пройденное. Сколько цветов у светофора?"
+                  },
+                  "answers": [
+                    {
+                      "type": "Bank.Key",
+                      "id": null,
+                      "version": null,
+                      "value": "1"
+                    },
+                    {
+                      "type": "Bank.Key",
+                      "id": null,
+                      "version": null,
+                      "value": "2"
+                    },
+                    {
+                      "type": "Bank.Key",
+                      "id": null,
+                      "version": null,
+                      "value": "3"
+                    },
+                    {
+                      "type": "Bank.Key",
+                      "id": null,
+                      "version": null,
+                      "value": "4"
+                    }
+                  ],
+                  "correctAnswer": 2
+                },
+                {
+                  "type": "Entities.StudyStep",
+                  "id": "step22",
                   "version": null,
                   "possibleInterventions": [],
                   "resultType": null,
                   "maxGrade": 0,
                   "title": null,
-                  "exercises": [
+                  "materials": {
+                    "type": "Bank.HyperlinkMaterial",
+                    "id": null,
+                    "version": null,
+                    "link": "onenotelink"
+                  }
+                },
+                {
+                  "type": "Entities.OpenTestStep",
+                  "id": "step23",
+                  "version": null,
+                  "possibleInterventions": [],
+                  "resultType": "function String() { [native code] }",
+                  "maxGrade": 1,
+                  "title": null,
+                  "problem": {
+                    "type": "Bank.Assignment",
+                    "id": null,
+                    "version": null,
+                    "content": "<div style=\"left:50px;top:75px\">Какой тип светофора изображен на рисунке?\n<img src=\"http://clipart-library.com/img/1287030.jpg\" width=\"250\"></img>\n</div>"
+                  },
+                  "correctAnswer": {
+                    "type": "Bank.Key",
+                    "id": null,
+                    "version": null,
+                    "value": "транспортный"
+                  }
+                },
+                {
+                  "type": "Entities.TestStep",
+                  "id": "step24",
+                  "version": null,
+                  "possibleInterventions": [],
+                  "resultType": "function Number() { [native code] }",
+                  "maxGrade": 2,
+                  "title": null,
+                  "problem": {
+                    "type": "Bank.Assignment",
+                    "id": null,
+                    "version": null,
+                    "content": "В местах, где движение регулируется, пешеходы должны руководствоваться в первую очередь сигналами "
+                  },
+                  "answers": [
                     {
-                      "type": "Entities.TestStep",
-                      "id": "exercise1",
+                      "type": "Bank.Key",
+                      "id": null,
                       "version": null,
-                      "possibleInterventions": [],
-                      "resultType": "function Number() { [native code] }",
-                      "maxGrade": 5,
-                      "title": null,
-                      "problem": {
-                        "type": "Bank.Assignment",
-                        "id": null,
-                        "version": null,
-                        "content": "Что следует предпринять водителю для предотвращения опасных последствий заноса автомобиля при резком повороте рулевого колеса на скользкой дороге?"
-                      },
-                      "answers": [
-                        {
-                          "type": "Bank.Key",
-                          "id": null,
-                          "version": null,
-                          "value": "Быстро, но плавно повернуть рулевое колесо в сторону заноса, затем опережающим воздействием на рулевое колесо выровнять траекторию движения."
-                        },
-                        {
-                          "type": "Bank.Key",
-                          "id": null,
-                          "version": null,
-                          "value": "Выключить сцепление и повернуть рулевое колесо в сторону заноса."
-                        },
-                        {
-                          "type": "Bank.Key",
-                          "id": null,
-                          "version": null,
-                          "value": "Нажать на педаль тормоза и воздействием на рулевое колесо выровнять траекторию движения."
-                        }
-                      ],
-                      "correctAnswer": 0
+                      "value": "регулировщика"
                     },
                     {
+                      "type": "Bank.Key",
+                      "id": null,
+                      "version": null,
+                      "value": "транспортного светофора"
+                    },
+                    {
+                      "type": "Bank.Key",
+                      "id": null,
+                      "version": null,
+                      "value": "пешеходного светофора"
+                    }
+                  ],
+                  "correctAnswer": 0
+                },
+                {
+                  "type": "Entities.ControlStep",
+                  "id": "step25",
+                  "version": null,
+                  "possibleInterventions": [],
+                  "resultType": null,
+                  "maxGrade": 6,
+                  "title": null,
+                  "exercises": [
+                    {
                       "type": "Entities.OpenTestStep",
-                      "id": "exercise2",
+                      "id": "exercise21",
                       "version": null,
                       "possibleInterventions": [],
                       "resultType": "function String() { [native code] }",
-                      "maxGrade": 15,
+                      "maxGrade": 1,
                       "title": null,
                       "problem": {
                         "type": "Bank.Assignment",
                         "id": null,
                         "version": null,
-                        "content": "Какие сведения необходимо сообщить диспетчеру для вызова «Скорой медицинской помощи» при ДТП?"
+                        "content": "<div style=\"left:50px;top:75px\">Светофор какого типа изображен на рисунке?\n  <img width=\"250\" src=\"https://arhivurokov.ru/multiurok/1/7/d/17dc7de6d066e259ca97319fa0183bc996409fa6/bukliet-pravila-dorozhnogho-dvizhieniia-v-zimnii-p_14.jpeg\"></img>\n  </div>"
                       },
                       "correctAnswer": {
                         "type": "Bank.Key",
                         "id": null,
                         "version": null,
-                        "value": "Точное место ДТП"
+                        "value": "Т.5"
                       }
+                    },
+                    {
+                      "type": "Entities.PascaStep",
+                      "id": "exercise22",
+                      "version": null,
+                      "possibleInterventions": [],
+                      "resultType": "class PascaStepResult {\r\n    constructor() {\r\n        this.ArtifactUri = null;\r\n        this.FinalGrade = 0;\r\n        this.Grades = null;\r\n        this.Reviewers = null;\r\n    }\r\n}",
+                      "maxGrade": 5,
+                      "title": null,
+                      "pascaFalsSettings": {
+                        "authorsCountToBeginAssessment": 2,
+                        "delayDates": true
+                      },
+                      "pascaOnenoteSettings": {},
+                      "pascaSessionSettings": {},
+                      "m_PascaFalsSettings": null
                     }
                   ]
                 }
               ],
-              "maxGrade": 0,
-              "possibleInterventions": null,
-              "title": "Зимняя езда",
-              "description": "Какой русски не любит быстрой зимней езды?"
+              "maxGrade": 10,
+              "minGrade": 5,
+              "possibleInterventions": [
+                {
+                  "type": "Entities.GotoModuleIntervention",
+                  "id": null,
+                  "version": null,
+                  "module": {
+                    "type": "Entities.Module",
+                    "id": "module1",
+                    "version": null,
+                    "steps": [
+                      {
+                        "type": "Entities.StudyStep",
+                        "id": "step01",
+                        "version": null,
+                        "possibleInterventions": [],
+                        "resultType": null,
+                        "maxGrade": 0,
+                        "title": null,
+                        "materials": {
+                          "type": "Bank.HypertextMaterial",
+                          "id": null,
+                          "version": null,
+                          "content": "<div>Приветствуем Вас на курсе ПДД 2018. Надеемся, вы узнаете много нового.</div>"
+                        }
+                      },
+                      {
+                        "type": "Entities.StudyStep",
+                        "id": "step02",
+                        "version": null,
+                        "possibleInterventions": [],
+                        "resultType": null,
+                        "maxGrade": 0,
+                        "title": null,
+                        "materials": {
+                          "type": "Bank.HyperlinkMaterial",
+                          "id": null,
+                          "version": null,
+                          "link": "https://pdde.ru/pdd/"
+                        }
+                      },
+                      {
+                        "type": "Entities.TestStep",
+                        "id": "step1",
+                        "version": null,
+                        "possibleInterventions": [
+                          {
+                            "type": "Entities.Hint",
+                            "id": null,
+                            "version": null,
+                            "message": "Действие знака 4.1.1 «Движение прямо», установленного перед перекрёстком, распространяется только на первое пересечение проезжих частей за знаком."
+                          }
+                        ],
+                        "resultType": "function Number() { [native code] }",
+                        "maxGrade": 1,
+                        "title": null,
+                        "problem": {
+                          "type": "Bank.Assignment",
+                          "id": null,
+                          "version": null,
+                          "content": "<div style=\"left:50px;top:75px\">Вам можно продолжить движение на перекрёстке:\n  <img src=\"https://pdde.ru/static/data/images/questions/13.jpg\" width=\"250\"></img>\n  </div>"
+                        },
+                        "answers": [
+                          {
+                            "type": "Bank.Key",
+                            "id": null,
+                            "version": null,
+                            "value": "В направлениях Б и В"
+                          },
+                          {
+                            "type": "Bank.Key",
+                            "id": null,
+                            "version": null,
+                            "value": "Только в направлении Б"
+                          },
+                          {
+                            "type": "Bank.Key",
+                            "id": null,
+                            "version": null,
+                            "value": "В направлениях А и Б"
+                          }
+                        ],
+                        "correctAnswer": 2
+                      },
+                      {
+                        "type": "Entities.OpenTestStep",
+                        "id": "step12",
+                        "version": null,
+                        "possibleInterventions": [
+                          {
+                            "type": "Entities.Distinction",
+                            "id": null,
+                            "version": null,
+                            "message": "Лампа красного цвета располагается сверху, лампа зелёного цвета располагается снизу",
+                            "entity1": "красный",
+                            "entity2": "зелёный",
+                            "distinctor": null
+                          },
+                          {
+                            "type": "Entities.Hint",
+                            "id": null,
+                            "version": null,
+                            "message": "Цвет светофора может быть одним из трёх: красный, жёлтый или зелёный"
+                          }
+                        ],
+                        "resultType": "function String() { [native code] }",
+                        "maxGrade": 1,
+                        "title": null,
+                        "problem": {
+                          "type": "Bank.Assignment",
+                          "id": null,
+                          "version": null,
+                          "content": "Какой цвет светофора требует остановки?"
+                        },
+                        "correctAnswer": {
+                          "type": "Bank.Key",
+                          "id": null,
+                          "version": null,
+                          "value": "красный"
+                        }
+                      },
+                      {
+                        "type": "Entities.StudyStep",
+                        "id": "step2",
+                        "version": null,
+                        "possibleInterventions": [
+                          {
+                            "type": "Entities.GotoStepIntervention",
+                            "id": null,
+                            "version": null,
+                            "step": {
+                              "type": "Entities.ControlStep",
+                              "id": "step3",
+                              "version": null,
+                              "possibleInterventions": [],
+                              "resultType": null,
+                              "maxGrade": 0,
+                              "title": null,
+                              "exercises": [
+                                {
+                                  "type": "Entities.OpenTestStep",
+                                  "id": "exercise1",
+                                  "version": null,
+                                  "possibleInterventions": [],
+                                  "resultType": "function String() { [native code] }",
+                                  "maxGrade": 2,
+                                  "title": null,
+                                  "problem": {
+                                    "type": "Bank.Assignment",
+                                    "id": null,
+                                    "version": null,
+                                    "content": "Единица деления всех транспортных средств по грузоподъемности, мощности двигателя, количеству колес и пассажирских мест - это?"
+                                  },
+                                  "correctAnswer": {
+                                    "type": "Bank.Key",
+                                    "id": null,
+                                    "version": null,
+                                    "value": "категория"
+                                  }
+                                },
+                                {
+                                  "type": "Entities.GeneratedTestStep",
+                                  "id": "exercise2",
+                                  "version": null,
+                                  "possibleInterventions": [],
+                                  "resultType": null,
+                                  "maxGrade": 1,
+                                  "title": null,
+                                  "objects": [
+                                    "Категория А",
+                                    "Категория А1",
+                                    "Категория В",
+                                    "Категория В1",
+                                    "Категория ВЕ"
+                                  ],
+                                  "batchSize": 10,
+                                  "question_type": 0,
+                                  "question_form": 1,
+                                  "features": [
+                                    "Тип ТС",
+                                    "Максимальная масса ТС",
+                                    "Минимальный возраст"
+                                  ],
+                                  "minGrade": 0.9
+                                }
+                              ]
+                            }
+                          }
+                        ],
+                        "resultType": null,
+                        "maxGrade": 0,
+                        "title": "Изучение светофора",
+                        "materials": {
+                          "type": "Bank.HypertextMaterial",
+                          "id": null,
+                          "version": null,
+                          "content": "<div style=\"left:50px;top:75px\">Светофо́р (от свет + греч. φορός «несущий») — оптическое устройство, подающее световые сигналы, регулирующие движение автомобильного, железнодорожного, водного и другого транспорта, а также пешеходов на пешеходных переходах\n    <img src=\"https://ds03.infourok.ru/uploads/ex/07e6/0005ad35-95e22fd3/1/img1.jpg\" width=\"450\"></img></div>"
+                        }
+                      },
+                      {
+                        "type": "Entities.ControlStep",
+                        "id": "step3",
+                        "version": null,
+                        "possibleInterventions": [],
+                        "resultType": null,
+                        "maxGrade": 0,
+                        "title": null,
+                        "exercises": [
+                          {
+                            "type": "Entities.OpenTestStep",
+                            "id": "exercise1",
+                            "version": null,
+                            "possibleInterventions": [],
+                            "resultType": "function String() { [native code] }",
+                            "maxGrade": 2,
+                            "title": null,
+                            "problem": {
+                              "type": "Bank.Assignment",
+                              "id": null,
+                              "version": null,
+                              "content": "Единица деления всех транспортных средств по грузоподъемности, мощности двигателя, количеству колес и пассажирских мест - это?"
+                            },
+                            "correctAnswer": {
+                              "type": "Bank.Key",
+                              "id": null,
+                              "version": null,
+                              "value": "категория"
+                            }
+                          },
+                          {
+                            "type": "Entities.GeneratedTestStep",
+                            "id": "exercise2",
+                            "version": null,
+                            "possibleInterventions": [],
+                            "resultType": null,
+                            "maxGrade": 1,
+                            "title": null,
+                            "objects": [
+                              "Категория А",
+                              "Категория А1",
+                              "Категория В",
+                              "Категория В1",
+                              "Категория ВЕ"
+                            ],
+                            "batchSize": 10,
+                            "question_type": 0,
+                            "question_form": 1,
+                            "features": [
+                              "Тип ТС",
+                              "Максимальная масса ТС",
+                              "Минимальный возраст"
+                            ],
+                            "minGrade": 0.9
+                          }
+                        ]
+                      }
+                    ],
+                    "maxGrade": 5,
+                    "minGrade": 3,
+                    "possibleInterventions": [
+                      {
+                        "type": "Entities.RepeatIntervention",
+                        "id": null,
+                        "version": null
+                      }
+                    ],
+                    "title": "Основы ПДД",
+                    "description": "В этом модуле вы пройдете первые шаги в изучении ПДД"
+                  }
+                }
+              ],
+              "title": "Светофоры",
+              "description": "Детальное изучение светофоров"
             }
           }
         ],
@@ -1053,17 +2190,90 @@
               "version": null,
               "steps": [
                 {
-                  "type": "Entities.OpenTestStep",
+                  "type": "Entities.StudyStep",
+                  "id": "step01",
+                  "version": null,
+                  "possibleInterventions": [],
+                  "resultType": null,
+                  "maxGrade": 0,
+                  "title": null,
+                  "materials": {
+                    "type": "Bank.HypertextMaterial",
+                    "id": null,
+                    "version": null,
+                    "content": "<div>Приветствуем Вас на курсе ПДД 2018. Надеемся, вы узнаете много нового.</div>"
+                  }
+                },
+                {
+                  "type": "Entities.StudyStep",
+                  "id": "step02",
+                  "version": null,
+                  "possibleInterventions": [],
+                  "resultType": null,
+                  "maxGrade": 0,
+                  "title": null,
+                  "materials": {
+                    "type": "Bank.HyperlinkMaterial",
+                    "id": null,
+                    "version": null,
+                    "link": "https://pdde.ru/pdd/"
+                  }
+                },
+                {
+                  "type": "Entities.TestStep",
                   "id": "step1",
+                  "version": null,
+                  "possibleInterventions": [
+                    {
+                      "type": "Entities.Hint",
+                      "id": null,
+                      "version": null,
+                      "message": "Действие знака 4.1.1 «Движение прямо», установленного перед перекрёстком, распространяется только на первое пересечение проезжих частей за знаком."
+                    }
+                  ],
+                  "resultType": "function Number() { [native code] }",
+                  "maxGrade": 1,
+                  "title": null,
+                  "problem": {
+                    "type": "Bank.Assignment",
+                    "id": null,
+                    "version": null,
+                    "content": "<div style=\"left:50px;top:75px\">Вам можно продолжить движение на перекрёстке:\n  <img src=\"https://pdde.ru/static/data/images/questions/13.jpg\" width=\"250\"></img>\n  </div>"
+                  },
+                  "answers": [
+                    {
+                      "type": "Bank.Key",
+                      "id": null,
+                      "version": null,
+                      "value": "В направлениях Б и В"
+                    },
+                    {
+                      "type": "Bank.Key",
+                      "id": null,
+                      "version": null,
+                      "value": "Только в направлении Б"
+                    },
+                    {
+                      "type": "Bank.Key",
+                      "id": null,
+                      "version": null,
+                      "value": "В направлениях А и Б"
+                    }
+                  ],
+                  "correctAnswer": 2
+                },
+                {
+                  "type": "Entities.OpenTestStep",
+                  "id": "step12",
                   "version": null,
                   "possibleInterventions": [
                     {
                       "type": "Entities.Distinction",
                       "id": null,
                       "version": null,
-                      "message": "Лампа зелёного цвета располагается сверху, лампа жёлтого цвета располагается снизу",
-                      "entity1": "зелёный",
-                      "entity2": "жёлтый",
+                      "message": "Лампа красного цвета располагается сверху, лампа зелёного цвета располагается снизу",
+                      "entity1": "красный",
+                      "entity2": "зелёный",
                       "distinctor": null
                     },
                     {
@@ -1074,63 +2284,20 @@
                     }
                   ],
                   "resultType": "function String() { [native code] }",
-                  "maxGrade": 0,
+                  "maxGrade": 1,
                   "title": null,
                   "problem": {
                     "type": "Bank.Assignment",
                     "id": null,
                     "version": null,
-                    "content": "<div style=\"left:200px;top:200px\">Какой цвет светофора изображен на рисунке?\n  <img src=\"http://clipart-library.com/img/1287030.jpg\" width=\"250\"></img>\n  </div>"
+                    "content": "Какой цвет светофора требует остановки?"
                   },
                   "correctAnswer": {
                     "type": "Bank.Key",
                     "id": null,
                     "version": null,
-                    "value": "зелёный"
+                    "value": "красный"
                   }
-                },
-                {
-                  "type": "Entities.TestStep",
-                  "id": "step12",
-                  "version": null,
-                  "possibleInterventions": [
-                    {
-                      "type": "Entities.Hint",
-                      "id": null,
-                      "version": null,
-                      "message": "Колёса, вывернутые в сторону кювета («А» и «Г») уведут неуправляемый автомобиль в кювет."
-                    }
-                  ],
-                  "resultType": "function Number() { [native code] }",
-                  "maxGrade": 2,
-                  "title": null,
-                  "problem": {
-                    "type": "Bank.Assignment",
-                    "id": null,
-                    "version": null,
-                    "content": "<div style=\"left:200px;top:200px\">В случае остановки на подъеме (спуске) при наличии обочины можно предотвратить самопроизвольное скатывание автомобиля на проезжую часть, повернув его передние колеса в положение:\n  <img src=\"http://pdd.bit-world.ru/assets/ab/pdd/0619.jpg\" width=\"350\"></img>\n  </div>"
-                  },
-                  "answers": [
-                    {
-                      "type": "Bank.Key",
-                      "id": null,
-                      "version": null,
-                      "value": "Б и В"
-                    },
-                    {
-                      "type": "Bank.Key",
-                      "id": null,
-                      "version": null,
-                      "value": "А и Г"
-                    },
-                    {
-                      "type": "Bank.Key",
-                      "id": null,
-                      "version": null,
-                      "value": "А и В"
-                    }
-                  ],
-                  "correctAnswer": 1
                 },
                 {
                   "type": "Entities.StudyStep",
@@ -1151,61 +2318,50 @@
                         "title": null,
                         "exercises": [
                           {
-                            "type": "Entities.TestStep",
+                            "type": "Entities.OpenTestStep",
                             "id": "exercise1",
                             "version": null,
                             "possibleInterventions": [],
-                            "resultType": "function Number() { [native code] }",
-                            "maxGrade": 5,
-                            "title": null,
-                            "problem": {
-                              "type": "Bank.Assignment",
-                              "id": null,
-                              "version": null,
-                              "content": "Что следует предпринять водителю для предотвращения опасных последствий заноса автомобиля при резком повороте рулевого колеса на скользкой дороге?"
-                            },
-                            "answers": [
-                              {
-                                "type": "Bank.Key",
-                                "id": null,
-                                "version": null,
-                                "value": "Быстро, но плавно повернуть рулевое колесо в сторону заноса, затем опережающим воздействием на рулевое колесо выровнять траекторию движения."
-                              },
-                              {
-                                "type": "Bank.Key",
-                                "id": null,
-                                "version": null,
-                                "value": "Выключить сцепление и повернуть рулевое колесо в сторону заноса."
-                              },
-                              {
-                                "type": "Bank.Key",
-                                "id": null,
-                                "version": null,
-                                "value": "Нажать на педаль тормоза и воздействием на рулевое колесо выровнять траекторию движения."
-                              }
-                            ],
-                            "correctAnswer": 0
-                          },
-                          {
-                            "type": "Entities.OpenTestStep",
-                            "id": "exercise2",
-                            "version": null,
-                            "possibleInterventions": [],
                             "resultType": "function String() { [native code] }",
-                            "maxGrade": 15,
+                            "maxGrade": 2,
                             "title": null,
                             "problem": {
                               "type": "Bank.Assignment",
                               "id": null,
                               "version": null,
-                              "content": "Какие сведения необходимо сообщить диспетчеру для вызова «Скорой медицинской помощи» при ДТП?"
+                              "content": "Единица деления всех транспортных средств по грузоподъемности, мощности двигателя, количеству колес и пассажирских мест - это?"
                             },
                             "correctAnswer": {
                               "type": "Bank.Key",
                               "id": null,
                               "version": null,
-                              "value": "Точное место ДТП"
+                              "value": "категория"
                             }
+                          },
+                          {
+                            "type": "Entities.GeneratedTestStep",
+                            "id": "exercise2",
+                            "version": null,
+                            "possibleInterventions": [],
+                            "resultType": null,
+                            "maxGrade": 1,
+                            "title": null,
+                            "objects": [
+                              "Категория А",
+                              "Категория А1",
+                              "Категория В",
+                              "Категория В1",
+                              "Категория ВЕ"
+                            ],
+                            "batchSize": 10,
+                            "question_type": 0,
+                            "question_form": 1,
+                            "features": [
+                              "Тип ТС",
+                              "Максимальная масса ТС",
+                              "Минимальный возраст"
+                            ],
+                            "minGrade": 0.9
                           }
                         ]
                       }
@@ -1218,7 +2374,7 @@
                     "type": "Bank.HypertextMaterial",
                     "id": null,
                     "version": null,
-                    "content": "<div style=\"left:200px;top:200px\">Светофо́р (от свет + греч. φορός «несущий») — оптическое устройство, подающее световые сигналы, регулирующие движение автомобильного, железнодорожного, водного и другого транспорта, а также пешеходов на пешеходных переходах\n    <img src=\"https://ds03.infourok.ru/uploads/ex/07e6/0005ad35-95e22fd3/1/img1.jpg\" width=\"450\"></img></div>"
+                    "content": "<div style=\"left:50px;top:75px\">Светофо́р (от свет + греч. φορός «несущий») — оптическое устройство, подающее световые сигналы, регулирующие движение автомобильного, железнодорожного, водного и другого транспорта, а также пешеходов на пешеходных переходах\n    <img src=\"https://ds03.infourok.ru/uploads/ex/07e6/0005ad35-95e22fd3/1/img1.jpg\" width=\"450\"></img></div>"
                   }
                 },
                 {
@@ -1231,69 +2387,65 @@
                   "title": null,
                   "exercises": [
                     {
-                      "type": "Entities.TestStep",
+                      "type": "Entities.OpenTestStep",
                       "id": "exercise1",
                       "version": null,
                       "possibleInterventions": [],
-                      "resultType": "function Number() { [native code] }",
-                      "maxGrade": 5,
-                      "title": null,
-                      "problem": {
-                        "type": "Bank.Assignment",
-                        "id": null,
-                        "version": null,
-                        "content": "Что следует предпринять водителю для предотвращения опасных последствий заноса автомобиля при резком повороте рулевого колеса на скользкой дороге?"
-                      },
-                      "answers": [
-                        {
-                          "type": "Bank.Key",
-                          "id": null,
-                          "version": null,
-                          "value": "Быстро, но плавно повернуть рулевое колесо в сторону заноса, затем опережающим воздействием на рулевое колесо выровнять траекторию движения."
-                        },
-                        {
-                          "type": "Bank.Key",
-                          "id": null,
-                          "version": null,
-                          "value": "Выключить сцепление и повернуть рулевое колесо в сторону заноса."
-                        },
-                        {
-                          "type": "Bank.Key",
-                          "id": null,
-                          "version": null,
-                          "value": "Нажать на педаль тормоза и воздействием на рулевое колесо выровнять траекторию движения."
-                        }
-                      ],
-                      "correctAnswer": 0
-                    },
-                    {
-                      "type": "Entities.OpenTestStep",
-                      "id": "exercise2",
-                      "version": null,
-                      "possibleInterventions": [],
                       "resultType": "function String() { [native code] }",
-                      "maxGrade": 15,
+                      "maxGrade": 2,
                       "title": null,
                       "problem": {
                         "type": "Bank.Assignment",
                         "id": null,
                         "version": null,
-                        "content": "Какие сведения необходимо сообщить диспетчеру для вызова «Скорой медицинской помощи» при ДТП?"
+                        "content": "Единица деления всех транспортных средств по грузоподъемности, мощности двигателя, количеству колес и пассажирских мест - это?"
                       },
                       "correctAnswer": {
                         "type": "Bank.Key",
                         "id": null,
                         "version": null,
-                        "value": "Точное место ДТП"
+                        "value": "категория"
                       }
+                    },
+                    {
+                      "type": "Entities.GeneratedTestStep",
+                      "id": "exercise2",
+                      "version": null,
+                      "possibleInterventions": [],
+                      "resultType": null,
+                      "maxGrade": 1,
+                      "title": null,
+                      "objects": [
+                        "Категория А",
+                        "Категория А1",
+                        "Категория В",
+                        "Категория В1",
+                        "Категория ВЕ"
+                      ],
+                      "batchSize": 10,
+                      "question_type": 0,
+                      "question_form": 1,
+                      "features": [
+                        "Тип ТС",
+                        "Максимальная масса ТС",
+                        "Минимальный возраст"
+                      ],
+                      "minGrade": 0.9
                     }
                   ]
                 }
               ],
-              "maxGrade": 0,
-              "possibleInterventions": null,
-              "title": "Базовые правила",
-              "description": "В этом модуле вы изучите самые главные правила дорожного движения"
+              "maxGrade": 5,
+              "minGrade": 3,
+              "possibleInterventions": [
+                {
+                  "type": "Entities.RepeatIntervention",
+                  "id": null,
+                  "version": null
+                }
+              ],
+              "title": "Основы ПДД",
+              "description": "В этом модуле вы пройдете первые шаги в изучении ПДД"
             }
           },
           {
@@ -1305,78 +2457,442 @@
               "version": null,
               "steps": [
                 {
-                  "type": "Entities.ControlStep",
+                  "type": "Entities.TestStep",
                   "id": "step21",
+                  "version": null,
+                  "possibleInterventions": [],
+                  "resultType": "function Number() { [native code] }",
+                  "maxGrade": 1,
+                  "title": null,
+                  "problem": {
+                    "type": "Bank.Assignment",
+                    "id": null,
+                    "version": null,
+                    "content": "Вспомним пройденное. Сколько цветов у светофора?"
+                  },
+                  "answers": [
+                    {
+                      "type": "Bank.Key",
+                      "id": null,
+                      "version": null,
+                      "value": "1"
+                    },
+                    {
+                      "type": "Bank.Key",
+                      "id": null,
+                      "version": null,
+                      "value": "2"
+                    },
+                    {
+                      "type": "Bank.Key",
+                      "id": null,
+                      "version": null,
+                      "value": "3"
+                    },
+                    {
+                      "type": "Bank.Key",
+                      "id": null,
+                      "version": null,
+                      "value": "4"
+                    }
+                  ],
+                  "correctAnswer": 2
+                },
+                {
+                  "type": "Entities.StudyStep",
+                  "id": "step22",
                   "version": null,
                   "possibleInterventions": [],
                   "resultType": null,
                   "maxGrade": 0,
                   "title": null,
-                  "exercises": [
+                  "materials": {
+                    "type": "Bank.HyperlinkMaterial",
+                    "id": null,
+                    "version": null,
+                    "link": "onenotelink"
+                  }
+                },
+                {
+                  "type": "Entities.OpenTestStep",
+                  "id": "step23",
+                  "version": null,
+                  "possibleInterventions": [],
+                  "resultType": "function String() { [native code] }",
+                  "maxGrade": 1,
+                  "title": null,
+                  "problem": {
+                    "type": "Bank.Assignment",
+                    "id": null,
+                    "version": null,
+                    "content": "<div style=\"left:50px;top:75px\">Какой тип светофора изображен на рисунке?\n<img src=\"http://clipart-library.com/img/1287030.jpg\" width=\"250\"></img>\n</div>"
+                  },
+                  "correctAnswer": {
+                    "type": "Bank.Key",
+                    "id": null,
+                    "version": null,
+                    "value": "транспортный"
+                  }
+                },
+                {
+                  "type": "Entities.TestStep",
+                  "id": "step24",
+                  "version": null,
+                  "possibleInterventions": [],
+                  "resultType": "function Number() { [native code] }",
+                  "maxGrade": 2,
+                  "title": null,
+                  "problem": {
+                    "type": "Bank.Assignment",
+                    "id": null,
+                    "version": null,
+                    "content": "В местах, где движение регулируется, пешеходы должны руководствоваться в первую очередь сигналами "
+                  },
+                  "answers": [
                     {
-                      "type": "Entities.TestStep",
-                      "id": "exercise1",
+                      "type": "Bank.Key",
+                      "id": null,
                       "version": null,
-                      "possibleInterventions": [],
-                      "resultType": "function Number() { [native code] }",
-                      "maxGrade": 5,
-                      "title": null,
-                      "problem": {
-                        "type": "Bank.Assignment",
-                        "id": null,
-                        "version": null,
-                        "content": "Что следует предпринять водителю для предотвращения опасных последствий заноса автомобиля при резком повороте рулевого колеса на скользкой дороге?"
-                      },
-                      "answers": [
-                        {
-                          "type": "Bank.Key",
-                          "id": null,
-                          "version": null,
-                          "value": "Быстро, но плавно повернуть рулевое колесо в сторону заноса, затем опережающим воздействием на рулевое колесо выровнять траекторию движения."
-                        },
-                        {
-                          "type": "Bank.Key",
-                          "id": null,
-                          "version": null,
-                          "value": "Выключить сцепление и повернуть рулевое колесо в сторону заноса."
-                        },
-                        {
-                          "type": "Bank.Key",
-                          "id": null,
-                          "version": null,
-                          "value": "Нажать на педаль тормоза и воздействием на рулевое колесо выровнять траекторию движения."
-                        }
-                      ],
-                      "correctAnswer": 0
+                      "value": "регулировщика"
                     },
                     {
+                      "type": "Bank.Key",
+                      "id": null,
+                      "version": null,
+                      "value": "транспортного светофора"
+                    },
+                    {
+                      "type": "Bank.Key",
+                      "id": null,
+                      "version": null,
+                      "value": "пешеходного светофора"
+                    }
+                  ],
+                  "correctAnswer": 0
+                },
+                {
+                  "type": "Entities.ControlStep",
+                  "id": "step25",
+                  "version": null,
+                  "possibleInterventions": [],
+                  "resultType": null,
+                  "maxGrade": 6,
+                  "title": null,
+                  "exercises": [
+                    {
                       "type": "Entities.OpenTestStep",
-                      "id": "exercise2",
+                      "id": "exercise21",
                       "version": null,
                       "possibleInterventions": [],
                       "resultType": "function String() { [native code] }",
-                      "maxGrade": 15,
+                      "maxGrade": 1,
                       "title": null,
                       "problem": {
                         "type": "Bank.Assignment",
                         "id": null,
                         "version": null,
-                        "content": "Какие сведения необходимо сообщить диспетчеру для вызова «Скорой медицинской помощи» при ДТП?"
+                        "content": "<div style=\"left:50px;top:75px\">Светофор какого типа изображен на рисунке?\n  <img width=\"250\" src=\"https://arhivurokov.ru/multiurok/1/7/d/17dc7de6d066e259ca97319fa0183bc996409fa6/bukliet-pravila-dorozhnogho-dvizhieniia-v-zimnii-p_14.jpeg\"></img>\n  </div>"
                       },
                       "correctAnswer": {
                         "type": "Bank.Key",
                         "id": null,
                         "version": null,
-                        "value": "Точное место ДТП"
+                        "value": "Т.5"
                       }
+                    },
+                    {
+                      "type": "Entities.PascaStep",
+                      "id": "exercise22",
+                      "version": null,
+                      "possibleInterventions": [],
+                      "resultType": "class PascaStepResult {\r\n    constructor() {\r\n        this.ArtifactUri = null;\r\n        this.FinalGrade = 0;\r\n        this.Grades = null;\r\n        this.Reviewers = null;\r\n    }\r\n}",
+                      "maxGrade": 5,
+                      "title": null,
+                      "pascaFalsSettings": {
+                        "authorsCountToBeginAssessment": 2,
+                        "delayDates": true
+                      },
+                      "pascaOnenoteSettings": {},
+                      "pascaSessionSettings": {},
+                      "m_PascaFalsSettings": null
                     }
                   ]
                 }
               ],
-              "maxGrade": 0,
-              "possibleInterventions": null,
-              "title": "Зимняя езда",
-              "description": "Какой русски не любит быстрой зимней езды?"
+              "maxGrade": 10,
+              "minGrade": 5,
+              "possibleInterventions": [
+                {
+                  "type": "Entities.GotoModuleIntervention",
+                  "id": null,
+                  "version": null,
+                  "module": {
+                    "type": "Entities.Module",
+                    "id": "module1",
+                    "version": null,
+                    "steps": [
+                      {
+                        "type": "Entities.StudyStep",
+                        "id": "step01",
+                        "version": null,
+                        "possibleInterventions": [],
+                        "resultType": null,
+                        "maxGrade": 0,
+                        "title": null,
+                        "materials": {
+                          "type": "Bank.HypertextMaterial",
+                          "id": null,
+                          "version": null,
+                          "content": "<div>Приветствуем Вас на курсе ПДД 2018. Надеемся, вы узнаете много нового.</div>"
+                        }
+                      },
+                      {
+                        "type": "Entities.StudyStep",
+                        "id": "step02",
+                        "version": null,
+                        "possibleInterventions": [],
+                        "resultType": null,
+                        "maxGrade": 0,
+                        "title": null,
+                        "materials": {
+                          "type": "Bank.HyperlinkMaterial",
+                          "id": null,
+                          "version": null,
+                          "link": "https://pdde.ru/pdd/"
+                        }
+                      },
+                      {
+                        "type": "Entities.TestStep",
+                        "id": "step1",
+                        "version": null,
+                        "possibleInterventions": [
+                          {
+                            "type": "Entities.Hint",
+                            "id": null,
+                            "version": null,
+                            "message": "Действие знака 4.1.1 «Движение прямо», установленного перед перекрёстком, распространяется только на первое пересечение проезжих частей за знаком."
+                          }
+                        ],
+                        "resultType": "function Number() { [native code] }",
+                        "maxGrade": 1,
+                        "title": null,
+                        "problem": {
+                          "type": "Bank.Assignment",
+                          "id": null,
+                          "version": null,
+                          "content": "<div style=\"left:50px;top:75px\">Вам можно продолжить движение на перекрёстке:\n  <img src=\"https://pdde.ru/static/data/images/questions/13.jpg\" width=\"250\"></img>\n  </div>"
+                        },
+                        "answers": [
+                          {
+                            "type": "Bank.Key",
+                            "id": null,
+                            "version": null,
+                            "value": "В направлениях Б и В"
+                          },
+                          {
+                            "type": "Bank.Key",
+                            "id": null,
+                            "version": null,
+                            "value": "Только в направлении Б"
+                          },
+                          {
+                            "type": "Bank.Key",
+                            "id": null,
+                            "version": null,
+                            "value": "В направлениях А и Б"
+                          }
+                        ],
+                        "correctAnswer": 2
+                      },
+                      {
+                        "type": "Entities.OpenTestStep",
+                        "id": "step12",
+                        "version": null,
+                        "possibleInterventions": [
+                          {
+                            "type": "Entities.Distinction",
+                            "id": null,
+                            "version": null,
+                            "message": "Лампа красного цвета располагается сверху, лампа зелёного цвета располагается снизу",
+                            "entity1": "красный",
+                            "entity2": "зелёный",
+                            "distinctor": null
+                          },
+                          {
+                            "type": "Entities.Hint",
+                            "id": null,
+                            "version": null,
+                            "message": "Цвет светофора может быть одним из трёх: красный, жёлтый или зелёный"
+                          }
+                        ],
+                        "resultType": "function String() { [native code] }",
+                        "maxGrade": 1,
+                        "title": null,
+                        "problem": {
+                          "type": "Bank.Assignment",
+                          "id": null,
+                          "version": null,
+                          "content": "Какой цвет светофора требует остановки?"
+                        },
+                        "correctAnswer": {
+                          "type": "Bank.Key",
+                          "id": null,
+                          "version": null,
+                          "value": "красный"
+                        }
+                      },
+                      {
+                        "type": "Entities.StudyStep",
+                        "id": "step2",
+                        "version": null,
+                        "possibleInterventions": [
+                          {
+                            "type": "Entities.GotoStepIntervention",
+                            "id": null,
+                            "version": null,
+                            "step": {
+                              "type": "Entities.ControlStep",
+                              "id": "step3",
+                              "version": null,
+                              "possibleInterventions": [],
+                              "resultType": null,
+                              "maxGrade": 0,
+                              "title": null,
+                              "exercises": [
+                                {
+                                  "type": "Entities.OpenTestStep",
+                                  "id": "exercise1",
+                                  "version": null,
+                                  "possibleInterventions": [],
+                                  "resultType": "function String() { [native code] }",
+                                  "maxGrade": 2,
+                                  "title": null,
+                                  "problem": {
+                                    "type": "Bank.Assignment",
+                                    "id": null,
+                                    "version": null,
+                                    "content": "Единица деления всех транспортных средств по грузоподъемности, мощности двигателя, количеству колес и пассажирских мест - это?"
+                                  },
+                                  "correctAnswer": {
+                                    "type": "Bank.Key",
+                                    "id": null,
+                                    "version": null,
+                                    "value": "категория"
+                                  }
+                                },
+                                {
+                                  "type": "Entities.GeneratedTestStep",
+                                  "id": "exercise2",
+                                  "version": null,
+                                  "possibleInterventions": [],
+                                  "resultType": null,
+                                  "maxGrade": 1,
+                                  "title": null,
+                                  "objects": [
+                                    "Категория А",
+                                    "Категория А1",
+                                    "Категория В",
+                                    "Категория В1",
+                                    "Категория ВЕ"
+                                  ],
+                                  "batchSize": 10,
+                                  "question_type": 0,
+                                  "question_form": 1,
+                                  "features": [
+                                    "Тип ТС",
+                                    "Максимальная масса ТС",
+                                    "Минимальный возраст"
+                                  ],
+                                  "minGrade": 0.9
+                                }
+                              ]
+                            }
+                          }
+                        ],
+                        "resultType": null,
+                        "maxGrade": 0,
+                        "title": "Изучение светофора",
+                        "materials": {
+                          "type": "Bank.HypertextMaterial",
+                          "id": null,
+                          "version": null,
+                          "content": "<div style=\"left:50px;top:75px\">Светофо́р (от свет + греч. φορός «несущий») — оптическое устройство, подающее световые сигналы, регулирующие движение автомобильного, железнодорожного, водного и другого транспорта, а также пешеходов на пешеходных переходах\n    <img src=\"https://ds03.infourok.ru/uploads/ex/07e6/0005ad35-95e22fd3/1/img1.jpg\" width=\"450\"></img></div>"
+                        }
+                      },
+                      {
+                        "type": "Entities.ControlStep",
+                        "id": "step3",
+                        "version": null,
+                        "possibleInterventions": [],
+                        "resultType": null,
+                        "maxGrade": 0,
+                        "title": null,
+                        "exercises": [
+                          {
+                            "type": "Entities.OpenTestStep",
+                            "id": "exercise1",
+                            "version": null,
+                            "possibleInterventions": [],
+                            "resultType": "function String() { [native code] }",
+                            "maxGrade": 2,
+                            "title": null,
+                            "problem": {
+                              "type": "Bank.Assignment",
+                              "id": null,
+                              "version": null,
+                              "content": "Единица деления всех транспортных средств по грузоподъемности, мощности двигателя, количеству колес и пассажирских мест - это?"
+                            },
+                            "correctAnswer": {
+                              "type": "Bank.Key",
+                              "id": null,
+                              "version": null,
+                              "value": "категория"
+                            }
+                          },
+                          {
+                            "type": "Entities.GeneratedTestStep",
+                            "id": "exercise2",
+                            "version": null,
+                            "possibleInterventions": [],
+                            "resultType": null,
+                            "maxGrade": 1,
+                            "title": null,
+                            "objects": [
+                              "Категория А",
+                              "Категория А1",
+                              "Категория В",
+                              "Категория В1",
+                              "Категория ВЕ"
+                            ],
+                            "batchSize": 10,
+                            "question_type": 0,
+                            "question_form": 1,
+                            "features": [
+                              "Тип ТС",
+                              "Максимальная масса ТС",
+                              "Минимальный возраст"
+                            ],
+                            "minGrade": 0.9
+                          }
+                        ]
+                      }
+                    ],
+                    "maxGrade": 5,
+                    "minGrade": 3,
+                    "possibleInterventions": [
+                      {
+                        "type": "Entities.RepeatIntervention",
+                        "id": null,
+                        "version": null
+                      }
+                    ],
+                    "title": "Основы ПДД",
+                    "description": "В этом модуле вы пройдете первые шаги в изучении ПДД"
+                  }
+                }
+              ],
+              "title": "Светофоры",
+              "description": "Детальное изучение светофоров"
             }
           }
         ],

@@ -1,7 +1,9 @@
 <div>
     <mat-spinner *ngIf="IsLoading|async"></mat-spinner>
     <div style="margin-bottom:10px" *ngIf="!(IsLoading|async)">
-        <span class="ms-font-l">Материалы доступны в странице рабочей тетради {{OnenoteLinkText|async}}</span>
+        <span class="ms-font-l">Материалы доступны в странице рабочей тетради</span>
+        <br>
+        <span class="ms-font-l">{{OnenoteLinkText|async}}</span>
     </div>
     <button class="btn btn-info" *ngIf="!(IsLoading|async)" (click)="gotoMaterials()" [disabled]="IsLoading|async">
         <span class="ms-Button-label">Перейти</span>

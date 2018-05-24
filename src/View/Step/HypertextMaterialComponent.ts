@@ -7,6 +7,7 @@ import { StepAnswer } from "Service/Fals/Statistics/StepAnswer";
 import { BehaviorSubject } from "rxjs/BehaviorSubject";
 import { StudyStep, HypertextMaterial } from "Service/Fals/index";
 import { SectionStructure } from "Service/Office/SectionStructure";
+import { Subject } from "rxjs/Subject";
 
 @Component({
   selector: "hypertextMaterial",
@@ -14,6 +15,11 @@ import { SectionStructure } from "Service/Office/SectionStructure";
   providers: [SectionStructure],
 })
 export class HypertextMaterialComponent implements OnInit {
+  @Input("IsLoading")
+  set setIsLoading(parentIsLoading: Subject<boolean>) {
+    this.IsLoading.subscribe(q => parentIsLoading.next(q));
+  }
+
   @Input("Material")
   set setMaterial(material: HypertextMaterial) {
     this.Material.next(material);

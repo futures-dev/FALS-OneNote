@@ -12,7 +12,7 @@ import { Request, Response } from "express";
 import * as dotenv from "dotenv";
 import * as mongo from "mongodb";
 
-import { } from "typemoq";
+import {} from "typemoq";
 
 import { Client } from "Backend/Socket/Client";
 
@@ -52,6 +52,7 @@ import { OpenTestStep } from "Service/Fals/Entities/OpenTestStep";
 import { TestStep } from "Service/Fals/Entities/TestStep";
 import { Distinction } from "Service/Fals/Entities/Distinction";
 import { on } from "cluster";
+import { Step, Answer, Key, Assignment } from "Service/Fals";
 
 dotenv.load();
 
@@ -71,7 +72,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors());
 
-app.get("/", function (req, res) {
+app.get("/", function(req, res) {
   res.sendfile(path.resolve(__dirname, "..", "index.html"));
 });
 
@@ -87,7 +88,13 @@ mongo.MongoClient.connect(process.env.DATABASE_URL).then(mongodb => {
   }
   //#endregion
 
-  function getEmail(guid: string, access_token: string, refresh_token: string, onenote_token: string, res: Response) {
+  function getEmail(
+    guid: string,
+    access_token: string,
+    refresh_token: string,
+    onenote_token: string,
+    res: Response
+  ) {
     request.get(
       onAuth.GetUserUrl,
       {
@@ -118,9 +125,7 @@ mongo.MongoClient.connect(process.env.DATABASE_URL).then(mongodb => {
             )
             .then(
               q => {
-                res
-                  .status(200)
-                  .send({ success: true, email: email });
+                res.status(200).send({ success: true, email: email });
               },
               r => console.log("rejected " + r)
             );
@@ -133,7 +138,7 @@ mongo.MongoClient.connect(process.env.DATABASE_URL).then(mongodb => {
 
   const onAuth = new Auth();
 
-  app.post("/checkCode", function (req, res) {
+  app.post("/checkCode", function(req, res) {
     const guid = req.body.guid;
     if (guid) {
       console.log("guid = " + guid);
@@ -158,7 +163,7 @@ mongo.MongoClient.connect(process.env.DATABASE_URL).then(mongodb => {
     }
   });
 
-  const refreshTokenFunction = function (req: Request, res: Response) {
+  const refreshTokenFunction = function(req: Request, res: Response) {
     const guid = req.body.guid;
     if (guid) {
       getTokenAsync(guid).then(
@@ -166,7 +171,9 @@ mongo.MongoClient.connect(process.env.DATABASE_URL).then(mongodb => {
           if (record) {
             request.post(
               onAuth.RefreshTokenUrl,
-              { formData: onAuth.GraphRefreshTokenContent(record.refresh_token) },
+              {
+                formData: onAuth.GraphRefreshTokenContent(record.refresh_token),
+              },
               (error, response, body) => {
                 if (error) {
                   console.log(error);
@@ -178,20 +185,29 @@ mongo.MongoClient.connect(process.env.DATABASE_URL).then(mongodb => {
                   console.log("access_token acquired, querying onenote_token");
                   request.post(
                     onAuth.RefreshTokenUrl,
-                    { formData: onAuth.OneNoteRefreshTokenContent(record.refresh_token) },
+                    {
+                      formData: onAuth.OneNoteRefreshTokenContent(
+                        record.refresh_token
+                      ),
+                    },
                     (e, r, b) => {
                       if (e) {
                         console.log(e);
                         console.log(r);
                         res.sendStatus(500);
-                      }
-                      else {
+                      } else {
                         const onenote_token = JSON.parse(b).access_token;
                         console.log("access_token acquired, querying email");
-                        getEmail(guid, access_token, refresh_token, onenote_token, res);
+                        getEmail(
+                          guid,
+                          access_token,
+                          refresh_token,
+                          onenote_token,
+                          res
+                        );
                       }
                     }
-                  )
+                  );
                 }
               }
             );
@@ -215,7 +231,7 @@ mongo.MongoClient.connect(process.env.DATABASE_URL).then(mongodb => {
 
   app.post("/refreshToken", refreshTokenFunction);
 
-  app.post("/submitCode", function (req, res) {
+  app.post("/submitCode", function(req, res) {
     const code = req.body.code;
     const guid = req.body.guid;
     if (code && guid) {
@@ -242,10 +258,15 @@ mongo.MongoClient.connect(process.env.DATABASE_URL).then(mongodb => {
                   console.log(e);
                   console.log(r);
                   res.sendStatus(500);
-                }
-                else {
+                } else {
                   const onenote_token = JSON.parse(b).access_token;
-                  getEmail(guid, access_token, refresh_token, onenote_token, res);
+                  getEmail(
+                    guid,
+                    access_token,
+                    refresh_token,
+                    onenote_token,
+                    res
+                  );
                 }
               }
             );
@@ -257,7 +278,7 @@ mongo.MongoClient.connect(process.env.DATABASE_URL).then(mongodb => {
     }
   });
 
-  app.post("/logout", function (req, res) {
+  app.post("/logout", function(req, res) {
     console.log("/logout");
     const guid = req.body.guid;
     if (guid) {
@@ -268,278 +289,372 @@ mongo.MongoClient.connect(process.env.DATABASE_URL).then(mongodb => {
     }
   });
 
-  app.put("/put", function (req, res) {
+  app.put("/put", function(req, res) {
     console.log("put/" + req.body.url);
     console.log(JSON.stringify(req.body));
     const guid = req.body.guid;
     const url = req.body.url;
     if (guid && url) {
-      tokens
-        .findOne(onAuth.existsFilter(guid))
-        .then(
-          record => {
-            if (record) {
-              request.put(
-                req.body.url,
-                {
-                  json: req.body.body,
-                  headers: {
-                    Authorization: "Bearer " + record.onenote_token,
-                  },
+      tokens.findOne(onAuth.existsFilter(guid)).then(
+        record => {
+          if (record) {
+            request.put(
+              req.body.url,
+              {
+                json: req.body.body,
+                headers: {
+                  Authorization: "Bearer " + record.onenote_token,
                 },
-                (error, response, body) => {
-                  if (response.statusCode == 401) {
-                    console.log("need refresh");
-                    refreshTokenFunction(
-                      req,
-                      Cast<Response>(
-                        new ResponseStub(() => {
-                          getTokenAsync(guid).then(record => {
-                            request.post(
-                              req.body.url,
-                              {
-                                json: req.body.body,
-                                headers: {
-                                  Authorization:
-                                    "Bearer " + record.onenote_token,
-                                },
+              },
+              (error, response, body) => {
+                if (response.statusCode == 401) {
+                  console.log("need refresh");
+                  refreshTokenFunction(
+                    req,
+                    Cast<Response>(
+                      new ResponseStub(() => {
+                        getTokenAsync(guid).then(record => {
+                          request.post(
+                            req.body.url,
+                            {
+                              json: req.body.body,
+                              headers: {
+                                Authorization: "Bearer " + record.onenote_token,
                               },
-                              (error, response, body) => {
-                                console.log("complete");
-                                res.send(body);
-                              }
-                            );
-                          });
-                        })
-                      )
-                    );
-                  } else {
-                    console.log("complete");
-                    res.send(body);
-                  }
+                            },
+                            (error, response, body) => {
+                              console.log("complete");
+                              res.send(body);
+                            }
+                          );
+                        });
+                      })
+                    )
+                  );
+                } else {
+                  console.log("complete");
+                  res.send(body);
                 }
-              );
-            } else {
-              res.status(404).send({
-                error: "no record found with guid",
-              });
-            }
-          },
-          reason => {
-            tokens.deleteMany({ guid: guid });
+              }
+            );
+          } else {
             res.status(404).send({
-              error: "no record found with guid, access and refresh in db",
+              error: "no record found with guid",
             });
           }
-        );
+        },
+        reason => {
+          tokens.deleteMany({ guid: guid });
+          res.status(404).send({
+            error: "no record found with guid, access and refresh in db",
+          });
+        }
+      );
     } else {
       res.status(404).send("Need guid and url param");
     }
   });
 
-  app.post("/post", function (req, res) {
+  app.post("/post", function(req, res) {
     console.log("post/" + req.body.url);
     console.log(JSON.stringify(req.body));
     const guid = req.body.guid;
     const url = req.body.url;
     if (guid && url) {
-      tokens
-        .findOne(onAuth.existsFilter(guid))
-        .then(
-          record => {
-            if (record) {
-              request.post(
-                req.body.url,
-                {
-                  formData: req.body.body,
-                  headers: {
-                    Authorization: "Bearer " + record.onenote_token,
-                  },
+      tokens.findOne(onAuth.existsFilter(guid)).then(
+        record => {
+          if (record) {
+            request.post(
+              req.body.url,
+              {
+                formData: req.body.body,
+                headers: {
+                  Authorization: "Bearer " + record.onenote_token,
                 },
-                (error, response, body) => {
-                  if (response.statusCode == 401) {
-                    console.log("need refresh");
-                    refreshTokenFunction(
-                      req,
-                      Cast<Response>(
-                        new ResponseStub(() => {
-                          getTokenAsync(guid).then(record => {
-                            request.post(
-                              req.body.url,
-                              {
-                                formData: req.body.body,
-                                headers: {
-                                  Authorization:
-                                    "Bearer " + record.onenote_token,
-                                },
+              },
+              (error, response, body) => {
+                if (response.statusCode == 401) {
+                  console.log("need refresh");
+                  refreshTokenFunction(
+                    req,
+                    Cast<Response>(
+                      new ResponseStub(() => {
+                        getTokenAsync(guid).then(record => {
+                          request.post(
+                            req.body.url,
+                            {
+                              formData: req.body.body,
+                              headers: {
+                                Authorization: "Bearer " + record.onenote_token,
                               },
-                              (error, response, body) => {
-                                console.log("complete");
-                                res.send(body);
-                              }
-                            );
-                          });
-                        })
-                      )
-                    );
-                  } else {
-                    console.log("complete");
-                    res.send(body);
-                  }
+                            },
+                            (error, response, body) => {
+                              console.log("complete");
+                              res.send(body);
+                            }
+                          );
+                        });
+                      })
+                    )
+                  );
+                } else {
+                  console.log("complete");
+                  res.send(body);
                 }
-              );
-            } else {
-              res.status(404).send({
-                error: "no record found with guid",
-              });
-            }
-          },
-          reason => {
-            tokens.deleteMany({ guid: guid });
+              }
+            );
+          } else {
             res.status(404).send({
-              error: "no record found with guid, access and refresh in db",
+              error: "no record found with guid",
             });
           }
-        );
+        },
+        reason => {
+          tokens.deleteMany({ guid: guid });
+          res.status(404).send({
+            error: "no record found with guid, access and refresh in db",
+          });
+        }
+      );
     } else {
       res.status(404).send("Need guid and url param");
     }
   });
 
-  app.patch("/patch", function (req, res) {
+  app.patch("/patch", function(req, res) {
     console.log("patch/" + req.body.url);
     console.log(JSON.stringify(req.body));
     const guid = req.body.guid;
     const url = req.body.url;
     if (guid && url) {
-      tokens
-        .findOne(onAuth.existsFilter(guid))
-        .then(
-          record => {
-            if (record) {
-              console.log(record);
-              request.patch(
-                req.body.url,
-                {
-                  json: req.body.body,
-                  headers: {
-                    Authorization: "Bearer " + record.onenote_token,
-                  },
+      tokens.findOne(onAuth.existsFilter(guid)).then(
+        record => {
+          if (record) {
+            console.log(record);
+            request.patch(
+              req.body.url,
+              {
+                json: req.body.body,
+                headers: {
+                  Authorization: "Bearer " + record.onenote_token,
                 },
-                (error, response, body) => {
-                  if (response.statusCode == 401) {
-                    console.log("need refresh");
-                    refreshTokenFunction(
-                      req,
-                      Cast<Response>(
-                        new ResponseStub(() => {
-                          getTokenAsync(guid).then(record => {
-                            request.patch(
-                              req.body.url,
-                              {
-                                json: req.body.body,
-                                headers: {
-                                  Authorization:
-                                    "Bearer " + record.onenote_token,
-                                },
+              },
+              (error, response, body) => {
+                if (response.statusCode == 401) {
+                  console.log("need refresh");
+                  refreshTokenFunction(
+                    req,
+                    Cast<Response>(
+                      new ResponseStub(() => {
+                        getTokenAsync(guid).then(record => {
+                          request.patch(
+                            req.body.url,
+                            {
+                              json: req.body.body,
+                              headers: {
+                                Authorization: "Bearer " + record.onenote_token,
                               },
-                              (error, response, body) => {
-                                console.log("complete");
-                                res.send(body);
-                              }
-                            );
-                          });
-                        })
-                      )
-                    );
-                  } else {
-                    console.log("complete");
-                    res.send(body);
-                  }
+                            },
+                            (error, response, body) => {
+                              console.log("complete");
+                              res.send(body);
+                            }
+                          );
+                        });
+                      })
+                    )
+                  );
+                } else {
+                  console.log("complete");
+                  res.send(body);
                 }
-              );
-            } else {
-              res.status(404).send({
-                error: "no record found with guid",
-              });
-            }
-          },
-          reason => {
-            tokens.deleteMany({ guid: guid });
+              }
+            );
+          } else {
             res.status(404).send({
-              error: "no record found with guid, access and refresh in db",
+              error: "no record found with guid",
             });
           }
-        );
+        },
+        reason => {
+          tokens.deleteMany({ guid: guid });
+          res.status(404).send({
+            error: "no record found with guid, access and refresh in db",
+          });
+        }
+      );
     } else {
       res.status(404).send("Need guid and url param");
     }
   });
 
-  app.get("/get", function (req, res) {
+  app.get("/get", function(req, res) {
     console.log("get/" + req.url);
     const guid = req.query.guid;
     const url = req.query.url;
     if (guid && url) {
-      tokens
-        .findOne(onAuth.existsFilter(guid))
-        .then(
-          record => {
-            if (record) {
-              request.get(
-                url,
-                {
-                  headers: {
-                    Authorization: "Bearer " + record.onenote_token,
-                  },
+      tokens.findOne(onAuth.existsFilter(guid)).then(
+        record => {
+          if (record) {
+            request.get(
+              url,
+              {
+                headers: {
+                  Authorization: "Bearer " + record.onenote_token,
                 },
-                (error, response, body) => {
-                  if (response.statusCode == 401) {
-                    console.log("need refresh");
-                    refreshTokenFunction(
-                      req,
-                      Cast<Response>(
-                        new ResponseStub(() => {
-                          getTokenAsync(guid).then(record => {
-                            request.get(
-                              req.body.url,
-                              {
-                                headers: {
-                                  Authorization:
-                                    "Bearer " + record.onenote_token,
-                                },
+              },
+              (error, response, body) => {
+                if (response.statusCode == 401) {
+                  console.log("need refresh");
+                  refreshTokenFunction(
+                    req,
+                    Cast<Response>(
+                      new ResponseStub(() => {
+                        getTokenAsync(guid).then(record => {
+                          request.get(
+                            req.body.url,
+                            {
+                              headers: {
+                                Authorization: "Bearer " + record.onenote_token,
                               },
-                              (error, response, body) => {
-                                console.log("complete");
-                                res.send(body);
-                              }
-                            );
-                          });
-                        })
-                      )
-                    );
-                  } else {
-                    console.log("complete");
-                    res.send(body);
-                  }
+                            },
+                            (error, response, body) => {
+                              console.log("complete");
+                              res.send(body);
+                            }
+                          );
+                        });
+                      })
+                    )
+                  );
+                } else {
+                  console.log("complete");
+                  res.send(body);
                 }
-              );
-            } else {
-              res.status(404).send({
-                error: "no record found with guid",
-              });
-            }
-          },
-          reason => {
-            tokens.deleteMany({ guid: guid });
+              }
+            );
+          } else {
             res.status(404).send({
-              error: "no record found with guid, access and refresh in db",
+              error: "no record found with guid",
             });
           }
-        );
+        },
+        reason => {
+          tokens.deleteMany({ guid: guid });
+          res.status(404).send({
+            error: "no record found with guid, access and refresh in db",
+          });
+        }
+      );
     } else {
       res.status(404).send("Need guid and url param");
     }
+  });
+
+  //#endregion
+
+  //#region Generate
+
+  function gen(): Step[] {
+    let ex1 = new TestStep();
+    ex1.id = "ex1";
+    ex1.problem = new Assignment();
+    ex1.problem.content = "Максимальная масса ТС (категория C)";
+    ex1.answers = [new Key(), new Key()];
+    ex1.answers[0].value = "750 кг";
+    ex1.answers[1].value = "3500 кг";
+    ex1.correctAnswer = 1;
+
+    let ex2 = new TestStep();
+    ex2.id = "ex2";
+    ex2.problem = new Assignment();
+    ex2.problem.content = "Тип ТС (категория B1)";
+    ex2.answers = [new Key(), new Key()];
+    ex2.answers[0].value = "Трицикл";
+    ex2.answers[1].value = "Мотоцикл";
+    ex2.correctAnswer = 0;
+
+    let ex3 = new TestStep();
+    ex3.id = "ex3";
+    ex3.problem = new Assignment();
+    ex3.problem.content = "Максимальная масса ТС (категория D1E)";
+    ex3.answers = [new Key(), new Key()];
+    ex3.answers[0].value = "11500 кг";
+    ex3.answers[1].value = "12000 кг";
+    ex3.correctAnswer = 1;
+
+    let ex4 = new TestStep();
+    ex4.id = "ex4";
+    ex4.problem = new Assignment();
+    ex4.problem.content =
+      "Минимальный возраст для получения прав (категория D)";
+    ex4.answers = [new Key(), new Key()];
+    ex4.answers[0].value = "18 лет";
+    ex4.answers[1].value = "21 лет";
+    ex4.correctAnswer = 1;
+
+    let ex5 = new TestStep();
+    ex5.id = "ex5";
+    ex5.problem = new Assignment();
+    ex5.problem.content =
+      "Минимальный возраст для получения прав (категория А1)";
+    ex5.answers = [new Key(), new Key()];
+    ex5.answers[0].value = "14 лет";
+    ex5.answers[1].value = "16 лет";
+    ex5.correctAnswer = 1;
+
+    let ex6 = new TestStep();
+    ex6.id = "ex6";
+    ex6.problem = new Assignment();
+    ex6.problem.content = "Максимальная масса ТС (категория C1)";
+    ex6.answers = [new Key(), new Key()];
+    ex6.answers[0].value = "3500 кг";
+    ex6.answers[1].value = "7500 кг";
+    ex6.correctAnswer = 1;
+
+    let ex7 = new TestStep();
+    ex7.id = "ex7";
+    ex7.problem = new Assignment();
+    ex7.problem.content = "Максимальная масса ТС (B)";
+    ex7.answers = [new Key(), new Key()];
+    ex7.answers[0].value = "750 кг";
+    ex7.answers[1].value = "3500 кг";
+    ex7.correctAnswer = 1;
+
+    let ex8 = new TestStep();
+    ex8.id = "ex8";
+    ex8.problem = new Assignment();
+    ex8.problem.content = "Минимальный возраст для получения прав (B1)";
+    ex8.answers = [new Key(), new Key()];
+    ex8.answers[0].value = "16 лет";
+    ex8.answers[1].value = "18 лет";
+    ex8.correctAnswer = 1;
+
+    let ex9 = new TestStep();
+    ex9.id = "ex9";
+    ex9.problem = new Assignment();
+    ex9.problem.content =
+      "Минимальный возраст для сдачи экзамена (категория А1)";
+    ex9.answers = [new Key(), new Key()];
+    ex9.answers[0].value = "14 лет";
+    ex9.answers[1].value = "16 лет";
+    ex9.correctAnswer = 1;
+
+    let ex10 = new TestStep();
+    ex10.id = "ex10";
+    ex10.problem = new Assignment();
+    ex10.problem.content = "Тип ТС (Категория M)";
+    ex10.answers = [new Key(), new Key()];
+    ex10.answers[0].value = "Мопед";
+    ex10.answers[1].value = "Мотоцикл";
+    ex10.correctAnswer = 0;
+
+    return [ex1, ex2, ex3, ex4, ex5, ex6, ex7, ex8, ex9, ex10];
+  }
+
+  app.get("/generate", function(req, res) {
+    const batch_size = req.query.batch_size;
+    res.status(200).send(gen().slice(0, batch_size));
   });
 
   //#endregion
@@ -682,6 +797,7 @@ mongo.MongoClient.connect(process.env.DATABASE_URL).then(mongodb => {
           SubmitStepResult,
           SubmitStepResultError.eStepDoesNotBelongToModule
         );
+        return;
       }
 
       if (result.type == "Statistics.StepAnswer") {
@@ -737,7 +853,7 @@ mongo.MongoClient.connect(process.env.DATABASE_URL).then(mongodb => {
                     (Cast<Distinction>(q).entity1 ==
                       testStep.answers[parseInt(answer.value)].value ||
                       Cast<Distinction>(q).entity2 ==
-                      testStep.answers[parseInt(answer.value)].value)
+                        testStep.answers[parseInt(answer.value)].value)
                 )
               );
               const hint = step.possibleInterventions.find(
@@ -829,7 +945,7 @@ mongo.MongoClient.connect(process.env.DATABASE_URL).then(mongodb => {
                   StepIntervention,
                   StepIntervention,
                   StepInterventionResult
-                  >
+                >
               ) => {
                 console.log("Intervention approve result: " + result.result);
                 if (result.result == StepInterventionResult.sOk) {

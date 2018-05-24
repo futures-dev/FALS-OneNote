@@ -1,8 +1,15 @@
 <div [ngSwitch]="(Step | async).materials.type">
-    <hypertextMaterial *ngSwitchCase="'Bank.HypertextMaterial'" [Material]="(Step | async).materials">
+    <hypertextMaterial *ngSwitchCase="'Bank.HypertextMaterial'" [Material]="(Step | async).materials" [IsLoading]="IsLoading">
     </hypertextMaterial>
+
+    <hyperlinkMaterial *ngSwitchCase="'Bank.HyperlinkMaterial'" [Material]="(Step | async).materials" [IsLoading]="IsLoading">
+    </hyperlinkMaterial>
 
     <div *ngSwitchDefault>
         No type!! {{(Material | async).type}}
     </div>
 </div>
+
+<button style="margin-top: 20px" class="btn btn-success" *ngIf="!(IsLoading|async)" (click)="continue()" [disabled]="IsLoading|async">
+    <span class="ms-Button-label">Готово</span>
+</button>

@@ -21,7 +21,20 @@ import { Answer } from "Service/Fals/Bank/Answer";
 import { Key } from "Service/Fals/Bank/Key";
 import { TestStep } from "Service/Fals/Entities/TestStep";
 import { CourseState } from "Service/Fals/Entities/CourseState";
-import { Distinction } from "Service/Fals";
+import {
+  Distinction,
+  RepeatIntervention,
+  GotoModuleIntervention,
+  HyperlinkMaterial,
+  GeneratedTestStep,
+  GeneratedExerciseType,
+  GeneratedExerciseForm,
+  PascaStep,
+  PascaSessionSettings,
+  PascaOnenoteSettings,
+  PascaFalsSettings,
+} from "Service/Fals";
+import { ModuleIntervention } from "Service/Fals/Statistics";
 
 let StoragePath = process.argv.slice(2)[0];
 
@@ -42,66 +55,83 @@ function generateModules(storage: Storage): { [i: number]: Tree<Module> } {
   map[1] = module1Node;
   let module1 = new Module();
   module1.id = "module1";
-  module1.title = "Базовые правила";
-  module1.description =
-    "В этом модуле вы изучите самые главные правила дорожного движения";
+  module1.title = "Основы ПДД";
+  module1.description = "В этом модуле вы пройдете первые шаги в изучении ПДД";
+  module1.maxGrade = 5;
+  module1.minGrade = 3;
   module1Node.Value = module1;
   let module2Node = new Tree<Module>();
   map[2] = module2Node;
   let module2 = new Module();
   module2.id = "module2";
-  module2.title = "Зимняя езда";
-  module2.description = "Какой русски не любит быстрой зимней езды?";
+  module2.title = "Светофоры";
+  module2.description = "Детальное изучение светофоров";
+  module2.maxGrade = 10;
+  module2.minGrade = 5;
   module2Node.Value = module2;
 
-  let step1 = new OpenTestStep();
+  module1.possibleInterventions = [new RepeatIntervention()];
+
+  let gotoModuleIntervention = new GotoModuleIntervention();
+  gotoModuleIntervention.module = module1;
+  module2.possibleInterventions = [gotoModuleIntervention];
+
+  let step01 = new StudyStep();
+  step01.id = "step01";
+  let material01 = new HypertextMaterial();
+  material01.content =
+    "<div>Приветствуем Вас на курсе ПДД 2018. Надеемся, вы узнаете много нового.</div>";
+  step01.materials = material01;
+
+  let step02 = new StudyStep();
+  step02.id = "step02";
+  let material02 = new HyperlinkMaterial();
+  material02.link = "https://pdde.ru/pdd/";
+  step02.materials = material02;
+
+  let step1 = new TestStep();
   step1.id = "step1";
-  let step12 = new TestStep();
+  let step12 = new OpenTestStep();
   step12.id = "step12";
   let step2 = new StudyStep();
   step2.title = "Изучение светофора";
   step2.id = "step2";
   let step3 = new ControlStep();
   step3.id = "step3";
-  module1.steps = [step1, step12, step2, step3];
+  module1.steps = [step01, step02, step1, step12, step2, step3];
 
   step1.problem = new Assignment();
-  step1.problem.content = `<div style="left:50px;top:75px">Какой цвет светофора изображен на рисунке?
-  <img src="http://clipart-library.com/img/1287030.jpg" width="250"></img>
+  step1.problem.content = `<div style="left:50px;top:75px">Вам можно продолжить движение на перекрёстке:
+  <img src="https://pdde.ru/static/data/images/questions/13.jpg" width="250"></img>
   </div>`;
-  step1.correctAnswer = new Key();
-  step1.correctAnswer.value = "зелёный";
+  let answer11 = new Key();
+  let answer12 = new Key();
+  let answer13 = new Key();
+  answer11.value = "В направлениях Б и В";
+  answer12.value = "Только в направлении Б";
+  answer13.value = "В направлениях А и Б";
+  step1.answers = [answer11, answer12, answer13];
+  step1.correctAnswer = 2;
+  step1.maxGrade = 1;
   let hintIntervention1 = new Hint();
   hintIntervention1.message =
-    "Цвет светофора может быть одним из трёх: красный, жёлтый или зелёный";
-  let distinctionIntervention1 = new Distinction();
-  distinctionIntervention1.entity1 = "зелёный";
-  distinctionIntervention1.entity2 = "жёлтый";
-  distinctionIntervention1.message =
-    "Лампа зелёного цвета располагается сверху, лампа жёлтого цвета располагается снизу";
-  step1.possibleInterventions = [distinctionIntervention1, hintIntervention1];
+    "Действие знака 4.1.1 «Движение прямо», установленного перед перекрёстком, распространяется только на первое пересечение проезжих частей за знаком.";
+  step1.possibleInterventions = [hintIntervention1];
 
   step12.problem = new Assignment();
-  step12.problem.content = `<div style="left:50px;top:75px">В случае остановки на подъеме (спуске) при наличии обочины можно предотвратить самопроизвольное скатывание автомобиля на проезжую часть, повернув его передние колеса в положение:
-  <img src="http://pdd.bit-world.ru/assets/ab/pdd/0619.jpg" width="350"></img>
-  </div>`;
-  step12.correctAnswer = 1;
-  step12.answers = [
-    Object.assign(new Key(), {
-      value: `Б и В`,
-    }),
-    Object.assign(new Key(), {
-      value: `А и Г`,
-    }),
-    Object.assign(new Key(), {
-      value: `А и В`,
-    }),
-  ];
-  step12.maxGrade = 2;
+  step12.problem.content = `Какой цвет светофора требует остановки?`;
+  step12.correctAnswer = new Key();
+  step12.correctAnswer.value = "красный";
+  let distinctionIntervention1 = new Distinction();
+  distinctionIntervention1.entity1 = "красный";
+  distinctionIntervention1.entity2 = "зелёный";
+  distinctionIntervention1.message =
+    "Лампа красного цвета располагается сверху, лампа зелёного цвета располагается снизу";
+  step12.maxGrade = 1;
   let hintIntervention12 = new Hint();
   hintIntervention12.message =
-    "Колёса, вывернутые в сторону кювета («А» и «Г») уведут неуправляемый автомобиль в кювет.";
-  step12.possibleInterventions = [hintIntervention12];
+    "Цвет светофора может быть одним из трёх: красный, жёлтый или зелёный";
+  step12.possibleInterventions = [distinctionIntervention1, hintIntervention12];
 
   let material1 = new HypertextMaterial();
   material1.content = `<div style="left:50px;top:75px">Светофо́р (от свет + греч. φορός «несущий») — оптическое устройство, подающее световые сигналы, регулирующие движение автомобильного, железнодорожного, водного и другого транспорта, а также пешеходов на пешеходных переходах
@@ -111,58 +141,105 @@ function generateModules(storage: Storage): { [i: number]: Tree<Module> } {
   gotoStepIntervention1.step = step3;
   step2.possibleInterventions = [gotoStepIntervention1];
 
-  let exercise1 = new TestStep();
+  let exercise1 = new OpenTestStep();
   exercise1.id = "exercise1";
-  let exercise2 = new OpenTestStep();
+  let exercise2 = new GeneratedTestStep();
   exercise2.id = "exercise2";
 
   exercise1.problem = new Assignment();
   exercise1.problem.content =
-    "Что следует предпринять водителю для предотвращения опасных последствий заноса автомобиля при резком повороте рулевого колеса на скользкой дороге?";
-  exercise1.answers = [
-    Object.assign(new Key(), {
-      value: `Быстро, но плавно повернуть рулевое колесо в сторону заноса, затем опережающим воздействием на рулевое колесо выровнять траекторию движения.`,
-    }),
-    Object.assign(new Key(), {
-      value: `Выключить сцепление и повернуть рулевое колесо в сторону заноса.`,
-    }),
-    Object.assign(new Key(), {
-      value: `Нажать на педаль тормоза и воздействием на рулевое колесо выровнять траекторию движения.`,
-    }),
-  ];
-  exercise1.correctAnswer = 0;
-  exercise1.maxGrade = 5;
+    "Единица деления всех транспортных средств по грузоподъемности, мощности двигателя, количеству колес и пассажирских мест - это?";
+  exercise1.correctAnswer = new Key();
+  exercise1.correctAnswer.value = "категория";
+  exercise1.maxGrade = 2;
 
-  exercise2.problem = new Assignment();
-  exercise2.problem.content = `Какие сведения необходимо сообщить диспетчеру для вызова «Скорой медицинской помощи» при ДТП?`;
-  exercise2.correctAnswer = Object.assign(new Key(), {
-    value: "Точное место ДТП",
-  });
-  exercise2.maxGrade = 15;
+  exercise2.objects = [
+    "Категория А",
+    "Категория А1",
+    "Категория В",
+    "Категория В1",
+    "Категория ВЕ",
+  ];
+  exercise2.features = [
+    "Тип ТС",
+    "Максимальная масса ТС",
+    "Минимальный возраст",
+  ];
+  exercise2.batchSize = 5;
+  exercise2.maxGrade = 1;
+  exercise2.minGrade = 0.9;
+  exercise2.question_type = GeneratedExerciseType.object_feature;
+  exercise2.question_form = GeneratedExerciseForm.binary_choice;
 
   step3.exercises = [exercise1, exercise2];
 
-  let step21 = new ControlStep();
+  let step21 = new TestStep();
   step21.id = "step21";
-  module2.steps = [step21];
-  let exercise21 = new StudyStep();
+  step21.problem = new Assignment();
+  step21.problem.content = "Вспомним пройденное. Сколько цветов у светофора?";
+  step21.answers = [new Key(), new Key(), new Key(), new Key()];
+  step21.answers[0].value = "1";
+  step21.answers[1].value = "2";
+  step21.answers[2].value = "3";
+  step21.answers[3].value = "4";
+  step21.correctAnswer = 2;
+  step21.maxGrade = 1;
+
+  let step22 = new StudyStep();
+  let material22 = new HyperlinkMaterial();
+  step22.materials = material22;
+  step22.id = "step22";
+  material22.link = "onenotelink";
+
+  let step23 = new OpenTestStep();
+  step23.id = "step23";
+  step23.problem = new Assignment();
+  step23.problem.content = `<div style="left:50px;top:75px">Какой тип светофора изображен на рисунке?
+<img src="http://clipart-library.com/img/1287030.jpg" width="250"></img>
+</div>`;
+  step23.correctAnswer = new Key();
+  step23.correctAnswer.value = "транспортный";
+  step23.maxGrade = 1;
+
+  let step24 = new TestStep();
+  step24.id = "step24";
+  step24.problem = new Assignment();
+  step24.problem.content =
+    "В местах, где движение регулируется, пешеходы должны руководствоваться в первую очередь сигналами ";
+  step24.answers = [new Key(), new Key(), new Key()];
+  step24.answers[0].value = "регулировщика";
+  step24.answers[1].value = "транспортного светофора";
+  step24.answers[2].value = "пешеходного светофора";
+  step24.correctAnswer = 0;
+  step24.maxGrade = 2;
+
+  let step25 = new ControlStep();
+  step25.id = "step25";
+  step25.maxGrade = 6;
+
+  let exercise21 = new OpenTestStep();
   exercise21.id = "exercise21";
-  let exercise22 = new OpenTestStep();
+  exercise21.problem = new Assignment();
+  exercise21.problem.content = `<div style="left:50px;top:75px">Светофор какого типа изображен на рисунке?
+  <img width="250" src="https://arhivurokov.ru/multiurok/1/7/d/17dc7de6d066e259ca97319fa0183bc996409fa6/bukliet-pravila-dorozhnogho-dvizhieniia-v-zimnii-p_14.jpeg"></img>
+  </div>`;
+  exercise21.correctAnswer = new Key();
+  exercise21.correctAnswer.value = "Т.5";
+  exercise21.maxGrade = 1;
+
+  let exercise22 = new PascaStep();
   exercise22.id = "exercise22";
-  step21.exercises = [exercise1, exercise2];
-
-  exercise21.materials = Object.assign(new HypertextMaterial(), {
-    content: "2 * 2 = 4 !!",
-  });
-  exercise21.maxGrade = 0;
-
-  exercise22.problem = Object.assign(new Assignment(), {
-    content: "2 * 2 = ?",
-  });
   exercise22.maxGrade = 5;
-  exercise22.correctAnswer = Object.assign(new Key(), {
-    value: "4",
-  });
+  exercise22.pascaFalsSettings = new PascaFalsSettings();
+  exercise22.pascaFalsSettings.authorsCountToBeginAssessment = 2;
+  exercise22.pascaFalsSettings.delayDates = true;
+  exercise22.pascaSessionSettings = new PascaSessionSettings();
+  // todo
+  exercise22.pascaOnenoteSettings = new PascaOnenoteSettings();
+  // todo
+
+  step25.exercises = [exercise21, exercise22];
+  module2.steps = [step21, step22, step23, step24, step25];
 
   modulesRoot.Children = [module1Node, module2Node];
 

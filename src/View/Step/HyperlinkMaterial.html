@@ -2,8 +2,7 @@
     <mat-spinner *ngIf="IsLoading|async"></mat-spinner>
     <div style="margin-bottom:10px" *ngIf="!(IsLoading|async)">
         <span class="ms-font-l">Материалы доступны по ссылке</span>
+        <br>
+        <a href="{{(Material|async).link}}" class="ms-font-l">{{(Material|async).link}}</a>
     </div>
-    <button class="btn btn-info" *ngIf="!(IsLoading|async)" (click)="gotoMaterials()" [disabled]="IsLoading|async">
-        <span class="ms-Button-label">Перейти</span>
-    </button>
 </div>

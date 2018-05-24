@@ -17,6 +17,7 @@ export class StepComponent implements OnInit {
   @Input("Step")
   set setStep(step: Step) {
     this.Step.next(step);
+    this.updateShowNext();
   }
 
   @Input("HideNext")
@@ -26,7 +27,15 @@ export class StepComponent implements OnInit {
   }
 
   updateShowNext() {
-    this.showNext.next(!this.HideNext && this.StepChanged);
+    var stepChanged =
+      !!this.Step.getValue() &&
+      !!this.CourseService.CurrentCourseState.getValue().currentStep &&
+      !this.Step.getValue().equals(
+        this.CourseService.CurrentCourseState.getValue().currentStep
+      );
+
+    console.log("stepChanged = " + stepChanged);
+    this.showNext.next(!this.HideNext && stepChanged);
   }
 
   public clickNext() {
@@ -47,16 +56,11 @@ export class StepComponent implements OnInit {
       if (e instanceof NavigationEnd) {
         console.log("StepComponent.NavigationEnd()");
         this.init();
+        this.updateShowNext();
       }
     });
 
     this.CourseService.CurrentCourseState.subscribe(newState => {
-      const newStep = newState.currentStep;
-      if (!this.Step.getValue() || newStep.equals(this.Step.getValue())) {
-        this.StepChanged = false;
-      } else {
-        this.StepChanged = true;
-      }
       this.updateShowNext();
     });
   }

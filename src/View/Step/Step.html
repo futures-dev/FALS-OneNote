@@ -15,6 +15,9 @@
     <controlStep *ngSwitchCase="'Entities.ControlStep'" [Step]="Step | async">
     </controlStep>
 
+    <generatedTestStep *ngSwitchCase="'Entities.GeneratedTestStep'" [Step]="Step | async">
+    </generatedTestStep>
+
     <div *ngSwitchDefault>
         No type!! {{(Step | async).type}}
     </div>

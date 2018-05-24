@@ -6,8 +6,8 @@ import { Step } from "Service/Fals/Entities/Step";
 import { GeneratedTestProvider } from "Service/Providers/GeneratedTestProvider";
 
 @Component({
-  selector: "GeneratedTestStep",
-  templateUrl: "View/Step/GeneratedTestStepComponent.html",
+  selector: "generatedTestStep",
+  templateUrl: "View/Step/GeneratedTestStep.html",
 })
 export class GeneratedTestStepComponent implements OnInit {
   @Input("Step")

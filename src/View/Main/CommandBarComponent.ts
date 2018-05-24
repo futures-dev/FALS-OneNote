@@ -43,8 +43,9 @@ export class CommandBarComponent implements OnInit, AfterViewInit {
   logout() {
     this.dropdownClick();
 
-    this.onenote.logout();
-    this.onenote.tryLogin();
+    this.onenote.logout().subscribe(() => {
+      this.onenote.tryLogin();
+    });
   }
 
   openCourseList() {
@@ -64,7 +65,7 @@ export class CommandBarComponent implements OnInit, AfterViewInit {
   public enabled = this.onenote.isAuth;
   toggleMenu: boolean;
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   initFabric() {
     var CommandBarElements = document.querySelectorAll(".ms-CommandBar");
