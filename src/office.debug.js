@@ -181,8 +181,8 @@ OSF.getSupportedLocale = function OSF$getSupportedLocale(
   return supportedLocale;
 };
 var ScriptLoading;
-(function(ScriptLoading) {
-  var ScriptInfo = (function() {
+(function (ScriptLoading) {
+  var ScriptInfo = (function () {
     function ScriptInfo(url, isReady, hasStarted, timer, pendingCallback) {
       this.url = url;
       this.isReady = isReady;
@@ -194,7 +194,7 @@ var ScriptLoading;
     }
     return ScriptInfo;
   })();
-  var ScriptTelemetry = (function() {
+  var ScriptTelemetry = (function () {
     function ScriptTelemetry(scriptId, startTime, msResponseTime) {
       this.scriptId = scriptId;
       this.startTime = startTime;
@@ -202,7 +202,7 @@ var ScriptLoading;
     }
     return ScriptTelemetry;
   })();
-  var LoadScriptHelper = (function() {
+  var LoadScriptHelper = (function () {
     function LoadScriptHelper() {
       this.defaultScriptLoadingTimeout = 10000;
       this.loadedScriptByIds = {};
@@ -214,16 +214,16 @@ var ScriptLoading;
         OfficeDebugJS: "office.debug.js",
       };
     }
-    LoadScriptHelper.prototype.isScriptLoading = function(id) {
+    LoadScriptHelper.prototype.isScriptLoading = function (id) {
       return !!(
         this.loadedScriptByIds[id] && this.loadedScriptByIds[id].hasStarted
       );
     };
-    LoadScriptHelper.prototype.getOfficeJsBasePath = function() {
+    LoadScriptHelper.prototype.getOfficeJsBasePath = function () {
       if (this.basePath) {
         return this.basePath;
       } else {
-        var getScriptBase = function(scriptSrc, scriptNameToCheck) {
+        var getScriptBase = function (scriptSrc, scriptNameToCheck) {
           var scriptBase, indexOfJS, scriptSrcLowerCase;
           scriptSrcLowerCase = scriptSrc.toLowerCase();
           indexOfJS = scriptSrcLowerCase.indexOf(scriptNameToCheck);
@@ -265,7 +265,7 @@ var ScriptLoading;
         return this.basePath;
       }
     };
-    LoadScriptHelper.prototype.loadScript = function(
+    LoadScriptHelper.prototype.loadScript = function (
       url,
       scriptId,
       callback,
@@ -280,14 +280,14 @@ var ScriptLoading;
         timeoutInMs
       );
     };
-    LoadScriptHelper.prototype.loadScriptParallel = function(
+    LoadScriptHelper.prototype.loadScriptParallel = function (
       url,
       scriptId,
       timeoutInMs
     ) {
       this.loadScriptInternal(url, scriptId, null, false, timeoutInMs);
     };
-    LoadScriptHelper.prototype.waitForFunction = function(
+    LoadScriptHelper.prototype.waitForFunction = function (
       scriptLoadTest,
       callback,
       numberOfTries,
@@ -295,7 +295,7 @@ var ScriptLoading;
     ) {
       var attemptsRemaining = numberOfTries;
       var timerId;
-      var validateFunction = function() {
+      var validateFunction = function () {
         attemptsRemaining--;
         if (scriptLoadTest()) {
           callback(true);
@@ -310,21 +310,21 @@ var ScriptLoading;
       };
       validateFunction();
     };
-    LoadScriptHelper.prototype.waitForScripts = function(ids, callback) {
+    LoadScriptHelper.prototype.waitForScripts = function (ids, callback) {
       var _this = this;
       if (this.invokeCallbackIfScriptsReady(ids, callback) == false) {
         for (var i = 0; i < ids.length; i++) {
           var id = ids[i];
           var loadedScriptEntry = this.loadedScriptByIds[id];
           if (loadedScriptEntry) {
-            loadedScriptEntry.pendingCallbacks.push(function() {
+            loadedScriptEntry.pendingCallbacks.push(function () {
               _this.invokeCallbackIfScriptsReady(ids, callback);
             });
           }
         }
       }
     };
-    LoadScriptHelper.prototype.logScriptLoading = function(
+    LoadScriptHelper.prototype.logScriptLoading = function (
       scriptId,
       startTime,
       msResponseTime
@@ -350,12 +350,12 @@ var ScriptLoading;
         this.scriptTelemetryBuffer.push(scriptTelemetry);
       }
     };
-    LoadScriptHelper.prototype.setAppCorrelationId = function(
+    LoadScriptHelper.prototype.setAppCorrelationId = function (
       appCorrelationId
     ) {
       this.osfControlAppCorrelationId = appCorrelationId;
     };
-    LoadScriptHelper.prototype.invokeCallbackIfScriptsReady = function(
+    LoadScriptHelper.prototype.invokeCallbackIfScriptsReady = function (
       ids,
       callback
     ) {
@@ -376,7 +376,7 @@ var ScriptLoading;
       callback(!hasError);
       return true;
     };
-    LoadScriptHelper.prototype.getScriptEntryByUrl = function(url) {
+    LoadScriptHelper.prototype.getScriptEntryByUrl = function (url) {
       for (var key in this.loadedScriptByIds) {
         var scriptEntry = this.loadedScriptByIds[key];
         if (
@@ -388,7 +388,7 @@ var ScriptLoading;
       }
       return null;
     };
-    LoadScriptHelper.prototype.loadScriptInternal = function(
+    LoadScriptHelper.prototype.loadScriptInternal = function (
       url,
       scriptId,
       callback,
@@ -434,7 +434,7 @@ var ScriptLoading;
             timeFromPageInit = window.performance.now();
           }
           var startTime = new Date().getTime();
-          var logTelemetry = function(succeeded) {
+          var logTelemetry = function (succeeded) {
             if (scriptId) {
               var totalTime = new Date().getTime() - startTime;
               if (!succeeded) {
@@ -470,7 +470,7 @@ var ScriptLoading;
               }
             }
           };
-          var onLoadError = function() {
+          var onLoadError = function () {
             logTelemetry(false);
             loadedScriptEntry.hasError = true;
             loadedScriptEntry.isReady = true;
@@ -491,7 +491,7 @@ var ScriptLoading;
             }
           };
           if (script.readyState) {
-            script.onreadystatechange = function() {
+            script.onreadystatechange = function () {
               if (
                 script.readyState == "loaded" ||
                 script.readyState == "complete"
@@ -521,7 +521,7 @@ var ScriptLoading;
         }
       }
     };
-    LoadScriptHelper.prototype.flushTelemetryBuffer = function() {
+    LoadScriptHelper.prototype.flushTelemetryBuffer = function () {
       if (OSF.AppTelemetry && OSF.AppTelemetry.onScriptDone) {
         for (var i = 0; i < this.scriptTelemetryBuffer.length; i++) {
           var scriptTelemetry = this.scriptTelemetryBuffer[i];
@@ -578,21 +578,21 @@ OSF.InitializationHelper = function OSF_InitializationHelper(
 };
 OSF.InitializationHelper.prototype.saveAndSetDialogInfo = function OSF_InitializationHelper$saveAndSetDialogInfo(
   hostInfoValue
-) {};
+) { };
 OSF.InitializationHelper.prototype.getAppContext = function OSF_InitializationHelper$getAppContext(
   wnd,
   gotAppContext
-) {};
-OSF.InitializationHelper.prototype.setAgaveHostCommunication = function OSF_InitializationHelper$setAgaveHostCommunication() {};
+) { };
+OSF.InitializationHelper.prototype.setAgaveHostCommunication = function OSF_InitializationHelper$setAgaveHostCommunication() { };
 OSF.InitializationHelper.prototype.prepareRightBeforeWebExtensionInitialize = function OSF_InitializationHelper$prepareRightBeforeWebExtensionInitialize(
   appContext
-) {};
+) { };
 OSF.InitializationHelper.prototype.loadAppSpecificScriptAndCreateOM = function OSF_InitializationHelper$loadAppSpecificScriptAndCreateOM(
   appContext,
   appReady,
   basePath
-) {};
-OSF.InitializationHelper.prototype.prepareRightAfterWebExtensionInitialize = function OSF_InitializationHelper$prepareRightAfterWebExtensionInitialize() {};
+) { };
+OSF.InitializationHelper.prototype.prepareRightAfterWebExtensionInitialize = function OSF_InitializationHelper$prepareRightAfterWebExtensionInitialize() { };
 OSF._OfficeAppFactory = (function OSF__OfficeAppFactory() {
   var _setNamespace = function OSF_OUtil$_setNamespace(name, parent) {
     if (parent && name && !parent[name]) {
@@ -683,13 +683,13 @@ OSF._OfficeAppFactory = (function OSF__OfficeAppFactory() {
       try {
         var windowNameObj = JSON.parse(_windowName);
         hostInfoValue = windowNameObj ? windowNameObj["hostInfo"] : null;
-      } catch (Exception) {}
+      } catch (Exception) { }
     }
     if (!hostInfoValue) {
       try {
         window.external = window.external || {};
         if (typeof agaveHost !== "undefined" && agaveHost.GetHostInfo) {
-          window.external.GetHostInfo = function() {
+          window.external.GetHostInfo = function () {
             return agaveHost.GetHostInfo();
           };
         }
@@ -711,7 +711,7 @@ OSF._OfficeAppFactory = (function OSF__OfficeAppFactory() {
             hostInfoValue = fallbackHostInfo;
           }
         }
-      } catch (Exception) {}
+      } catch (Exception) { }
     }
     var getSessionStorage = function OSF__OfficeAppFactory$_retrieveHostInfo$getSessionStorage() {
       var osfSessionStorage = null;
@@ -719,7 +719,7 @@ OSF._OfficeAppFactory = (function OSF__OfficeAppFactory() {
         if (window.sessionStorage) {
           osfSessionStorage = window.sessionStorage;
         }
-      } catch (ex) {}
+      } catch (ex) { }
       return osfSessionStorage;
     };
     var osfSessionStorage = getSessionStorage();
@@ -759,12 +759,12 @@ OSF._OfficeAppFactory = (function OSF__OfficeAppFactory() {
       if (
         OSF.HostSpecificFileVersionMap[_hostInfo.hostType] &&
         OSF.HostSpecificFileVersionMap[_hostInfo.hostType][
-          _hostInfo.hostPlatform
+        _hostInfo.hostPlatform
         ]
       ) {
         fallbackVersion =
           OSF.HostSpecificFileVersionMap[_hostInfo.hostType][
-            _hostInfo.hostPlatform
+          _hostInfo.hostPlatform
           ];
       }
       if (hostSpecificFileVersionValue > parseFloat(fallbackVersion)) {
@@ -773,7 +773,7 @@ OSF._OfficeAppFactory = (function OSF__OfficeAppFactory() {
       if (osfSessionStorage) {
         try {
           osfSessionStorage.setItem("hostInfoValue", hostInfoValue);
-        } catch (e) {}
+        } catch (e) { }
       }
     } else {
       _hostInfo.isO15 = true;
@@ -805,10 +805,10 @@ OSF._OfficeAppFactory = (function OSF__OfficeAppFactory() {
     var requiresMsAjax = false;
     if (!basePath)
       throw "Office Web Extension script library file name should be " +
-        OSF.ConstantNames.OfficeJS +
-        " or " +
-        OSF.ConstantNames.OfficeDebugJS +
-        ".";
+      OSF.ConstantNames.OfficeJS +
+      " or " +
+      OSF.ConstantNames.OfficeDebugJS +
+      ".";
     var isMicrosftAjaxLoaded = function OSF$isMicrosftAjaxLoaded() {
       if (
         (typeof Sys !== "undefined" &&
@@ -853,10 +853,10 @@ OSF._OfficeAppFactory = (function OSF__OfficeAppFactory() {
             return false;
           } else {
             throw "Neither the locale, " +
-              appLocale.toLowerCase() +
-              ", provided by the host app nor the fallback locale " +
-              OSF.ConstantNames.DefaultLocale +
-              " are supported.";
+            appLocale.toLowerCase() +
+            ", provided by the host app nor the fallback locale " +
+            OSF.ConstantNames.DefaultLocale +
+            " are supported.";
           }
         } else {
           fallbackLocaleTried = false;
@@ -865,10 +865,10 @@ OSF._OfficeAppFactory = (function OSF__OfficeAppFactory() {
       };
       if (!isMicrosftAjaxLoaded()) {
         window.Type = Function;
-        Type.registerNamespace = function(ns) {
+        Type.registerNamespace = function (ns) {
           window[ns] = window[ns] || {};
         };
-        Type.prototype.registerClass = function(cls) {
+        Type.prototype.registerClass = function (cls) {
           cls = {};
         };
       }
@@ -905,7 +905,7 @@ OSF._OfficeAppFactory = (function OSF__OfficeAppFactory() {
           );
         }
         _initializationHelper.setAgaveHostCommunication();
-        getAppContextAsync(_WebAppState.wnd, function(appContext) {
+        getAppContextAsync(_WebAppState.wnd, function (appContext) {
           if (OSF.AppTelemetry && OSF.AppTelemetry.logAppCommonMessage) {
             OSF.AppTelemetry.logAppCommonMessage(
               "getAppContextAsync callback start"
@@ -936,10 +936,10 @@ OSF._OfficeAppFactory = (function OSF__OfficeAppFactory() {
             _initializationHelper.prepareApiSurface &&
               _initializationHelper.prepareApiSurface(appContext);
             _loadScriptHelper.waitForFunction(
-              function() {
+              function () {
                 return Microsoft.Office.WebExtension.initialize != undefined;
               },
-              function(initializedDeclared) {
+              function (initializedDeclared) {
                 if (initializedDeclared) {
                   if (_initializationHelper.prepareApiSurface) {
                     Microsoft.Office.WebExtension.initialize(
@@ -956,8 +956,8 @@ OSF._OfficeAppFactory = (function OSF__OfficeAppFactory() {
                   throw "Office.js has not been fully loaded yet. Please try again later or make sure to add your initialization code on the Office.initialize function.";
                 }
               },
-              400,
-              50
+              50,
+              1000
             );
           };
           if (
@@ -969,7 +969,7 @@ OSF._OfficeAppFactory = (function OSF__OfficeAppFactory() {
           }
           _loadScriptHelper.waitForScripts(
             [OSF.ConstantNames.OfficeStringsId],
-            function() {
+            function () {
               if (officeStrings && !Strings.OfficeOM) {
                 Strings.OfficeOM = officeStrings;
               }
