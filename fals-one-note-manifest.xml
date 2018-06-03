@@ -20,8 +20,8 @@
   <Description DefaultValue="[Notebook Add-in description]"/>
 
   <!-- Icon for your add-in. Used on installation screens and the add-ins dialog. -->
-  <IconUrl DefaultValue="https://fals-on.herokuapp.com/assets/icon-32.png" />
-  <HighResolutionIconUrl DefaultValue="https://fals-on.herokuapp.com/assets/hi-res-icon.png"/>
+  <IconUrl DefaultValue="https://fals-on.herokuapp.com/assets/Logo-32.png" />
+  <HighResolutionIconUrl DefaultValue="https://fals-on.herokuapp.com/assets/Logo-200.png"/>
 
   <!--If you plan to submit this add-in to the Office Store, uncomment the SupportUrl element below-->
   <SupportUrl DefaultValue="https://www.hse.ru/ba/se/students/diplomas"></SupportUrl>
