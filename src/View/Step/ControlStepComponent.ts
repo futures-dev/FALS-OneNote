@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, OnDestroy } from "@angular/core";
 import { CourseService } from "Service/CourseLogic/CourseService";
-import { BehaviorSubject } from "rxjs";
+import { BehaviorSubject } from "rxjs/BehaviorSubject";
 import { ControlStep } from "Service/Fals/Entities/ControlStep";
 import { Step } from "Service/Fals/Entities/Step";
 import { ConnectionService } from "Service/Socket/Connection";
@@ -34,9 +34,9 @@ export class ControlStepComponent implements OnInit, OnDestroy {
   constructor(
     private courseService: CourseService,
     private connectionService: ConnectionService
-  ) {}
+  ) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   public Exercises: BehaviorSubject<Step[]> = new BehaviorSubject([]);
 
