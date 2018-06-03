@@ -1,6 +1,10 @@
 /* Auto-generated file */
 
 import { Period, Type } from "Service/Fals/TypeMap";
+// var dictProto: any = <any>{};
+// dictProto.__proto__.putIfAbsent = function(child, node) {
+//   this[child] = this[child] || node;
+// };
 import { Serialize } from "../Serialization/Serialize";
 import { Entity } from "../Bank/Entity";
 import { Step } from "./Step";
@@ -17,6 +21,8 @@ export class Module extends Entity {
   public steps: Step[];
 
   public maxGrade: number;
+
+  public minGrade: number;
 
   public possibleInterventions: ModuleInterventionModel[];
 
@@ -35,6 +41,7 @@ export class Module extends Entity {
     super();
     this.steps = null;
     this.maxGrade = 0;
+    this.minGrade = 0;
     this.possibleInterventions = null;
     this.title = null;
     this.description = null;

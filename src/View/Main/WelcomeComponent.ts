@@ -32,7 +32,9 @@ export class WelcomeComponent implements AfterContentInit {
     this.state.next(
       this.onenote.isAuth ? LoginState.Ready : LoginState.NeedLogin
     );
-    this.ref.detectChanges();
+    try {
+      this.ref.detectChanges();
+    } catch {}
   }
 
   login() {

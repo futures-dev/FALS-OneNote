@@ -5,8 +5,10 @@ import { CourseService } from "Service/CourseLogic/CourseService";
 import { Course } from "Service/Fals/Entities/Course";
 import { StepAnswer } from "Service/Fals/Statistics/StepAnswer";
 import { BehaviorSubject } from "rxjs/BehaviorSubject";
-import { StudyStep, HypertextMaterial } from "Service/Fals/index";
 import { SectionStructure } from "Service/Office/SectionStructure";
+import { HypertextMaterial } from "Service/Fals/Bank/HypertextMaterial";
+import { Subject } from "rxjs/Subject";
+import { IfNull } from "Service/Common/IfNull";
 
 @Component({
   selector: "hypertextMaterial",
@@ -14,6 +16,11 @@ import { SectionStructure } from "Service/Office/SectionStructure";
   providers: [SectionStructure],
 })
 export class HypertextMaterialComponent implements OnInit {
+  @Input("IsLoading")
+  set setIsLoading(parentIsLoading: Subject<boolean>) {
+    this.IsLoading.subscribe(q => parentIsLoading.next(q));
+  }
+
   @Input("Material")
   set setMaterial(material: HypertextMaterial) {
     this.Material.next(material);
@@ -21,17 +28,19 @@ export class HypertextMaterialComponent implements OnInit {
     this.SectionStructure.getMaterialPage(
       state.course.title,
       state.currentModule.title,
-      state.currentStep.id
+      IfNull(state.currentStep.title, state.currentStep.id)
     ).then(q => {
       this.MaterialPage.next(q);
       this.OnenoteLinkText.next(
         `${state.course.title}->${state.currentModule.title}->${
-        state.currentStep.id
+          state.currentStep.id
         }`
       );
-      this.SectionStructure.open(q).then(
-        () => this.SectionStructure.putContent(this.Material.getValue().content, q)
-          .then(() => this.IsLoading.next(false))
+      this.SectionStructure.open(q).then(() =>
+        this.SectionStructure.putContent(
+          this.Material.getValue().content,
+          q
+        ).then(() => this.IsLoading.next(false))
       );
     });
   }
@@ -52,11 +61,11 @@ export class HypertextMaterialComponent implements OnInit {
   );
   private MaterialPage: BehaviorSubject<OneNote.Page> = new BehaviorSubject<
     OneNote.Page
-    >(null);
+  >(null);
 
   public Material: BehaviorSubject<HypertextMaterial> = new BehaviorSubject<
     HypertextMaterial
-    >(null);
+  >(null);
 
   public IsLoading: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
     true
@@ -65,7 +74,7 @@ export class HypertextMaterialComponent implements OnInit {
   constructor(
     private CourseService: CourseService,
     private SectionStructure: SectionStructure
-  ) { }
+  ) {}
 
-  ngOnInit() { }
+  ngOnInit() {}
 }

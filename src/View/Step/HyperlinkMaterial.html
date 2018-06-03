@@ -1,9 +1,13 @@
 <div>
-    <mat-spinner *ngIf="IsLoading|async"></mat-spinner>
     <div style="margin-bottom:10px" *ngIf="!(IsLoading|async)">
-        <span class="ms-font-l">Материалы доступны по ссылке</span>
+        <span class="ms-font-l">
+            {{(Material|async).link.startsWith("onenote:")? "Материалы доступны в ": "Материалы доступны по ссылке "}}</span>
+        <br>
+        <a (click)="gotoMaterials() " style="text-overflow: ellipsis;overflow:hidden;white-space:nowrap;display:block;color:blue;text-decoration-line:
+                underline;cursor: pointer " class="ms-font-l " target="_blank " title="{{(Material|async).link}} ">
+            {{(Material|async).link.startsWith("onenote:")? "Библиотеке содержимого ": (Material|async).link }}
+        </a>
     </div>
-    <button class="btn btn-info" *ngIf="!(IsLoading|async)" (click)="gotoMaterials()" [disabled]="IsLoading|async">
-        <span class="ms-Button-label">Перейти</span>
-    </button>
+
+    <mat-spinner style="margin-top:10px" *ngIf="IsLoading|async "></mat-spinner>
 </div>

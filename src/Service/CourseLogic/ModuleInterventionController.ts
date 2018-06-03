@@ -13,12 +13,14 @@ import { ModuleInterventionResult } from "Service/Fals/Facades/ModuleInterventio
 import { RepeatIntervention } from "Service/Fals/Entities/RepeatIntervention";
 import { GotoModuleIntervention } from "Service/Fals/Entities/GotoModuleIntervention";
 import { Module } from "Service/Fals/Entities/Module";
+import { Router } from "@angular/router";
 
 export class ModuleInterventionController {
   constructor(
     private courseService: CourseService,
     private connection: ConnectionService,
-    private interaction: InteractionRequester
+    private interaction: InteractionRequester,
+    private router: Router
   ) {
     courseService.CurrentCourseState.subscribe(this.courseStateChangedAction);
   }
@@ -54,16 +56,17 @@ export class ModuleInterventionController {
       ModuleInterventionResult
       >
   ) {
-    const intervention = interventionResult.request;
+    const intervention = interventionResult.request.intervention;
 
     switch (intervention.type) {
-      case "Entities.GotoModuleInterventiton":
+      case GotoModuleIntervention["__class"]:
         this.onGotoModuleIntervention(interventionResult);
         return;
-      case "Entities.RepeatIntervention":
+      case RepeatIntervention["__class"]:
         this.onHint(Cast<RepeatIntervention>(intervention));
       default:
         console.log("Unknown Module intervention: " + intervention.type);
+        interventionResult.result = ModuleInterventionResult.eNotSupported;
     }
   }
 
@@ -77,12 +80,19 @@ export class ModuleInterventionController {
     const intervention = interventionResult.request;
 
     this.interaction
-      .Request<ModuleInterventionResult>(typeof GotoModuleInteractionComponent)
+      .Request<ModuleInterventionResult>(
+        GotoModuleInteractionComponent,
+        {}
+      )
       .subscribe(r => {
         console.log(
           `Goto module Intervention ${intervention.id} approval result: ${r}`
         );
-        interventionResult.ResultSubject.next(r);
+        // if (r) {
+        //   this.router.navigateByUrl("courseDashboard?id=1");
+        // }
+        interventionResult.ResultSubject.next(
+          r ? ModuleInterventionResult.sOk : ModuleInterventionResult.eDeclined);
       });
   }
 

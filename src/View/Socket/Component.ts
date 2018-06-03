@@ -28,10 +28,9 @@ export class SocketComponent implements OnInit {
       );
     }
     this.eventListened = event;
-    this.ConnectionService.AddListener(
-      event,
-      (this.eventListener = s => this.Output.next(JSON.stringify(s)))
-    );
+    this.ConnectionService.AddListener(event, s =>
+      this.Output.next(JSON.stringify(s))
+    ).subscribe();
   }
 
   Emit(): void {

@@ -20,7 +20,7 @@ export class ModuleInterventionScenario extends ObserveScenarioBase<
 
   Cancel(): void {
     super.Cancel();
-    this.RemoveListener(ModuleIntervene, this.moduleIntervene);
+    this.RemoveListener(ModuleIntervene);
   }
 
   Observe(): void {

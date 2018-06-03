@@ -8,7 +8,7 @@ import java.util.Stack;
 
 public class Tree<T> {
 
-	public Tree<T> Children[];
+	public Tree<T> Children[] = new Tree[0];
 	public String type = getClass().getName();
 	public T Value;
 
@@ -36,14 +36,16 @@ public class Tree<T> {
 			if (predicate.apply(node.Value)) {
 				Tree<T> parent = node;
 				do {
-					parent = parents.getOrDefault(parent, null);
+					parent = parents.get(parent);
 					outParents.add(parent);
 				} while (parent != null);
 
 				return node;
 			} else {
 				for (Tree<T> child : node.Children) {
-					parents.putIfAbsent(child, node);
+					if (!parents.containsKey(child)) {
+						parents.put(child, node);
+					}
 					stack.push(child);
 				}
 			}

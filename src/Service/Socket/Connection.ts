@@ -13,6 +13,7 @@ export class ConnectionService {
   connection: SocketIOClient.Socket;
 
   constructor(oneNote: OneNoteAuth) {
+    console.log("ConnectionService hopes to be singleton");
     const email = oneNote.email.getValue();
     if (email) {
       this.init(email);
@@ -44,9 +45,14 @@ export class ConnectionService {
     this.connection.on("error", m => console.log(m));
   }
 
-  AddListener(event: string, callback: Listener<any>): void {
-    this.isInit.first(q => !!q).subscribe(() => {
-      let listener = message => callback(deserialize(message));
+  AddListener(event: string, callback: Listener<any>) {
+    return this.isInit.first(q => !!q).map(() => {
+      console.log("AddListener " + event);
+      let listener = message => {
+        console.log("Received " + event);
+        console.log(message);
+        callback(deserialize(message));
+      };
       this.connection.addEventListener(event, listener);
       return listener;
     });

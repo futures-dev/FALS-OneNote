@@ -1,4 +1,5 @@
 export * from "./CourseStatistics";
+export * from "./ModuleGrade";
 export * from "./ModuleIntervention";
 export * from "./ModuleResult";
 export * from "./ModuleStatistics";

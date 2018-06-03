@@ -14,7 +14,8 @@ export class SectionStructure {
   getMaterialPage(
     course: string,
     module: string,
-    step?: string
+    step?: string,
+    falsSectionGroupName: string = this.Api.FalsSectionGroupName
   ): OfficeExtension.IPromise<OneNote.Page> {
     return OneNote.run(async context => {
       const notebook = context.application.getActiveNotebook();
@@ -65,7 +66,63 @@ export class SectionStructure {
     });
   }
 
+  navigateOnPascaPage(
+    studentName: string,
+    pascaSectionGroupName: string,
+    sessionName: string,
+    assignmentSectionName: string
+  ) {
+    return OneNote.run(async context => {
+      const notebook = context.application.getActiveNotebook();
+      notebook.load();
+
+      return await context.sync().then(async () => {
+        const studentSG = await this.Api.getOrCreateSectionGroup(
+          studentName,
+          notebook,
+          context
+        );
+        const pascaSG = await this.Api.getOrCreateSectionGroup(
+          pascaSectionGroupName,
+          studentSG,
+          context
+        );
+        const sessionSG = await this.Api.getOrCreateSectionGroup(
+          sessionName,
+          pascaSG,
+          context
+        );
+        const assignmentSection = await this.Api.getOrCreateSection(
+          assignmentSectionName,
+          sessionSG,
+          context
+        );
+        if (assignmentSection) {
+          const pages = assignmentSection.pages;
+          pages.load();
+          return await context.sync().then(async () => {
+            if (pages.count > 0) {
+              const assingmentPage = pages.getItemAt(0);
+              context.application.navigateToPage(assingmentPage);
+            } else {
+              const assignmentPage = await this.Api.getOrCreatePage(
+                "Задание",
+                assignmentSection,
+                context
+              );
+              context.application.navigateToPage(assignmentPage);
+            }
+          });
+        }
+      });
+    });
+  }
+
   putContent(content: string, page: OneNote.Page) {
+    if (!content.startsWith("<")) {
+      content = '<div style="width:300px">' + content + "</div>";
+    }
+
     return OneNote.run(async context => {
       page = context.application.getActivePage();
       page.load();

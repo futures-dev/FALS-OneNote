@@ -9,6 +9,6 @@ import { SectionStructure } from "Service/Office/SectionStructure";
   imports: [],
   exports: [],
   declarations: [],
-  providers: [InitializationPublisher, Api, Web, OneNoteAuth, SectionStructure],
+  providers: [InitializationPublisher, Api, Web, SectionStructure],
 })
 export class OfficeModule {}

@@ -1,0 +1,22 @@
+<div>
+    <div style="margin-bottom:10px" *ngIf="!(IsLoading|async)">
+        <span class="ms-font-l">В рамках этого шага предлагается выполнить задание и пройти взаимное оценивание.</span>
+        <br>
+        <span class="ms-font-l">Задание для выполнения и инструкции доступны в странице рабочей тетради</span>
+        <br>
+        <span class="ms-font-l">{{OnenoteLinkText|async}}</span>
+    </div>
+    <button class="btn btn-info" *ngIf="!(IsLoading|async)" (click)="gotoMaterials()" [disabled]="IsLoading|async" style="margin-bottom: 10px">
+        <span class="ms-Button-label">Перейти</span>
+    </button>
+
+    <button class="btn" [ngClass]="{
+        'btn-success': (state|async)==StateEnum.Correct,
+        'btn-danger': (state|async)==StateEnum.Wrong,
+        'btn-info': (state|async)==StateEnum.Loading||(state|async)==StateEnum.Default
+    }" (click)="tryProceed()" [disabled]="(state|async)==StateEnum.Correct||(state|async)==StateEnum.Loading||(DisableAnswer|async)">
+        <span class="ms-Button-label" style="color:white">{{((state|async)==StateEnum.Correct)?"Сессия PR":"Далее"}}</span>
+    </button>
+
+    <mat-spinner style="margin-top:10px" *ngIf="IsLoading|async"></mat-spinner>
+</div>

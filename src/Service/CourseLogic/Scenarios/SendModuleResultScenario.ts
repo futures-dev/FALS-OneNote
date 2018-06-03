@@ -24,7 +24,7 @@ export class SubmitModuleResultScenario extends RequestScenarioBase<
 
   OnSubmitModuleResult(error: SubmitModuleResultError) {
     this.EmitResult(this.result, error);
-    this.RemoveListener(SubmitModuleResult, this.submitModule);
+    this.RemoveListener(SubmitModuleResult);
   }
 
   private readonly submitModule: (s: SubmitModuleResultError) => void = s =>

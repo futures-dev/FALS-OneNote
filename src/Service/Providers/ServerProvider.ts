@@ -26,4 +26,8 @@ export class ServerProvider {
   getLazy<T>(lazy: ILazyWrapper<T>): Observable<T> {
     return this.http.get<T>(this.url + lazy.IUrl).map(ser.deserialize);
   }
+
+  post(path: string, params): Observable<any> {
+    return this.http.post(this.url + path, params);
+  }
 }

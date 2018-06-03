@@ -16,6 +16,7 @@ import { Step } from "Service/Fals/Entities/Step";
 import { Router } from "@angular/router";
 import { Hint } from "Service/Fals/Entities/Hint";
 import { Distinction } from "Service/Fals/Entities/Distinction";
+import { GotoStepData } from "View/Interaction/GotoStepData";
 
 export class StepInterventionController {
   constructor(
@@ -27,8 +28,10 @@ export class StepInterventionController {
     courseService.CurrentCourseState.subscribe(this.courseStateChangedAction);
   }
 
+  private navId = 0;
+
   private onCourseStateChanged(courseState: CourseState) {
-    if (!courseState) {
+    if (!courseState || !courseState.currentStep) {
       return;
     }
 
@@ -89,7 +92,13 @@ export class StepInterventionController {
     const intervention = interventionResult.request;
 
     this.interaction
-      .Request<StepInterventionResult>(GotoStepInteractionComponent)
+      .Request<StepInterventionResult>(
+        GotoStepInteractionComponent,
+        new GotoStepData(
+          intervention.step,
+          Cast<GotoStepIntervention>(intervention.intervention).step
+        )
+      )
       .subscribe(r => {
         console.log(
           `Goto Step Intervention ${intervention.id} approval result: ${r}`
@@ -99,7 +108,7 @@ export class StepInterventionController {
             .take(1)
             .subscribe(ns => {
               console.log("navigating " + ns.currentStep.id);
-              this.router.navigateByUrl("/step?id=" + ns.currentStep.id);
+              this.router.navigateByUrl("/step?id=" + ++this.navId);
             });
         }
         interventionResult.ResultSubject.next(
@@ -118,7 +127,13 @@ export class StepInterventionController {
     const intervention = interventionResult.request;
 
     this.interaction
-      .Request<StepInterventionResult>(GotoStepInteractionComponent)
+      .Request<StepInterventionResult>(
+        GotoStepInteractionComponent,
+        new GotoStepData(
+          intervention.step,
+          Cast<GotoStepIntervention>(intervention.intervention).step
+        )
+      )
       .subscribe(r => {
         console.log(
           `Repeat Step Intervention ${intervention.id} approval result: ${r}`
@@ -128,9 +143,7 @@ export class StepInterventionController {
             .take(1)
             .subscribe(ns => {
               console.log("navigating " + ns.currentStep.id);
-              this.router.navigateByUrl(
-                "/step?repeat=true&id=" + ns.currentStep.id
-              );
+              this.router.navigateByUrl("/step?repeat=true&id=" + ++this.navId);
             });
         }
         interventionResult.ResultSubject.next(

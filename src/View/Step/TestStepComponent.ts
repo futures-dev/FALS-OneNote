@@ -14,6 +14,7 @@ import { Hint } from "Service/Fals/Entities/Hint";
 import { Distinction } from "Service/Fals/Entities/Distinction";
 import { SubmitStepResultError } from "Service/Fals/Facades/SubmitStepResultError";
 import { StepAnswerState } from "View/Step/StepAnswerState";
+import { IfNull } from "Service/Common/IfNull";
 
 @Component({
   selector: "testStep",
@@ -23,15 +24,17 @@ export class TestStepComponent implements OnInit {
   @Input("Step")
   set setStep(step: TestStep) {
     this.Step.next(step);
-    console.log("hi");
-    console.log(step.answers);
     this.Answers.next(step.answers.map(k => k.value));
 
     if (step.problem.content.trim().startsWith("<")) {
       console.log("big problem");
       const state = this.CourseService.CurrentCourseState.getValue();
       this.section
-        .getMaterialPage(state.course.id, state.currentModule.id, step.id)
+        .getMaterialPage(
+          state.course.title,
+          state.currentModule.title,
+          IfNull(step.title, step.id)
+        )
         .then(page => {
           this.section.open(page).then(() => {
             this.section.putContent(step.problem.content, page).then(q => {
@@ -50,6 +53,11 @@ export class TestStepComponent implements OnInit {
     this.skip = skip;
   }
 
+  @Input("SingleAttempt")
+  set setSingleAttempt(singleAttempt: boolean) {
+    this.SingleAttempt = singleAttempt;
+  }
+
   skip: boolean = false;
 
   public Step: BehaviorSubject<TestStep> = new BehaviorSubject<TestStep>(null);
@@ -63,6 +71,8 @@ export class TestStepComponent implements OnInit {
   public Hint: BehaviorSubject<string> = new BehaviorSubject(null);
 
   public Distinction: BehaviorSubject<string> = new BehaviorSubject(null);
+
+  public DisableAnswer: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   constructor(
     private CourseService: CourseService,
@@ -93,7 +103,7 @@ export class TestStepComponent implements OnInit {
 
   state: BehaviorSubject<StepAnswerState> = new BehaviorSubject<
     StepAnswerState
-    >(StepAnswerState.Default);
+  >(StepAnswerState.Default);
   StateEnum: typeof StepAnswerState = StepAnswerState;
   public IsLoading: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
     true
@@ -101,6 +111,9 @@ export class TestStepComponent implements OnInit {
 
   tryProceed() {
     this.state.next(StepAnswerState.Loading);
+    if (this.SingleAttempt) {
+      this.DisableAnswer.next(true);
+    }
 
     let result = new StepAnswer();
     result.module = this.CourseService.CurrentCourseState.value.currentModule;
@@ -121,5 +134,7 @@ export class TestStepComponent implements OnInit {
     });
   }
 
-  ngOnInit() { }
+  ngOnInit() {}
+
+  private SingleAttempt: boolean = false;
 }

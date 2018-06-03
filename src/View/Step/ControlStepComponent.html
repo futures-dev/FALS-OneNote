@@ -1,6 +1,6 @@
 <div>
     <div *ngFor="let exercise of (Exercises|async);let i = index">
-        <h2 style="text-align: center">{{i + 1}}</h2>
-        <step [Step]="exercise" [HideNext]="true"></step>
+        <h2 style="text-align: center;color:darkred">{{i + 1}}</h2>
+        <step [Step]="exercise" [HideNext]="true" [SingleAttempt]="true"></step>
     </div>
 </div>

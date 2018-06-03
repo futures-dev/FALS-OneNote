@@ -25,7 +25,7 @@ export class ActivateCourseScenario extends RequestScenarioBase<
 
   private OnSelectCourse(activateCourseError: ActivateCourseError): void {
     this.EmitResult(this.course, activateCourseError);
-    this.RemoveListener(SelectCourse, this.selectCourse);
+    this.RemoveListener(SelectCourse);
   }
 
   private selectCourse: (s: ActivateCourseError) => void = s =>

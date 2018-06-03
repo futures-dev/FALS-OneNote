@@ -7,12 +7,20 @@ import { CommonModule } from "@angular/common";
 import { CourseDashboardComponent } from "View/CourseDashboard/Component";
 import { CourseService } from "Service/CourseLogic/CourseService";
 import { CourseLogicModule } from "Service/CourseLogic/Module";
-import { ModuleComponent } from "View/CourseDashboard/ModuleComponent";
+import { GradeController } from "Service/CourseLogic/GradeController";
+import { ConnectionService } from "Service/Socket/Connection";
+import { OneNoteAuth } from "Service/Office/Auth/OneNoteAuth";
 
 @NgModule({
-  imports: [RouterModule, FormsModule, CommonModule, CourseLogicModule],
+  imports: [
+    RouterModule,
+    FormsModule,
+    CommonModule,
+    CourseLogicModule,
+    socket.SocketModule,
+  ],
   exports: [],
-  declarations: [CourseDashboardComponent, ModuleComponent],
-  providers: [CourseService],
+  declarations: [CourseDashboardComponent],
+  providers: [CourseService, ConnectionService, GradeController],
 })
 export class CourseDashboardModule {}

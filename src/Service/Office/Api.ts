@@ -8,7 +8,7 @@ import { Cast } from "Service/Common/Cast";
 
 @Injectable()
 export class Api {
-  public readonly FalsSectionGroupName = "FALS";
+  public readonly FalsSectionGroupName = "EdMachine";
 
   public getOrCreateSectionGroup(
     sgName: string,
