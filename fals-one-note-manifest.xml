@@ -20,8 +20,8 @@
   <Description DefaultValue="[Notebook Add-in description]"/>
 
   <!-- Icon for your add-in. Used on installation screens and the add-ins dialog. -->
-  <IconUrl DefaultValue="https://localhost:3000/assets/icon-32.png" />
-  <HighResolutionIconUrl DefaultValue="https://localhost:3000/assets/hi-res-icon.png"/>
+  <IconUrl DefaultValue="https://fals-on.herokuapp.com/assets/icon-32.png" />
+  <HighResolutionIconUrl DefaultValue="https://fals-on.herokuapp.com/assets/hi-res-icon.png"/>
 
   <!--If you plan to submit this add-in to the Office Store, uncomment the SupportUrl element below-->
   <SupportUrl DefaultValue="https://www.hse.ru/ba/se/students/diplomas"></SupportUrl>
@@ -119,14 +119,14 @@
     <!-- You can use resources across hosts and form factors. -->
     <Resources>
       <bt:Images>
-        <bt:Image id="Contoso.tpicon_16x16" DefaultValue="https://localhost:3000/assets/logo-16.png" />
-        <bt:Image id="Contoso.tpicon_32x32" DefaultValue="https://localhost:3000/assets/logo-32.png" />
-        <bt:Image id="Contoso.tpicon_80x80" DefaultValue="https://localhost:3000/assets/logo-80.png" />
+        <bt:Image id="Contoso.tpicon_16x16" DefaultValue="https://fals-on.herokuapp.com/assets/logo-16.png" />
+        <bt:Image id="Contoso.tpicon_32x32" DefaultValue="https://fals-on.herokuapp.com/assets/logo-32.png" />
+        <bt:Image id="Contoso.tpicon_80x80" DefaultValue="https://fals-on.herokuapp.com/assets/logo-80.png" />
       </bt:Images>
       <bt:Urls>
         <bt:Url id="Contoso.Taskpane.Url" DefaultValue="https://fals-on.herokuapp.com/" />
         <bt:Url id="Contoso.GetStarted.LearnMoreUrl" DefaultValue="https://www.hse.ru/ba/se/students/diplomas" />
-        <bt:Url id="Contoso.DesktopFunctionFile.Url" DefaultValue="https://localhost:3000/function-file.html" />
+        <bt:Url id="Contoso.DesktopFunctionFile.Url" DefaultValue="https://fals-on.herokuapp.com/function-file.html" />
       </bt:Urls>
       <!-- ShortStrings max characters==125. -->
       <bt:ShortStrings>
