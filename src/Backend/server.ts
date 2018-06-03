@@ -12,12 +12,12 @@ import { Request, Response } from "express";
 import * as dotenv from "dotenv";
 import * as mongo from "mongodb";
 
-import {} from "typemoq";
+import { } from "typemoq";
 
 import { Client } from "Backend/Socket/Client";
 
 import * as fs from "fs";
-import { Storage } from "Backend//Storage";
+import { Storage, CourseStateEx } from "Backend//Storage";
 
 import { delay } from "Service/Common/Thread";
 import { Course } from "Service/Fals/Entities/Course";
@@ -30,6 +30,11 @@ import {
   CurrentStateChanged,
   SubmitStepResult,
   StepIntervene,
+  GeneratedTestChanged,
+  GetCurrentGrade,
+  ControlStepChanged,
+  ModuleIntervene,
+  GradeChanged,
 } from "Service/Socket/Events";
 import { Results } from "Service/Socket/Results";
 import { CourseState } from "Service/Fals/Entities/CourseState";
@@ -38,6 +43,12 @@ import {
   StepStatistics,
   StepIntervention,
   StepAnswer,
+  Statistics,
+  StepGrade,
+  ModuleGrade,
+  ModuleStatistics,
+  StepTime,
+  ModuleIntervention,
 } from "Service/Fals/Statistics";
 import { Auth } from "Backend/Office/Auth";
 import { ResponseStub } from "Backend/Mocks";
@@ -52,7 +63,18 @@ import { OpenTestStep } from "Service/Fals/Entities/OpenTestStep";
 import { TestStep } from "Service/Fals/Entities/TestStep";
 import { Distinction } from "Service/Fals/Entities/Distinction";
 import { on } from "cluster";
-import { Step, Answer, Key, Assignment } from "Service/Fals";
+import {
+  Step,
+  Answer,
+  Key,
+  Assignment,
+  ControlStep,
+  GeneratedTestStep,
+  StepInterventionModel,
+  PascaStep,
+  GotoModuleIntervention,
+} from "Service/Fals";
+import { IfNull } from "Service/Common/IfNull";
 
 dotenv.load();
 
@@ -72,7 +94,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors());
 
-app.get("/", function(req, res) {
+app.get("/", function (req, res) {
   res.sendfile(path.resolve(__dirname, "..", "index.html"));
 });
 
@@ -109,12 +131,14 @@ mongo.MongoClient.connect(process.env.DATABASE_URL).then(mongodb => {
           res.sendStatus(500);
         } else {
           const email = JSON.parse(b).userPrincipalName;
+          const displayName = JSON.parse(b).displayName;
           tokens
             .update(
               { guid: guid },
               {
                 guid: guid,
                 email: email,
+                displayName: displayName,
                 access_token: access_token,
                 refresh_token: refresh_token,
                 onenote_token: onenote_token,
@@ -125,7 +149,11 @@ mongo.MongoClient.connect(process.env.DATABASE_URL).then(mongodb => {
             )
             .then(
               q => {
-                res.status(200).send({ success: true, email: email });
+                res.status(200).send({
+                  success: true,
+                  email: email,
+                  displayName: displayName,
+                });
               },
               r => console.log("rejected " + r)
             );
@@ -138,7 +166,7 @@ mongo.MongoClient.connect(process.env.DATABASE_URL).then(mongodb => {
 
   const onAuth = new Auth();
 
-  app.post("/checkCode", function(req, res) {
+  app.post("/checkCode", function (req, res) {
     const guid = req.body.guid;
     if (guid) {
       console.log("guid = " + guid);
@@ -146,7 +174,11 @@ mongo.MongoClient.connect(process.env.DATABASE_URL).then(mongodb => {
         record => {
           console.log("record = " + record);
           if (record) {
-            res.status(200).send({ success: true, email: record.email });
+            res.status(200).send({
+              success: true,
+              email: record.email,
+              displayName: record.displayName,
+            });
           } else {
             res.status(404).send({ error: "no record found with guid" });
           }
@@ -163,7 +195,18 @@ mongo.MongoClient.connect(process.env.DATABASE_URL).then(mongodb => {
     }
   });
 
-  const refreshTokenFunction = function(req: Request, res: Response) {
+  app.post("/resetProgress", function (req, res) {
+    const userId = req.body.userId;
+    if (userId) {
+      const defaultStorage = readStorage();
+      storage.CourseStates[userId] = defaultStorage.CourseStates[userId];
+      res.status(200).send({ success: true });
+    } else {
+      res.status(404).send("Need userId");
+    }
+  });
+
+  const refreshTokenFunction = function (req: Request, res: Response) {
     const guid = req.body.guid;
     if (guid) {
       getTokenAsync(guid).then(
@@ -231,7 +274,7 @@ mongo.MongoClient.connect(process.env.DATABASE_URL).then(mongodb => {
 
   app.post("/refreshToken", refreshTokenFunction);
 
-  app.post("/submitCode", function(req, res) {
+  app.post("/submitCode", function (req, res) {
     const code = req.body.code;
     const guid = req.body.guid;
     if (code && guid) {
@@ -278,7 +321,7 @@ mongo.MongoClient.connect(process.env.DATABASE_URL).then(mongodb => {
     }
   });
 
-  app.post("/logout", function(req, res) {
+  app.post("/logout", function (req, res) {
     console.log("/logout");
     const guid = req.body.guid;
     if (guid) {
@@ -289,7 +332,7 @@ mongo.MongoClient.connect(process.env.DATABASE_URL).then(mongodb => {
     }
   });
 
-  app.put("/put", function(req, res) {
+  app.put("/put", function (req, res) {
     console.log("put/" + req.body.url);
     console.log(JSON.stringify(req.body));
     const guid = req.body.guid;
@@ -355,7 +398,7 @@ mongo.MongoClient.connect(process.env.DATABASE_URL).then(mongodb => {
     }
   });
 
-  app.post("/post", function(req, res) {
+  app.post("/post", function (req, res) {
     console.log("post/" + req.body.url);
     console.log(JSON.stringify(req.body));
     const guid = req.body.guid;
@@ -421,7 +464,7 @@ mongo.MongoClient.connect(process.env.DATABASE_URL).then(mongodb => {
     }
   });
 
-  app.patch("/patch", function(req, res) {
+  app.patch("/patch", function (req, res) {
     console.log("patch/" + req.body.url);
     console.log(JSON.stringify(req.body));
     const guid = req.body.guid;
@@ -488,7 +531,7 @@ mongo.MongoClient.connect(process.env.DATABASE_URL).then(mongodb => {
     }
   });
 
-  app.get("/get", function(req, res) {
+  app.get("/get", function (req, res) {
     console.log("get/" + req.url);
     const guid = req.query.guid;
     const url = req.query.url;
@@ -590,7 +633,7 @@ mongo.MongoClient.connect(process.env.DATABASE_URL).then(mongodb => {
       "Минимальный возраст для получения прав (категория D)";
     ex4.answers = [new Key(), new Key()];
     ex4.answers[0].value = "18 лет";
-    ex4.answers[1].value = "21 лет";
+    ex4.answers[1].value = "21 год";
     ex4.correctAnswer = 1;
 
     let ex5 = new TestStep();
@@ -634,7 +677,7 @@ mongo.MongoClient.connect(process.env.DATABASE_URL).then(mongodb => {
     ex9.id = "ex9";
     ex9.problem = new Assignment();
     ex9.problem.content =
-      "Минимальный возраст для сдачи экзамена (категория А1)";
+      "Минимальный возраст для получения прав (категория А1)";
     ex9.answers = [new Key(), new Key()];
     ex9.answers[0].value = "14 лет";
     ex9.answers[1].value = "16 лет";
@@ -652,7 +695,7 @@ mongo.MongoClient.connect(process.env.DATABASE_URL).then(mongodb => {
     return [ex1, ex2, ex3, ex4, ex5, ex6, ex7, ex8, ex9, ex10];
   }
 
-  app.get("/generate", function(req, res) {
+  app.get("/generate", function (req, res) {
     const batch_size = req.query.batch_size;
     res.status(200).send(gen().slice(0, batch_size));
   });
@@ -680,12 +723,17 @@ mongo.MongoClient.connect(process.env.DATABASE_URL).then(mongodb => {
 
   //#region Storage
 
-  let storage: Storage = Object.create(Storage.prototype);
-  Object.assign(
-    storage,
-    JSON.parse(fs.readFileSync(process.argv.slice(2)[0]).toString())
-  );
-  storage.onSerialized();
+  function readStorage(): Storage {
+    let storage: Storage = Object.create(Storage.prototype);
+    Object.assign(
+      storage,
+      JSON.parse(fs.readFileSync(process.argv.slice(2)[0]).toString())
+    );
+    storage.onSerialized();
+    return storage;
+  }
+
+  const storage = readStorage();
 
   //#region GET
 
@@ -727,21 +775,74 @@ mongo.MongoClient.connect(process.env.DATABASE_URL).then(mongodb => {
       storage.Students[socket.handshake.query.userId]
     ));
 
+    socket.on("disconnect", function () {
+      console.log("Disconnect ", JSON.stringify(client.userId));
+
+      if (storage.CourseStates[client.userId]) {
+        storage.CourseStates[client.userId].GeneratedSteps = {};
+        storage.CourseStates[client.userId].SubStepAnswers = {};
+      }
+    });
+
+    function generateExercises(nState: CourseState, force: boolean = true) {
+      if (nState.currentStep.type == ControlStep["__class"]) {
+        const generatedTestStep = Cast<GeneratedTestStep>(
+          Cast<ControlStep>(nState.currentStep).exercises.find(
+            q => q.type == GeneratedTestStep["__class"]
+          )
+        );
+        if (generatedTestStep) {
+          let gens =
+            storage.CourseStates[client.userId].GeneratedSteps[
+            generatedTestStep.id
+            ];
+          if (force || !gens) {
+            gens = storage.CourseStates[client.userId].GeneratedSteps[
+              generatedTestStep.id
+            ] = [];
+            storage.CourseStates[client.userId].SubStepAnswers[
+              generatedTestStep.id
+            ] = [];
+          }
+          if (gens.length == 0) {
+            gens = storage.CourseStates[client.userId].GeneratedSteps[
+              generatedTestStep.id
+            ] = gen().slice(0, generatedTestStep.batchSize);
+            console.log("gen test");
+            var handler = (result: StepStatistics) => {
+              if (result.type == StepTime["__class"]) {
+                const stepTime = Cast<StepTime>(result);
+                if (
+                  stepTime &&
+                  stepTime.beginTime &&
+                  stepTime.step.type == GeneratedTestStep["__class"]
+                ) {
+                  console.log("emit gentest");
+                  socket.emit(GeneratedTestChanged, gens);
+                  socket.removeListener(SubmitStepResult, handler);
+                }
+              }
+            };
+            socket.on(SubmitStepResult, handler);
+          }
+        }
+      }
+    }
+
     socket.on(SelectCourse, (course: Course) => {
       console.log("SelectCourse " + client.userId);
       if (!storage.CourseStates[client.userId]) {
-        storage.CourseStates[client.userId] = [];
+        storage.CourseStates[client.userId] = new CourseStateEx([]);
       }
 
       course = deserialize(course);
       course = storage.Courses.find(q => course.equals(q));
 
-      let courseStates = storage.CourseStates[client.userId];
+      let courseStates = storage.CourseStates[client.userId].CourseStates;
       let lastState = courseStates[courseStates.length - 1];
 
       let currentState = new CourseState();
-      currentState.course = course;
-      currentState.index = lastState ? lastState.index + 1 : 1;
+      currentState.student = client.Student;
 
       let previousState = courseStates
         .slice(0)
@@ -749,13 +850,14 @@ mongo.MongoClient.connect(process.env.DATABASE_URL).then(mongodb => {
         .find(q => q.course == course);
 
       if (previousState) {
-        if (previousState.currentModule) {
-          currentState.currentModule = previousState.currentModule;
-        }
-        if (previousState.currentStep) {
-          currentState.currentStep = previousState.currentStep;
-        }
+        Object.assign(currentState, previousState);
+      } else {
+        currentState.course = course;
       }
+      currentState.index = lastState ? lastState.index + 1 : 1;
+
+      Assert(currentState.course, "SelectCourse: currentState.course is null");
+
       if (!currentState.currentModule) {
         let node = course.modules;
         if (node.Value) {
@@ -770,29 +872,96 @@ mongo.MongoClient.connect(process.env.DATABASE_URL).then(mongodb => {
         "SelectCourse: currentState.currentModule is null"
       );
 
-      currentState.currentStep = currentState.currentModule.steps[0];
+      if (!currentState.currentStep) {
+        currentState.currentStep = currentState.currentModule.steps[0];
+      }
       Assert(
         currentState.currentStep,
         "SelectCourse: currentState.currentStep is null"
       );
 
-      storage.CourseStates[client.userId].push(currentState);
+      generateExercises(currentState, false);
+
+      storage.CourseStates[client.userId].CourseStates.push(currentState);
 
       socket.emit(CurrentStateChanged, currentState);
 
       socket.emit(SelectCourse, Results.sOk);
     });
 
+    function gotoStepIntervene(
+      intervention: StepIntervention,
+      newState?: CourseState
+    ) {
+      socket.emit(StepIntervene, intervention);
+      socket.addListener(
+        StepIntervene,
+        (
+          result: Result<
+            StepIntervention,
+            StepIntervention,
+            StepInterventionResult
+            >
+        ) => {
+          console.log("Intervention approve result: " + result.result);
+          if (result.result == StepInterventionResult.sOk) {
+            const states = storage.CourseStates[client.userId].CourseStates;
+
+            if (!newState) {
+              const state = states[states.length - 1];
+              newState = new CourseState();
+              Object.assign(newState, state);
+            }
+
+            newState.currentStep = Cast<GotoStepIntervention>(
+              result.response.intervention
+            ).step;
+            console.log(JSON.stringify(newState));
+
+            states.push(newState);
+            socket.emit(CurrentStateChanged, newState);
+          }
+        }
+      );
+    }
+
+    function gotoModuleIntervene(intervention: ModuleIntervention) {
+      socket.emit(ModuleIntervene, intervention);
+      socket.addListener(
+        ModuleIntervene,
+        (
+          result: Result<
+            StepIntervention,
+            StepIntervention,
+            StepInterventionResult
+            >
+        ) => {
+          console.log("Intervention approve result: " + result.result);
+          if (result.result == StepInterventionResult.sOk) {
+            const states = storage.CourseStates[client.userId].CourseStates;
+
+            const state = states[states.length - 1];
+            const newState = new CourseState();
+
+            newState.course = state.course;
+            newState.student = state.student;
+
+            newState.currentModule = Cast<GotoModuleIntervention>(
+              intervention.intervention
+            ).module;
+            newState.currentStep = newState.currentModule.steps[0];
+
+            states.push(newState);
+            socket.emit(CurrentStateChanged, newState);
+          }
+        }
+      );
+    }
+
     socket.on(SubmitStepResult, (result: StepStatistics) => {
       console.log(SubmitStepResult, client.userId);
 
-      let courseState = storage.CourseStates[client.userId].pop();
-      storage.CourseStates[client.userId].push(courseState);
-      let stepIdx = courseState.currentModule.steps.findIndex(q =>
-        q.equals(result.step)
-      );
-      let step = courseState.currentModule.steps[stepIdx];
-      if (!step) {
+      if (!storage.CourseStates[client.userId]) {
         socket.emit(
           SubmitStepResult,
           SubmitStepResultError.eStepDoesNotBelongToModule
@@ -800,6 +969,108 @@ mongo.MongoClient.connect(process.env.DATABASE_URL).then(mongodb => {
         return;
       }
 
+      let courseState = storage.CourseStates[client.userId].CourseStates.pop();
+      storage.CourseStates[client.userId].CourseStates.push(courseState);
+      let stepIdx = courseState.currentModule.steps.findIndex(q =>
+        q.equals(result.step)
+      );
+      let step = courseState.currentModule.steps[stepIdx];
+      let controlStep: ControlStep;
+      let generatedTestStep: GeneratedTestStep;
+      if (!step) {
+        // check ControlStep
+        stepIdx = courseState.currentModule.steps.findIndex(q => {
+          if (q.type == "Entities.ControlStep") {
+            let i = Cast<ControlStep>(q).exercises.findIndex(z =>
+              z.equals(result.step)
+            );
+            if (i >= 0) {
+              controlStep = Cast<ControlStep>(q);
+              step = controlStep.exercises[i];
+
+              return true;
+            }
+
+            const hiddenSteps = storage.HiddenSteps[q.id];
+            if (hiddenSteps) {
+              i = hiddenSteps.findIndex(z => z.equals(result.step));
+              if (i >= 0) {
+                controlStep = Cast<ControlStep>(q);
+                step = hiddenSteps[i];
+
+                return true;
+              }
+            }
+
+            // check GeneratedTestStep
+            i = Cast<ControlStep>(q).exercises.findIndex(z => {
+              if (z.type == GeneratedTestStep["__class"]) {
+                const generatedTestStep = Cast<GeneratedTestStep>(z);
+                let genSteps =
+                  storage.CourseStates[client.userId].GeneratedSteps[
+                  generatedTestStep.id
+                  ];
+                if (!genSteps) {
+                  genSteps = storage.CourseStates[client.userId].GeneratedSteps[
+                    generatedTestStep.id
+                  ] = [];
+                }
+                let zi = genSteps.findIndex(w => w.equals(result.step));
+                if (zi >= 0) {
+                  return true;
+                }
+              }
+
+              return false;
+            });
+            if (i >= 0) {
+              controlStep = Cast<ControlStep>(q);
+              generatedTestStep = Cast<GeneratedTestStep>(
+                controlStep.exercises[i]
+              );
+              step = storage.CourseStates[client.userId].GeneratedSteps[
+                generatedTestStep.id
+              ].find(w => w.equals(result.step));
+              return true;
+            }
+          }
+
+          return false;
+        });
+
+        if (stepIdx < 0) {
+          // check GeneratedTestStep
+          stepIdx = courseState.currentModule.steps.findIndex(q => {
+            if (q.type == "Entities.GeneratedTestStep") {
+              const i = storage.CourseStates[client.userId].GeneratedSteps[
+                Cast<GeneratedTestStep>(q).id
+              ].findIndex(w => w.equals(result.step));
+              if (i >= 0) {
+                generatedTestStep = Cast<GeneratedTestStep>(q);
+                step = storage.CourseStates[client.userId].GeneratedSteps[
+                  generatedTestStep.id
+                ].find(w => w.equals(result.step));
+                return true;
+              }
+            }
+          });
+
+          if (stepIdx < 0) {
+            // could not find step in current module
+            socket.emit(
+              SubmitStepResult,
+              SubmitStepResultError.eStepDoesNotBelongToModule
+            );
+            return;
+          }
+        }
+      }
+
+      // by now, ControlStep, GeneratedTestStep and Step should be inited properly
+
+      var isWrong: boolean = false;
+      var stepIntervene: StepIntervention = null;
+      var moduleIntervene: ModuleIntervention = null;
       if (result.type == "Statistics.StepAnswer") {
         // check answer
         const answer = new StepAnswer();
@@ -838,8 +1109,12 @@ mongo.MongoClient.connect(process.env.DATABASE_URL).then(mongodb => {
             } else {
               courseState.unfinishedSteps.push(step);
             }
+            isWrong = true;
             socket.emit(SubmitStepResult, SubmitStepResultError.sWrongAnswer);
-            return;
+          } else {
+            courseState.unfinishedSteps = courseState.unfinishedSteps.filter(
+              q => !q.equals(step)
+            );
           }
         } else if (step.type == "Entities.TestStep") {
           const testStep = new TestStep();
@@ -853,7 +1128,7 @@ mongo.MongoClient.connect(process.env.DATABASE_URL).then(mongodb => {
                     (Cast<Distinction>(q).entity1 ==
                       testStep.answers[parseInt(answer.value)].value ||
                       Cast<Distinction>(q).entity2 ==
-                        testStep.answers[parseInt(answer.value)].value)
+                      testStep.answers[parseInt(answer.value)].value)
                 )
               );
               const hint = step.possibleInterventions.find(
@@ -877,98 +1152,262 @@ mongo.MongoClient.connect(process.env.DATABASE_URL).then(mongodb => {
             } else {
               courseState.unfinishedSteps.push(step);
             }
+            isWrong = true;
             socket.emit(SubmitStepResult, SubmitStepResultError.sWrongAnswer);
-            return;
+          } else {
+            courseState.unfinishedSteps = courseState.unfinishedSteps.filter(
+              q => !q.equals(step)
+            );
+          }
+        } else if (step.type == PascaStep["__class"]) {
+          courseState.unfinishedSteps.push(step);
+          if (controlStep) {
+            const answers =
+              storage.CourseStates[client.userId].SubStepAnswers[
+              controlStep.id
+              ];
+            var idx = answers.findIndex(a => {
+              return a.step.id == "exercise21" && !a.isCorrect;
+            });
+            if (idx >= 0) {
+              moduleIntervene = new ModuleIntervention();
+              moduleIntervene.course = courseState.course;
+              moduleIntervene.module = courseState.currentModule;
+              const intervention = new GotoModuleIntervention();
+              moduleIntervene.intervention = intervention;
+              intervention.module =
+                courseState.course.modules.Children[0].Value;
+            }
+          }
+        }
+        answer.isCorrect = !isWrong;
+
+        // by now Step errors are handled. Move next based on ControlStep and GeneratedTestStep
+
+        // grade
+        let findModule = function (q: Statistics): boolean {
+          if (q.type == ModuleGrade["__class"]) {
+            return Cast<ModuleGrade>(q).module.equals(
+              courseState.currentModule
+            );
+          }
+
+          return false;
+        };
+
+        if (generatedTestStep) {
+          let generatedAnswers =
+            storage.CourseStates[client.userId].SubStepAnswers[
+            generatedTestStep.id
+            ];
+          if (!generatedAnswers) {
+            generatedAnswers = storage.CourseStates[
+              client.userId
+            ].SubStepAnswers[generatedTestStep.id] = [];
+          }
+
+          generatedAnswers.push(answer);
+
+          var genGrade: number = null;
+
+          if (generatedAnswers.length % generatedTestStep.batchSize == 0) {
+            genGrade = 0.0;
+            for (var i = 0; i < generatedAnswers.length; i++) {
+              if (generatedAnswers[i].isCorrect) {
+                genGrade++;
+              }
+            }
+            genGrade /= generatedAnswers.length;
+            if (
+              genGrade < generatedTestStep.minGrade &&
+              generatedAnswers.length < generatedTestStep.batchSize * 2
+            ) {
+              const newEx = gen().slice(
+                generatedTestStep.batchSize,
+                generatedTestStep.batchSize * 2
+              );
+              storage.CourseStates[client.userId].GeneratedSteps[
+                generatedTestStep.id
+              ] = storage.CourseStates[client.userId].GeneratedSteps[
+                generatedTestStep.id
+              ].concat(newEx);
+              socket.emit(GeneratedTestChanged, newEx);
+            } else {
+              answer.isCorrect = genGrade >= generatedTestStep.minGrade;
+              step = generatedTestStep;
+              answer.step = generatedTestStep;
+              generatedTestStep = null;
+              isWrong = false;
+            }
+          }
+        }
+
+        if (controlStep && !generatedTestStep) {
+          let controlStepAnswers =
+            storage.CourseStates[client.userId].SubStepAnswers[controlStep.id];
+          if (!controlStepAnswers) {
+            controlStepAnswers = storage.CourseStates[
+              client.userId
+            ].SubStepAnswers[controlStep.id] = [];
+          }
+
+          controlStepAnswers.push(answer);
+
+          genGrade = 0;
+          for (var i = 0; i < controlStepAnswers.length; i++) {
+            if (controlStepAnswers[i].isCorrect) {
+              genGrade += controlStepAnswers[i].step.maxGrade;
+            }
+          }
+
+          let moduleGrade = Cast<ModuleGrade>(storage.CourseStates[client.userId].Statistics.slice(0)
+            .reverse()
+            .find(findModule));
+
+          if (controlStepAnswers.length == controlStep.exercises.length) {
+            const hiddenSteps = storage.HiddenSteps[controlStep.id];
+            if (genGrade + (moduleGrade ? moduleGrade.grade : 0) < courseState.currentModule.minGrade && hiddenSteps) {
+              socket.emit(ControlStepChanged, hiddenSteps);
+            } else {
+              step = controlStep;
+              controlStep = null;
+              isWrong = false;
+            }
+          } else if (controlStepAnswers.length > controlStep.exercises.length) {
+            if (genGrade + (moduleGrade ? moduleGrade.grade : 0) < courseState.currentModule.minGrade) {
+              stepIdx--;
+              genGrade = 0;
+              stepIntervene = new StepIntervention();
+              stepIntervene.course = courseState.course;
+              stepIntervene.module = courseState.currentModule;
+              stepIntervene.step = controlStep;
+              const intervention = (stepIntervene.intervention = new GotoStepIntervention());
+              intervention.step = controlStep;
+            } else {
+              step = controlStep;
+              controlStep = null;
+              isWrong = false;
+            }
           }
         }
 
         let newState = new CourseState();
-        if (stepIdx + 1 < courseState.currentModule.steps.length) {
-          Object.assign(newState, courseState);
-          newState.currentStep = courseState.currentModule.steps[stepIdx + 1];
-        } else {
-          // todo: check unfinished steps
-          // todo: make grade
+        Object.assign(newState, courseState);
 
-          let parents: Array<Tree<Module>> = [];
-          let currentModuleNode = courseState.course.modules.search(
-            courseState.currentModule.equals,
-            parents
-          );
-          parents = parents.reverse();
-          let parent = parents.pop();
-          let nextModuleNode: Tree<Module> = null;
-          while (parent) {
-            let currentIdx = parent.Children.findIndex(
-              q => q == currentModuleNode
+        if (!controlStep && !generatedTestStep && !isWrong) {
+
+          const previousGrade = storage.CourseStates[
+            client.userId
+          ].Statistics.slice(0)
+            .reverse()
+            .find(findModule);
+          const moduleGrade = new ModuleGrade();
+          if (previousGrade) {
+            Object.assign(moduleGrade, previousGrade);
+          }
+
+          moduleGrade.course = courseState.course;
+          moduleGrade.module = courseState.currentModule;
+
+          if (genGrade !== undefined && genGrade !== null) {
+            moduleGrade.grade = moduleGrade.grade + genGrade;
+          } else {
+            moduleGrade.grade = moduleGrade.grade + step.maxGrade;
+          }
+          if (moduleGrade.grade > moduleGrade.module.maxGrade) {
+            moduleGrade.grade = moduleGrade.module.maxGrade;
+          }
+
+          storage.CourseStates[client.userId].Statistics.push(moduleGrade);
+          socket.emit(GradeChanged, moduleGrade);
+
+          if (stepIdx + 1 < courseState.currentModule.steps.length) {
+            newState.currentStep = courseState.currentModule.steps[stepIdx + 1];
+          } else {
+            let parents: Array<Tree<Module>> = [];
+            let currentModuleNode = courseState.course.modules.search(
+              t => courseState.currentModule.equals(t),
+              parents
             );
-            if (parent.Children.length > currentIdx + 1) {
-              nextModuleNode = parent.Children[currentIdx + 1];
-              break;
+            parents = parents.slice(0).reverse();
+            let parent = parents.pop();
+            let nextModuleNode: Tree<Module> = null;
+            while (parent) {
+              let currentIdx = parent.Children.findIndex(
+                q => q == currentModuleNode
+              );
+              if (parent.Children.length > currentIdx + 1) {
+                nextModuleNode = parent.Children[currentIdx + 1];
+                break;
+              } else {
+                parent = parents.pop();
+              }
+            }
+            if (nextModuleNode) {
+              newState.currentModule = nextModuleNode.Value;
+              newState.currentStep = newState.currentModule.steps[0];
             } else {
-              parent = parents.pop();
+              // course is over!
+              newState.isCourseFinished = true;
+              newState.currentStep = null;
             }
           }
-          if (nextModuleNode) {
-            newState.currentModule = nextModuleNode.Value;
-            newState.currentStep = newState.currentModule.steps[0];
+
+          if (newState.currentStep) {
+            console.log("new step: " + newState.currentStep.id);
+            storage.CourseStates[client.userId].CourseStates.push(newState);
+            socket.emit(CurrentStateChanged, newState);
+
+            generateExercises(newState);
           } else {
-            // course is over!
-            newState.isCourseFinished = true;
+            console.log("new state: course finished");
           }
         }
 
-        console.log("new step: " + newState.currentStep.id);
-        storage.CourseStates[client.userId].push(newState);
-        socket.emit(CurrentStateChanged, newState);
+        if (!isWrong) {
+          socket.emit(SubmitStepResult, SubmitStepResultError.sOk);
+        }
 
-        socket.emit(SubmitStepResult, SubmitStepResultError.sOk);
-      } else if (step.id == "step2") {
-        // temp intervention test
+        if (moduleIntervene) {
+          gotoModuleIntervene(moduleIntervene);
+        } else if (stepIntervene) {
+          gotoStepIntervene(stepIntervene, newState);
+        }
+        else if (!newState.currentStep) {
+          socket.emit(CurrentStateChanged, newState);
+        }
 
-        setTimeout(
-          arg => {
-            const intervention = new StepIntervention();
-            intervention.module = courseState.currentModule;
-            intervention.step = courseState.currentStep;
-            intervention.course = courseState.course;
+      } else if (result.type == StepTime["__class"]) {
+        const stepTime = Cast<StepTime>(result);
+        if (stepTime.endTime && stepTime.step.type == ControlStep["__class"]) {
+          storage.CourseStates[client.userId].GeneratedSteps = {};
+          storage.CourseStates[client.userId].SubStepAnswers = {};
+        } else if (
+          stepTime.beginTime &&
+          stepTime.step.type == ControlStep["__class"]
+        ) {
+          generateExercises(courseState, false);
+        } else if (step.id == "step02" && stepTime.beginTime) {
+          // temp intervention test
 
-            const gotoStep = new GotoStepIntervention();
-            intervention.intervention = gotoStep;
-            gotoStep.step = courseState.currentModule.steps[2];
+          setTimeout(
+            arg => {
+              console.log("intervene");
+              const intervention = new StepIntervention();
+              intervention.module = courseState.currentModule;
+              intervention.step = courseState.currentStep;
+              intervention.course = courseState.course;
 
-            socket.emit(StepIntervene, intervention);
-            socket.addListener(
-              StepIntervene,
-              (
-                result: Result<
-                  StepIntervention,
-                  StepIntervention,
-                  StepInterventionResult
-                >
-              ) => {
-                console.log("Intervention approve result: " + result.result);
-                if (result.result == StepInterventionResult.sOk) {
-                  const states = storage.CourseStates[client.userId];
-                  const state = states[states.length - 1];
+              const gotoStep = new GotoStepIntervention();
+              intervention.intervention = gotoStep;
+              gotoStep.step = courseState.currentModule.steps[2];
 
-                  const newState = new CourseState();
-                  Object.assign(newState, state);
-
-                  newState.currentStep = Cast<GotoStepIntervention>(
-                    result.response.intervention
-                  ).step;
-                  console.log(JSON.stringify(newState));
-
-                  states.push(newState);
-                  socket.emit(CurrentStateChanged, newState);
-                }
-              }
-            );
-          },
-          5000,
-          ""
-        );
+              gotoStepIntervene(intervention);
+            },
+            5000,
+            ""
+          );
+        }
       }
     });
 
@@ -977,12 +1416,13 @@ mongo.MongoClient.connect(process.env.DATABASE_URL).then(mongodb => {
 
       let courseStates = storage.CourseStates[client.userId];
       if (!courseStates) {
-        courseStates = storage.CourseStates[client.userId] = [];
+        courseStates = storage.CourseStates[client.userId] = new CourseStateEx(
+          []
+        );
         socket.emit(GetCurrentState, Results.eNotFound);
       }
 
-      let courseState = courseStates
-        .slice(0)
+      let courseState = courseStates.CourseStates.slice(0)
         .reverse()
         .find(q => student.equals(client.Student));
       if (courseState) {
@@ -990,6 +1430,51 @@ mongo.MongoClient.connect(process.env.DATABASE_URL).then(mongodb => {
       } else {
         socket.emit(GetCurrentState, Results.eNotFound);
       }
+    });
+
+    socket.on(GetCurrentGrade, (entity: Step | Module) => {
+      console.log("GetCurrentGrade " + entity.type + " " + entity.id);
+
+      if (!storage.CourseStates[client.userId]) {
+        return;
+      }
+
+      const isStep = entity instanceof Step;
+
+      let findStep = function (q: Statistics): boolean {
+        if (q.type == StepGrade["__class"]) {
+          return Cast<StepGrade>(q).step.equals(entity);
+        }
+
+        return false;
+      };
+      let findModule = function (q: Statistics): boolean {
+        if (q.type == ModuleGrade["__class"]) {
+          return Cast<ModuleGrade>(q).module.equals(entity);
+        }
+
+        return false;
+      };
+
+      let grade = storage.CourseStates[client.userId].Statistics.slice(0)
+        .reverse()
+        .find(isStep ? findStep : findModule);
+      if (!grade) {
+        if (isStep) {
+          const stepGrade = new StepGrade();
+          stepGrade.step = Cast<Step>(entity);
+          grade = stepGrade;
+        }
+        else {
+          const moduleGrade = new ModuleGrade();
+          moduleGrade.module = Cast<Module>(entity);
+          grade = moduleGrade;
+        }
+      }
+      socket.emit(
+        GetCurrentGrade,
+        grade
+      );
     });
 
     // todo: remove
