@@ -262,7 +262,7 @@ var ScriptLoading;
             }
           }
         }
-        return this.basePath;
+        return "https://appsforoffice.microsoft.com/lib/1.1/hosted/";
       }
     };
     LoadScriptHelper.prototype.loadScript = function (
