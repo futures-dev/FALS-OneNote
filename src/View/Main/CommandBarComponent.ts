@@ -73,7 +73,7 @@ export class CommandBarComponent implements OnInit, AfterViewInit {
   public enabled = this.onenote.isAuth;
   toggleMenu: boolean;
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 
   initFabric() {
     var CommandBarElements = document.querySelectorAll(".ms-CommandBar");
