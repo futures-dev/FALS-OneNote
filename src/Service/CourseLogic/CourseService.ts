@@ -24,7 +24,7 @@ import { Tree } from "Service/Fals/Entities/Tree";
 export class CourseService {
   public readonly CurrentCourseState: BehaviorSubject<
     CourseState
-  > = new BehaviorSubject<CourseState>(null);
+    > = new BehaviorSubject<CourseState>(null);
   public get Modules(): Observable<Module> {
     return Observable.from(
       this.CurrentCourseState.getValue().course.modules.Children
@@ -51,16 +51,19 @@ export class CourseService {
     this.moduleInterventionController = new ModuleInterventionController(
       this,
       socket,
-      interaction
+      interaction,
+      this.router
     );
 
-    socket.AddListener(CurrentStateChanged, (cs: CourseState) => {
-      this.CurrentCourseState.next(cs);
+    socket
+      .AddListener(CurrentStateChanged, (cs: CourseState) => {
+        this.CurrentCourseState.next(cs);
 
-      if (!cs.currentStep) {
-        router.navigateByUrl("courseDashboard");
-      }
-    });
+        if (!cs.currentStep) {
+          router.navigateByUrl("courseDashboard");
+        }
+      })
+      .subscribe();
   }
 
   public Activate(course: Course): Observable<ActivateCourseError> {
@@ -74,6 +77,7 @@ export class CourseService {
       console.log(
         "ActivateScenario success =" + course + ", awaiting CourseStateChanged"
       );
+      this.router.navigateByUrl("courseDashboard");
     });
     activate.Start();
 

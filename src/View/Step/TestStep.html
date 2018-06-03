@@ -1,5 +1,4 @@
 <div>
-    <mat-spinner *ngIf="IsLoading|async"></mat-spinner>
     <div [innerHTML]="Problem|async"></div>
     <div class="ms-MessageBanner" *ngIf="!!(Hint|async)">
         <div class="ms-MessageBanner-content">
@@ -30,10 +29,12 @@
         'btn-success': (state|async)==StateEnum.Correct,
         'btn-danger': (state|async)==StateEnum.Wrong,
         'btn-info': (state|async)==StateEnum.Loading||(state|async)==StateEnum.Default
-    }" style="color:white" disabled (click)="tryProceed()" [disabled]="(state|async)==StateEnum.Correct||(state|async)==StateEnum.Loading">
+    }" style="color:white;margin-top:5px" (click)="tryProceed()" [disabled]="(state|async)==StateEnum.Correct||(state|async)==StateEnum.Loading||(DisableAnswer|async)">
         <span class="ms-Button-label" style="color:white">{{((state|async)==StateEnum.Correct)?"Верно":"Отправить"}}</span>
     </button>
 </div>
+
+<mat-spinner style="margin-top:10px" *ngIf="IsLoading|async"></mat-spinner>
 
 <script type="text/javascript">
     var TextFieldElements = document.querySelectorAll(".ms-TextField");

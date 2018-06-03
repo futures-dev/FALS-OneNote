@@ -9,13 +9,21 @@ import { StepComponent } from "View/Step/Component";
 import { OpenTestStepComponent } from "View/Step/OpenTestStepComponent";
 import { TestStepComponent } from "View/Step/TestStepComponent";
 import { StudyStepComponent } from "View/Step/StudyStepComponent";
-import { HypertextMaterial } from "Service/Fals";
 import { HypertextMaterialComponent } from "View/Step/HypertextMaterialComponent";
 import { ControlStepComponent } from "View/Step/ControlStepComponent";
 import { ProvidersModule } from "Service/Providers/Module";
 import { MatProgressSpinnerModule } from "@angular/material";
 import { GeneratedTestStepComponent } from "View/Step/GeneratedTestStepComponent";
 import { HyperlinkMaterialComponent } from "View/Step/HyperlinkMaterialComponent";
+import { GradeController } from "Service/CourseLogic/GradeController";
+import { ControlStepChanged } from "Service/Socket/Events";
+import { ControlStepChangedScenario } from "Service/CourseLogic/Scenarios/ControlStepChangedScenario";
+import { GeneratedTestStepChangedScenario } from "Service/CourseLogic/Scenarios/GeneratedTestStepChangedScenario";
+import { ConnectionService } from "Service/Socket/Connection";
+import { SocketModule } from "Service/Socket/Module";
+import { PascaStepComponent } from "View/Step/PascaStepComponent";
+import { OneNoteAuth } from "Service/Office/Auth/OneNoteAuth";
+import { OfficeModule } from "Service/Office/Module";
 
 @NgModule({
   imports: [
@@ -23,8 +31,10 @@ import { HyperlinkMaterialComponent } from "View/Step/HyperlinkMaterialComponent
     FormsModule,
     CommonModule,
     CourseLogicModule,
+    OfficeModule,
     ProvidersModule,
     MatProgressSpinnerModule,
+    SocketModule,
   ],
   exports: [],
   declarations: [
@@ -36,7 +46,8 @@ import { HyperlinkMaterialComponent } from "View/Step/HyperlinkMaterialComponent
     HyperlinkMaterialComponent,
     ControlStepComponent,
     GeneratedTestStepComponent,
+    PascaStepComponent,
   ],
-  providers: [CourseService],
+  providers: [CourseService, GradeController, ConnectionService, OneNoteAuth],
 })
 export class StepModule {}

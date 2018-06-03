@@ -1,5 +1,5 @@
 import * as fs from "fs";
-import { Storage } from "Backend/Storage";
+import { Storage, CourseStateEx } from "Backend/Storage";
 
 import { Course } from "Service/Fals/Entities/Course";
 import { CourseWrapper } from "Service/Fals/Entities/Lazy/CourseWrapper";
@@ -45,6 +45,7 @@ storage.Courses = generateCourses(storage);
 storage.CourseStates = {
   "studentA@gmail.com": generateCourseStates(storage),
 };
+storage.HiddenSteps = generateHiddenSteps(storage);
 
 function generateModules(storage: Storage): { [i: number]: Tree<Module> } {
   var map = {};
@@ -98,11 +99,12 @@ function generateModules(storage: Storage): { [i: number]: Tree<Module> } {
   step2.id = "step2";
   let step3 = new ControlStep();
   step3.id = "step3";
+  step3.maxGrade = 3;
   module1.steps = [step01, step02, step1, step12, step2, step3];
 
   step1.problem = new Assignment();
-  step1.problem.content = `<div style="left:50px;top:75px">Вам можно продолжить движение на перекрёстке:
-  <img src="https://pdde.ru/static/data/images/questions/13.jpg" width="250"></img>
+  step1.problem.content = `<div style="left:50px;top:75px;width:300px">Вам можно продолжить движение на перекрёстке:
+  <img width="400px" src="https://avto-russia.ru/pdd_abma1b1/images/pdd-15-02.jpg"></img>
   </div>`;
   let answer11 = new Key();
   let answer12 = new Key();
@@ -134,8 +136,8 @@ function generateModules(storage: Storage): { [i: number]: Tree<Module> } {
   step12.possibleInterventions = [distinctionIntervention1, hintIntervention12];
 
   let material1 = new HypertextMaterial();
-  material1.content = `<div style="left:50px;top:75px">Светофо́р (от свет + греч. φορός «несущий») — оптическое устройство, подающее световые сигналы, регулирующие движение автомобильного, железнодорожного, водного и другого транспорта, а также пешеходов на пешеходных переходах
-    <img src="https://ds03.infourok.ru/uploads/ex/07e6/0005ad35-95e22fd3/1/img1.jpg" width="450"></img></div>`;
+  material1.content = `<div style="left:50px;top:75px;width:300px">Светофо́р (от свет + греч. φορός «несущий») — оптическое устройство, подающее световые сигналы, регулирующие движение автомобильного, железнодорожного, водного и другого транспорта, а также пешеходов на пешеходных переходах
+    <img width="400px" src="https://ds03.infourok.ru/uploads/ex/07e6/0005ad35-95e22fd3/1/img1.jpg"></img></div>`;
   step2.materials = material1;
   let gotoStepIntervention1 = new GotoStepIntervention();
   gotoStepIntervention1.step = step3;
@@ -167,7 +169,7 @@ function generateModules(storage: Storage): { [i: number]: Tree<Module> } {
   ];
   exercise2.batchSize = 5;
   exercise2.maxGrade = 1;
-  exercise2.minGrade = 0.9;
+  exercise2.minGrade = 0.7;
   exercise2.question_type = GeneratedExerciseType.object_feature;
   exercise2.question_form = GeneratedExerciseForm.binary_choice;
 
@@ -189,13 +191,14 @@ function generateModules(storage: Storage): { [i: number]: Tree<Module> } {
   let material22 = new HyperlinkMaterial();
   step22.materials = material22;
   step22.id = "step22";
-  material22.link = "onenotelink";
+  material22.link =
+    "onenote:https://eduhseru-my.sharepoint.com/personal/aikolomiets_edu_hse_ru/Documents/Записные%20книжки%20для%20занятий/Testroom/_Библиотека%20содержимого/SectionGroup5/Т6.one#О%20светофорах%20Т.6&section-id={CAA62863-22AA-46F0-8DC9-0D89F4903618}&page-id={5C461093-D883-4458-83F2-BEAAAE5369C7}&end";
 
   let step23 = new OpenTestStep();
   step23.id = "step23";
   step23.problem = new Assignment();
-  step23.problem.content = `<div style="left:50px;top:75px">Какой тип светофора изображен на рисунке?
-<img src="http://clipart-library.com/img/1287030.jpg" width="250"></img>
+  step23.problem.content = `<div style="left:50px;top:75px;width:250px">Какой тип светофора изображен на рисунке?
+<img width="200px" src="https://i.imgur.com/pGpZhvL.jpg"></img>
 </div>`;
   step23.correctAnswer = new Key();
   step23.correctAnswer.value = "транспортный";
@@ -220,7 +223,7 @@ function generateModules(storage: Storage): { [i: number]: Tree<Module> } {
   let exercise21 = new OpenTestStep();
   exercise21.id = "exercise21";
   exercise21.problem = new Assignment();
-  exercise21.problem.content = `<div style="left:50px;top:75px">Светофор какого типа изображен на рисунке?
+  exercise21.problem.content = `<div style="left:50px;top:75px;width:300px">1. Светофор какого типа изображен на рисунке?
   <img width="250" src="https://arhivurokov.ru/multiurok/1/7/d/17dc7de6d066e259ca97319fa0183bc996409fa6/bukliet-pravila-dorozhnogho-dvizhieniia-v-zimnii-p_14.jpeg"></img>
   </div>`;
   exercise21.correctAnswer = new Key();
@@ -234,9 +237,10 @@ function generateModules(storage: Storage): { [i: number]: Tree<Module> } {
   exercise22.pascaFalsSettings.authorsCountToBeginAssessment = 2;
   exercise22.pascaFalsSettings.delayDates = true;
   exercise22.pascaSessionSettings = new PascaSessionSettings();
-  // todo
+  exercise22.pascaSessionSettings.sessionName = "Проект Светофоры";
   exercise22.pascaOnenoteSettings = new PascaOnenoteSettings();
-  // todo
+  exercise22.pascaOnenoteSettings.assignmentSectionName = "Assignment";
+  exercise22.pascaOnenoteSettings.pascaSectionGroupName = "PASCA";
 
   step25.exercises = [exercise21, exercise22];
   module2.steps = [step21, step22, step23, step24, step25];
@@ -268,7 +272,7 @@ function generateCourses(storage: Storage): Course[] {
   return [courseA, courseB];
 }
 
-function generateCourseStates(storage: Storage): CourseState[] {
+function generateCourseStates(storage: Storage): CourseStateEx {
   Assert(
     storage.Students,
     "Students should be generated before generateCourses"
@@ -287,7 +291,21 @@ function generateCourseStates(storage: Storage): CourseState[] {
     IUrl: "/course" + "?courseId=1",
   });
 
-  return [courseA, courseB];
+  return new CourseStateEx([courseA, courseB]);
+}
+
+function generateHiddenSteps(storage: Storage): { [stepId: string]: Step[] } {
+  const hiddenSteps = {};
+  const step3 = new TestStep();
+  hiddenSteps["step3"] = [step3];
+  step3.answers = [new Key(), new Key()];
+  step3.answers[0].value = "300.000р";
+  step3.answers[1].value = "15.000р";
+  step3.maxGrade = 1;
+  step3.correctAnswer = 1;
+  step3.problem = new Assignment();
+  step3.problem.content = "Максимальная величина штрафа за управление ТС без соответствующей категории прав -";
+  return hiddenSteps;
 }
 
 function generateStudents(storage: Storage): Student[] {
@@ -306,7 +324,8 @@ let storageObject = new Storage(
   storage.Students,
   storage.Modules,
   storage.Courses,
-  storage.CourseStates
+  storage.CourseStates,
+  storage.HiddenSteps
 );
 storage.CourseStates, console.log(storageObject);
 fs.writeFileSync(StoragePath, JSON.stringify(storageObject, null, 2));

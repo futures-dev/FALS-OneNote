@@ -6,6 +6,8 @@ import { AsyncResult } from "Service/CourseLogic/AsyncResult";
 import { Result } from "Service/Fals/Facades/Result";
 import { Listener } from "Service/Socket/Listener";
 import { Subscription } from "rxjs/Subscription";
+import { Observable } from "rxjs/Observable";
+import { BehaviorSubject } from "rxjs/BehaviorSubject";
 
 export interface Scenario<TRequest, TResponse, TResult> {
   Start(): void;
@@ -56,12 +58,19 @@ export abstract class RequestScenarioBase<
   }
 
   protected AddListener(message: string, listener: Listener<TResponse>) {
-    this.connection.AddListener(message, listener);
+    const listenerSubscription = this.connection.AddListener(message, listener);
+    listenerSubscription.subscribe(l => this._listener.next(l));
   }
 
-  protected RemoveListener(message: string, listener: Listener<TResponse>) {
-    this.connection.RemoveListener(message, listener);
+  protected RemoveListener(message: string) {
+    this._listener
+      .filter(q => !!q)
+      .subscribe(listener => this.connection.RemoveListener(message, listener));
   }
+
+  private readonly _listener: BehaviorSubject<
+    Listener<any>
+  > = new BehaviorSubject(null);
 }
 
 export abstract class ObserveScenarioBase<
@@ -74,11 +83,14 @@ export abstract class ObserveScenarioBase<
   }
 
   protected AddListener(message: string, listener: Listener<TRequest>) {
-    this.connection.AddListener(message, listener);
+    const listenerSubscription = this.connection.AddListener(message, listener);
+    listenerSubscription.subscribe(l => this._listener.next(l));
   }
 
-  protected RemoveListener(message: string, listener: Listener<TRequest>) {
-    this.connection.RemoveListener(message, listener);
+  protected RemoveListener(message: string) {
+    this._listener
+      .filter(q => !!q)
+      .subscribe(listener => this.connection.RemoveListener(message, listener));
   }
 
   protected Respond(message: string, request: TRequest, response: TResponse) {
@@ -89,4 +101,8 @@ export abstract class ObserveScenarioBase<
       this.connection.Send(message, serializableResult);
     });
   }
+
+  private readonly _listener: BehaviorSubject<
+    Listener<any>
+  > = new BehaviorSubject(null);
 }

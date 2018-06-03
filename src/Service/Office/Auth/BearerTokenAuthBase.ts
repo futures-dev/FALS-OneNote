@@ -10,12 +10,13 @@ interface submitCodeResponse {
 }
 
 export abstract class BearerTokenAuthBase {
-  constructor(protected http: HttpClient) { }
+  constructor(protected http: HttpClient) {}
 
   public abstract tryLogin();
 
   public isAuth: BehaviorSubject<boolean> = new BehaviorSubject(false);
   public email: BehaviorSubject<string> = new BehaviorSubject(null);
+  public displayName: BehaviorSubject<string> = new BehaviorSubject(null);
 
   //#region Auth
 

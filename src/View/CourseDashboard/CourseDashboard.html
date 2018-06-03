@@ -1,18 +1,15 @@
 <div class="ms-List">
     <li class="ms-ListItem">
-        <div class="ms-Breadcrumb" style="margin-right:20px">
+        <div class="ms-Breadcrumb" style="max-width: 1px;">
             <div class="ms-Breadcrumb-overflow">
                 <div class="ms-Breadcrumb-overflowButton ms-Icon ms-Icon--More" (click)="toggle()"></div>
                 <div class="ms-Breadcrumb-overflowMenu" [ngClass]="{'is-open':toggleMenu}">
                     <ul class="ms-ContextualMenu">
-                        <!-- <li class="ms-ContextualMenu-item" *ngFor="let module of (Modules|async);let i = index">
-                    <a class="ms-ContextualMenu-link" (mouseenter)="mouseEnter(i)" (mouseleave)="mouseLeave(i)">{{module.title}}</a>
-                </li> -->
                     </ul>
                 </div>
             </div>
             <ul class="ms-Breadcrumb-list" style="display: contents;">
-                <li class="ms-Breadcrumb-listItem" *ngFor="let module of (Modules|async);let i = index">
+                <li class="ms-Breadcrumb-listItem" *ngFor="let module of Modules;let i = index">
                     <a class="ms-Breadcrumb-itemLink" tabindex="" [ngStyle]="{
                 'opacity': isCurrentModule(module) ? '1' : '0.6'
             }">{{module.title}}</a>
@@ -21,7 +18,7 @@
             </ul>
         </div>
         <div class="courseDashboard-Callouts">
-            <div *ngFor="let module of (Modules|async);let i = index" class="ms-Callout is-hidden ms-Callout--OOBE">
+            <div *ngFor="let module of Modules;let i = index" class="ms-Callout is-hidden ms-Callout--OOBE">
                 <div class="ms-Callout-main">
                     <div class="ms-Callout-header">
                         <p class="ms-Callout-title">{{module.title}}</p>
@@ -29,7 +26,8 @@
                     <div class="ms-Callout-inner">
                         <div class="ms-Callout-content">
                             <p class="ms-Callout-subText">{{module.description}}</p>
-                            <p class="ms-Callout-subText">Оценка: {{module.grade ? module.grade : 0}}/{{module.maxGrade}}</p>
+                            <p class="ms-Callout-subText" style="color:mediumblue" *ngIf='((Course|async).unfinishedSteps) && ((Course|async).unfinishedSteps.findIndex(isPascaStep)>=0)'>Ожидается завершение взаимного оценивания</p>
+                            <p class="ms-Callout-subText">Оценка: {{grades[module.id]}}/{{module.maxGrade}}</p>
                         </div>
                         <div class="ms-Callout-actions">
                             <div class="ms-CommandButton ms-CommandButton--inline">

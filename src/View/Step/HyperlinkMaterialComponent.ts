@@ -5,7 +5,7 @@ import { CourseService } from "Service/CourseLogic/CourseService";
 import { Course } from "Service/Fals/Entities/Course";
 import { StepAnswer } from "Service/Fals/Statistics/StepAnswer";
 import { BehaviorSubject } from "rxjs/BehaviorSubject";
-import { StudyStep } from "Service/Fals/index";
+import { StudyStep } from "Service/Fals/Entities/StudyStep";
 import { SectionStructure } from "Service/Office/SectionStructure";
 import { HyperlinkMaterial } from "Service/Fals/Bank/HyperlinkMaterial";
 import { Subject } from "rxjs/Subject";
@@ -28,7 +28,14 @@ export class HyperlinkMaterialComponent implements OnInit {
   }
 
   gotoMaterials() {
-    window.open(this.Material.getValue().link);
+    const link = this.Material.getValue().link;
+    if (link.startsWith("onenote:")) {
+      OneNote.run(async context => {
+        context.application.navigateToPageWithClientUrl(link);
+      });
+    } else {
+      window.open(link);
+    }
   }
 
   public Material: BehaviorSubject<HyperlinkMaterial> = new BehaviorSubject<

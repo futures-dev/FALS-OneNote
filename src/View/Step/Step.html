@@ -3,10 +3,10 @@
 </div>
 
 <div style="margin:20px" [ngSwitch]="(Step | async).type">
-    <openTestStep *ngSwitchCase="'Entities.OpenTestStep'" [Step]="Step | async">
+    <openTestStep *ngSwitchCase="'Entities.OpenTestStep'" [Step]="Step | async" [SingleAttempt]="SingleAttempt">
     </openTestStep>
 
-    <testStep *ngSwitchCase="'Entities.TestStep'" [Step]="Step | async">
+    <testStep *ngSwitchCase="'Entities.TestStep'" [Step]="Step | async" [SingleAttempt]="SingleAttempt">
     </testStep>
 
     <studyStep *ngSwitchCase="'Entities.StudyStep'" [Step]="Step | async">
@@ -15,8 +15,11 @@
     <controlStep *ngSwitchCase="'Entities.ControlStep'" [Step]="Step | async">
     </controlStep>
 
-    <generatedTestStep *ngSwitchCase="'Entities.GeneratedTestStep'" [Step]="Step | async">
+    <generatedTestStep *ngSwitchCase="'Entities.GeneratedTestStep'" [Step]="Step | async" [SingleAttempt]="SingleAttempt">
     </generatedTestStep>
+
+    <pascaStep *ngSwitchCase="'Entities.PascaStep'" [Step]="Step | async" [SingleAttempt]="SingleAttempt">
+    </pascaStep>
 
     <div *ngSwitchDefault>
         No type!! {{(Step | async).type}}

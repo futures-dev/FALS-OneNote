@@ -1,6 +1,11 @@
-<h2 mat-dialog-title>Пора переходить к следующему шагу</h2>
-<mat-dialog-content>Вы согласны?</mat-dialog-content>
+<h2 mat-dialog-title>{{isControlStep ? "Ваши знания не на высоте.. Повторите материал и пройдите контрольный шаг еще раз.": "Пора переходить к
+    следующему шагу"}}</h2>
+<mat-dialog-content>{{isControlStep ? "Вы готовы?" : "Вы согласны?"}}</mat-dialog-content>
 <mat-dialog-actions>
-    <button class="btn" style="white-space:unset;width:100%;margin-bottom: 10px" mat-button [mat-dialog-close]="false">Нет, посижу на этом шаге ещё немного</button>
-    <button class="btn btn-success" style="white-space:unset;width: 100%" mat-button [mat-dialog-close]="true">Да</button>
+    <button class="btn" style="white-space:unset;width:100%;margin-bottom: 10px" mat-button [mat-dialog-close]="false">
+        {{isControlStep? "Нет, нужно подготовиться": "Нет, посижу на этом шаге ещё немного"}}
+    </button>
+    <button class="btn btn-success" style="white-space:unset;width: 100%" mat-button [mat-dialog-close]="true">
+        Да
+    </button>
 </mat-dialog-actions>

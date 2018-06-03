@@ -9,6 +9,7 @@ import { Router } from "@angular/router";
 import { InitializationPublisher } from "Service/Office/InitializationPublisher";
 import { BehaviorSubject } from "rxjs";
 import { Cast } from "Service/Common/Cast";
+import { ServerProvider } from "Service/Providers/ServerProvider";
 
 declare var fabric: any;
 
@@ -23,6 +24,7 @@ export class CommandBarComponent implements OnInit, AfterViewInit {
 
   constructor(
     private onenote: OneNoteAuth,
+    private serverProvider: ServerProvider,
     private initializationPublisher: InitializationPublisher,
     private router: Router
   ) {
@@ -54,6 +56,12 @@ export class CommandBarComponent implements OnInit, AfterViewInit {
     this.router.navigateByUrl("/courseList");
   }
 
+  resetCourses() {
+    this.serverProvider
+      .post("/resetProgress", { userId: this.onenote.email.getValue() })
+      .subscribe(q => this.dropdownClick());
+  }
+
   dropdownClick() {
     //this.toggleMenu = !this.toggleMenu;
     var hosts = document.querySelectorAll(".ms-ContextualHost");
@@ -65,7 +73,7 @@ export class CommandBarComponent implements OnInit, AfterViewInit {
   public enabled = this.onenote.isAuth;
   toggleMenu: boolean;
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 
   initFabric() {
     var CommandBarElements = document.querySelectorAll(".ms-CommandBar");

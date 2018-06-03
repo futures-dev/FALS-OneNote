@@ -5,9 +5,10 @@ import { CourseService } from "Service/CourseLogic/CourseService";
 import { Course } from "Service/Fals/Entities/Course";
 import { StepAnswer } from "Service/Fals/Statistics/StepAnswer";
 import { BehaviorSubject } from "rxjs/BehaviorSubject";
-import { StudyStep, HypertextMaterial } from "Service/Fals/index";
 import { SectionStructure } from "Service/Office/SectionStructure";
+import { HypertextMaterial } from "Service/Fals/Bank/HypertextMaterial";
 import { Subject } from "rxjs/Subject";
+import { IfNull } from "Service/Common/IfNull";
 
 @Component({
   selector: "hypertextMaterial",
@@ -27,7 +28,7 @@ export class HypertextMaterialComponent implements OnInit {
     this.SectionStructure.getMaterialPage(
       state.course.title,
       state.currentModule.title,
-      state.currentStep.id
+      IfNull(state.currentStep.title, state.currentStep.id)
     ).then(q => {
       this.MaterialPage.next(q);
       this.OnenoteLinkText.next(

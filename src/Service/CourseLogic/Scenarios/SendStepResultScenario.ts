@@ -24,7 +24,7 @@ export class SubmitStepResultScenario extends RequestScenarioBase<
 
   OnSubmitStepResult(error: SubmitStepResultError) {
     this.EmitResult(this.result, error);
-    this.RemoveListener(SubmitStepResult, this.submitStepResult);
+    this.RemoveListener(SubmitStepResult);
   }
 
   private readonly submitStepResult: (s: SubmitStepResultError) => void = s =>

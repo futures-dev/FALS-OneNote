@@ -22,6 +22,7 @@ import { GotoStepInteractionComponent } from "View/Interaction/GotoStepInteracti
 import { InteractionModule } from "View/Interaction/Module";
 import { MatDialogModule } from "@angular/material";
 import { MatProgressSpinnerModule } from "@angular/material";
+import { OneNoteAuth } from "Service/Office/Auth/OneNoteAuth";
 
 @NgModule({
   imports: [
@@ -35,9 +36,6 @@ import { MatProgressSpinnerModule } from "@angular/material";
     MatDialogModule,
     MatProgressSpinnerModule,
     ClarityModule,
-
-    // local modules
-    OfficeModule,
 
     // View modules
     InteractionModule,
@@ -58,6 +56,7 @@ import { MatProgressSpinnerModule } from "@angular/material";
 
     ConnectionService,
     CourseService,
+    OneNoteAuth,
   ],
 })
 export class MainModule {}

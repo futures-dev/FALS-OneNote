@@ -20,7 +20,7 @@ export class StepInterventionScenario extends ObserveScenarioBase<
 
   Cancel(): void {
     super.Cancel();
-    this.RemoveListener(StepIntervene, this.stepIntervene);
+    this.RemoveListener(StepIntervene);
   }
 
   Observe(): void {

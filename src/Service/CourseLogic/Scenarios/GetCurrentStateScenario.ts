@@ -27,7 +27,7 @@ export class GetCurrentStateScenario extends RequestScenarioBase<
 
   OnGetCurrentState(cs: CourseState): void {
     this.EmitResult(this.student, cs);
-    this.RemoveListener(GetCurrentState, this.getCurrentState);
+    this.RemoveListener(GetCurrentState);
   }
 
   private readonly getCurrentState: (s: CourseState) => void = s =>
