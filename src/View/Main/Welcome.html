@@ -14,7 +14,7 @@
 </ng-container>
 <ng-container *ngIf="(state|async) != StateEnum.LoadingOffice">
     <header class="ms-welcome__header ms-bgColor-neutralLighter ms-u-fadeIn500">
-        <img width="100" height="100" src="assets/Logo-400.png" alt="EdMachine-OneNote" title="EdMachine-OneNote" style="margin-bottom: 50px"
+        <img width="100" height="100" src="assets/logo-400.png" alt="EdMachine-OneNote" title="EdMachine-OneNote" style="margin-bottom: 50px"
         />
 
         <button *ngIf="(state|async) == StateEnum.NeedLogin" class="ms-Button ms-Button--primary" (click)="login()">
