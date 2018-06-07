@@ -26,7 +26,7 @@
                     <div class="ms-Callout-inner">
                         <div class="ms-Callout-content">
                             <p class="ms-Callout-subText">{{module.description}}</p>
-                            <p class="ms-Callout-subText" style="color:mediumblue" *ngIf='((Course|async).unfinishedSteps) && ((Course|async).unfinishedSteps.findIndex(isPascaStep)>=0)'>Ожидается завершение взаимного оценивания</p>
+                            <p class="ms-Callout-subText" style="color:mediumblue" *ngIf='isCurrentModule(module) && ((Course|async).unfinishedSteps) && ((Course|async).unfinishedSteps.findIndex(isPascaStep)>=0)'>Ожидается завершение взаимного оценивания</p>
                             <p class="ms-Callout-subText">Оценка: {{grades[module.id]}}/{{module.maxGrade}}</p>
                         </div>
                         <div class="ms-Callout-actions">
