@@ -84,6 +84,14 @@ console.log(process.env.DATABASE_URL);
 var port = process.env.PORT || 3003;
 
 app.use(morgan("dev"));
+app.use(function (req, res, next) {
+  if (req.method == "GET") {
+    res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
+    res.header('Expires', '-1');
+    res.header('Pragma', 'no-cache');
+    next();
+  }
+});
 app.use(express.static(path.resolve(__dirname, "..")));
 app.use(
   "/node_modules",
