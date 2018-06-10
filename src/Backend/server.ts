@@ -85,10 +85,10 @@ console.log(process.env.DATABASE_URL);
 var port = process.env.PORT || 3003;
 
 app.use(morgan("dev"));
-app.use(express.static(path.resolve(__dirname, "..")));
+app.use(express.static(path.resolve(__dirname, ".."), { maxAge: 31557600 }));
 app.use(
   "/node_modules",
-  express.static(path.resolve(__dirname, "..", "..", "node_modules"))
+  express.static(path.resolve(__dirname, "..", "..", "node_modules"), { maxAge: 31557600 })
 );
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
